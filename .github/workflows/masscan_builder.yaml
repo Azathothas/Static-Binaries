@@ -61,8 +61,8 @@ jobs:
         run: |
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)        
+          # Add static flag
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_gcc"    
           # Remove tmp files
@@ -73,8 +73,8 @@ jobs:
         run: | 
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)        
+          # Add static flag
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_64_gcc"    
           # Remove tmp files
@@ -85,8 +85,8 @@ jobs:
         run: |  
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)        
+          # Add static flag
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_s390x_gcc" 
           # Remove tmp files
@@ -96,21 +96,17 @@ jobs:
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           echo '```console' >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./masscan/masscan_*' &>> README.md
-           echo -e "" >> README.md
-           echo -e "--> SHA256SUM" >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./masscan/masscan_*' &>> README.md     
-           echo -e '```\n' >> README.md
-           echo -e "" >> README.md
-           echo '---' >> README.md
-           echo '- #### Bundled Commands' >> README.md
-           echo '```console' >> README.md
-           sudo chmod +xwr ./masscan/masscan_linux_arm64_aarch64_gcc
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./masscan/masscan_linux_arm64_aarch64_gcc' &>> README.md
-           echo '```' >> README.md
-           echo '---' >> README.md
-           echo -e "" >> README.md    
+           cat ./masscan/INFO.md > ./masscan/README.md
+           echo -e "" >> ./masscan/README.md 
+           echo '---' >> ./masscan/README.md
+           echo '```console' >> ./masscan/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./masscan/masscan_*' &>> ./masscan/README.md
+           echo -e "" >> ./masscan/README.md
+           echo -e "--> SHA256SUM" >> ./masscan/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./masscan/masscan_*' &>> ./masscan/README.md   
+           echo -e '```\n' >> ./masscan/README.md
+           echo -e "" >> ./masscan/README.md
+           echo '---' >> ./masscan/README.md
         working-directory: main
         continue-on-error: true
         
