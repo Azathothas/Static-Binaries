@@ -65,19 +65,19 @@ export MASSCAN_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 ---
 ```console
 $ file ./masscan/masscan_linux_arm64_aarch64_gcc ./masscan/masscan_linux_arm64_aarch64_musl ./masscan/masscan_linux_s390x_gcc ./masscan/masscan_linux_x86_64_gcc ./masscan/masscan_linux_x86_gcc
-./masscan/masscan_linux_arm64_aarch64_gcc:  ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=263434f1953b7443f7cb6c36706b3f7835223896, for GNU/Linux 5.4.0, with debug_info, not stripped
-./masscan/masscan_linux_arm64_aarch64_musl: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, with debug_info, not stripped
-./masscan/masscan_linux_s390x_gcc:          ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=090ce7ad302f7cbde9e10f6f52c936d6373ebe98, for GNU/Linux 5.4.0, with debug_info, not stripped
-./masscan/masscan_linux_x86_64_gcc:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=556a9c1deba6e52af727ea2520e0a00ed8280940, for GNU/Linux 3.2.0, with debug_info, not stripped
-./masscan/masscan_linux_x86_gcc:            ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f488dca9a7cb63b117433e171734ab66e8306b94, for GNU/Linux 3.2.0, with debug_info, not stripped
+./masscan/masscan_linux_arm64_aarch64_gcc:  ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, BuildID[sha1]=09c5d98015291231c52597c312aa527590b9623f, for GNU/Linux 5.4.0, stripped
+./masscan/masscan_linux_arm64_aarch64_musl: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
+./masscan/masscan_linux_s390x_gcc:          ELF 64-bit MSB executable, IBM S/390, version 1 (SYSV), statically linked, BuildID[sha1]=157889323b14847045ed29074d3e11924cf5c183, for GNU/Linux 5.4.0, stripped
+./masscan/masscan_linux_x86_64_gcc:         ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=80a7440c7b178f9cd2d225303d19d4df818f5c41, for GNU/Linux 3.2.0, stripped
+./masscan/masscan_linux_x86_gcc:            ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, BuildID[sha1]=669fbcafbf5d310325b48a43fc6f914c51df9e4e, for GNU/Linux 3.2.0, stripped
 
 --> SHA256SUM
 $ sha256sum ./masscan/masscan_linux_arm64_aarch64_gcc ./masscan/masscan_linux_arm64_aarch64_musl ./masscan/masscan_linux_s390x_gcc ./masscan/masscan_linux_x86_64_gcc ./masscan/masscan_linux_x86_gcc
-fe597441ffa75f10e1dca0e13adf3cacfdbbed74f2118eac6e519db943220e3c  ./masscan/masscan_linux_arm64_aarch64_gcc
-97bee6b95ef3d496f1942d03872f0861ed702de4fab6f5cfb85513ef145b1720  ./masscan/masscan_linux_arm64_aarch64_musl
-994df59fee988d91251ae8fb9a53cd0a2bf2e06f11a50e5ba778fcfe73860833  ./masscan/masscan_linux_s390x_gcc
-7c45f19b103ecc6bf135b54b90e5a50d42a6744ed456fa0cd9e04983d5bef2ae  ./masscan/masscan_linux_x86_64_gcc
-41a2bbf7960cd3258aebc9e279a13dd406c7a51968fa26fc547ae8fdf7a87a43  ./masscan/masscan_linux_x86_gcc
+009ef5f236a75b8d923119b3572447ffd689eea742eb0adb0886a1a8f0398ad8  ./masscan/masscan_linux_arm64_aarch64_gcc
+51d9a66671768a9772e5fa7fda92cf8a952792d1246d71f7c796d01a3deacc01  ./masscan/masscan_linux_arm64_aarch64_musl
+68acce53779df00b958c6baf360566b7d496fc2e681c00d07639c6dc6db6be4b  ./masscan/masscan_linux_s390x_gcc
+032bd7736016b6c55caeec934faf8634b55fd05398192379ee0403471f830818  ./masscan/masscan_linux_x86_64_gcc
+11fecfda144768ea6dafb3465c827c99d68eb60f136a7c83c4cae9a34a3223d0  ./masscan/masscan_linux_x86_gcc
 ```
 
 
