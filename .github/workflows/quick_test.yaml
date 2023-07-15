@@ -1,4 +1,4 @@
-name: Build Massdns Binaries
+name: Quick Build Tests
 
 on:
   workflow_dispatch:
