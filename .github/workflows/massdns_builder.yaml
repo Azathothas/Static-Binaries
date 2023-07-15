@@ -114,7 +114,7 @@ jobs:
            echo -e "" >> ./massdns/README.md
            echo -e "--> SHA256SUM" >> ./massdns/README.md
            /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
-           echo -e '```\n' >> ./massdnsREADME.md
+           echo -e '```\n' >> ./massdns/README.md
            echo -e "" >> ./massdns/README.md
            echo '---' >> ./massdns/README.md
         working-directory: main
