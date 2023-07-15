@@ -1,4 +1,4 @@
-name: Build Static Bins
+name: Build Massscan
 
 on:
   workflow_dispatch:
@@ -30,22 +30,22 @@ jobs:
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/massscan"
      
-      - name: Build --> linux-arm64-aarch64-GCC        
+      - name: Build --> linux-arm64-aarch64-gcc       
         run: |
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
      
-      - name: Build --> linux-arm64-aarch64-MUSL   
+      - name: Build --> linux-arm64-aarch64-musl  
         run: | 
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
      
-      - name: Build --> linux-x86-GCC  
+      - name: Build --> linux-x86-gcc 
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
      
-      - name: Build --> linux-x86-64-GCC  
+      - name: Build --> linux-x86-64-gcc 
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_64_gcc"    
