@@ -81,8 +81,8 @@ jobs:
           docker run --privileged -v $(pwd):/work dockcross/windows-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_arm64"
      
-       - name: Update README.md
-         run: |     
+      - name: Update README.md
+        run: |     
            echo '```console' >> README.md
            /bin/bash -c 'PS4="$ "; set -x; file massdns-*' &>> README.md
            echo -e"\n--> SHA256SUM\n" >> README.md
