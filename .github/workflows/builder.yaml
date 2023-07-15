@@ -25,6 +25,8 @@ jobs:
         run: |
           # git clone
           git clone https://github.com/robertdavidgraham/masscan 
+          # Mark Safe
+          git config --global --add safe.directory /work/masscan
           # Add static flag
           sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"
           # Create Output Dir
@@ -35,10 +37,10 @@ jobs:
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
      
-      - name: Build --> linux-arm64-aarch64-musl  
-        run: | 
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
+     # - name: Build --> linux-arm64-aarch64-musl  
+     #   run: | 
+     #     docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+     #     mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
      
       - name: Build --> linux-x86-gcc 
         run: |           
