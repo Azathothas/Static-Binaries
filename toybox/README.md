@@ -1,6 +1,6 @@
 
 ---
-- #### Download Toybox
+- #### Download Toybox `v0.8.9` (Jan 11, 2023)
 > - This is just a mirror of : http://landley.net/toybox/bin/
 > - Nothing is rebuild/re-compiled
 
