@@ -50,7 +50,7 @@ jobs:
           set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4"
           set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_x86_64"
          #Change Perms
-          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_*
+          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_* ; set +x
         #continue-on-error: true
         
         
