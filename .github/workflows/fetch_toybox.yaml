@@ -82,5 +82,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Fetch @latest ToyBox Bins
+          commit_message: Fetch latest ToyBox Bins
           #push_options: '--force'
