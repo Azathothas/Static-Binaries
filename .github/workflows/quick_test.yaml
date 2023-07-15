@@ -1,0 +1,69 @@
+name: Build Massdns Binaries
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+   
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget \n"
+      
+      - name: Setup Env
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/massdns"
+     
+      - name: Build --> windows-static-x64       
+        run: |
+          # git clone
+          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
+          # Mark Safe
+          git config --global --add safe.directory $(pwd)
+          # Add static flag
+          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
+          # Build
+          docker run --privileged -v $(pwd):/work dockcross/windows-static-x64 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make nolinux -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
+          # Move Bin
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_windows_x64_aarch64_gcc"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1
+        continue-on-error: true
+        
+        
+      - name: Update README.md
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./massdns/INFO.md > ./massdns/README.md
+           echo -e "" >> ./massdns/README.md 
+           echo '---' >> ./massdns/README.md
+           echo '```console' >> ./massdns/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./massdns/massdns_*' &>> ./massdns/README.md
+           echo -e "" >> ./massdns/README.md
+           echo -e "--> SHA256SUM" >> ./massdns/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
+           echo -e '```\n' >> ./massdnsREADME.md
+           echo -e "" >> ./massdns/README.md
+           echo '---' >> ./massdns/README.md
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: Cross-Compile MassDNS Binaries 
+          #push_options: '--force'
