@@ -32,56 +32,66 @@ jobs:
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/massscan"
      
-     # - name: Build --> linux-arm64-aarch64-gcc       
-     #   run: |
-     #     docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
-     #     mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
-     
-     # - name: Build --> linux-arm64-aarch64-musl  
-     #   run: | 
-     #     docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
-     #     mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
-     
-     # - name: Build --> linux-x86-gcc 
-     #   run: |           
-     #     docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
-     #     mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
-     
+      - name: Build --> linux-arm64-aarch64-gcc       
+        run: |
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
+        continue-on-error: true
+        
+      - name: Build --> linux-arm64-aarch64-musl  
+        run: | 
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
+        continue-on-error: true
+        
+      - name: Build --> linux-x86-gcc 
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
+        continue-on-error: true
+        
       - name: Build --> linux-x86-64-gcc 
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_64_gcc"    
-      
+        continue-on-error: true
+        
       - name: Build --> linux-s390x-gcc
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_s390x_gcc" 
-     
+        continue-on-error: true
+        
       - name: Build --> windows-static-x86
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x86" 
-    
+        continue-on-error: true
+        
       - name: Build --> windows-static-x64
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64" 
-     
+        continue-on-error: true
+        
       - name: Build --> windows-static-x64-posix
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x64-posix bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64_posix" 
-     
+        continue-on-error: true
+        
       - name: Build --> windows-armv7
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/windows-armv7 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_armv7" 
-     
+        continue-on-error: true
+        
       - name: Build --> windows-arm64
         run: |           
           docker run --privileged -v $(pwd):/work dockcross/windows-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_arm64"
-     
+        continue-on-error: true
+        
       - name: Update README.md
         run: |     
            echo '```console' >> README.md
