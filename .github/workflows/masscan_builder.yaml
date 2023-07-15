@@ -1,4 +1,4 @@
-name: Build Massscan
+name: Build Masscan Binaries
 
 on:
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)
           # Add static flag
-          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -s -static/' "./masscan/Makefile"
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           # Move Bin
@@ -49,7 +49,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)
           # Add static flag
-          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -s -static/' "./masscan/Makefile"
           # Build        
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_arm64_aarch64_musl"  
@@ -62,7 +62,7 @@ jobs:
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
           # Add static flag
-          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -s -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_gcc"    
           # Remove tmp files
@@ -74,7 +74,7 @@ jobs:
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
           # Add static flag
-          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -s -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_64_gcc"    
           # Remove tmp files
@@ -86,7 +86,7 @@ jobs:
           # git clone
           cd $(mktemp -d) && git clone https://github.com/robertdavidgraham/masscan 
           # Add static flag
-          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"      
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -s -static/' "./masscan/Makefile"      
           docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "git config --global --add safe.directory /work/masscan ; cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_s390x_gcc" 
           # Remove tmp files
