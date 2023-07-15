@@ -1,0 +1,89 @@
+name: Build Static Bins
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends build-essential ca-certificates pkg-config bison flex wget \n"
+      - name: Setup Env
+        run: |
+          # git clone
+          git clone https://github.com/robertdavidgraham/masscan 
+          # Add static flag
+          sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/massscan"
+      - name: Build --> linux-arm64-aarch64-GCC        
+        run: |
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
+      - name: Build --> linux-arm64-aarch64-MUSL   
+        run: | 
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"    
+      - name: Build --> linux-x86-GCC  
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
+      - name: Build --> linux-x86-64-GCC  
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_64_gcc"    
+      - name: Build --> linux-s390x-gcc
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_s390x_gcc" 
+      - name: Build --> windows-static-x86
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x86" 
+      - name: Build --> windows-static-x64
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64" 
+      - name: Build --> windows-static-x64-posix
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/windows-static-x64-posix bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64_posix" 
+      - name: Build --> windows-armv7
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/windows-armv7 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_armv7" 
+      - name: Build --> windows-arm64
+        run: |           
+          docker run --privileged -v $(pwd):/work dockcross/windows-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1))"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_arm64"
+       - name: Update README.md
+         run: |     
+          echo '```console' >> README.md
+          /bin/bash -c 'PS4="$ "; set -x; file massdns-*' &>> README.md
+          echo -e"\n--> SHA256SUM\n" >> README.md
+          /bin/bash -c 'PS4="$ "; set -x; sha256sum massdns-*' &>> README.md          
+          echo -e '```\n' >> README.md
+          echo -e "" >> README.md
+          echo '---' >> README.md
+          echo '- #### Bundled Commands' >> README.md
+          echo '```console' >> README.md
+          chmod +xwr masscan_linux_arm64_aarch64_gcc
+          /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./masscan_linux_arm64_aarch64_gcc' &>> README.md
+          echo '```' >> README.md
+          echo '---' >> README.md
+          echo -e "" >> README.md          
+          rm README.md.old         
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main
