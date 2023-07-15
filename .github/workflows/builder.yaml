@@ -154,7 +154,8 @@ jobs:
         continue-on-error: true
         
       - name: Update README.md
-        run: |     
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
            echo '```console' >> README.md
            /bin/bash -c 'PS4="$ "; set -x; file massdns-*' &>> README.md
            echo -e"\n--> SHA256SUM\n" >> README.md
