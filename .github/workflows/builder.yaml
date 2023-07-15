@@ -24,7 +24,7 @@ jobs:
       - name: Setup Env
         run: |
           # Create Output Dir
-          mkdir -p "$GITHUB_WORKSPACE/main/massscan"
+          mkdir -p "$GITHUB_WORKSPACE/main/masscan"
      
       - name: Build --> linux-arm64-aarch64-gcc       
         run: |
@@ -37,7 +37,7 @@ jobs:
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
           # Move Bin
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_gcc"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_arm64_aarch64_gcc"
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1
         continue-on-error: true
@@ -52,7 +52,7 @@ jobs:
           sed -i 's/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2/CFLAGS = -g -ggdb $(FLAGS2) $(INCLUDES) $(DEFINES) -Wall -O2 -static/' "./masscan/Makefile"
           # Build        
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_arm64_aarch64_musl"  
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_arm64_aarch64_musl"  
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1          
         continue-on-error: true
@@ -64,7 +64,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_gcc"    
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1          
         continue-on-error: true
@@ -76,7 +76,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_64_gcc"    
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_x86_64_gcc"    
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
@@ -88,7 +88,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_s390x_gcc" 
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_linux_s390x_gcc" 
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1           
         continue-on-error: true
@@ -100,7 +100,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x86" 
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_windows_static_x86" 
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1          
         continue-on-error: true
@@ -112,7 +112,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x86 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_windows_static_x64"
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1            
         continue-on-error: true
@@ -124,7 +124,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/windows-static-x64-posix bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_static_x64_posix" 
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_windows_static_x64_posix" 
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1           
         continue-on-error: true
@@ -136,7 +136,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/windows-armv7 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_armv7" 
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_windows_armv7" 
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1            
         continue-on-error: true
@@ -148,7 +148,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)        
           docker run --privileged -v $(pwd):/work dockcross/windows-arm64 bash -c "cd ./masscan && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/masscan && ./bin/masscan --help ; echo"
-          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_windows_arm64"
+          mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/masscan/masscan_windows_arm64"
           # Remove tmp files
           rm -rf /tmp >/dev/null 2>&1           
         continue-on-error: true
@@ -157,16 +157,16 @@ jobs:
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            echo '```console' >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./massscan/massdns-*' &>> README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./masscan/massdns-*' &>> README.md
            echo -e"\n--> SHA256SUM\n" >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massscan/massdns-*' &>> README.md          
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./masscan/massdns-*' &>> README.md     
            echo -e '```\n' >> README.md
            echo -e "" >> README.md
            echo '---' >> README.md
            echo '- #### Bundled Commands' >> README.md
            echo '```console' >> README.md
-           chmod +xwr ./massscan/masscan_linux_arm64_aarch64_gcc
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./massscan/masscan_linux_arm64_aarch64_gcc' &>> README.md
+           chmod +xwr ./masscan/masscan_linux_arm64_aarch64_gcc
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./masscan/masscan_linux_arm64_aarch64_gcc' &>> README.md
            echo '```' >> README.md
            echo '---' >> README.md
            echo -e "" >> README.md    
