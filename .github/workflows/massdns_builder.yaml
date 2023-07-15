@@ -37,10 +37,10 @@ jobs:
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
           # Move Bin
-          mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_gcc"
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_gcc"
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1
-        #continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-arm64-aarch64-musl  
         run: | 
@@ -52,10 +52,10 @@ jobs:
           sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
           # Build       
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_musl"  
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_musl"  
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1          
-        #continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-x86-gcc 
         run: |
@@ -67,10 +67,10 @@ jobs:
           sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_gcc"    
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_gcc"    
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1          
-        #continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-x86-64-gcc 
         run: | 
@@ -82,10 +82,10 @@ jobs:
           sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_64_gcc"    
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_64_gcc"    
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1        
-        #continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-s390x-gcc
         run: |  
@@ -97,10 +97,10 @@ jobs:
           sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_s390x_gcc" 
+          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_s390x_gcc" 
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1           
-        #continue-on-error: true
+        continue-on-error: true
         
       - name: Update README.md
         run: |  
