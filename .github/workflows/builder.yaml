@@ -67,7 +67,7 @@ jobs:
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_gcc"    
           # Remove tmp files
           rm -rf /tmp          
-       continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-x86-64-gcc 
         run: | 
@@ -79,7 +79,7 @@ jobs:
           mv ./masscan/bin/masscan "$GITHUB_WORKSPACE/main/massscan/masscan_linux_x86_64_gcc"    
           # Remove tmp files
           rm -rf /tmp         
-       continue-on-error: true
+        continue-on-error: true
         
       - name: Build --> linux-s390x-gcc
         run: |  
