@@ -15,7 +15,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main
-      
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget \n"      
+          
       - name: Setup ENV
         run: |
           # Create Output Dir
@@ -53,17 +57,23 @@ jobs:
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           cat ./massdns/INFO.md > ./massdns/README.md
-           echo -e "" >> ./massdns/README.md 
-           echo '---' >> ./massdns/README.md
-           echo '```console' >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./massdns/massdns_*' &>> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
-           echo -e "--> SHA256SUM" >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
-           echo -e '```\n' >> ./massdnsREADME.md
-           echo -e "" >> ./massdns/README.md
-           echo '---' >> ./massdns/README.md
+           cat ./toybox/INFO.md > ./toybox/README.md
+           echo -e "" >> ./toybox/README.md 
+           echo '---' >> ./toybox/README.md
+           echo '```console' >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./toybox/toybox_*' &>> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo -e "--> SHA256SUM" >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./toybox/toybox_*' &>> ./toybox/README.md   
+           echo -e '```\n' >> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo '---' >> ./toybox/README.md
+           echo '- #### Bundled Commands' >> ./toybox/README.md
+           echo '```console' >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./toybox/toybox_arm64_aarch64' &>> ./toybox/README.md
+           echo '```' >> ./toybox/README.md
+           echo '---' >> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md                    
         working-directory: main
         continue-on-error: true
         
