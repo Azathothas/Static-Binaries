@@ -31,26 +31,26 @@ jobs:
         run: |
          #Download
           curl -qfsSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox_arm64_aarch64"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox_armv4l"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox_armv5l"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox_armv7l"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox_armv7m"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox_i486"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox_i686"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox_m68k"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox_microblaze"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox_mips"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox_mips64"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox_mipsel"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox_powerpc"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64le"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox_s390x"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox_sh2eb"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox_sh4"
-          curl -qfsSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox_x86_64"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox_armv4l"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox_armv5l"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox_armv7l"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox_armv7m"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox_i486"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox_i686"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox_m68k"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox_microblaze"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox_mips"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox_mips64"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox_mipsel"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox_powerpc"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64le"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox_s390x"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox_sh2eb"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox_sh4"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox_x86_64"
          #Change Perms
-          sudo chmod +xwr ./toybox/*
+          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_*
         #continue-on-error: true
         
         
