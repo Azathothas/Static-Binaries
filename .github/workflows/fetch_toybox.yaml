@@ -1,0 +1,76 @@
+name: Fetch Toybox Binaries
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+      
+      - name: Setup ENV
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/toybox"
+     
+     #@latest: http://landley.net/toybox/downloads/binaries/latest/
+     #@latest: http://landley.net/toybox/bin/
+      - name: Download @Latest Releases    
+        run: |
+         #Download
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox_arm64_aarch64"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox_armv4l"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox_armv5l"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox_armv7l"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox_armv7m"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox_i486"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox_i686"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox_m68k"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox_microblaze"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox_mips"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox_mips64"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox_mipsel"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox_powerpc"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox_powerpc64le"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox_s390x"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox_sh2eb"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox_sh4"
+          curl -qfsSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox_x86_64"
+         #Change Perms
+          sudo chmod +xwr ./main/toybox/*
+        #continue-on-error: true
+        
+        
+      - name: Update README.md
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./massdns/INFO.md > ./massdns/README.md
+           echo -e "" >> ./massdns/README.md 
+           echo '---' >> ./massdns/README.md
+           echo '```console' >> ./massdns/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./massdns/massdns_*' &>> ./massdns/README.md
+           echo -e "" >> ./massdns/README.md
+           echo -e "--> SHA256SUM" >> ./massdns/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
+           echo -e '```\n' >> ./massdnsREADME.md
+           echo -e "" >> ./massdns/README.md
+           echo '---' >> ./massdns/README.md
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: Cross-Compile MassDNS Binaries 
+          #push_options: '--force'
