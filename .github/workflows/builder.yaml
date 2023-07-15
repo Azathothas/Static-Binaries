@@ -157,16 +157,16 @@ jobs:
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            echo '```console' >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; file massdns-*' &>> README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./massscan/massdns-*' &>> README.md
            echo -e"\n--> SHA256SUM\n" >> README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum massdns-*' &>> README.md          
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massscan/massdns-*' &>> README.md          
            echo -e '```\n' >> README.md
            echo -e "" >> README.md
            echo '---' >> README.md
            echo '- #### Bundled Commands' >> README.md
            echo '```console' >> README.md
-           chmod +xwr masscan_linux_arm64_aarch64_gcc
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./masscan_linux_arm64_aarch64_gcc' &>> README.md
+           chmod +xwr ./massscan/masscan_linux_arm64_aarch64_gcc
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./massscan/masscan_linux_arm64_aarch64_gcc' &>> README.md
            echo '```' >> README.md
            echo '---' >> README.md
            echo -e "" >> README.md    
