@@ -56,21 +56,22 @@ jobs:
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1          
         continue-on-error: true
-        
-      - name: Build --> linux-x86-gcc 
-        run: |
-          # git clone
-          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Add static flag
-          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
-          # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_gcc"    
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1          
-        continue-on-error: true
+   
+   #Compiling for 32bit fails
+   #   - name: Build --> linux-x86-gcc 
+   #     run: |
+   #       # git clone
+   #       cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
+   #       # Mark Safe
+   #       git config --global --add safe.directory $(pwd)
+   #      # Add static flag
+   #       sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
+    #      # Build
+    #      docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
+    #      sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_gcc"    
+    #      # Remove tmp files
+    #      #rm -rf /tmp >/dev/null 2>&1          
+    #    continue-on-error: true
         
       - name: Build --> linux-x86-64-gcc 
         run: | 
