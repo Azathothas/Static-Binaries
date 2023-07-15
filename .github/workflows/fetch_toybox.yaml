@@ -50,7 +50,7 @@ jobs:
           curl -qfsSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox_sh4"
           curl -qfsSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox_x86_64"
          #Change Perms
-          sudo chmod +xwr ./main/toybox/*
+          sudo chmod +xwr ./toybox/*
         #continue-on-error: true
         
         
