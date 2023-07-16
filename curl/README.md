@@ -33,3 +33,4 @@ acff6102d02e9996f6982114f3618de80d4887ee7d423f5961d2238466df185b  ./curl/curl_wi
 - #### Version
 ```console
 $ qemu-aarch64-static ./curl/curl_aarch64_arm64
+curl: try 'curl --help' for more information
