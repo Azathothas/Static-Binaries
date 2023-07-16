@@ -22,17 +22,41 @@
  uname -m || dpkg --print-architecture
 
 !# Index (ARCH || ALT_ARCH) 
---> linux_arm64_aarch64_gcc || arm64 [64-bit] (GNU/Linux)
---> linux_arm64_aarch64_musl || arm64 [64-bit] (GNU/Linux)
---> linux_s390x_gcc || IBM S/390 [64-bit] (GNU/Linux)
---> linux_x86_gcc || x86 [32-bit] (GNU/Linux)
---> linux_x86_64_gcc || x86_64 [64-bit] (GNU/Linux)
+!# For Android
+--> curl_armhf_arm32_Android
+--> curl_arm32_Android             
+--> curl_arm64_Android     
+--> curl_mips_Android               
+--> curl_mipsel_Android  
+--> curl_x86_Android  
+--> curl_x86_64_Android            
+--> curl_x64_Android               
+!# DOS
+--> curl_DOS
+--> curl_lite_DOS                  
+--> curl_tiny_DOS  
+!#For Linux
+--> curl_aarch64_arm64_Linux       
+--> curl_aarch64_arm64_http3_Linux 
+--> curl_amd64_x86_64_Linux       
+--> curl_amd64_x86_64_http3_Linux  
+--> curl_armhf_Linux               
+--> curl_armv7_Linux               
+--> curl_i386_Linux                    
+--> curl_or1k_OpenRISC_Linux       
+--> curl_ppc64le_powerpc64le_Linux
+--> curl_riscv64_Linux             
+!# For Windows
+--> curl_amd_x86_Windows.exe    
+--> curl_amd_x86_64_Windows.exe    
+--> curl_arm_x64_Windows.exe  
 
 !# Export
 export CURL_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 
 !# Download
- curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/masscan/masscan_$MASSCAN_ARCH"
+ curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/$CURL_ARCH"
+
 ```
 ---
 - #### Install Curl
