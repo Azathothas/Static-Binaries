@@ -44,7 +44,7 @@ jobs:
           set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_amd_x86_64.exe"
           set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_arm_x64.exe" 
          #Change Perms
-          && sudo chmod +xwr $GITHUB_WORKSPACE/main/curl/curl_* ; set +x
+          sudo chmod +xwr $GITHUB_WORKSPACE/main/curl/curl_* ; set +x
         continue-on-error: true
         
         
