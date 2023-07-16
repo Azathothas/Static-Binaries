@@ -31,6 +31,7 @@ export MASSCAN_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 - #### Install Masscan
 ```bash
 !# Copy downloaded Masscan binary to /usr/bin || /usr/local/bin
+!# Or for $HOME
  mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
 
 !# Move Downloaded Busybox binary to that DIR
