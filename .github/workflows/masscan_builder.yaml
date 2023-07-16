@@ -2,6 +2,8 @@ name: Build Masscan Binaries
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 20 * * 6"  # 08:00 PM UTC Every Saturday --> 01:45 AM Nepal Time Every Sunday
   
 jobs:
   build:
