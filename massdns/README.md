@@ -10,8 +10,20 @@
 > >    - There is much work to be done before dockcross can compile for Windows
 > > ```
 ```bash
-!# Get CPU Arch:
+!# Get CPU Arch (Android)
+[ADB]
+adb shell getprop ro.product.cpu.abi
+[Termux]
+getprop ro.product.cpu.abi
+
+!# Get CPU Arch (Linux)
  uname -m || dpkg --print-architecture
+
+!# Get CPU Arch (Windows)
+[cmd prompt]
+echo %PROCESSOR_ARCHITECTURE%
+[Powershell]
+$env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH) 
 --> linux_arm64_aarch64_gcc || arm64 [64-bit] (GNU/Linux)
@@ -74,5 +86,7 @@ $ sha256sum ./massdns/massdns_linux_arm64_aarch64_gcc ./massdns/massdns_linux_ar
 98766f958c91b3c0f3df951ed9d820d7ddc5ea07df553ea8d12e38a3a6be9b34  ./massdns/massdns_linux_arm64_aarch64_musl
 cdb5186718434cef14ddc69dbc8187e53591dc8ae94f9f0dfc334293c1004e7e  ./massdns/massdns_linux_s390x_gcc
 4a7954a675919fc435775ab530797a227bdd2450625b9ab391d604228092ad56  ./massdns/massdns_linux_x86_64_gcc
+```
+
 
 ---
