@@ -1,8 +1,8 @@
 
 ---
-- #### Download Toybox `v0.8.9` (Jan 11, 2023)
+- #### Download Toybox
 > - This is just a mirror of : http://landley.net/toybox/bin/
-> - Nothing is rebuild/re-compiled
+> - Nothing is rebuilt/re-compiled
 
 ```bash
 !# Get CPU Arch:
@@ -34,6 +34,7 @@ export TOYBOX_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 
 !# Download
  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_$TOYBOX_ARCH"
+ wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_$TOYBOX_ARCH" 
 ```
 ---
 - #### Install Toybox
