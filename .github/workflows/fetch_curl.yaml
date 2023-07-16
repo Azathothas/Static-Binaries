@@ -40,32 +40,34 @@ jobs:
           set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-i386" -o "$GITHUB_WORKSPACE/main/curl/curl_i386"
           set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-ppc64le" -o "$GITHUB_WORKSPACE/main/curl/curl_ppc64le_powerpc64le"
          #Windows 
-          set -x; curl -qflSLO "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" && 
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_amd_x86.exe"
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_amd_x86_64.exe"
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_arm_x64.exe" 
          #Change Perms
-          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_* ; set +x
-        #continue-on-error: true
+          && sudo chmod +xwr $GITHUB_WORKSPACE/main/curl/curl_* ; set +x
+        continue-on-error: true
         
         
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           cat ./toybox/INFO.md > ./toybox/README.md
-           echo -e "" >> ./toybox/README.md 
-           echo '---' >> ./toybox/README.md
-           echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./toybox/toybox_*' &>> ./toybox/README.md
-           echo -e "" >> ./toybox/README.md
-           echo -e "--> SHA256SUM" >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./toybox/toybox_*' &>> ./toybox/README.md   
-           echo -e '```\n' >> ./toybox/README.md
-           echo -e "" >> ./toybox/README.md
-           echo '---' >> ./toybox/README.md
-           echo '- #### Bundled Commands' >> ./toybox/README.md
-           echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./toybox/toybox_arm64_aarch64' &>> ./toybox/README.md
-           echo '```' >> ./toybox/README.md
-           echo '---' >> ./toybox/README.md
-           echo -e "" >> ./toybox/README.md                    
+           cat ./curl/INFO.md > ./curl/README.md
+           echo -e "" >> ./curl/README.md 
+           echo '---' >> ./curl/README.md
+           echo '```console' >> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./curl/curl_*' &>> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo -e "--> SHA256SUM" >> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./curl/curl_*' &>> ./curl/README.md   
+           echo -e '```\n' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo '---' >> ./curl/README.md
+           echo '- #### Version' >> ./curl/README.md
+           echo '```console' >> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./curl/curl_aarch64_arm64' &>> ./curl/README.md
+           echo '```' >> ./curl/README.md
+           echo '---' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md                    
         working-directory: main
         continue-on-error: true
         
@@ -74,5 +76,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Fetch latest ToyBox Bins
+          commit_message: Fetch latest Curl Bins
           #push_options: '--force'
