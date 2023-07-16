@@ -2,6 +2,8 @@ name: Build Massdns Binaries
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 21 * * 6"  # 09:00 PM UTC Every Saturday --> 02:45 AM Nepal Time Every Sunday
   
 jobs:
   build:
