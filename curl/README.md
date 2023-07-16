@@ -1,10 +1,56 @@
+
 ---
-curl test
+- #### Download Curl
+> - Nothing is rebuilt/re-compiled
+> - This is just a mirror, with the following sources
+> > ```bash
+> > --> Android:
+> >      - https://github.com/bol-van/bins
+> >      - https://github.com/Zackptg5/Cross-Compiled-Binaries-Android
+> > --> DOS:
+> >      - http://mik.dyndns.pro/dos-stuff/bin
+> > --> Linux:
+> >      - https://github.com/moparisthebest/static-curl/releases/latest
+> >      - https://github.com/stunnel/static-curl/releases
+> >      - https://github.com/ryanwoodsmall/static-binaries
+> > --> Windows:
+> >      - https://curl.se/windows
+> > ```
+> > 
+```bash
+!# Get CPU Arch:
+ uname -m || dpkg --print-architecture
+
+!# Index (ARCH || ALT_ARCH) 
+--> linux_arm64_aarch64_gcc || arm64 [64-bit] (GNU/Linux)
+--> linux_arm64_aarch64_musl || arm64 [64-bit] (GNU/Linux)
+--> linux_s390x_gcc || IBM S/390 [64-bit] (GNU/Linux)
+--> linux_x86_gcc || x86 [32-bit] (GNU/Linux)
+--> linux_x86_64_gcc || x86_64 [64-bit] (GNU/Linux)
+
+!# Export
+export CURL_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
+
+!# Download
+ curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/masscan/masscan_$MASSCAN_ARCH"
+```
 ---
+- #### Install Curl
+```bash
+!# Copy downloaded curl binary to /usr/bin || /usr/local/bin
+!# For $HOME/bin
+ mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
+
+!# Move Downloaded Busybox binary to that DIR
+ mv "$Path_To_curl_Binary" "/usr/bin/curl"
+
+!# Give Writeable Perms
+ chmod +xwr "/usr/bin/curl"
+```
 
 ---
 ```console
-$ file ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64_http3_Linux ./curl/curl_amd64_x86_64_Linux ./curl/curl_amd64_x86_64_http3_Linux ./curl/curl_amd_x86_64_Windows.exe ./curl/curl_amd_x86_Windows.exe ./curl/curl_arm32_Android ./curl/curl_arm64_Android ./curl/curl_arm_x64_Windows.exe ./curl/curl_armhf_Linux ./curl/curl_armhf_arm32_Android ./curl/curl_armv7_Linux ./curl/curl_i386_Linux ./curl/curl_lite_DOS ./curl/curl_mips_Android ./curl/curl_mipsel_Android ./curl/curl_or1k_OpenRISC_Linux ./curl/curl_ppc64le_powerpc64le_Linux ./curl/curl_riscv64_Linux ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe ./curl/curl_x64_Android ./curl/curl_x86_64_Android ./curl/curl_x86_Android
+$ file ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64_http3_Linux ./curl/curl_amd64_x86_64_Linux ./curl/curl_amd64_x86_64_http3_Linux ./curl/curl_amd_x86_64_Windows.exe ./curl/curl_amd_x86_Windows.exe ./curl/curl_arm32_Android ./curl/curl_arm64_Android ./curl/curl_arm_x64_Windows.exe ./curl/curl_armhf_Linux ./curl/curl_armhf_arm32_Android ./curl/curl_armv7_Linux ./curl/curl_i386_Linux ./curl/curl_lite_DOS ./curl/curl_mips_Android ./curl/curl_mipsel_Android ./curl/curl_or1k_OpenRISC_Linux ./curl/curl_ppc64le_powerpc64le_Linux ./curl/curl_riscv64_Linux ./curl/curl_tiny_DOS ./curl/curl_x64_Android ./curl/curl_x86_64_Android ./curl/curl_x86_Android
 ./curl/curl_DOS:                       MS-DOS executable, COFF for MS-DOS, DJGPP go32 DOS extender, UPX compressed
 ./curl/curl_aarch64_arm64_Linux:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
 ./curl/curl_aarch64_arm64_http3_Linux: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
@@ -26,15 +72,12 @@ $ file ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64
 ./curl/curl_ppc64le_powerpc64le_Linux: ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), statically linked, stripped
 ./curl/curl_riscv64_Linux:             ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, stripped
 ./curl/curl_tiny_DOS:                  MS-DOS executable, COFF for MS-DOS, DJGPP go32 DOS extender, UPX compressed
-./curl/curl_windows_amd_x86.exe:       PE32 executable (console) Intel 80386, for MS Windows
-./curl/curl_windows_amd_x86_64.exe:    PE32+ executable (console) x86-64, for MS Windows
-./curl/curl_windows_arm_x64.exe:       PE32+ executable (console) Aarch64, for MS Windows
 ./curl/curl_x64_Android:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./curl/curl_x86_64_Android:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./curl/curl_x86_Android:               ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, stripped
 
 --> SHA256SUM
-$ sha256sum ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64_http3_Linux ./curl/curl_amd64_x86_64_Linux ./curl/curl_amd64_x86_64_http3_Linux ./curl/curl_amd_x86_64_Windows.exe ./curl/curl_amd_x86_Windows.exe ./curl/curl_arm32_Android ./curl/curl_arm64_Android ./curl/curl_arm_x64_Windows.exe ./curl/curl_armhf_Linux ./curl/curl_armhf_arm32_Android ./curl/curl_armv7_Linux ./curl/curl_i386_Linux ./curl/curl_lite_DOS ./curl/curl_mips_Android ./curl/curl_mipsel_Android ./curl/curl_or1k_OpenRISC_Linux ./curl/curl_ppc64le_powerpc64le_Linux ./curl/curl_riscv64_Linux ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe ./curl/curl_x64_Android ./curl/curl_x86_64_Android ./curl/curl_x86_Android
+$ sha256sum ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64_http3_Linux ./curl/curl_amd64_x86_64_Linux ./curl/curl_amd64_x86_64_http3_Linux ./curl/curl_amd_x86_64_Windows.exe ./curl/curl_amd_x86_Windows.exe ./curl/curl_arm32_Android ./curl/curl_arm64_Android ./curl/curl_arm_x64_Windows.exe ./curl/curl_armhf_Linux ./curl/curl_armhf_arm32_Android ./curl/curl_armv7_Linux ./curl/curl_i386_Linux ./curl/curl_lite_DOS ./curl/curl_mips_Android ./curl/curl_mipsel_Android ./curl/curl_or1k_OpenRISC_Linux ./curl/curl_ppc64le_powerpc64le_Linux ./curl/curl_riscv64_Linux ./curl/curl_tiny_DOS ./curl/curl_x64_Android ./curl/curl_x86_64_Android ./curl/curl_x86_Android
 fc6b3d39195df7af245b211c2cc9e8b22ff8624d14ca67703db1862f782defcd  ./curl/curl_DOS
 3e17d3a355cc7dc00d953d65cffbc54e07d2bebbdf5be2d0f1031240c7798d08  ./curl/curl_aarch64_arm64_Linux
 39f2c3b6d43f7450a1e64a15a93ecd65b67ab554ee4673f6675066e5a6b1c03e  ./curl/curl_aarch64_arm64_http3_Linux
@@ -56,9 +99,6 @@ b11f9155a8f3441db9f6fe471eaabdd953a9c58521f679d5789595cba76b931d  ./curl/curl_or
 65c651e8c6b00c12a67366cfdfde6e85189616b8fe3e85ca9f446c5f472b42e7  ./curl/curl_ppc64le_powerpc64le_Linux
 feec0e5ee0832cce1e83d22c2db818451654c7b5ccda2fcba1e9673613c04241  ./curl/curl_riscv64_Linux
 7704aa5287a62d0758e6c0d62fbd490a7ed59a4c004bd6861e50031e7995c1b4  ./curl/curl_tiny_DOS
-8e707a23cc6aceb9dfd6bf72060ac2faf80d108a8fe9334dd83786970041ac8b  ./curl/curl_windows_amd_x86.exe
-acff6102d02e9996f6982114f3618de80d4887ee7d423f5961d2238466df185b  ./curl/curl_windows_amd_x86_64.exe
-3534e71577d5fc1024236f8edf3fc3de50819a283f8e564099add87022743f74  ./curl/curl_windows_arm_x64.exe
 1a0c608d62d59aaee32c00d1fec588ffd9f7709d12ee18541babab49cc7478b8  ./curl/curl_x64_Android
 6a126cfd5c7b5f3a8de45a634dfde47ac7b9b0f74942058b1d301873964554e8  ./curl/curl_x86_64_Android
 1480ebe150175f70c5c950f0420c1e270500f742956ce8df4aea53f1ec37c88d  ./curl/curl_x86_Android
