@@ -1,6 +1,6 @@
 
 ---
-- #### Download MassScan
+- #### Download Curl
 > - Nothing is rebuilt/re-compiled
 > - This is just a mirror, with the following sources
 > > ```bash
