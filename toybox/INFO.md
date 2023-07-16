@@ -2,7 +2,7 @@
 ---
 - #### Download Toybox
 > - This is just a mirror of : http://landley.net/toybox/bin/
-> - Nothing is rebuild/re-compiled
+> - Nothing is rebuilt/re-compiled
 
 ```bash
 !# Get CPU Arch:
