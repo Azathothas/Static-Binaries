@@ -3,7 +3,7 @@ name: Fetch Toybox Binaries
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 18 * * 6"  # Run every Saturday at 12 AM NST (UTC+5:45)
+    - cron: "0 19 * * 6"  # 7:00 PM UTC Every Saturday --> 12:45 AM Nepal Time Every Sunday
   
 jobs:
   build:
