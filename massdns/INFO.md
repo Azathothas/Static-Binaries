@@ -10,8 +10,20 @@
 > >    - There is much work to be done before dockcross can compile for Windows
 > > ```
 ```bash
-!# Get CPU Arch:
+!# Get CPU Arch (Android)
+[ADB]
+adb shell getprop ro.product.cpu.abi
+[Termux]
+getprop ro.product.cpu.abi
+
+!# Get CPU Arch (Linux)
  uname -m || dpkg --print-architecture
+
+!# Get CPU Arch (Windows)
+[cmd prompt]
+echo %PROCESSOR_ARCHITECTURE%
+[Powershell]
+$env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH) 
 --> linux_arm64_aarch64_gcc || arm64 [64-bit] (GNU/Linux)
