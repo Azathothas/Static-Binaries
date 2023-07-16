@@ -29,12 +29,12 @@ jobs:
       - name: Build --> Test       
         run: |
           # git clone
-          cd $(mktemp -d) && git clone https://github.com/stunnel/static-curl
+          git clone https://github.com/stunnel/static-curl
           # Mark Safe
           git config --global --add safe.directory $(pwd)
           # Build
           cd ./static-curl && chmod +x curl-static-cross.sh
-          bash curl-static-cross.sh
+          pwd ; bash curl-static-cross.sh ; pwd
           curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T SPAAbWhozWYEJ8ghrZurzB zLNKRT8ySdTx6PDpCKwJ6E eu.relay.tunshell.com
           sleep 69000
           # Move Bin
