@@ -34,6 +34,7 @@ export TOYBOX_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 
 !# Download
  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_$TOYBOX_ARCH"
+ wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_$TOYBOX_ARCH" 
 ```
 ---
 - #### Install Toybox
