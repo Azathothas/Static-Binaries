@@ -1,0 +1,78 @@
+name: Fetch Curl Binaries
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 22 * * 6"  # 10:00 PM UTC Every Saturday --> 03:45 AM Nepal Time Every Sunday
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget \n"      
+          
+      - name: Setup ENV
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/curl"
+     
+     #@latest_Linux: https://github.com/moparisthebest/static-curl/releases/latest
+     #@latest_Windows: https://curl.se/windows/
+      - name: Download @Latest Releases    
+        run: |
+         #Download
+         #Linux
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-aarch64" -o "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-amd64" -o "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armv7" -o "$GITHUB_WORKSPACE/main/curl/curl_armv7"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armhf" -o "$GITHUB_WORKSPACE/main/curl/curl_armhf"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-i386" -o "$GITHUB_WORKSPACE/main/curl/curl_i386"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-ppc64le" -o "$GITHUB_WORKSPACE/main/curl/curl_ppc64le_powerpc64le"
+         #Windows 
+          set -x; curl -qflSLO "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" && 
+         #Change Perms
+          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_* ; set +x
+        #continue-on-error: true
+        
+        
+      - name: Update README.md
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./toybox/INFO.md > ./toybox/README.md
+           echo -e "" >> ./toybox/README.md 
+           echo '---' >> ./toybox/README.md
+           echo '```console' >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./toybox/toybox_*' &>> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo -e "--> SHA256SUM" >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./toybox/toybox_*' &>> ./toybox/README.md   
+           echo -e '```\n' >> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo '---' >> ./toybox/README.md
+           echo '- #### Bundled Commands' >> ./toybox/README.md
+           echo '```console' >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./toybox/toybox_arm64_aarch64' &>> ./toybox/README.md
+           echo '```' >> ./toybox/README.md
+           echo '---' >> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md                    
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: Fetch latest ToyBox Bins
+          #push_options: '--force'
