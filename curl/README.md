@@ -4,10 +4,12 @@ curl test
 
 ---
 ```console
-$ file ./curl/curl_DOS ./curl/curl_aarch64_arm64 ./curl/curl_amd64_x86_64 ./curl/curl_armhf ./curl/curl_armv7 ./curl/curl_i386 ./curl/curl_lite_DOS ./curl/curl_ppc64le_powerpc64le ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe
+$ file ./curl/curl_DOS ./curl/curl_aarch64_arm64 ./curl/curl_aarch64_arm64_http3 ./curl/curl_amd64_x86_64 ./curl/curl_amd64_x86_64_http3 ./curl/curl_armhf ./curl/curl_armv7 ./curl/curl_i386 ./curl/curl_lite_DOS ./curl/curl_ppc64le_powerpc64le ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe
 ./curl/curl_DOS:                    MS-DOS executable, COFF for MS-DOS, DJGPP go32 DOS extender, UPX compressed
 ./curl/curl_aarch64_arm64:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./curl/curl_aarch64_arm64_http3:    ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=c7d68951968401f869e4af86a21ae652a2d04f35, stripped
 ./curl/curl_amd64_x86_64:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=cfb60fe53d998710e2f981131c5e092757ab5fdf, stripped
+./curl/curl_amd64_x86_64_http3:     ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=c7d68951968401f869e4af86a21ae652a2d04f35, stripped
 ./curl/curl_armhf:                  ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 ./curl/curl_armv7:                  ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 ./curl/curl_i386:                   ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, stripped
@@ -19,10 +21,12 @@ $ file ./curl/curl_DOS ./curl/curl_aarch64_arm64 ./curl/curl_amd64_x86_64 ./curl
 ./curl/curl_windows_arm_x64.exe:    PE32+ executable (console) Aarch64, for MS Windows
 
 --> SHA256SUM
-$ sha256sum ./curl/curl_DOS ./curl/curl_aarch64_arm64 ./curl/curl_amd64_x86_64 ./curl/curl_armhf ./curl/curl_armv7 ./curl/curl_i386 ./curl/curl_lite_DOS ./curl/curl_ppc64le_powerpc64le ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe
+$ sha256sum ./curl/curl_DOS ./curl/curl_aarch64_arm64 ./curl/curl_aarch64_arm64_http3 ./curl/curl_amd64_x86_64 ./curl/curl_amd64_x86_64_http3 ./curl/curl_armhf ./curl/curl_armv7 ./curl/curl_i386 ./curl/curl_lite_DOS ./curl/curl_ppc64le_powerpc64le ./curl/curl_tiny_DOS ./curl/curl_windows_amd_x86.exe ./curl/curl_windows_amd_x86_64.exe ./curl/curl_windows_arm_x64.exe
 fc6b3d39195df7af245b211c2cc9e8b22ff8624d14ca67703db1862f782defcd  ./curl/curl_DOS
 3e17d3a355cc7dc00d953d65cffbc54e07d2bebbdf5be2d0f1031240c7798d08  ./curl/curl_aarch64_arm64
+9290d0e99737ecf244d868ef416735676174a379bba23453265de942dcd39483  ./curl/curl_aarch64_arm64_http3
 f58feb42ebdb075aa3534c75c7f5fc5c247fb022f432b804962928e38164bc42  ./curl/curl_amd64_x86_64
+9290d0e99737ecf244d868ef416735676174a379bba23453265de942dcd39483  ./curl/curl_amd64_x86_64_http3
 e42730533f7306dcce51f280b654c50ed57cf2054295a625528ab1aece95d3fc  ./curl/curl_armhf
 e63d1fc5718fa2784bd3aa4a3c1a4307689ca53c2cdc92aea6ea2e13ea00eb92  ./curl/curl_armv7
 56328b876c1bab7376cd8429913e3346b6df7526e2c40b563e07f0d7ce6d7ba1  ./curl/curl_i386
@@ -43,6 +47,6 @@ curl 8.1.2 (aarch64-unknown-linux-musl) libcurl/8.1.2 OpenSSL/1.1.1t zlib/1.2.12
 Release-Date: 2023-05-30
 Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
 Features: alt-svc AsynchDNS HSTS HTTP2 HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP UnixSockets
-```
----
 
+$ qemu-aarch64-static ./curl/curl_aarch64_arm64_http3 -V
+qemu-aarch64-static: ./curl/curl_aarch64_arm64_http3: Invalid ELF image for this architecture
