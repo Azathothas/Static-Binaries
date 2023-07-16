@@ -21,5 +21,5 @@
 > - [Binary Tools](https://github.com/mosajjal/binary-tools) **`aarch64 (ARM)` `x64`**
 > - [Static Binaries](https://github.com/ryanwoodsmall/static-binaries) **`aarch64 (ARM)` `armhf` `i686` `or1k` `riscv64` `x86_64`**
 > - [Android Static Bins](https://github.com/bol-van/bins) **`aarch64 (ARM)` `armhf` `mips` `mipsel` `x86` `x86_64`**
-> - [Cross Compiled Android Bins](https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/tree/master/bash) **`aarch64 (ARM)` `arm64` `x86` `x86_64`** 
+> - [Cross Compiled Android Bins](https://github.com/Zackptg5/Cross-Compiled-Binaries-Android) **`aarch64 (ARM)` `arm64` `x86` `x86_64`** 
 ---
