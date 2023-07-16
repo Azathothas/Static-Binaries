@@ -32,34 +32,59 @@ jobs:
       - name: Download @Latest Releases    
         run: |
          #Download
+         #-------------------------#
+         #Android
+         #armhf
+          set -x; curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/armhf/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_armhf_arm32_Android"
+          #arm32
+          set -x; curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm32_Android"
+         #arm64
+         set -x; curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm64" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm64_Android"         
+         #mips
+          set -x; curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mips/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mips_Android"
+         #mipsel 
+          set -x; curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mipsel/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Android"
+          #x86
+          set -x; curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x86" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_Android"
+          #x86_64
+          set -x; curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/x86_64/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_64_Android"
+          #x64
+         set -x; curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x64" -o  "$GITHUB_WORKSPACE/main/curl/curl_x64_Android"
+         #-------------------------#
          #DOS
           set -x; curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curl.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_DOS"
           set -x; curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curllite.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_lite_DOS"
           set -x; curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curltiny.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_tiny_DOS"
+         #-------------------------# 
          #Linux
          #aarch64_arm64
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-aarch64" -o "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-aarch64" -o "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_Linux"
          #aarch64_arm64 HTTP3 
-          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-arm64-8.1.2.tar.xz" -o "curl_aarch64_arm64_http3.tar.xz" &&  tar -xvf "curl_aarch64_arm64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_http3"
+          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-arm64-8.1.2.tar.xz" -o "curl_aarch64_arm64_http3.tar.xz" &&  tar -xvf "curl_aarch64_arm64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_http3_Linux"
          #amd64_x86_64 
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-amd64" -o "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-amd64" -o "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64_Linux"
          #amd64_x86_64 HTTP3  
-          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-amd64-8.1.2.tar.xz" -o "curl_amd64_x86_64_http3.tar.xz" &&  tar -xvf "curl_amd64_x86_64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64_http3"      
+          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-amd64-8.1.2.tar.xz" -o "curl_amd64_x86_64_http3.tar.xz" &&  tar -xvf "curl_amd64_x86_64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64_http3_Linux"      
          #armv7 
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armv7" -o "$GITHUB_WORKSPACE/main/curl/curl_armv7"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armv7" -o "$GITHUB_WORKSPACE/main/curl/curl_armv7_Linux"
          #armhf 
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armhf" -o "$GITHUB_WORKSPACE/main/curl/curl_armhf"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-armhf" -o "$GITHUB_WORKSPACE/main/curl/curl_armhf_Linux"
          #i386 
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-i386" -o "$GITHUB_WORKSPACE/main/curl/curl_i386"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-i386" -o "$GITHUB_WORKSPACE/main/curl/curl_i386_Linux"
+         #or1k
+          set -x; curl -qflSL "https://raw.githubusercontent.com/ryanwoodsmall/static-binaries/master/or1k/curl" -o "$GITHUB_WORKSPACE/main/curl/curl_or1k_OpenRISC_Linux"
          #ppc64le 
-          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-ppc64le" -o "$GITHUB_WORKSPACE/main/curl/curl_ppc64le_powerpc64le"
+          set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-ppc64le" -o "$GITHUB_WORKSPACE/main/curl/curl_ppc64le_powerpc64le_Linux"
+         #risc64
+          set -x; curl -qflSL "https://raw.githubusercontent.com/ryanwoodsmall/static-binaries/master/riscv64/curl" -o "$GITHUB_WORKSPACE/main/curl/curl_riscv64_Linux"
+         #-------------------------# 
          #Windows 
          #Windows 32-bit
-          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_amd_x86.exe"
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_Windows.exe"
          #Windows x86_64_amd64 
-          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_amd_x86_64.exe"
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Windows.exe"
          #Windows arm64 
-          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_windows_arm_x64.exe" 
+          set -x; curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_arm_x64_Windows.exe" 
          #Change Perms
           sudo chmod +xwr $GITHUB_WORKSPACE/main/curl/curl_* ; set +x
         continue-on-error: true
