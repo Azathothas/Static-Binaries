@@ -40,7 +40,7 @@ jobs:
          #aarch64_arm64
           set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-aarch64" -o "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64"
          #aarch64_arm64 HTTP3 
-          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-amd64-8.1.2.tar.xz" -o "curl_aarch64_arm64_http3.tar.xz" &&  tar -xvf "curl_aarch64_arm64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_http3"
+          set -x; curl -qflSL "https://github.com/stunnel/static-curl/releases/download/8.1.2/curl-static-arm64-8.1.2.tar.xz" -o "curl_aarch64_arm64_http3.tar.xz" &&  tar -xvf "curl_aarch64_arm64_http3.tar.xz" && mv "./curl" "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_http3"
          #amd64_x86_64 
           set -x; curl -qflSL "https://github.com/moparisthebest/static-curl/releases/latest/download/curl-amd64" -o "$GITHUB_WORKSPACE/main/curl/curl_amd64_x86_64"
          #amd64_x86_64 HTTP3  
