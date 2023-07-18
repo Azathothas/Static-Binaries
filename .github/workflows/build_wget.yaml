@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Build || Fetch wget
+name: Build || Fetch wget Binaries
 
 on:
   workflow_dispatch:
