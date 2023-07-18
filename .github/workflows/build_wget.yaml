@@ -331,7 +331,7 @@ jobs:
            echo '---' >> ./wget/README.md
            echo '- #### Sizes' >> ./wget/README.md
            echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; cd ./wget ; ls -lh | awk '{print $5, $9}' | column -t' &>> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x;ls ./wget -lh | awk '{print $5, $9}' | column -t' &>> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '```' >> ./wget/README.md           
            echo -e "" >> ./wget/README.md             
