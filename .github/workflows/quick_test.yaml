@@ -29,7 +29,8 @@ jobs:
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           rm -rf ./wget/*.base64           
+           rm -rf "./wget/*.base64"    
+           
         working-directory: main
         continue-on-error: true
         
