@@ -64,6 +64,7 @@ jobs:
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
+          set -x; curl -qflSL "https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_WGET" -o "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Tiny_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
           cd ..
           rm -rf build
@@ -124,6 +125,7 @@ jobs:
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
+          set -x; curl -qflSL "https://www.busybox.net/downloads/binaries/1.35.0-i686-linux-musl/busybox_WGET" -o "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Tiny_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
           cd ..
           rm -rf build
@@ -327,6 +329,11 @@ jobs:
            echo -e "" >> ./wget/README.md
            echo '```' >> ./wget/README.md
            echo '---' >> ./wget/README.md
+           echo '- #### Sizes' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; cd ./wget ; ls -lh | awk '{print $5, $9}' | column -t' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '```' >> ./wget/README.md           
            echo -e "" >> ./wget/README.md             
         working-directory: main
         continue-on-error: true
