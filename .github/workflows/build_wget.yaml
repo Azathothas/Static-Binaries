@@ -76,7 +76,7 @@ jobs:
           export CROSS_COMPILE=aarch64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
           cd ..
@@ -90,7 +90,7 @@ jobs:
           export CROSS_COMPILE=arm-linux-gnueabi-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
           cd ..
@@ -104,7 +104,7 @@ jobs:
           export CROSS_COMPILE=arm-linux-gnueabihf-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
           cd ..
@@ -118,7 +118,7 @@ jobs:
           export CROSS_COMPILE=i686-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
           cd ..
@@ -132,7 +132,7 @@ jobs:
           export CROSS_COMPILE=m68k-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
           cd ..
@@ -146,7 +146,7 @@ jobs:
           export CROSS_COMPILE=mips-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
           cd ..
@@ -160,7 +160,7 @@ jobs:
           export CROSS_COMPILE=mipsel-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
           cd ..
@@ -174,7 +174,7 @@ jobs:
           export CROSS_COMPILE=mips64-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
           cd ..
@@ -188,7 +188,7 @@ jobs:
           export CROSS_COMPILE=mips64el-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
           cd ..
@@ -202,7 +202,7 @@ jobs:
           export CROSS_COMPILE=powerpc-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
           cd ..
@@ -216,7 +216,7 @@ jobs:
           export CROSS_COMPILE=powerpc64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
           cd ..
@@ -230,7 +230,7 @@ jobs:
           export CROSS_COMPILE=powerpc64le-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
           cd ..
@@ -244,7 +244,7 @@ jobs:
           export CROSS_COMPILE=riscv32-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
           cd ..
@@ -258,7 +258,7 @@ jobs:
           export CROSS_COMPILE=riscv64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
           cd ..
@@ -272,7 +272,7 @@ jobs:
           export CROSS_COMPILE=s390x-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
           cd ..
