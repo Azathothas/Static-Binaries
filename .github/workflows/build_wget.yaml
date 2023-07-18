@@ -306,7 +306,7 @@ jobs:
         continue-on-error: true
       - name: Generate '.base64' 
         run: |
-          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
         working-directory: busybox    
         continue-on-error: true
       - name: Update README.md
