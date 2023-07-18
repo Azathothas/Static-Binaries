@@ -183,7 +183,7 @@ vmstat w watch watchdog wc wget which who whoami xargs xxd yes zcat
 
 - #### Sizes
 
-```
+```console
 2.3K   INFO.md
 14K    README.md
 806K   toybox_arm64_aarch64
