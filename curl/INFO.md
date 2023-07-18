@@ -77,7 +77,7 @@ export CURL_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 !# For $HOME/bin
  mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
 
-!# Move Downloaded Busybox binary to that DIR
+!# Move Downloaded curl binary to that DIR
  mv "$Path_To_curl_Binary" "/usr/bin/curl"
 
 !# Give Writeable Perms
