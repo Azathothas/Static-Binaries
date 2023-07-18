@@ -306,7 +306,7 @@ jobs:
         continue-on-error: true
       - name: Generate '.base64' 
         run: |
-          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
         working-directory: busybox    
         continue-on-error: true
       - name: Update README.md
@@ -323,18 +323,22 @@ jobs:
            echo -e '```\n' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
            echo '- #### Flags' >> ./wget/README.md
            echo '```console' >> ./wget/README.md
            /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux' &>> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '```' >> ./wget/README.md
-           echo '---' >> ./wget/README.md
-           echo '- #### Sizes' >> ./wget/README.md
-           echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ls -lh ./wget | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '```' >> ./wget/README.md           
            echo -e "" >> ./wget/README.md             
+           echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md 
+           echo '- #### Sizes' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md 
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./wget | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '```' >> ./wget/README.md      
+           echo -e "" >> ./wget/README.md                       
         working-directory: main
         continue-on-error: true
       #https://github.com/stefanzweifel/git-auto-commit-action  
