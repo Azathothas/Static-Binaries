@@ -323,7 +323,7 @@ jobs:
            echo '---' >> ./wget/README.md
            echo '- #### Flags' >> ./wget/README.md
            echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_aarch64_arm64_Linux -V' &>> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux' &>> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '```' >> ./wget/README.md
            echo '---' >> ./wget/README.md
