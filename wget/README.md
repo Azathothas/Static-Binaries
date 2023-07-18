@@ -372,3 +372,94 @@ $ column -t
 ---
 - #### Sizes
 ```console
+
+---
+- #### Sizes
+```console
+2.7K   INFO.md
+37K    README.md
+535K   wget_amd_x86_WinTLS_lite_Windows.exe
+714K   wget_amd_x86_WinTLS_lite_Windows.exe.base64
+952K   wget_amd_x86_WinTLS_lite_Windows.exe.base64.base64
+1.3M   wget_amd_x86_WinTLS_lite_Windows.exe.base64.base64.base64
+653K   wget_amd_x86_lite_Windows.exe
+871K   wget_amd_x86_lite_Windows.exe.base64
+1.2M   wget_amd_x86_lite_Windows.exe.base64.base64
+1.6M   wget_amd_x86_lite_Windows.exe.base64.base64.base64
+612K   wget_amd_x86_x64_lite_Windows.exe
+816K   wget_amd_x86_x64_lite_Windows.exe.base64
+1.1M   wget_amd_x86_x64_lite_Windows.exe.base64.base64
+1.5M   wget_amd_x86_x64_lite_Windows.exe.base64.base64.base64
+875K   wget_busybox_aarch_arm64_Linux
+1.2M   wget_busybox_aarch_arm64_Linux.base64
+1.6M   wget_busybox_aarch_arm64_Linux.base64.base64
+2.1M   wget_busybox_aarch_arm64_Linux.base64.base64.base64
+1.3M   wget_busybox_amd_x86_64_Linux
+1.7M   wget_busybox_amd_x86_64_Linux.base64
+2.3M   wget_busybox_amd_x86_64_Linux.base64.base64
+3.0M   wget_busybox_amd_x86_64_Linux.base64.base64.base64
+98K    wget_busybox_amd_x86_64_Tiny_Linux
+130K   wget_busybox_amd_x86_64_Tiny_Linux.base64
+173K   wget_busybox_amd_x86_64_Tiny_Linux.base64.base64
+819K   wget_busybox_arm_gnueabi_Linux
+1.1M   wget_busybox_arm_gnueabi_Linux.base64
+1.5M   wget_busybox_arm_gnueabi_Linux.base64.base64
+1.9M   wget_busybox_arm_gnueabi_Linux.base64.base64.base64
+591K   wget_busybox_arm_gnueabihf_Linux
+788K   wget_busybox_arm_gnueabihf_Linux.base64
+1.1M   wget_busybox_arm_gnueabihf_Linux.base64.base64
+1.4M   wget_busybox_arm_gnueabihf_Linux.base64.base64.base64
+1.2M   wget_busybox_i686_Linux
+1.6M   wget_busybox_i686_Linux.base64
+2.1M   wget_busybox_i686_Linux.base64.base64
+2.7M   wget_busybox_i686_Linux.base64.base64.base64
+97K    wget_busybox_i686_Tiny_Linux
+129K   wget_busybox_i686_Tiny_Linux.base64
+171K   wget_busybox_i686_Tiny_Linux.base64.base64
+757K   wget_busybox_m68k_Linux
+1009K  wget_busybox_m68k_Linux.base64
+1.4M   wget_busybox_m68k_Linux.base64.base64
+1.8M   wget_busybox_m68k_Linux.base64.base64.base64
+1.1M   wget_busybox_mips64_Linux
+1.5M   wget_busybox_mips64_Linux.base64
+2.0M   wget_busybox_mips64_Linux.base64.base64
+2.6M   wget_busybox_mips64_Linux.base64.base64.base64
+1.1M   wget_busybox_mips64el_Linux
+1.5M   wget_busybox_mips64el_Linux.base64
+2.0M   wget_busybox_mips64el_Linux.base64.base64
+2.6M   wget_busybox_mips64el_Linux.base64.base64.base64
+1.1M   wget_busybox_mips_Linux
+1.4M   wget_busybox_mips_Linux.base64
+1.8M   wget_busybox_mips_Linux.base64.base64
+2.4M   wget_busybox_mips_Linux.base64.base64.base64
+1.1M   wget_busybox_mipsel_Linux
+1.4M   wget_busybox_mipsel_Linux.base64
+1.8M   wget_busybox_mipsel_Linux.base64.base64
+2.4M   wget_busybox_mipsel_Linux.base64.base64.base64
+1.4M   wget_busybox_powerpc64_Linux
+1.9M   wget_busybox_powerpc64_Linux.base64
+2.5M   wget_busybox_powerpc64_Linux.base64.base64
+3.3M   wget_busybox_powerpc64_Linux.base64.base64.base64
+1.4M   wget_busybox_powerpc64le_Linux
+1.9M   wget_busybox_powerpc64le_Linux.base64
+2.5M   wget_busybox_powerpc64le_Linux.base64.base64
+3.3M   wget_busybox_powerpc64le_Linux.base64.base64.base64
+1.1M   wget_busybox_powerpc_Linux
+1.5M   wget_busybox_powerpc_Linux.base64
+1.9M   wget_busybox_powerpc_Linux.base64.base64
+2.6M   wget_busybox_powerpc_Linux.base64.base64.base64
+663K   wget_busybox_riscv32_Linux
+884K   wget_busybox_riscv32_Linux.base64
+1.2M   wget_busybox_riscv32_Linux.base64.base64
+1.6M   wget_busybox_riscv32_Linux.base64.base64.base64
+668K   wget_busybox_riscv64_Linux
+890K   wget_busybox_riscv64_Linux.base64
+1.2M   wget_busybox_riscv64_Linux.base64.base64
+1.6M   wget_busybox_riscv64_Linux.base64.base64.base64
+983K   wget_busybox_s390x_Linux
+1.3M   wget_busybox_s390x_Linux.base64
+1.8M   wget_busybox_s390x_Linux.base64.base64
+2.3M   wget_busybox_s390x_Linux.base64.base64.base64
+
+```
+
