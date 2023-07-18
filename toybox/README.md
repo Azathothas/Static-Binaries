@@ -140,5 +140,34 @@ unix2dos unlink unshare uptime usleep uudecode uuencode uuidgen vconfig
 vmstat w watch watchdog wc wget which who whoami xargs xxd yes zcat
 
 ```
+
+---
+
+- #### Sizes
+
+```
+2.3K  INFO.md
+8.8K  README.md
+806K  toybox_arm64_aarch64
+786K  toybox_armv4l
+778K  toybox_armv5l
+766K  toybox_armv7l
+658K  toybox_armv7m
+733K  toybox_i486
+733K  toybox_i686
+729K  toybox_m68k
+1.1M  toybox_microblaze
+977K  toybox_mips
+944K  toybox_mips64
+980K  toybox_mipsel
+842K  toybox_powerpc
+911K  toybox_powerpc64
+911K  toybox_powerpc64le
+854K  toybox_s390x
+821K  toybox_sh2eb
+701K  toybox_sh4
+723K  toybox_x86_64
+```
+
 ---
 
