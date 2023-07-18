@@ -19,7 +19,6 @@ jobs:
       - name: Install build dependencies
         run: "\
           sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget \n"
       
       - name: Setup Env
         run: |
@@ -30,14 +29,7 @@ jobs:
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           echo -e "" >> ./wget/README.md             
-           echo '---' >> ./wget/README.md
-           echo '- #### Sizes' >> ./wget/README.md
-           echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ ";ls -lh ./wget | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '```' >> ./wget/README.md           
-           echo -e "" >> ./wget/README.md             
+           rm -rf ./wget/*.base64           
         working-directory: main
         continue-on-error: true
         
