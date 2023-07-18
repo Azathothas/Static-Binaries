@@ -320,6 +320,10 @@ jobs:
            echo -e "" >> ./wget/README.md
            echo -e "--> SHA256SUM" >> ./wget/README.md
            /bin/bash -c 'PS4="$ "; set -x; sha256sum ./wget/wget_*' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> Sizes" >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./wget/wget_* | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
            echo -e '```\n' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '---' >> ./wget/README.md
@@ -331,14 +335,7 @@ jobs:
            echo '```' >> ./wget/README.md
            echo -e "" >> ./wget/README.md             
            echo '---' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md 
-           echo '- #### Sizes' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md 
-           echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ ";ls -lh ./wget | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '```' >> ./wget/README.md      
-           echo -e "" >> ./wget/README.md                       
+           echo -e "" >> ./wget/README.md      
         working-directory: main
         continue-on-error: true
       #https://github.com/stefanzweifel/git-auto-commit-action  
