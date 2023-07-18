@@ -1,0 +1,321 @@
+# Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
+name: Build && Fetch wget
+
+on:
+  workflow_dispatch:
+
+env:
+  #Update @latest: https://github.com/riscv-collab/riscv-gnu-toolchain/releases #32 glibc Ubuntu: 22.04 
+  #RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.04.21/riscv32-glibc-ubuntu-22.04-nightly-2023.04.21-nightly.tar.gz
+  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.07.07/riscv32-glibc-ubuntu-22.04-gcc-nightly-2023.07.07-nightly.tar.gz
+  #Update @latest: https://busybox.net/downloads/ # 
+  #BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.0.tar.bz2 
+  BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.1.tar.bz2
+  BUSYBOX_DIRNAME: busybox-1.36.1
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: main
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq p7zip-full wget  \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          sudo mkdir -p /usr/local/rv32\n
+          wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
+          sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
+          echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
+          sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
+          mkdir busybox\n
+        "
+      - name: Get busybox
+        run: wget -O- -q $BUSYBOX_URL | tar jxf -
+        working-directory: busybox
+      - name: Build wget-busybox for x86_64
+        run: |
+          mkdir build
+          cd build
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for aarch64
+        run: |
+          mkdir build
+          cd build
+          export ARCH=aarch64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for arm-linux-gnueabi
+        run: |
+          mkdir build
+          cd build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabi-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for arm-linux-gnueabihf
+        run: |
+          mkdir build
+          cd build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabihf-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for i686
+        run: |
+          mkdir build
+          cd build
+          export ARCH=i686
+          export CROSS_COMPILE=i686-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox   
+      - name: Build wget-busybox for m68k
+        run: |
+          mkdir build
+          cd build
+          export ARCH=m68k
+          export CROSS_COMPILE=m68k-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox         
+      - name: Build wget-busybox for mips-linux-gnu
+        run: |
+          mkdir build
+          cd build
+          export ARCH=mips
+          export CROSS_COMPILE=mips-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for mipsel-linux-gnu
+        run: |
+          mkdir build
+          cd build
+          export ARCH=mips
+          export CROSS_COMPILE=mipsel-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for mips64-linux-gnuabi64
+        run: |
+          mkdir build
+          cd build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64-linux-gnuabi64-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for mips64el-linux-gnuabi64
+        run: |
+          mkdir build
+          cd build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64el-linux-gnuabi64-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox 
+      - name: Build wget-busybox for powerpc
+        run: |
+          mkdir build
+          cd build
+          export ARCH=powerpc
+          export CROSS_COMPILE=powerpc-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox 
+      - name: Build wget-busybox for powerpc64
+        run: |
+          mkdir build
+          cd build
+          export ARCH=powerpc64
+          export CROSS_COMPILE=powerpc64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
+          cd ..
+          rm -rf build        
+        working-directory: busybox
+      - name: Build wget-busybox for powerpc64le-linux-gnu
+        run: |
+          mkdir build
+          cd build
+          export ARCH=powerpc
+          export CROSS_COMPILE=powerpc64le-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for riscv32-linux-gnu
+        run: |
+          mkdir build
+          cd build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv32-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for riscv64-linux-gnu
+        run: |
+          mkdir build
+          cd build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+      - name: Build wget-busybox for s390x
+        run: |
+          mkdir build
+          cd build
+          export ARCH=s390x
+          export CROSS_COMPILE=s390x-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash make_single_applets.sh WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox  
+      - name: Fetch wget for windows
+        run: |
+          for url in $(curl -s "https://api.github.com/repos/lifenjoiner/wget-for-windows/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*mingw32*.zip' -exec unzip -j -o {} -d win32 \; && cp "./win32/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_lite_Windows.exe"
+          find . -type f -name '*WinTLS*.7z' -exec 7z x {} -o"win32_TLS" -y \; && cp "./win32_TLS/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_WinTLS_lite_Windows.exe" 
+          find . -type f -name '*mingw64*.zip' -exec unzip -j -o {} -d win64 \; && cp "./win64/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_x64_lite_Windows.exe"
+        working-directory: busybox    
+      - name: Generate '.base64' 
+        run: |
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+        working-directory: busybox          
+      - name: Update README.md
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./wget/INFO.md > ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./wget/wget_*' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> SHA256SUM" >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./wget/wget_*' &>> ./wget/README.md
+           echo -e '```\n' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo '- #### Flags' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_aarch64_arm64_Linux -V' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '```' >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md             
+        working-directory: main
+      #https://github.com/stefanzweifel/git-auto-commit-action  
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: Cross-Compile wget Binaries 
+          #push_options: '--force'
