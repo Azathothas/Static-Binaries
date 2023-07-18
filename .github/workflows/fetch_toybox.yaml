@@ -74,11 +74,15 @@ jobs:
            echo '```console' >> ./toybox/README.md
            /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./toybox/toybox_arm64_aarch64' &>> ./toybox/README.md
            echo '```' >> ./toybox/README.md
+           echo -e "" >> ./curl/README.md
            echo '---' >> ./toybox/README.md
-           echo '- #### Sizes' >> ./toybox/README.md           
+           echo -e "" >> ./curl/README.md
+           echo '- #### Sizes' >> ./toybox/README.md
+           echo -e "" >> ./curl/README.md
            echo '```' >> ./toybox/README.md           
-           /bin/bash -c 'PS4="$ "; set -x; ls -lh ./toybox | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md 
-           echo '```' >> ./toybox/README.md           
+           /bin/bash -c 'PS4="$ ";ls -lh ./toybox | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md 
+           echo '```' >> ./toybox/README.md    
+           echo -e "" >> ./curl/README.md
            echo '---' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md                    
         working-directory: main
