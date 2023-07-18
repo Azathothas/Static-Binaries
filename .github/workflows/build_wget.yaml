@@ -62,7 +62,7 @@ jobs:
           cd build
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash make_single_applets.sh WGET
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
           cd ..
