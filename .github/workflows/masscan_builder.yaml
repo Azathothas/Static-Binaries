@@ -112,7 +112,8 @@ jobs:
            echo -e "" >> ./masscan/README.md
            echo '- #### Sizes' >> ./masscan/README.md  
            echo -e "" >> ./masscan/README.md
-           echo '```' >> ./masscan/README.md           
+           echo '```console' >> ./masscan/README.md    
+           echo -e "" >> ./masscan/README.md
            /bin/bash -c 'PS4="$ ";ls -lh ./masscan | awk "{print \$5, \$9}" | column -t' &>> ./masscan/README.md
            echo '```' >> ./masscan/README.md    
            echo -e "" >> ./masscan/README.md
