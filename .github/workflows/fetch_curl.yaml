@@ -104,14 +104,18 @@ jobs:
            echo -e '```\n' >> ./curl/README.md
            echo -e "" >> ./curl/README.md
            echo '---' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
            echo '- #### Version' >> ./curl/README.md
            echo '```console' >> ./curl/README.md
            /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./curl/curl_aarch64_arm64_Linux -V' &>> ./curl/README.md
            echo -e "" >> ./curl/README.md
            /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./curl/curl_aarch64_arm64_http3_Linux -V' &>> ./curl/README.md 
            echo '```' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
            echo '---' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
            echo '- #### Sizes' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
            echo '```console' >> ./curl/README.md
            /bin/bash -c 'PS4="$ "; set -x; ls -lh ./curl | awk "{print \$5, \$9}" | column -t' &>> ./curl/README.md
            echo -e "" >> ./curl/README.md
