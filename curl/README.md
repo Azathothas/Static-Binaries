@@ -77,7 +77,7 @@ export CURL_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 !# For $HOME/bin
  mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
 
-!# Move Downloaded Busybox binary to that DIR
+!# Move Downloaded curl binary to that DIR
  mv "$Path_To_curl_Binary" "/usr/bin/curl"
 
 !# Give Writeable Perms
@@ -157,4 +157,9 @@ Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop
 Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP TrackMemory UnixSockets zstd
 ```
 ---
-
+- #### Sizes
+```console
+$ ls ./curl -lh
+$ awk '{print'
+awk: cmd. line:1: {print
+awk: cmd. line:1:       ^ unexpected newline or end of string
