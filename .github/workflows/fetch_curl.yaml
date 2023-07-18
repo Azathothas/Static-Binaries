@@ -111,7 +111,12 @@ jobs:
            /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./curl/curl_aarch64_arm64_http3_Linux -V' &>> ./curl/README.md 
            echo '```' >> ./curl/README.md
            echo '---' >> ./curl/README.md
-           echo -e "" >> ./curl/README.md                    
+           echo '- #### Sizes' >> ./curl/README.md
+           echo '```console' >> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; set -x;ls ./curl -lh | awk '{print $5, $9}' | column -t' &>> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo '```' >> ./curl/README.md          
+           echo -e "" >> ./curl/README.md                   
         working-directory: main
         continue-on-error: true
         
