@@ -68,6 +68,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for aarch64
         run: |
           mkdir build
@@ -82,6 +83,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for arm-linux-gnueabi
         run: |
           mkdir build
@@ -96,6 +98,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for arm-linux-gnueabihf
         run: |
           mkdir build
@@ -110,6 +113,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for i686
         run: |
           mkdir build
@@ -124,6 +128,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox   
+        continue-on-error: true
       - name: Build wget-busybox for m68k
         run: |
           mkdir build
@@ -137,7 +142,8 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
           cd ..
           rm -rf build
-        working-directory: busybox         
+        working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for mips-linux-gnu
         run: |
           mkdir build
@@ -152,6 +158,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for mipsel-linux-gnu
         run: |
           mkdir build
@@ -166,6 +173,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for mips64-linux-gnuabi64
         run: |
           mkdir build
@@ -180,6 +188,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for mips64el-linux-gnuabi64
         run: |
           mkdir build
@@ -194,6 +203,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox 
+        continue-on-error: true
       - name: Build wget-busybox for powerpc
         run: |
           mkdir build
@@ -208,6 +218,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox 
+        continue-on-error: true
       - name: Build wget-busybox for powerpc64
         run: |
           mkdir build
@@ -222,6 +233,7 @@ jobs:
           cd ..
           rm -rf build        
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for powerpc64le-linux-gnu
         run: |
           mkdir build
@@ -236,6 +248,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for riscv32-linux-gnu
         run: |
           mkdir build
@@ -250,6 +263,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for riscv64-linux-gnu
         run: |
           mkdir build
@@ -264,6 +278,7 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox
+        continue-on-error: true
       - name: Build wget-busybox for s390x
         run: |
           mkdir build
@@ -278,17 +293,20 @@ jobs:
           cd ..
           rm -rf build
         working-directory: busybox  
+        continue-on-error: true
       - name: Fetch wget for windows
         run: |
           for url in $(curl -s "https://api.github.com/repos/lifenjoiner/wget-for-windows/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
           find . -type f -name '*mingw32*.zip' -exec unzip -j -o {} -d win32 \; && cp "./win32/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_lite_Windows.exe"
           find . -type f -name '*WinTLS*.7z' -exec 7z x {} -o"win32_TLS" -y \; && cp "./win32_TLS/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_WinTLS_lite_Windows.exe" 
           find . -type f -name '*mingw64*.zip' -exec unzip -j -o {} -d win64 \; && cp "./win64/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_x64_lite_Windows.exe"
-        working-directory: busybox    
+        working-directory: busybox  
+        continue-on-error: true
       - name: Generate '.base64' 
         run: |
           cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
-        working-directory: busybox          
+        working-directory: busybox    
+        continue-on-error: true
       - name: Update README.md
         run: |
            cd "$GITHUB_WORKSPACE/main"
@@ -311,6 +329,7 @@ jobs:
            echo '---' >> ./wget/README.md
            echo -e "" >> ./wget/README.md             
         working-directory: main
+        continue-on-error: true
       #https://github.com/stefanzweifel/git-auto-commit-action  
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
