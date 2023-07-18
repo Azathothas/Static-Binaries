@@ -159,7 +159,35 @@ Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefi
 ---
 - #### Sizes
 ```console
-$ ls ./curl -lh
-$ awk '{print'
-awk: cmd. line:1: {print
-awk: cmd. line:1:       ^ unexpected newline or end of string
+$ ls -lh ./curl
+$ column -t
+$ awk '{print $5, $9}'
+2.2K  INFO.md
+9.8K  README.md
+1.2M  curl_DOS
+3.1M  curl_aarch64_arm64_Linux
+5.3M  curl_aarch64_arm64_http3_Linux
+5.1M  curl_amd64_x86_64_Linux
+6.5M  curl_amd64_x86_64_http3_Linux
+6.2M  curl_amd_x86_64_Windows.exe
+4.5M  curl_amd_x86_Windows.exe
+4.9M  curl_arm32_Android
+6.7M  curl_arm64_Android
+4.7M  curl_arm_x64_Windows.exe
+2.9M  curl_armhf_Linux
+3.2M  curl_armhf_arm32_Android
+2.4M  curl_armv7_Linux
+3.6M  curl_i386_Linux
+531K  curl_lite_DOS
+2.1M  curl_mips_Android
+2.0M  curl_mipsel_Android
+1.6M  curl_or1k_OpenRISC_Linux
+3.7M  curl_ppc64le_powerpc64le_Linux
+1.3M  curl_riscv64_Linux
+359K  curl_tiny_DOS
+8.0M  curl_x64_Android
+5.1M  curl_x86_64_Android
+8.1M  curl_x86_Android
+
+```
+
