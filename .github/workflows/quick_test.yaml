@@ -17,8 +17,8 @@ jobs:
           path: main
    
       - name: Install build dependencies
-        run: "\
-          sudo apt-get update\n
+        run: |
+          sudo apt-get update
       
       - name: Setup Env
         run: |
