@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Build || Fetch wget Binaries
+name: Build || Fetch Wget Binaries
 
 on:
   workflow_dispatch:
@@ -317,5 +317,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Cross-Compile wget Binaries 
+          commit_message: Cross-Compile || Fetch latest Wget Binaries 
           #push_options: '--force'
