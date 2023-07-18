@@ -84,7 +84,7 @@ jobs:
            echo -e "" >> ./toybox/README.md
            echo '- #### Sizes' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
-           echo '```' >> ./toybox/README.md           
+           echo '```console' >> ./toybox/README.md           
            /bin/bash -c 'PS4="$ ";ls -lh ./toybox | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md 
            echo '```' >> ./toybox/README.md    
            echo -e "" >> ./toybox/README.md
