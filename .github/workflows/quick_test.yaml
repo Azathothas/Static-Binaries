@@ -25,39 +25,18 @@ jobs:
         run: |
           # Create Output Dir
           #mkdir -p "$GITHUB_WORKSPACE/main/massdns"
-     
-      - name: Build --> Test       
-        run: |
-          # git clone
-          git clone https://github.com/stunnel/static-curl
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Build
-          cd ./static-curl && chmod +x curl-static-cross.sh
-          pwd ; bash curl-static-cross.sh ; pwd
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T SPAAbWhozWYEJ8ghrZurzB zLNKRT8ySdTx6PDpCKwJ6E eu.relay.tunshell.com
-          sleep 69000
-          # Move Bin
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_windows_x64_aarch64_gcc"
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1
-        continue-on-error: true
-        
+
         
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           cat ./massdns/INFO.md > ./massdns/README.md
-           echo -e "" >> ./massdns/README.md 
-           echo '---' >> ./massdns/README.md
-           echo '```console' >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./massdns/massdns_*' &>> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
-           echo -e "--> SHA256SUM" >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
-           echo -e '```\n' >> ./massdnsREADME.md
-           echo -e "" >> ./massdns/README.md
-           echo '---' >> ./massdns/README.md
+           echo '---' >> ./wget/README.md
+           echo '- #### Sizes' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ls -lh ./wget | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '```' >> ./wget/README.md           
+           echo -e "" >> ./wget/README.md             
         working-directory: main
         continue-on-error: true
         
@@ -66,5 +45,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Cross-Compile MassDNS Binaries 
+          commit_message: Quick Test
           #push_options: '--force'
