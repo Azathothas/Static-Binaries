@@ -119,6 +119,12 @@ jobs:
            echo -e '```\n' >> ./massdns/README.md
            echo -e "" >> ./massdns/README.md
            echo '---' >> ./massdns/README.md
+           echo '- #### Sizes' >> ./massdns/README.md       
+           echo '```' >> ./massdns/README.md       
+           /bin/bash -c 'PS4="$ "; set -x; ls -lh ./massdns | awk "{print \$5, \$9}" | column -t' &>> ./massdns/README.md
+           echo '```' >> ./massdns/README.md     
+           echo '---' >> ./massdns/README.md
+           echo -e "" >> ./massdns/README.md
         working-directory: main
         continue-on-error: true
         
