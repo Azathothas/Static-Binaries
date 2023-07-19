@@ -56,32 +56,32 @@ jobs:
      #amd_x86_64
       - name: Build wget-busybox for x86_64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for x86_64 (MUSL-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
-          cd .. && rm -rf build
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true   
 
      #aarch64_arm64
       - name: Build wget-busybox for aarch64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=aarch64
           export CROSS_COMPILE=aarch64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -89,7 +89,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true             
       - name: Build wget-busybox for aarch64 (MUSL-DockerCross)
@@ -108,7 +108,7 @@ jobs:
      #arm
       - name: Build wget-busybox for arm-linux-gnueabi (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=arm
           export CROSS_COMPILE=arm-linux-gnueabi-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -116,7 +116,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabi_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true     
       - name: Build wget-busybox for arm-linux-armv6 (MUSL-DockerCross)
@@ -133,7 +133,7 @@ jobs:
         continue-on-error: true          
       - name: Build wget-busybox for arm-linux-gnueabihf (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=arm
           export CROSS_COMPILE=arm-linux-gnueabihf-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -141,7 +141,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_arm_gnueabihf_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for arm-linux-gnueabihf_armv7l (MUSL-DockerCross)
@@ -160,7 +160,7 @@ jobs:
      #i686      
       - name: Build wget-busybox for i686 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=i686
           export CROSS_COMPILE=i686-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -168,16 +168,16 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build" 
         working-directory: busybox   
         continue-on-error: true
       - name: Build wget-busybox for i686 (MUSL-DockerCross)
         run: |
           wget -O- -q $BUSYBOX_URL | tar jxf - && cd "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME"
-          docker run --privileged -v $(pwd):/work dockcross/dockcross/linux-i686 bash -c "make defconfig"
+          docker run --privileged -v $(pwd):/work dockcross/linux-i686 bash -c "make defconfig"
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
-          docker run --privileged -v $(pwd):/work dockcross/dockcross/linux-i686 bash -c "./make_single_applets.sh WGET"
+          docker run --privileged -v $(pwd):/work dockcross/linux-i686 bash -c "./make_single_applets.sh WGET"
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_musl_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_i686_musl_Linux"
           cd .. && sudo rm -rf "./build" "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME" > /dev/null 2>&1
@@ -187,7 +187,7 @@ jobs:
      #m68k      
       - name: Build wget-busybox for m68k (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=m68k
           export CROSS_COMPILE=m68k-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -195,7 +195,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_m68k_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for m68k (MUSL-DockerCross)
@@ -214,7 +214,7 @@ jobs:
      #mips 
       - name: Build wget-busybox for mips-linux-gnu (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=mips
           export CROSS_COMPILE=mips-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -222,7 +222,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for mips-linux-gnu (MUSL-DockerCross)
@@ -241,7 +241,7 @@ jobs:
     #mipsel
       - name: Build wget-busybox for mipsel-linux-gnu (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=mips
           export CROSS_COMPILE=mipsel-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -249,7 +249,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mipsel_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for mipsel-linux-gnu (MUSL-DockerCross)
@@ -268,7 +268,7 @@ jobs:
     #mips64    
       - name: Build wget-busybox for mips64-linux-gnuabi64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=mips64
           export CROSS_COMPILE=mips64-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -276,12 +276,12 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for mips64el-linux-gnuabi64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=mips64
           export CROSS_COMPILE=mips64el-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -289,14 +289,14 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_mips64el_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox 
         continue-on-error: true
 
      #ppc         
       - name: Build wget-busybox for powerpc (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=powerpc
           export CROSS_COMPILE=powerpc-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -304,13 +304,13 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox 
         continue-on-error: true
      #ppc64  
       - name: Build wget-busybox for powerpc64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=powerpc64
           export CROSS_COMPILE=powerpc64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -318,13 +318,13 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64_Linux"
-          cd .. && rm -rf build       
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"      
         working-directory: busybox
         continue-on-error: true
      #ppc64le   
       - name: Build wget-busybox for powerpc64le-linux-gnu (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=powerpc
           export CROSS_COMPILE=powerpc64le-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -332,7 +332,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_powerpc64le_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for powerpc64le-linux-gnu (MUSL-DockerCross)
@@ -351,7 +351,7 @@ jobs:
      #risc32         
       - name: Build wget-busybox for riscv32-linux-gnu (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=riscv
           export CROSS_COMPILE=riscv32-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -359,7 +359,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv32_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for riscv32-linux-gnu (MUSL-DockerCross)
@@ -377,7 +377,7 @@ jobs:
      #risv64
       - name: Build wget-busybox for riscv64-linux-gnu (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=riscv
           export CROSS_COMPILE=riscv64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -385,7 +385,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_riscv64_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox
         continue-on-error: true
       - name: Build wget-busybox for riscv64-linux-gnu (MUSL-DockerCross)
@@ -404,7 +404,7 @@ jobs:
      #s390x         
       - name: Build wget-busybox for s390x (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
           export ARCH=s390x
           export CROSS_COMPILE=s390x-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
@@ -412,7 +412,7 @@ jobs:
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_s390x_Linux"
-          cd .. && rm -rf build 
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         working-directory: busybox  
         continue-on-error: true
       - name: Build wget-busybox for s390x (MUSL-DockerCross)
