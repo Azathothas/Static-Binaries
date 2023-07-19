@@ -1,43 +1,142 @@
-name: Quick Build Tests
+# Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
+name: Build || Fetch Wget Binaries
 
 on:
   workflow_dispatch:
-  
+
+env:
+  #Update @latest: https://github.com/riscv-collab/riscv-gnu-toolchain/releases #32 glibc Ubuntu: 22.04 
+  #RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.04.21/riscv32-glibc-ubuntu-22.04-nightly-2023.04.21-nightly.tar.gz
+  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.07.07/riscv32-glibc-ubuntu-22.04-gcc-nightly-2023.07.07-nightly.tar.gz
+  #Update @latest: https://busybox.net/downloads/ # 
+  #BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.0.tar.bz2 
+  BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.1.tar.bz2
+  BUSYBOX_DIRNAME: busybox-1.36.1
+
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-22.04
+
     permissions:
       contents: write
-      
-    steps:        
-      - name: Checkout repository
-        uses: actions/checkout@v3
+
+    steps:
+      - uses: actions/checkout@v3
         with:
           path: main
-   
       - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          sudo mkdir -p /usr/local/rv32\n
+          wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
+          sudo ln -s /usr/bin/ar /usr/bin/musl-ar\n
+          ln -s /usr/bin/strip /usr/bin/musl-strip\n
+          sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
+          echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
+          sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
+          mkdir busybox\n
+        "
+      - name: Get busybox
+        run: wget -O- -q $BUSYBOX_URL | tar jxf -
+        working-directory: busybox
+      - name: Build wget-busybox for x86_64 (GCC)
         run: |
-          echo
-      
-      - name: Setup Env
+          mkdir build && cd build
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
+          set -x; curl -qflSL "https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_WGET" -o "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Tiny_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+        continue-on-error: true
+      - name: Build wget-busybox for x86_64 (MUSL)
         run: |
-          # Create Output Dir
-          #mkdir -p "$GITHUB_WORKSPACE/main/massdns"
-
-        
+          mkdir build && cd build
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
+          cd ..
+          rm -rf build
+        working-directory: busybox
+        continue-on-error: true   
+      - name: Build wget-busybox for aarch64
+        run: |
+          mkdir build
+          cd build
+          export ARCH=aarch64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config          
+          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
+          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
+          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
+          cd ..
+          rm -rf build
+      - name: Generate '.base64' 
+        run: |
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+        working-directory: busybox    
+        continue-on-error: true
       - name: Update README.md
-        run: |  
+        run: |
            cd "$GITHUB_WORKSPACE/main"
-           find ./wget -type f -name '*.base64' -delete  
-           
+           cat ./wget/INFO.md > ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./wget/wget_*' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> SHA256SUM" >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./wget/wget_*' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> Sizes" >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./wget/wget_* | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e '```\n' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '- #### Flags' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux' &>> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '```' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md             
+           echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md      
         working-directory: main
         continue-on-error: true
-        
+      #https://github.com/stefanzweifel/git-auto-commit-action  
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Quick Test
+          commit_message: Cross-Compile || Fetch latest Wget Binaries 
           #push_options: '--force'
