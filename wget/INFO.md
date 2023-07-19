@@ -52,9 +52,13 @@ $env:PROCESSOR_ARCHITECTURE
 
 !# Export
 export WGET_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
+!# For Linux : append `musl` before `_Linux` if you want the musl compiled binaries
+!# Example: wget_busybox_aarch_arm64_Linux --> wget_busybox_aarch_arm64_musl_Linux
+!# export WGET_ARCH="wget_busybox_aarch_arm64_musl_Linux"
 
-!# Download
+!# Download Def
  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/$WGET_ARCH"
+
 !# Or for .base64
  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/$WGET_ARCH.base64"
 
