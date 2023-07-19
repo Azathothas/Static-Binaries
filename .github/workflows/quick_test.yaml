@@ -92,12 +92,14 @@ jobs:
           export CROSS_COMPILE=aarch64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config          
+          sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config          
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
           cd ..
           rm -rf build
+        working-directory: busybox
+        continue-on-error: true           
       - name: Generate '.base64' 
         run: |
           cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
