@@ -89,9 +89,9 @@ $ file ./wget/wget_amd_x86_WinTLS_lite_Windows.exe ./wget/wget_amd_x86_WinTLS_li
 ./wget/wget_amd_x86_x64_lite_Windows.exe.base64:    ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_aarch_arm64_Linux:              ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f7b70ca055505ff775dc425afc5221b30d759189, for GNU/Linux 3.7.0, stripped
 ./wget/wget_busybox_aarch_arm64_Linux.base64:       ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_aarch_arm64_musl_Linux:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bfc7317c48aca60f688e73078db8fdba35177d8c, for GNU/Linux 3.7.0, stripped
+./wget/wget_busybox_aarch_arm64_musl_Linux:         ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
 ./wget/wget_busybox_aarch_arm64_musl_Linux.base64:  ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_amd_x86_64_Linux:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d2a3692764f00a120bd7fa7f3fa17297ec0b5250, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_amd_x86_64_Linux:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=179ea4a6be5c1df5e796ffabd0bb61e78d0f214b, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_amd_x86_64_Linux.base64:        ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_amd_x86_64_Tiny_Linux:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./wget/wget_busybox_amd_x86_64_Tiny_Linux.base64:   ASCII text, with very long lines (65536), with no line terminators
@@ -138,10 +138,10 @@ f048d6af0b475cddefdc33222b8e5dcfb75fd0894076fcd9ad9cbd3eac602e4c  ./wget/wget_am
 6e70eef8fff29eea094d4aa3c07fac82106c711b914c6c47d69720d7691bd3cd  ./wget/wget_amd_x86_x64_lite_Windows.exe.base64
 af5c6d5340f3790b7bae847d0c0c393d104ea7eb0a241b1dbfa6940dd3fcaa1a  ./wget/wget_busybox_aarch_arm64_Linux
 83273e34d54bee8eea3af3d8b3e0e2ac31e04d884b76f480abba32213659283f  ./wget/wget_busybox_aarch_arm64_Linux.base64
-520718e520e9b7f26c41d910989f3dab0deb70dbc958d1910f4c12ed5b455698  ./wget/wget_busybox_aarch_arm64_musl_Linux
-35a1209a1518cc7563b4d11de9034b4de46ad8cceb8f4b34fdea0007c0cfb398  ./wget/wget_busybox_aarch_arm64_musl_Linux.base64
-124276873f7106f4d28676414f8141f9cdd89819a60b4eac5c2009dca07fffeb  ./wget/wget_busybox_amd_x86_64_Linux
-aa71a84e6c70607ce8a11dfa2010aca5fcb71526c5669506adc6206c81ec5aec  ./wget/wget_busybox_amd_x86_64_Linux.base64
+fd049465c8d498d6b922e7c64f6851646b7310726271f11a1fd596b652d31241  ./wget/wget_busybox_aarch_arm64_musl_Linux
+f71cb93de6fd48e07c5d7a502b9abb59d3f6b549401eb8823738c4085716aa6f  ./wget/wget_busybox_aarch_arm64_musl_Linux.base64
+2bf6f6db9948570c46a16ea8b3fe5316de302072949a1fb4684199e3abcf4fde  ./wget/wget_busybox_amd_x86_64_Linux
+3f29f241a80a4341a613bfe0665bf4d66e95529f56a554c19522291922d21aad  ./wget/wget_busybox_amd_x86_64_Linux.base64
 6f962014746ec88aeb8271ba63d05fa5616e0eca014259b0fd29d0d29de9192a  ./wget/wget_busybox_amd_x86_64_Tiny_Linux
 fd28deaa62e028a190277084c74cf668fc4cebabca13c9716eb809c9a00c599a  ./wget/wget_busybox_amd_x86_64_Tiny_Linux.base64
 32c6fc4ec58bb605b31c17e772180f58efa27755fc825e19c4a673203e2bb35e  ./wget/wget_busybox_amd_x86_64_musl_Linux
@@ -186,8 +186,8 @@ dace4c3fdcf22994a39d1cc2f9c36e70be0f62c0d0c95bb6f305741b48f0a7cc  ./wget/wget_bu
 816K   ./wget/wget_amd_x86_x64_lite_Windows.exe.base64
 875K   ./wget/wget_busybox_aarch_arm64_Linux
 1.2M   ./wget/wget_busybox_aarch_arm64_Linux.base64
-875K   ./wget/wget_busybox_aarch_arm64_musl_Linux
-1.2M   ./wget/wget_busybox_aarch_arm64_musl_Linux.base64
+115K   ./wget/wget_busybox_aarch_arm64_musl_Linux
+153K   ./wget/wget_busybox_aarch_arm64_musl_Linux.base64
 1.3M   ./wget/wget_busybox_amd_x86_64_Linux
 1.7M   ./wget/wget_busybox_amd_x86_64_Linux.base64
 98K    ./wget/wget_busybox_amd_x86_64_Tiny_Linux
