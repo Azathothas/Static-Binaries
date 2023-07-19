@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Build || Fetch Wget Binaries
+name: Quick Build Test
 
 on:
   workflow_dispatch:
@@ -47,7 +47,7 @@ jobs:
           sudo mkdir -p /usr/local/rv32\n
           wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
           sudo ln -s /usr/bin/ar /usr/bin/musl-ar\n
-          ln -s /usr/bin/strip /usr/bin/musl-strip\n
+          sudo ln -s /usr/bin/strip /usr/bin/musl-strip\n
           sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
           sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
           sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
