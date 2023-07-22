@@ -119,11 +119,11 @@ fc6b3d39195df7af245b211c2cc9e8b22ff8624d14ca67703db1862f782defcd  ./curl/curl_DO
 39f2c3b6d43f7450a1e64a15a93ecd65b67ab554ee4673f6675066e5a6b1c03e  ./curl/curl_aarch64_arm64_http3_Linux
 f58feb42ebdb075aa3534c75c7f5fc5c247fb022f432b804962928e38164bc42  ./curl/curl_amd64_x86_64_Linux
 9290d0e99737ecf244d868ef416735676174a379bba23453265de942dcd39483  ./curl/curl_amd64_x86_64_http3_Linux
-acff6102d02e9996f6982114f3618de80d4887ee7d423f5961d2238466df185b  ./curl/curl_amd_x86_64_Windows.exe
-8e707a23cc6aceb9dfd6bf72060ac2faf80d108a8fe9334dd83786970041ac8b  ./curl/curl_amd_x86_Windows.exe
+a0f6c3ab684e75eea7582fcd8ad3385efc6487d58339bf29bea0264f9c37d2f1  ./curl/curl_amd_x86_64_Windows.exe
+ed403b8569f850f7b6a4ef08ee60a06f4ad92600c16fe4466fe6ac078645312f  ./curl/curl_amd_x86_Windows.exe
 3881ce6eb521d36f997eb8c9246bb66949943470046c35b9f19fd5f6dc25c82a  ./curl/curl_arm32_Android
 95d8d5219b4d67543573af5d0728c2c8e0bfe134967467fe50795f73186a9349  ./curl/curl_arm64_Android
-3534e71577d5fc1024236f8edf3fc3de50819a283f8e564099add87022743f74  ./curl/curl_arm_x64_Windows.exe
+ce19fc00ea599acc1db867f8a1154cfaa6e12f00e610c0871499a7cddf968df5  ./curl/curl_arm_x64_Windows.exe
 e42730533f7306dcce51f280b654c50ed57cf2054295a625528ab1aece95d3fc  ./curl/curl_armhf_Linux
 81ec9164f1146c12be106c839778a5b54183525c50e667b2284350b8a737b4ae  ./curl/curl_armhf_arm32_Android
 e63d1fc5718fa2784bd3aa4a3c1a4307689ca53c2cdc92aea6ea2e13ea00eb92  ./curl/curl_armv7_Linux
@@ -142,6 +142,7 @@ feec0e5ee0832cce1e83d22c2db818451654c7b5ccda2fcba1e9673613c04241  ./curl/curl_ri
 
 
 ---
+
 - #### Version
 ```console
 $ qemu-aarch64-static ./curl/curl_aarch64_arm64_Linux -V
@@ -156,8 +157,11 @@ Release-Date: 2023-05-30
 Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp ws wss
 Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP TrackMemory UnixSockets zstd
 ```
+
 ---
+
 - #### Sizes
+
 ```console
 $ ls -lh ./curl
 $ column -t
