@@ -10,6 +10,7 @@
 > >      - Binaries for s390x are compiled using dockercross
 > > --> Windows:
 > >      - https://github.com/abcfy2/aria2-static-build
+> >      - https://github.com/repos/minnyres/aria2-windows-arm64
 > > ```
 > > 
 ```bash
@@ -67,19 +68,16 @@ export aria2_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 ---
 - #### Install aria2
 ```bash
-!# Copy downloaded aria2 binary to /usr/bin || /usr/local/bin
-!# For `.base64`
- base64 -d "$BIN.base64" > "$BIN"
+!# Copy downloaded aria2c binary to /usr/bin || /usr/local/bin
 
 !# For $HOME/bin
  mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
 
 !# Move Downloaded aria2 binary to that DIR
- mv "$Path_To_aria2_Binary" "/usr/bin/aria2"
+ mv "$Path_To_aria2c_Binary" "/usr/bin/aria2c"
 
 !# Give Writeable Perms
- chmod +xwr "/usr/bin/aria2"
-
+ chmod +xwr "/usr/bin/aria2c"
 ```
 
 
