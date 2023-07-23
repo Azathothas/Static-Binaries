@@ -29,28 +29,56 @@ echo %PROCESSOR_ARCHITECTURE%
 [Powershell]
 $env:PROCESSOR_ARCHITECTURE
 
-!# Index (ARCH || ALT_ARCH) 
+!# Index (ARCH || ALT_ARCH)
+
+!# For Android
+--> aria2c_aarch_arm_Android
+--> aria2c_aarch64_arm64_Android
+--> aria2c_x86_64_Android
+--> aria2c_x86_Android
+
 !#For Linux
---> aria2_busybox_aarch_arm64_Linux || aarch64 || arm64 [64-bit] (GNU/Linux)
---> aria2_busybox_amd_x86_64_Linux || amd x86_64 || x86_64 [64-bit] (GNU/Linux)
---> aria2_busybox_arm_gnueabi_Linux || ARMv4 || ARMv5 || ARMv7 (?) [32-bit] {Hardware Floating-Point Unit (FPU) support : NO}
---> aria2_busybox_arm_gnueabihf_Linux || ARMv7 [32-bit] {Hardware Floating-Point Unit (FPU) support : YES}
---> aria2_busybox_i686_Linux || x86_64 [32-bit] (GNU/Linux)
---> aria2_busybox_m68k_Linux || Motorola_NXP [32-bit] (SYSV)
---> aria2_busybox_mips_Linux || MIPS (Big-Endian) [32-bit] (SYSV)
---> aria2_busybox_mips64_Linux || MIPS (Big-Endian) [64-bit] (SYSV)
---> aria2_busybox_mips64el_Linux || MIPSel (Little-Endian) [64-bit] (SYSV)
---> aria2_busybox_mipsel_Linux || MIPSel (Little-Endian) [32-bit] (SYSV)
---> aria2_busybox_powerpc_Linux || ppc || cisco 4500 [32-bit] (SYSV)
---> aria2_busybox_powerpc64_Linux || ppc || cisco 4500 [32-bit] (SYSV)
---> aria2_busybox_powerpc64le_Linux || ppc64le || cisco 7500 || OpenPOWER ELF V2 ABI (Little-Endian) [64-bit] (GNU/Linux)
---> aria2_busybox_riscv32_Linux || UCB RISC-V || RVC [32-bit] (SYSV)
---> aria2_busybox_riscv64_Linux || UCB RISC-V || RVC [64-bit] (SYSV)
---> aria2_busybox_s390x_Linux || IBM S/390 [64-bit] (GNU/Linux) 
+--> aria2c_aarch64_arm64_musl_Linux || aarch64 || arm64 [64-bit] (GNU/Linux)
+--> aria2c_aarch64_arm64_musl_latest_Linux
+--> aria2c_aarch64_arm64_libressl_musl_Linux
+--> aria2c_aarch64_arm64_libressl_musl_latest_Linux
+--> aria2c_amd_x86_64_musl_Linux || amd x86_64 || x86_64 [64-bit] (GNU/Linux)
+--> aria2c_amd_x86_64_musl_latest_Linux
+--> aria2c_amd_x86_64_libressl_musl_Linux
+--> aria2c_amd_x86_64_libressl_musl_latest_Linux
+--> aria2c_arm_abi_musl_Linux || ARMv4 || ARMv5 || ARMv7 (?) [32-bit] {Hardware Floating-Point Unit (FPU) support : NO}
+--> aria2c_arm_abi_musl_latest_Linux
+--> aria2c_arm_abi_libressl_musl_Linux
+--> aria2c_arm_abi_libressl_musl_latest_Linux
+--> //_gnueabihf_Linux || ARMv7 [32-bit] {Hardware Floating-Point Unit (FPU) support : YES}
+--> // || x86_64 [32-bit] (GNU/Linux)
+--> //_m68k_Linux || Motorola_NXP [32-bit] (SYSV)
+--> aria2c_mips_musl_Linux || MIPS (Big-Endian) [32-bit] (SYSV)
+--> aria2c_mips_musl_latest_Linux
+--> aria2c_mips_libressl_musl_Linux
+--> aria2c_mips_libressl_musl_latest_Linux
+--> aria2c_mips64_musl_Linux || MIPS (Big-Endian) [64-bit] (SYSV)
+--> aria2c_mips64_musl_latest_Linux
+--> aria2c_mips64_libressl_musl_Linux
+--> aria2c_mips64_libressl_musl_latest_Linux
+--> //_mips64el_Linux || MIPSel (Little-Endian) [64-bit] (SYSV)
+--> aria2c_mipsel_musl_Linux || MIPSel (Little-Endian) [32-bit] (SYSV)
+--> aria2c_mipsel_musl_latest_Linux
+--> aria2c_mipsel_libressl_musl_Linux
+--> aria2c_mipsel_libressl_musl_latest_Linux
+--> //powerpc_Linux || ppc || cisco 4500 [32-bit] (SYSV)
+--> //powerpc64_Linux || ppc || cisco 4500 [32-bit] (SYSV)
+--> //powerpc64le_Linux || ppc64le || cisco 7500 || OpenPOWER ELF V2 ABI (Little-Endian) [64-bit] (GNU/Linux)
+--> //riscv32_Linux || UCB RISC-V || RVC [32-bit] (SYSV)
+--> //riscv64_Linux || UCB RISC-V || RVC [64-bit] (SYSV)
+--> //s390x_Linux || IBM S/390 [64-bit] (GNU/Linux)
+
 !# For Windows
---> aria2_amd_x86_lite_Windows.exe || [32-bit] (PE32)
---> aria2_amd_x86_WinTLS_lite_Windows.exe || [32-bit] (PE32)
---> aria2_amd_x86_x64_lite_Windows.exe || [64-bit] (PE32+) 
+--> aria2c_aarch64_arm64_Windows.exe || [64-bit] (PE32+) 
+--> aria2c_amd_x86_x64_Windows.exe || [64-bit] (PE32+) 
+--> aria2c_i686_Windows.exe || [32-bit] (PE32)
+--> aria2c_i686_latest_Windows.exe
+
 
 !# Export
 export aria2_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
@@ -85,7 +113,7 @@ export aria2_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 
 ---
 ```console
-$ file ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows.exe ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux ./aria2/aria2c_aarch64_arm64_musl_Linux ./aria2/aria2c_aarch64_arm64_musl_latest_Linux ./aria2/aria2c_aarch_arm_Android ./aria2/aria2c_amd_x86_64_libressl_musl_Linux ./aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux ./aria2/aria2c_amd_x86_64_musl_Linux ./aria2/aria2c_amd_x86_64_musl_latest_Linux ./aria2/aria2c_amd_x86_x64_Windows.exe ./aria2/aria2c_amd_x86_x64_latest_Windows.exe ./aria2/aria2c_arm_abi_libressl_musl_Linux ./aria2/aria2c_arm_abi_libressl_musl_latest_Linux ./aria2/aria2c_arm_abi_musl_Linux ./aria2/aria2c_arm_abi_musl_latest_Linux ./aria2/aria2c_i686_Windows.exe ./aria2/aria2c_i686_latest_Windows.exe ./aria2/aria2c_mip64_libressl_musl_Linux ./aria2/aria2c_mip64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_musl_Linux ./aria2/aria2c_mips_libressl_musl_Linux ./aria2/aria2c_mips_libressl_musl_latest_Linux ./aria2/aria2c_mips_musl_Linux ./aria2/aria2c_mips_musl_latest_Linux ./aria2/aria2c_mipsel_libressl_musl_Linux ./aria2/aria2c_mipsel_libressl_musl_latest_Linux ./aria2/aria2c_mipsel_musl_Linux ./aria2/aria2c_x86_64_Android ./aria2/aria2c_x86_64_Linux ./aria2/aria2c_x86_Android
+$ file ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows.exe ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux ./aria2/aria2c_aarch64_arm64_musl_Linux ./aria2/aria2c_aarch64_arm64_musl_latest_Linux ./aria2/aria2c_aarch_arm_Android ./aria2/aria2c_amd_x86_64_libressl_musl_Linux ./aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux ./aria2/aria2c_amd_x86_64_musl_Linux ./aria2/aria2c_amd_x86_64_musl_latest_Linux ./aria2/aria2c_amd_x86_x64_Windows.exe ./aria2/aria2c_amd_x86_x64_latest_Windows.exe ./aria2/aria2c_arm_abi_libressl_musl_Linux ./aria2/aria2c_arm_abi_libressl_musl_latest_Linux ./aria2/aria2c_arm_abi_musl_Linux ./aria2/aria2c_arm_abi_musl_latest_Linux ./aria2/aria2c_i686_Windows.exe ./aria2/aria2c_i686_latest_Windows.exe ./aria2/aria2c_mip64_libressl_musl_Linux ./aria2/aria2c_mip64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_libressl_musl_Linux ./aria2/aria2c_mips64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_musl_Linux ./aria2/aria2c_mips64_musl_latest_Linux ./aria2/aria2c_mips_libressl_musl_Linux ./aria2/aria2c_mips_libressl_musl_latest_Linux ./aria2/aria2c_mips_musl_Linux ./aria2/aria2c_mips_musl_latest_Linux ./aria2/aria2c_mipsel_libressl_musl_Linux ./aria2/aria2c_mipsel_libressl_musl_latest_Linux ./aria2/aria2c_mipsel_musl_Linux ./aria2/aria2c_mipsel_musl_latest_Linux ./aria2/aria2c_x86_64_Android ./aria2/aria2c_x86_64_Linux ./aria2/aria2c_x86_Android
 ./aria2/aria2c_aarch64_arm64_Android:                    ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
 ./aria2/aria2c_aarch64_arm64_Windows.exe:                PE32+ executable (console) Aarch64, for MS Windows
 ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux:        ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
@@ -107,7 +135,10 @@ $ file ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows
 ./aria2/aria2c_i686_latest_Windows.exe:                  PE32 executable (console) Intel 80386 (stripped to external PDB), for MS Windows
 ./aria2/aria2c_mip64_libressl_musl_Linux:                ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mip64_libressl_musl_latest_Linux:         ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
+./aria2/aria2c_mips64_libressl_musl_Linux:               ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
+./aria2/aria2c_mips64_libressl_musl_latest_Linux:        ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mips64_musl_Linux:                        ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
+./aria2/aria2c_mips64_musl_latest_Linux:                 ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mips_libressl_musl_Linux:                 ELF 32-bit MSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mips_libressl_musl_latest_Linux:          ELF 32-bit MSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mips_musl_Linux:                          ELF 32-bit MSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
@@ -115,12 +146,13 @@ $ file ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows
 ./aria2/aria2c_mipsel_libressl_musl_Linux:               ELF 32-bit LSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mipsel_libressl_musl_latest_Linux:        ELF 32-bit LSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_mipsel_musl_Linux:                        ELF 32-bit LSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
+./aria2/aria2c_mipsel_musl_latest_Linux:                 ELF 32-bit LSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
 ./aria2/aria2c_x86_64_Android:                           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./aria2/aria2c_x86_64_Linux:                             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9dd1e4e82baf6700ae0ca11de310c8dc0a769912, for GNU/Linux 3.2.0, stripped
 ./aria2/aria2c_x86_Android:                              ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, stripped
 
 --> SHA256SUM
-$ sha256sum ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows.exe ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux ./aria2/aria2c_aarch64_arm64_musl_Linux ./aria2/aria2c_aarch64_arm64_musl_latest_Linux ./aria2/aria2c_aarch_arm_Android ./aria2/aria2c_amd_x86_64_libressl_musl_Linux ./aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux ./aria2/aria2c_amd_x86_64_musl_Linux ./aria2/aria2c_amd_x86_64_musl_latest_Linux ./aria2/aria2c_amd_x86_x64_Windows.exe ./aria2/aria2c_amd_x86_x64_latest_Windows.exe ./aria2/aria2c_arm_abi_libressl_musl_Linux ./aria2/aria2c_arm_abi_libressl_musl_latest_Linux ./aria2/aria2c_arm_abi_musl_Linux ./aria2/aria2c_arm_abi_musl_latest_Linux ./aria2/aria2c_i686_Windows.exe ./aria2/aria2c_i686_latest_Windows.exe ./aria2/aria2c_mip64_libressl_musl_Linux ./aria2/aria2c_mip64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_musl_Linux ./aria2/aria2c_mips_libressl_musl_Linux ./aria2/aria2c_mips_libressl_musl_latest_Linux ./aria2/aria2c_mips_musl_Linux ./aria2/aria2c_mips_musl_latest_Linux ./aria2/aria2c_mipsel_libressl_musl_Linux ./aria2/aria2c_mipsel_libressl_musl_latest_Linux ./aria2/aria2c_mipsel_musl_Linux ./aria2/aria2c_x86_64_Android ./aria2/aria2c_x86_64_Linux ./aria2/aria2c_x86_Android
+$ sha256sum ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Windows.exe ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux ./aria2/aria2c_aarch64_arm64_musl_Linux ./aria2/aria2c_aarch64_arm64_musl_latest_Linux ./aria2/aria2c_aarch_arm_Android ./aria2/aria2c_amd_x86_64_libressl_musl_Linux ./aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux ./aria2/aria2c_amd_x86_64_musl_Linux ./aria2/aria2c_amd_x86_64_musl_latest_Linux ./aria2/aria2c_amd_x86_x64_Windows.exe ./aria2/aria2c_amd_x86_x64_latest_Windows.exe ./aria2/aria2c_arm_abi_libressl_musl_Linux ./aria2/aria2c_arm_abi_libressl_musl_latest_Linux ./aria2/aria2c_arm_abi_musl_Linux ./aria2/aria2c_arm_abi_musl_latest_Linux ./aria2/aria2c_i686_Windows.exe ./aria2/aria2c_i686_latest_Windows.exe ./aria2/aria2c_mip64_libressl_musl_Linux ./aria2/aria2c_mip64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_libressl_musl_Linux ./aria2/aria2c_mips64_libressl_musl_latest_Linux ./aria2/aria2c_mips64_musl_Linux ./aria2/aria2c_mips64_musl_latest_Linux ./aria2/aria2c_mips_libressl_musl_Linux ./aria2/aria2c_mips_libressl_musl_latest_Linux ./aria2/aria2c_mips_musl_Linux ./aria2/aria2c_mips_musl_latest_Linux ./aria2/aria2c_mipsel_libressl_musl_Linux ./aria2/aria2c_mipsel_libressl_musl_latest_Linux ./aria2/aria2c_mipsel_musl_Linux ./aria2/aria2c_mipsel_musl_latest_Linux ./aria2/aria2c_x86_64_Android ./aria2/aria2c_x86_64_Linux ./aria2/aria2c_x86_Android
 cb2bd8beafb566ef55d217837edff00e3f660aa6050927b5f9b68651ff4ba51a  ./aria2/aria2c_aarch64_arm64_Android
 8aeaf6bcf7f4e897acbfc5dde154e1894403aa89722bddc45468d4e6a734d50f  ./aria2/aria2c_aarch64_arm64_Windows.exe
 58e68bf7fb255e0d775f056fc8595acaea5985e89b0735609b4b7b0b5a340d49  ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux
@@ -142,7 +174,10 @@ ee1240c2c540a7090bfaf67f1498d2796a3ffa4f3638ceff2f386299c9a947ad  ./aria2/aria2c
 0b51fc224b746751c5145137b917af324d7fc7dc5618441aa68cf224488a4f2f  ./aria2/aria2c_i686_latest_Windows.exe
 cb3971ee4a2451452e93287fb9fe7cfda9ca333bc982a794d1227db04745ad1f  ./aria2/aria2c_mip64_libressl_musl_Linux
 cb3971ee4a2451452e93287fb9fe7cfda9ca333bc982a794d1227db04745ad1f  ./aria2/aria2c_mip64_libressl_musl_latest_Linux
+cb3971ee4a2451452e93287fb9fe7cfda9ca333bc982a794d1227db04745ad1f  ./aria2/aria2c_mips64_libressl_musl_Linux
+cb3971ee4a2451452e93287fb9fe7cfda9ca333bc982a794d1227db04745ad1f  ./aria2/aria2c_mips64_libressl_musl_latest_Linux
 e27ae3b371d7bfb9659cd4e7615aea591796405a57e1419cca862f8f77ec01cc  ./aria2/aria2c_mips64_musl_Linux
+e27ae3b371d7bfb9659cd4e7615aea591796405a57e1419cca862f8f77ec01cc  ./aria2/aria2c_mips64_musl_latest_Linux
 5789b94318fc8e90711aac9f4bea07f2900c421337088cde3f2362eea474377c  ./aria2/aria2c_mips_libressl_musl_Linux
 5789b94318fc8e90711aac9f4bea07f2900c421337088cde3f2362eea474377c  ./aria2/aria2c_mips_libressl_musl_latest_Linux
 f3fddc6e3c061a3ec092f8ca9b8c33199ce6fc8bcc14bd1b798072d29973e525  ./aria2/aria2c_mips_musl_Linux
@@ -150,6 +185,7 @@ f3fddc6e3c061a3ec092f8ca9b8c33199ce6fc8bcc14bd1b798072d29973e525  ./aria2/aria2c
 d4ec61b175594dbac6f165fabef1e639b614814bfeb72163dd1f2a05758a7533  ./aria2/aria2c_mipsel_libressl_musl_Linux
 d4ec61b175594dbac6f165fabef1e639b614814bfeb72163dd1f2a05758a7533  ./aria2/aria2c_mipsel_libressl_musl_latest_Linux
 a1ecad6cc1962ebbce92c31bc52756b89aaf0e71c983efa051ff6d8649b2e40a  ./aria2/aria2c_mipsel_musl_Linux
+a1ecad6cc1962ebbce92c31bc52756b89aaf0e71c983efa051ff6d8649b2e40a  ./aria2/aria2c_mipsel_musl_latest_Linux
 312cd572799d01f6986ed769ea36f7477adeeceed43c25ea3159b304070eb357  ./aria2/aria2c_x86_64_Android
 c9f9b191d81fecfc7a6271f4b9864097515eb37b915605ecee4683eef79ee13d  ./aria2/aria2c_x86_64_Linux
 a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c_x86_Android
@@ -161,8 +197,8 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 - #### Sizes
 
 ```console
-3.1K  INFO.md
-14K   README.md
+3.8K  INFO.md
+16K   README.md
 8.6M  aria2c_aarch64_arm64_Android
 4.4M  aria2c_aarch64_arm64_Windows.exe
 8.1M  aria2c_aarch64_arm64_libressl_musl_Linux
@@ -184,7 +220,10 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 5.9M  aria2c_i686_latest_Windows.exe
 12M   aria2c_mip64_libressl_musl_Linux
 12M   aria2c_mip64_libressl_musl_latest_Linux
+12M   aria2c_mips64_libressl_musl_Linux
+12M   aria2c_mips64_libressl_musl_latest_Linux
 14M   aria2c_mips64_musl_Linux
+14M   aria2c_mips64_musl_latest_Linux
 11M   aria2c_mips_libressl_musl_Linux
 11M   aria2c_mips_libressl_musl_latest_Linux
 14M   aria2c_mips_musl_Linux
@@ -192,6 +231,7 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 11M   aria2c_mipsel_libressl_musl_Linux
 11M   aria2c_mipsel_libressl_musl_latest_Linux
 14M   aria2c_mipsel_musl_Linux
+14M   aria2c_mipsel_musl_latest_Linux
 9.5M  aria2c_x86_64_Android
 41M   aria2c_x86_64_Linux
 11M   aria2c_x86_Android
@@ -201,4 +241,34 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 
 - #### Flags
 ```console
-$ qemu-aarch64-static aria2c_aarch64_arm64_libressl_musl_latest_Linux --version
+$ qemu-aarch64-static ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux --version
+aria2 version 1.36.0
+Copyright (C) 2006, 2019 Tatsuhiro Tsujikawa
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+** Configuration **
+Enabled Features: Async DNS, BitTorrent, Firefox3 Cookie, GZip, HTTPS, Message Digest, Metalink, XML-RPC, SFTP
+Hash Algorithms: sha-1, sha-224, sha-256, sha-384, sha-512, md5, adler32
+Libraries: zlib/1.2.11.zlib-ng libxml2/2.9.14 sqlite3/3.39.2 OpenSSL/2.0.0 c-ares/1.18.1 libssh2/1.10.0
+Compiler: gcc 11.2.1 20211120
+  built by  x86_64-pc-linux-gnu
+  targeting aarch64-unknown-linux-musl
+  on        Aug 10 2022 15:52:45
+System: Linux 5.15.0-1041-azure #48-Ubuntu SMP Tue Jun 20 20:34:08 UTC 2023 aarch64
+
+Report bugs to https://github.com/aria2/aria2/issues
+Visit https://aria2.github.io/
+
+```
+
+---
+
