@@ -21,8 +21,53 @@ jobs:
       - name: Install build dependencies
         run: "\
           sudo apt-get update\n
-          sudo apt install autoconf automake autotools-dev autopoint '*gnutls*' libc-ares-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev libssl-dev libunistring-dev libtool libxml2-dev nettle-dev '*p11-kit*' pkg-config zlib1g-dev -y --ignore-missing \n"
+          sudo apt install -y --ignore-missing --no-install-recommends \
+          autoconf \
+          automake \
+          autotools-dev \
+          autopoint \
+          '*gnutls*' \
+          libc-ares-dev \
+          '*libaria*' \
+          libcppunit-dev \
+          libexpat1-dev \
+          libgcrypt-dev \
+          libgmp-dev \
+          libgpg-error-dev \
+          libsqlite3-dev \
+          libssh2-1-dev \
+          libssl-dev \
+          libunistring-dev \
+          libtool \
+          libxml2-dev \
+          nettle-dev \
+          '*p11-kit*' \
+          pkg-config \
+          python3-pip \
+          zlib1g-dev  \n
+          pip3 install sphinx \n"
       
+      - name: Install build dependencies for cross compile
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends build-essential wget ca-certificates \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
+          
       - name: Setup Env
         run: |
           # Create Output Dir
@@ -76,14 +121,14 @@ jobs:
       - name: Build --> linux-x86-64-gcc 
         run: | 
           # git clone
-          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
+          cd $(mktemp -d) && git clone https://github.com/aria2/aria2
           # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Add static flag
-          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
+          git config --global --add safe.directory $(pwd)        
           # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-x64 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_64_gcc"    
+          cd ./aria2 && sudo autoreconf -i && sudo ./configure --without-gnutls ARIA2_STATIC=yes && sudo make -j$(($(nproc)+1))
+          # Strip & Move
+          sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
+          sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_x86_64_Linux"    
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
