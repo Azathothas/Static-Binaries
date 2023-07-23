@@ -72,53 +72,7 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/aria2"
-     
-      - name: Build --> linux-arm64-aarch64-gcc       
-        run: |
-          # git clone
-          cd $(mktemp -d) && git clone https://github.com/aria2/aria2
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install autoconf automake autopoint autotools-dev autopoint '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev libssl-dev libunistring-dev libtool libxml2-dev '*openssl*' nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && autoreconf -i && ./configure --host=aarch64-linux-gnu --without-gnutls ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
-          # Strip & Move
-          sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
-          sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Linux"    
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1
-        continue-on-error: true
-        
-      - name: Build --> linux-arm64-aarch64-musl  
-        run: | 
-          # git clone
-          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Add static flag
-          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
-          # Build       
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_musl"  
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1          
-        continue-on-error: true
-   
-   #Compiling for 32bit fails
-   #   - name: Build --> linux-x86-gcc 
-   #     run: |
-   #       # git clone
-   #       cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
-   #       # Mark Safe
-   #       git config --global --add safe.directory $(pwd)
-   #      # Add static flag
-   #       sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
-    #      # Build
-    #      docker run --privileged -v $(pwd):/work dockcross/linux-x86 bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-    #      sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_x86_gcc"    
-    #      # Remove tmp files
-    #      #rm -rf /tmp >/dev/null 2>&1          
-    #    continue-on-error: true
-        
+
       - name: Build --> linux-x86-64-gcc 
         run: | 
           # git clone
@@ -134,21 +88,8 @@ jobs:
           #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
         
-      - name: Build --> linux-s390x-gcc
-        run: |  
-          # git clone
-          cd $(mktemp -d) && git clone https://github.com/blechschmidt/massdns
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)
-          # Add static flag
-          sed -i 's/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c/$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PROJECT_FLAGS) -O3 -std=c11 -DHAVE_EPOLL -DHAVE_SYSINFO -Wall -fstack-protector-strong src\/main.c -s  -static/g' "./massdns/Makefile"
-          # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-s390x bash -c "git config --global --add safe.directory /work/massdns ; cd ./massdns && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/massdns && ./bin/massdns --help ; echo"
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_s390x_gcc" 
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1           
-        continue-on-error: true
-        
+     #docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install '*ares*' autoconf automake autopoint autotools-dev gettext '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev '*libssl*' libunistring-dev libtool libxml2-dev openssl nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && make clean && autoreconf -i && ./configure --host=aarch64-linux-gnu ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
+     
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
