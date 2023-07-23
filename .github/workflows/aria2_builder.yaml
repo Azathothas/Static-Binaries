@@ -2,8 +2,10 @@ name: Build || Fetch aria2 Binaries
 
 on:
   workflow_dispatch:
-  #schedule:
-  #  - cron: "0 21 * * 6"  # 09:00 PM UTC Every Saturday --> 02:45 AM Nepal Time Every Sunday
+  schedule:
+    - cron: "45 21 * * 6"  # 09:45 PM UTC Every Saturday --> 03:30 AM Nepal Time Every Sunday
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
   
 jobs:
   build:
