@@ -91,9 +91,10 @@ cdb5186718434cef14ddc69dbc8187e53591dc8ae94f9f0dfc334293c1004e7e  ./massdns/mass
 
 ---
 - #### Sizes
-``console`
+
+```console
 2.1K  INFO.md
-2     README.m
+1     README.m
 3.6K  README.md
 713K  massdns_linux_arm64_aarch64_gcc
 147K  massdns_linux_arm64_aarch64_musl
