@@ -1,4 +1,4 @@
-name: Build aria2 Binaries
+name: Build || Fetch aria2 Binaries
 
 on:
   workflow_dispatch:
@@ -18,78 +18,66 @@ jobs:
         with:
           path: main
    
-      - name: Install build dependencies
-        run: "\
-          sudo apt-get update\n
-          sudo apt install -y --ignore-missing --no-install-recommends \
-          autoconf \
-          automake \
-          autotools-dev \
-          autopoint \
-          '*gnutls*' \
-          libc-ares-dev \
-          '*libaria*' \
-          libcppunit-dev \
-          libexpat1-dev \
-          libgcrypt-dev \
-          libgmp-dev \
-          libgpg-error-dev \
-          libsqlite3-dev \
-          libssh2-1-dev \
-          libssl-dev \
-          libunistring-dev \
-          libtool \
-          libxml2-dev \
-          nettle-dev \
-          '*p11-kit*' \
-          pkg-config \
-          python3-pip \
-          zlib1g-dev  \n
-          pip3 install sphinx \n"
-      
-      - name: Install build dependencies for cross compile
-        run: "\
-          sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends build-essential wget ca-certificates \
-          file qemu-user-static \
-          g++-aarch64-linux-gnu \
-          g++-arm-linux-gnueabi \
-          g++-arm-linux-gnueabihf \
-          g++-i686-linux-gnu \
-          g++-m68k-linux-gnu \
-          g++-mips-linux-gnu \
-          g++-mipsel-linux-gnu \
-          g++-mips64-linux-gnuabi64 \
-          g++-mips64el-linux-gnuabi64 \
-          g++-powerpc-linux-gnu \
-          g++-powerpc64-linux-gnu \
-          g++-powerpc64le-linux-gnu \
-          g++-riscv64-linux-gnu \
-          g++-s390x-linux-gnu \
-          g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
           
       - name: Setup Env
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/aria2"
 
-      - name: Build --> linux-x86-64-gcc 
-        run: | 
-          # git clone
-          cd $(mktemp -d) && git clone https://github.com/aria2/aria2
-          # Mark Safe
-          git config --global --add safe.directory $(pwd)        
-          # Build
-          cd ./aria2 && sudo autoreconf -i && sudo ./configure --without-gnutls ARIA2_STATIC=yes && sudo make -j$(($(nproc)+1))
-          # Strip & Move
-          sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
-          sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_x86_64_Linux"    
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1        
-        continue-on-error: true
+    #   - name: Build --> linux-x86-64-gcc 
+    #     run: | 
+    #       # git clone
+    #       cd $(mktemp -d) && git clone https://github.com/aria2/aria2
+    #       # Mark Safe
+    #       git config --global --add safe.directory $(pwd)        
+    #       # Build
+    #       cd ./aria2 && sudo autoreconf -i && sudo ./configure --without-gnutls ARIA2_STATIC=yes && sudo make -j$(($(nproc)+1))
+    #       # Strip & Move
+    #       sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
+    #       sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_x86_64_Linux"    
+    #       # Remove tmp files
+    #       #rm -rf /tmp >/dev/null 2>&1        
+    #     continue-on-error: true
         
      #docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install '*ares*' autoconf automake autopoint autotools-dev gettext '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev '*libssl*' libunistring-dev libtool libxml2-dev openssl nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && make clean && autoreconf -i && ./configure --host=aarch64-linux-gnu ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
      
+    #Linux
+     #Fetch
+      - name: Fetch aria2 bins [ Stable ]
+        run: |
+          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
+        #aarch64_arm64
+          mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_Linux"
+          mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped " "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_libressl_musl_Linux"
+        #amd_x86_64
+          mv "./aria2-x86_64-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_musl_Linux"
+          mv "./aria2-x86_64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_libressl_musl_Linux"          
+        #arm_abi
+          mv "./aria2-arm-linux-musleabi_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_Linux" 
+          mv "./aria2-arm-linux-musleabi_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_libressl_musl_Linux"
+        #mips 
+          mv "./aria2-mips-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_Linux"
+          mv "./aria2-mips-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_libressl_musl_Linux"
+        #mipsel  
+          mv "./aria2-mipsel-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_Linux"
+          mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_Linux"
+        #mips64  
+          mv "./aria2-mips64-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
+          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_Linux"
+        working-directory: aria2
+        continue-on-error: true
+        
+    #Fetch
+      - name: Fetch aria2 bins [ Latest ]
+        run: |
+          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
+          mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_Linux"
+          
+        working-directory: aria2
+        continue-on-error: true
+        
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
@@ -121,5 +109,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Cross-Compile aria2 Binaries 
+          commit_message: Build || Fetch aria2 Binaries 
           #push_options: '--force'
