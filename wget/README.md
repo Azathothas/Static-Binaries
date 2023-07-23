@@ -291,23 +291,4 @@ c942975f88659d7a0d57396688ebe52a4be59afab797318e6dbe954891eb7a1e  ./wget/wget_bu
 - #### Flags
 ```console
 $ qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux
-Usage: wget [-cqS] [--spider] [-O FILE] [-o LOGFILE] [--header STR]
-	[--post-data STR | --post-file FILE] [-Y on/off]
-	[--no-check-certificate] [-P DIR] [-U AGENT] [-T SEC] URL...
-
-Retrieve files via HTTP or FTP
-
-	--spider	Only check URL existence: $? is 0 if exists
-	--header STR	Add STR (of form 'header: value') to headers
-	--post-data STR	Send STR using POST method
-	--post-file FILE	Send FILE using POST method
-	--no-check-certificate	Don't validate the server's certificate
-	-c		Continue retrieval of aborted transfer
-	-q		Quiet
-	-P DIR		Save to DIR (default .)
-	-S    		Show server response
-	-T SEC		Network read timeout is SEC seconds
-	-O FILE		Save to FILE ('-' for stdout)
-	-o LOGFILE	Log messages to FILE
-	-U STR		Use STR for User-Agent header
-	-Y on/off	Use proxy
+/bin/bash: line 1: qemu-aarch64-static: command not found
