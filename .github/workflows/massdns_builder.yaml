@@ -121,7 +121,7 @@ jobs:
            echo '---' >> ./massdns/README.md
            echo -e "" >> ./massdns/README.m
            echo '- #### Sizes' >> ./massdns/README.md 
-           echo -e "" >> ./massdns/README.m
+           echo -e "" >> ./massdns/README.md
            echo '``console`' >> ./massdns/README.md       
            /bin/bash -c 'PS4="$ ";ls -lh ./massdns | awk "{print \$5, \$9}" | column -t' &>> ./massdns/README.md
            echo '```' >> ./massdns/README.md     
