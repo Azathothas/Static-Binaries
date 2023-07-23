@@ -58,10 +58,12 @@ $env:PROCESSOR_ARCHITECTURE
 --> aria2c_mips_libressl_musl_Linux
 --> aria2c_mips_libressl_musl_latest_Linux
 --> aria2c_mips64_musl_Linux || MIPS (Big-Endian) [64-bit] (SYSV)
+--> aria2c_mips64_musl_latest_Linux
 --> aria2c_mips64_libressl_musl_Linux
 --> aria2c_mips64_libressl_musl_latest_Linux
 --> //_mips64el_Linux || MIPSel (Little-Endian) [64-bit] (SYSV)
 --> aria2c_mipsel_musl_Linux || MIPSel (Little-Endian) [32-bit] (SYSV)
+--> aria2c_mipsel_musl_latest_Linux
 --> aria2c_mipsel_libressl_musl_Linux
 --> aria2c_mipsel_libressl_musl_latest_Linux
 --> //powerpc_Linux || ppc || cisco 4500 [32-bit] (SYSV)
