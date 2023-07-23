@@ -117,7 +117,7 @@ jobs:
            echo '- #### Sizes' >> ./curl/README.md
            echo -e "" >> ./curl/README.md
            echo '```console' >> ./curl/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ls -lh ./curl | awk "{print \$5, \$9}" | column -t' &>> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./curl | awk "{print \$5, \$9}" | column -t' &>> ./curl/README.md
            echo -e "" >> ./curl/README.md
            echo '```' >> ./curl/README.md          
            echo -e "" >> ./curl/README.md                   
