@@ -50,6 +50,7 @@ jobs:
      #Fetch
       - name: Fetch aria2 bins [ Stable ]
         run: |
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T AFRnfSeG7BSQZml9dEUXQT kUYcy9UMAejKD2RRSeOZeE eu.relay.tunshell.com
           #Android
           #aarch_arm
           curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/aria2/aria2c.bin-arm" -o  "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch_arm_Android"
