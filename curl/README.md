@@ -163,9 +163,6 @@ Features: alt-svc AsynchDNS brotli HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefi
 - #### Sizes
 
 ```console
-$ ls -lh ./curl
-$ column -t
-$ awk '{print $5, $9}'
 2.2K  INFO.md
 9.8K  README.md
 1.2M  curl_DOS
