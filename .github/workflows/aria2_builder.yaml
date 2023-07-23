@@ -79,7 +79,7 @@ jobs:
           mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_Linux"
           #mips64  
           mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
-          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_Linux"
+          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_libressl_musl_Linux"
           #Windows
           mv "./aria2_1.36.0_arm64.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Windows.exe" 
           mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_Windows.exe"
@@ -104,11 +104,11 @@ jobs:
           mv "./aria2-mips-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_latest_Linux"
           mv "./aria2-mips-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_libressl_musl_latest_Linux"
           #mipsel  
-          mv "./aria2-mipsel-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_Linux"
+          mv "./aria2-mipsel-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_latest_Linux"
           mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_latest_Linux"
           #mips64  
-          mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
-          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_latest_Linux"
+          mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_latest_Linux"
+          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_libressl_musl_latest_Linux"
           #Windows
           mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_latest_Windows.exe"
           mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_latest_Windows.exe"                    
@@ -139,7 +139,7 @@ jobs:
            echo -e "" >> ./aria2/README.md 
            echo '- #### Flags' >> ./aria2/README.md 
            echo '```console' >> ./aria2/README.md 
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static aria2c_aarch64_arm64_libressl_musl_latest_Linux --version' &>> ./aria2/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux --version' &>> ./aria2/README.md 
            echo -e "" >> ./aria2/README.md 
            echo '```' >> ./aria2/README.md 
            echo -e "" >> ./aria2/README.md        
