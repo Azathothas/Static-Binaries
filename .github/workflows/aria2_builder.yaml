@@ -80,7 +80,7 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)
           # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install autoconf automake autotools-dev autopoint '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev libssl-dev libunistring-dev libtool libxml2-dev '*openssl*' nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && autoreconf -i && ./configure --host=aarch64-linux-gnu --without-gnutls ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install autoconf automake autopoint autotools-dev autopoint '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev libssl-dev libunistring-dev libtool libxml2-dev '*openssl*' nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && autoreconf -i && ./configure --host=aarch64-linux-gnu --without-gnutls ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
           # Strip & Move
           sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
           sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Linux"    
