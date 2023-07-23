@@ -39,8 +39,6 @@ jobs:
           set -x; curl -qflSL "https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_WGET" -o "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Tiny_Linux"
           chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
           cd .. && rm -rf build 
-        working-directory: busybox
-        continue-on-error: true
       - name: Build wget-busybox for x86_64 (MUSL-Native)
         run: |
           wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
