@@ -47,22 +47,22 @@ jobs:
         run: |
           for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
           find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
-        #aarch64_arm64
+          #aarch64_arm64
           mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_Linux"
           mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped " "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_libressl_musl_Linux"
-        #amd_x86_64
+          #amd_x86_64
           mv "./aria2-x86_64-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_musl_Linux"
           mv "./aria2-x86_64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_libressl_musl_Linux"          
-        #arm_abi
+          #arm_abi
           mv "./aria2-arm-linux-musleabi_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_Linux" 
           mv "./aria2-arm-linux-musleabi_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_libressl_musl_Linux"
-        #mips 
+          #mips 
           mv "./aria2-mips-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_Linux"
           mv "./aria2-mips-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_libressl_musl_Linux"
-        #mipsel  
+          #mipsel  
           mv "./aria2-mipsel-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_Linux"
           mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_Linux"
-        #mips64  
+          #mips64  
           mv "./aria2-mips64-linux-musl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
           mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_Linux"
         working-directory: aria2
