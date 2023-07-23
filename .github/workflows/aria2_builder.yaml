@@ -45,6 +45,7 @@ jobs:
         run: |
           cd $(mktemp -d)
           for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          for url in $(curl -s "https://api.github.com/repos/minnyres/aria2-windows-arm64/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
           find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
           #aarch64_arm64
           mv "./aria2-aarch64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_Linux"
@@ -65,8 +66,9 @@ jobs:
           mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
           mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_Linux"
           #Windows
-          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_Windows.exe"
-          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_Windows.exe"
+          mv "./aria2_1.36.0_arm64.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Windows.exe" 
+          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_Windows.exe"
+          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_Windows.exe"
         continue-on-error: true
         
       - name: Fetch aria2 bins [ Latest ]
@@ -93,8 +95,8 @@ jobs:
           mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
           mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mip64_libressl_musl_latest_Linux"
           #Windows
-          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_latest_Windows.exe"
-          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_latest_Windows.exe"                    
+          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_latest_Windows.exe"
+          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_latest_Windows.exe"                    
         continue-on-error: true
         
       - name: Update README.md
