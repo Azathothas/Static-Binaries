@@ -80,9 +80,10 @@ jobs:
           # Mark Safe
           git config --global --add safe.directory $(pwd)
           # Build
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "git config --global --add safe.directory /work/aria2 ; cd ./aria2 && autoreconf -i && ./configure ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo && chmod +x ./bin/aria2 && ./bin/aria2 --help ; echo"
-          # Move Bin
-          sudo mv ./massdns/bin/massdns "$GITHUB_WORKSPACE/main/massdns/massdns_linux_arm64_aarch64_gcc"
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install autoconf automake autotools-dev autopoint '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev libssl-dev libunistring-dev libtool libxml2-dev '*openssl*' nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./aria2 && autoreconf -i && ./configure --host=aarch64-linux-gnu --without-gnutls ARIA2_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/aria2c && ./src/aria2c --version "
+          # Strip & Move
+          sudo strip "./src/aria2c" && sudo chmod +xwr "./src/aria2c"
+          sudo cp "./src/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Linux"    
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1
         continue-on-error: true
@@ -151,26 +152,26 @@ jobs:
       - name: Update README.md
         run: |  
            cd "$GITHUB_WORKSPACE/main"
-           cat ./massdns/INFO.md > ./massdns/README.md
-           echo -e "" >> ./massdns/README.md 
-           echo '---' >> ./massdns/README.md
-           echo '```console' >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./massdns/massdns_*' &>> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
-           echo -e "--> SHA256SUM" >> ./massdns/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./massdns/massdns_*' &>> ./massdns/README.md   
-           echo -e '```\n' >> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
-           echo '---' >> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
-           echo '- #### Sizes' >> ./massdns/README.md 
-           echo -e "" >> ./massdns/README.md
-           echo '```console' >> ./massdns/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./massdns | awk "{print \$5, \$9}" | column -t' &>> ./massdns/README.md
-           echo '```' >> ./massdns/README.md     
-           echo -e "" >> ./massdns/README.md
-           echo '---' >> ./massdns/README.md
-           echo -e "" >> ./massdns/README.md
+           cat ./aria2/INFO.md > ./aria2/README.md
+           echo -e "" >> ./aria2/README.md 
+           echo '---' >> ./aria2/README.md
+           echo '```console' >> ./aria2/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./aria2/aria2_*' &>> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo -e "--> SHA256SUM" >> ./aria2/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./aria2/aria2_*' &>> ./aria2/README.md   
+           echo -e '```\n' >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo '---' >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo '- #### Sizes' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md
+           echo '```console' >> ./aria2/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./aria2 | awk "{print \$5, \$9}" | column -t' &>> ./aria2/README.md
+           echo '```' >> ./aria2/README.md     
+           echo -e "" >> ./aria2/README.md
+           echo '---' >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
         working-directory: main
         continue-on-error: true
         
@@ -179,5 +180,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Cross-Compile MassDNS Binaries 
+          commit_message: Cross-Compile aria2 Binaries 
           #push_options: '--force'
