@@ -95,59 +95,59 @@ $ file ./wget/wget_amd_x86_WinTLS_lite_Windows.exe ./wget/wget_amd_x86_WinTLS_li
 ./wget/wget_busybox_aarch_arm64_Linux.base64:               ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_aarch_arm64_musl_Linux:                 ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
 ./wget/wget_busybox_aarch_arm64_musl_Linux.base64:          ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_amd_x86_64_Linux:                       ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=336aeb7c5b6a1af5e19598c49802d54f337c9c37, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_amd_x86_64_Linux:                       ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a4d5e7d4903fa9ccd8d0db8eb27125d1206e3c20, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_amd_x86_64_Linux.base64:                ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_amd_x86_64_Tiny_Linux:                  ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./wget/wget_busybox_amd_x86_64_Tiny_Linux.base64:           ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_amd_x86_64_musl_Linux:                  ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
 ./wget/wget_busybox_amd_x86_64_musl_Linux.base64:           ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_arm_armv6_musl_Linux:                   ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=ea33ecc6e1b0235db64caa306f194ec321645b2e, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_arm_armv6_musl_Linux:                   ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=a0939ab8760a326e2a6502adae98374657a45fe2, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_arm_armv6_musl_Linux.base64:            ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_arm_gnueabi_Linux:                      ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=370fefa8c2ed5b9e3b4af3b0da7a2393cbf497b2, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_arm_gnueabi_Linux:                      ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=3d9680d6728a9f1f1f130e42e41528f4521da869, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_arm_gnueabi_Linux.base64:               ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_arm_gnueabihf_Linux:                    ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=5f91da61638d61506eec6f29e89fd57dd87b6948, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_arm_gnueabihf_Linux:                    ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=afface6656d3b94f08999586717dec40139afc51, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_arm_gnueabihf_Linux.base64:             ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_arm_gnueabihf_armv7l_musl_Linux:        ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), static-pie linked, stripped
 ./wget/wget_busybox_arm_gnueabihf_armv7l_musl_Linux.base64: ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_i686_Linux:                             ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0c4c22e75aefd515366afc54f96bb797a4ba9217, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_i686_Linux:                             ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b87f9c95658150f471a55ade5542d6fb6a92a6e1, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_i686_Linux.base64:                      ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_i686_Tiny_Linux:                        ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, stripped
 ./wget/wget_busybox_i686_Tiny_Linux.base64:                 ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_i686_musl_Linux:                        ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, for GNU/Linux 4.4.255, stripped
 ./wget/wget_busybox_i686_musl_Linux.base64:                 ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_m68k_Linux:                             ELF 32-bit MSB executable, Motorola m68k, 68020, version 1 (SYSV), statically linked, BuildID[sha1]=7c62a4f4a555abaa52e423624f25521c4aeb4f5e, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_m68k_Linux:                             ELF 32-bit MSB executable, Motorola m68k, 68020, version 1 (SYSV), statically linked, BuildID[sha1]=a0c4f988ca84c8a5bdb48dcd3a71d9b0193e9a2f, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_m68k_Linux.base64:                      ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_mips64_Linux:                           ELF 64-bit MSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=bddaabb18d892811852d562476e8db4f07eac710, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_mips64_Linux:                           ELF 64-bit MSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=f8e40629cf4541c46afab9fc376a6749087b5c48, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_mips64_Linux.base64:                    ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_mips64el_Linux:                         ELF 64-bit LSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=d009a5db9c60646571dc9ca0c5ba7b10fea03f45, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_mips64el_Linux:                         ELF 64-bit LSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=14ccc3e73173b1b5d040d5724732cf34931bb8d2, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_mips64el_Linux.base64:                  ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_mips_Linux:                             ELF 32-bit MSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=e3d64259eb5570c0ca8998c5f5d420a2d4edd18a, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_mips_Linux.base64:                      ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_mips_musl_Linux:                        ELF 32-bit MSB executable, MIPS, MIPS-I version 1 (SYSV), statically linked, BuildID[sha1]=b8aebb29c676e3a7603de7b39829a4ee5d0f3666, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_mips_musl_Linux:                        ELF 32-bit MSB executable, MIPS, MIPS-I version 1 (SYSV), statically linked, BuildID[sha1]=4a70da615e8e42d97cc47a81fb717c397613575a, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_mips_musl_Linux.base64:                 ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_mipsel_Linux:                           ELF 32-bit LSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=bccb28a3e4faab5ad95724c4b5fc8fabd72b06e2, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_mipsel_Linux:                           ELF 32-bit LSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=c41c27d1c4d061d52078a486f67e1a83d4764ab6, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_mipsel_Linux.base64:                    ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_mipsel_musl_Linux:                      ELF 32-bit LSB executable, MIPS, MIPS-I version 1 (SYSV), statically linked, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_mipsel_musl_Linux.base64:               ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_powerpc64_Linux:                        ELF 64-bit MSB executable, 64-bit PowerPC or cisco 7500, Power ELF V1 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2662c41a3d0f32aba797d5de3ea1fadbbf1308fd, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_powerpc64_Linux:                        ELF 64-bit MSB executable, 64-bit PowerPC or cisco 7500, Power ELF V1 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=64e96ebedfdb6e04f231deed3de32a0d7b02dcb6, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_powerpc64_Linux.base64:                 ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_powerpc64le_Linux:                      ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dd7338622aa3edafbf7d2f8a0d7771560efdb7d1, for GNU/Linux 3.10.0, stripped
+./wget/wget_busybox_powerpc64le_Linux:                      ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=97a1b077a82d1ffd034675d8e810c3a93b918672, for GNU/Linux 3.10.0, stripped
 ./wget/wget_busybox_powerpc64le_Linux.base64:               ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_powerpc64le_musl_Linux:                 ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9d39f7c884ac32f819d23da62048bdeb37d7f645, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_powerpc64le_musl_Linux:                 ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=cfaf87f13518426eb6395536032ca778605677df, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_powerpc64le_musl_Linux.base64:          ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_powerpc_Linux:                          ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, BuildID[sha1]=9faa503fe02ba93e08da280d56ff054b4f358e39, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_powerpc_Linux:                          ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, BuildID[sha1]=8ee23aba779bacfc6865683430df5fe8927b7552, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_powerpc_Linux.base64:                   ASCII text, with very long lines (65536), with no line terminators
 ./wget/wget_busybox_riscv32_Linux:                          ELF 32-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_riscv32_Linux.base64:                   ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_riscv32_musl_Linux:                     ELF 32-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=68f6e1e50922215428e6925077466c8505519589, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_riscv32_musl_Linux:                     ELF 32-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=291d59f87f80f7f8f7b000e95d262cde19afe916, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_riscv32_musl_Linux.base64:              ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_riscv64_Linux:                          ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=bb757b74d78242f05416267341d426cd787646cc, for GNU/Linux 4.15.0, stripped
+./wget/wget_busybox_riscv64_Linux:                          ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=97b8d2fd34b00f04462d4c1bc2cd636d6864b22a, for GNU/Linux 4.15.0, stripped
 ./wget/wget_busybox_riscv64_Linux.base64:                   ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_riscv64_musl_Linux:                     ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=393244c68a5573373e5467a51880ee34c261ce60, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_riscv64_musl_Linux:                     ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=f385a71ac9f643b2436461bf96d0def777f85901, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_riscv64_musl_Linux.base64:              ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_s390x_Linux:                            ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=63793e1e7d8781b93e51469476b4c9221455e478, for GNU/Linux 3.2.0, stripped
+./wget/wget_busybox_s390x_Linux:                            ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a6d08f95224e13b1e5a6e8bbfbd01273d0eae47e, for GNU/Linux 3.2.0, stripped
 ./wget/wget_busybox_s390x_Linux.base64:                     ASCII text, with very long lines (65536), with no line terminators
-./wget/wget_busybox_s390x_musl_Linux:                       ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5fa2ec4ce963c949e4018ff4d96d72d510f17641, for GNU/Linux 5.4.0, stripped
+./wget/wget_busybox_s390x_musl_Linux:                       ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fc5afb30bfed1bfec47611711151baf816768590, for GNU/Linux 5.4.0, stripped
 ./wget/wget_busybox_s390x_musl_Linux.base64:                ASCII text, with very long lines (65536), with no line terminators
 
 --> SHA256SUM
@@ -162,60 +162,60 @@ af5c6d5340f3790b7bae847d0c0c393d104ea7eb0a241b1dbfa6940dd3fcaa1a  ./wget/wget_bu
 83273e34d54bee8eea3af3d8b3e0e2ac31e04d884b76f480abba32213659283f  ./wget/wget_busybox_aarch_arm64_Linux.base64
 fd049465c8d498d6b922e7c64f6851646b7310726271f11a1fd596b652d31241  ./wget/wget_busybox_aarch_arm64_musl_Linux
 f71cb93de6fd48e07c5d7a502b9abb59d3f6b549401eb8823738c4085716aa6f  ./wget/wget_busybox_aarch_arm64_musl_Linux.base64
-ae4b250031054dd72ac20a841c408ee5aa95b418c9822ce06c28cfb452643f88  ./wget/wget_busybox_amd_x86_64_Linux
-d1ae73525bd561449ff4841937d3188c2518c6b419b1907be0cda7bc73baf47d  ./wget/wget_busybox_amd_x86_64_Linux.base64
+e7c5a55a654283612c5fe4e82d411362187fcdab119c2e168b581dac9a85de05  ./wget/wget_busybox_amd_x86_64_Linux
+7f4f9bde5baf00fffa988e18057052243221adf6fa4e94450d8c404344617de0  ./wget/wget_busybox_amd_x86_64_Linux.base64
 6f962014746ec88aeb8271ba63d05fa5616e0eca014259b0fd29d0d29de9192a  ./wget/wget_busybox_amd_x86_64_Tiny_Linux
 fd28deaa62e028a190277084c74cf668fc4cebabca13c9716eb809c9a00c599a  ./wget/wget_busybox_amd_x86_64_Tiny_Linux.base64
 32c6fc4ec58bb605b31c17e772180f58efa27755fc825e19c4a673203e2bb35e  ./wget/wget_busybox_amd_x86_64_musl_Linux
 e340081292270b1a69d665ac59611da747e24d4331b5f9f98bbfae6e6a45c4b7  ./wget/wget_busybox_amd_x86_64_musl_Linux.base64
-b24bd5f245004dea1c1568c08bc0206a147993de346ce795ca09a3ccf0100a10  ./wget/wget_busybox_arm_armv6_musl_Linux
-37a27864c5e7bf2f000ff75c25cd7370bedc27807b52a8ee95269671795896fe  ./wget/wget_busybox_arm_armv6_musl_Linux.base64
-10f204f132727b9d4625e9563ee8db0139df9619bb53d30c2fe4e77a0ea9a110  ./wget/wget_busybox_arm_gnueabi_Linux
-3a32d8c110a91334573597878a1223aaf36ecbb90b33ea90a65d3e9f2e329921  ./wget/wget_busybox_arm_gnueabi_Linux.base64
-fd67388e7b8d9aba22410b89ae8fab6caad9338311fb8893e2e3b815a5d064c9  ./wget/wget_busybox_arm_gnueabihf_Linux
-a47137c23ab0a9110236c42ac299b9e90b4d81d71566d4232e00c88cbaa7aaab  ./wget/wget_busybox_arm_gnueabihf_Linux.base64
+eeb3791681bc16eaa79597982e8bd673eea27975f4fef1e97e0757a9ad99eb83  ./wget/wget_busybox_arm_armv6_musl_Linux
+32b8b40d09321f204b2da9b62c3571efdad7c4a7554bef183c9315ace6390ee2  ./wget/wget_busybox_arm_armv6_musl_Linux.base64
+9c1cd77184259e90293461600484e960ece1563b6105e3668fb6947ef97613a3  ./wget/wget_busybox_arm_gnueabi_Linux
+c2d52127ebffab4884b9bdee57d2d2851a48cee802a4052107c733c8f703c15f  ./wget/wget_busybox_arm_gnueabi_Linux.base64
+3640548428e46dc8b0b89563e59cc78bcb9fc5ebbc148e32f1cf2f61888dee5a  ./wget/wget_busybox_arm_gnueabihf_Linux
+da28b4a4cec3c626d88bbd483d1d55873625c33d386c55fedb28c710710530d3  ./wget/wget_busybox_arm_gnueabihf_Linux.base64
 6c2275f0b91350c3906c4e2104c644a33a78a38fc64130cb454a7facbe04de66  ./wget/wget_busybox_arm_gnueabihf_armv7l_musl_Linux
 ee01ddafe8bcf04f4d70d4f149250a5c160a65864e954fe4fa02b299fbfb7a40  ./wget/wget_busybox_arm_gnueabihf_armv7l_musl_Linux.base64
-9bef9b9f2e98d24c723bb46efc010abc8397d91da30ba004af3eefc66ef7aef0  ./wget/wget_busybox_i686_Linux
-2a5374c620b54b2e0bc16c07e905948db9081c48810794ed49c9f291bfec9e9c  ./wget/wget_busybox_i686_Linux.base64
+8964d4bbed4f645541c1440365fdf89c45be441c70c9ec1351f1073740c8f286  ./wget/wget_busybox_i686_Linux
+4d7fb9647c53ecc58501319edb02d62581462a18300fc43e60007a43db2214cd  ./wget/wget_busybox_i686_Linux.base64
 b668f9049c3227885dd87992bc8c1267d642675e84e789ea613f5e821d860271  ./wget/wget_busybox_i686_Tiny_Linux
 9141661e8dfc1b4ba0048c6aaf65cc2b5c9be21094fe8548be2f6c8bf6f01eb2  ./wget/wget_busybox_i686_Tiny_Linux.base64
-a7cba203d696bc25de5f45550cdd4e8456c463ff7efc6705805a8d6c5e6a73fb  ./wget/wget_busybox_i686_musl_Linux
-d86ae0ea07226cb526ee1e399ff999932225fa53a744c292a28a6f087cda2dac  ./wget/wget_busybox_i686_musl_Linux.base64
-099af2d095222d809c3c227d330c25f3e80c41d3d7aeb1c23edc89d0e6ff9e57  ./wget/wget_busybox_m68k_Linux
-e0c597ce01baba4cbdb7b874963d8dba534d59ecd96e36077b01af95aedc0635  ./wget/wget_busybox_m68k_Linux.base64
-e5d1e9a3b1e35321d854809cdbf8358de5985b752ca3d5e8f24e383cecb39be1  ./wget/wget_busybox_mips64_Linux
-ba898698e6fb05977729f1f38cec246be949fbede91072995bc5e3ff7bc6db6d  ./wget/wget_busybox_mips64_Linux.base64
-79a31d290c0832e407d9857ee8f3ac054dbb7c589e496d4a420eabf3bcdb791c  ./wget/wget_busybox_mips64el_Linux
-4168155c9c4173000821174766a3816db836149eb3cf5496ffb8ff57a52a6f12  ./wget/wget_busybox_mips64el_Linux.base64
+3e7551e67e7ed2e6796b1df63d3b107a21872a516fdd38a755f3b033c7c56dce  ./wget/wget_busybox_i686_musl_Linux
+72856e3e56e624899d2a931ea6a6cd821712195820f2361c4d813e863ca0436b  ./wget/wget_busybox_i686_musl_Linux.base64
+34b3e3dc1b4f112d928c172f4c56aea9a068d80581c53f0dc7d6825f511292b8  ./wget/wget_busybox_m68k_Linux
+5b96bfa770ac47f6548c355e9d9192100283cb47f67eee73e53db6d0d5620503  ./wget/wget_busybox_m68k_Linux.base64
+ac6301c486124f5ead806381dcbf7450624f6bd364f681392b5d444bf5239794  ./wget/wget_busybox_mips64_Linux
+3efbd90514152a7bbeffc4b7f029c802effe7840c0aba631531250b7de29792c  ./wget/wget_busybox_mips64_Linux.base64
+26607fbea36fe219206b212797b35fbd998a3b1c51a350f90996d0badd660d68  ./wget/wget_busybox_mips64el_Linux
+7ebc58abbfeb5b167f84ee66bd5d44eec95df07b8e10e828ee866f74b2f82d00  ./wget/wget_busybox_mips64el_Linux.base64
 50e96ee937a0865c40c822c7151c8d5e9281adc2719439d4a43fd9cd771b8493  ./wget/wget_busybox_mips_Linux
 777719207a9f65fee87bf02be1d2e53d411383b4986c54b01a3ae5aba1710fe7  ./wget/wget_busybox_mips_Linux.base64
-3b7be4dbf99ed5f3d638dd980657e7c8fdd82d4bd3d5626e323ea1190ec7d00c  ./wget/wget_busybox_mips_musl_Linux
-4e18a85fc19504e1c2e3952d95ed8000d32d0fdf904425d3d2a332bb2fa3c411  ./wget/wget_busybox_mips_musl_Linux.base64
-94f16a0614793664bc8f94c85d6dd464d0bb613be977fa0f792aadc7e4bd398a  ./wget/wget_busybox_mipsel_Linux
-812ff2fb6752bd031e9f65a219f04718db5c57834d65022a6439e8d1cce01a15  ./wget/wget_busybox_mipsel_Linux.base64
-55364a841bf494b2d2dc5cdfed130bd912388822d52d4c67cc8e1e629ddec341  ./wget/wget_busybox_mipsel_musl_Linux
-652f452ce1fcac48c213567abf0e02a3be68d412541d74ccccaab60737d66d6e  ./wget/wget_busybox_mipsel_musl_Linux.base64
-c7d98247919840d775ecd5657b504eae276165f9d40af0fbf3d1162d0f3bb0b1  ./wget/wget_busybox_powerpc64_Linux
-8cbba942d0fcad3aa20c302d862cf3a12430b77e41888f3c230c02aee69af829  ./wget/wget_busybox_powerpc64_Linux.base64
-a26593e971e66d70f7117ddb210e1912f5ed2b1fb3985781dbed26b758ec2f7d  ./wget/wget_busybox_powerpc64le_Linux
-d3240456f1a2d49404dbbd0bb356ae7b7931364d0b10966eddc26a723d066969  ./wget/wget_busybox_powerpc64le_Linux.base64
-3f7b27854d073c2c60fb2597d20f9ae3a86875efafc93c56ba3a0cf480f421c2  ./wget/wget_busybox_powerpc64le_musl_Linux
-cb016294f468bf52b84962f061a8a29c203667f4abad99dba72ddc9ef11368b8  ./wget/wget_busybox_powerpc64le_musl_Linux.base64
-a35e577350e10f1917a2c28e3fade1ce7749297eb31bf79b0cada3e1d8bcc4b9  ./wget/wget_busybox_powerpc_Linux
-920d306e90f299eb860a7523ace8a92b9f53d8a3c24303433c2f74be3c50d6ac  ./wget/wget_busybox_powerpc_Linux.base64
-7821eb56b20bcc4e68094468336a2ec8f8b9193ffcdc40db1211079a7b69a6fb  ./wget/wget_busybox_riscv32_Linux
-df356d9405813e0ad83d67c8dec3b1d5751a262b153e4367769ed71379a808cd  ./wget/wget_busybox_riscv32_Linux.base64
-cbdd4e1c80f866e43483fbaf9dbea068a4d353a482383aab70a103c3e7179c0a  ./wget/wget_busybox_riscv32_musl_Linux
-37d4dee812646cb18751c643eac22871f3e38a298ab4f3c727ca96921eac2dec  ./wget/wget_busybox_riscv32_musl_Linux.base64
-530ccbb24c749edc1be769f6e79608de472c39617a52db8390a46dc6b3bdf419  ./wget/wget_busybox_riscv64_Linux
-98e0a2b12776422bfcaf1d44848f5c5a1c292cde853c31302bc821b55a431171  ./wget/wget_busybox_riscv64_Linux.base64
-1d8e72789b2d2772159b7dac031e81a3b798fd49719fd09af5fea135aaf82796  ./wget/wget_busybox_riscv64_musl_Linux
-e9fe0095174c87d2e82b0a814f393abf49b26cfb59c108eff13dc9ab36b866b3  ./wget/wget_busybox_riscv64_musl_Linux.base64
-d99808872ccdf2291bfe0aa2f2229c004afb68465c561338be954624f3846b31  ./wget/wget_busybox_s390x_Linux
-d75973bbdfc469137a4415eef42d57e114e018779a2621264f1aca5de53bdbbe  ./wget/wget_busybox_s390x_Linux.base64
-c942975f88659d7a0d57396688ebe52a4be59afab797318e6dbe954891eb7a1e  ./wget/wget_busybox_s390x_musl_Linux
-53afe9314b8847338f5c71c3d856e98affd7faf051e8b35ada239cdcd63ee98b  ./wget/wget_busybox_s390x_musl_Linux.base64
+e6f60abf76af7bf1d0203aa69074c246829fda20e2fa545b9aea5b711fce9bb1  ./wget/wget_busybox_mips_musl_Linux
+ae7f12b1297f7ae28dab7bd05195152a05be615a31760ac27a1d9583f1f4aa09  ./wget/wget_busybox_mips_musl_Linux.base64
+167d3968a296f0641cb3c4235ef2bda5b0b17f34d25c36665f7f2fcf9d076a5a  ./wget/wget_busybox_mipsel_Linux
+d7ff032fada1d022a24058e8d58f3d9e527d2d9e45f3075bc076a2c3a06be6a2  ./wget/wget_busybox_mipsel_Linux.base64
+2bd03e4b74af6b2536de3c9f0818b2972839b4c5ea2e969f94f9a787677d6804  ./wget/wget_busybox_mipsel_musl_Linux
+2aeccfbe0492d382596149103cabc612d32661e913cbcbceb39755c0a758ef74  ./wget/wget_busybox_mipsel_musl_Linux.base64
+30e91f3ada54b5ee0b94158080e19975b48469ee125fcc5cb1a5d8e867adfae0  ./wget/wget_busybox_powerpc64_Linux
+12158ca9a2763adc56fc4cdc77bf596d64ecfb83c2999a35ccf07dfe64a2fdf1  ./wget/wget_busybox_powerpc64_Linux.base64
+270909f3f7ae5a4bb41f4a2b719c802d690567246eb6dbac6e4e83b081c1a606  ./wget/wget_busybox_powerpc64le_Linux
+8df4979f5029bd4b09e9e3ee1a713e1ad35e498133c745a6587b2263e2fa4d06  ./wget/wget_busybox_powerpc64le_Linux.base64
+e2fa780262eec2c193b50d44c57b4d434ae7006b62b5114beec9eb5a4b5dce81  ./wget/wget_busybox_powerpc64le_musl_Linux
+4a8dd0b486b7edda3fe3a3551a132c7cb0993893d2838214282c30303d130c3d  ./wget/wget_busybox_powerpc64le_musl_Linux.base64
+bd84358f5961bd5842bba66f041bd873daf15f8ee552388f147042ecfa6e69f5  ./wget/wget_busybox_powerpc_Linux
+74987a10c3b18c617d4884c40a63749dd1a11784c1f0de03b92e17347c2524c6  ./wget/wget_busybox_powerpc_Linux.base64
+edf8f2d0a24d14acefa756ed7bd86a871da1f46e9ceeca6929f7b430d11f2373  ./wget/wget_busybox_riscv32_Linux
+5df2757ef25547b48dafa83306ff23a6fb2592f5631ed8c7c48f65f1faf2febc  ./wget/wget_busybox_riscv32_Linux.base64
+142fb9529fb0db3387c4311ce34e915084c3db12c670657ef3a05ef292040da9  ./wget/wget_busybox_riscv32_musl_Linux
+730d97a4dbc7edda61bb806eba1042cd0eb040f3e2d1a76f91720f3b60184a63  ./wget/wget_busybox_riscv32_musl_Linux.base64
+de3aa73440b7c934d0aeacd6c9a48a2bbc2d632f4b712b5cdc744fee880e5b42  ./wget/wget_busybox_riscv64_Linux
+df6dd71516dc986e4cfeca1c7b6fe1657a8865f84bbbd883702f123348f324c4  ./wget/wget_busybox_riscv64_Linux.base64
+3b567c86d3b530554300695d4ab7e10d06e965ddbd75cc220a14844e90c325bf  ./wget/wget_busybox_riscv64_musl_Linux
+ee7f1f838644c4045cc8a2b87631eac264b170996fa6b3a6ebf5c748b24c2c85  ./wget/wget_busybox_riscv64_musl_Linux.base64
+633cc5761479812f1e47f73df50b82c14cc0b044c273d4da55d433bbc64664fd  ./wget/wget_busybox_s390x_Linux
+7151ec023d97323f49355d0e4258af6bc369a12f24eda6c34be7d478aa327a10  ./wget/wget_busybox_s390x_Linux.base64
+1f3835df09a0005f281b9873d862f2e043d50af1c39aa1a6612424e3949c0a79  ./wget/wget_busybox_s390x_musl_Linux
+a1d2eabf3a5cc9f337823f40cd1ed4b01ce50aabba54967c5436230c1b6540d5  ./wget/wget_busybox_s390x_musl_Linux.base64
 
 --> Sizes
 535K   ./wget/wget_amd_x86_WinTLS_lite_Windows.exe
@@ -291,4 +291,23 @@ c942975f88659d7a0d57396688ebe52a4be59afab797318e6dbe954891eb7a1e  ./wget/wget_bu
 - #### Flags
 ```console
 $ qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux
-/bin/bash: line 1: qemu-aarch64-static: command not found
+Usage: wget [-cqS] [--spider] [-O FILE] [-o LOGFILE] [--header STR]
+	[--post-data STR | --post-file FILE] [-Y on/off]
+	[--no-check-certificate] [-P DIR] [-U AGENT] [-T SEC] URL...
+
+Retrieve files via HTTP or FTP
+
+	--spider	Only check URL existence: $? is 0 if exists
+	--header STR	Add STR (of form 'header: value') to headers
+	--post-data STR	Send STR using POST method
+	--post-file FILE	Send FILE using POST method
+	--no-check-certificate	Don't validate the server's certificate
+	-c		Continue retrieval of aborted transfer
+	-q		Quiet
+	-P DIR		Save to DIR (default .)
+	-S    		Show server response
+	-T SEC		Network read timeout is SEC seconds
+	-O FILE		Save to FILE ('-' for stdout)
+	-o LOGFILE	Log messages to FILE
+	-U STR		Use STR for User-Agent header
+	-Y on/off	Use proxy
