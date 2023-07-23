@@ -92,7 +92,7 @@ jobs:
       - name: Fetch aria2 bins [ Latest ]
         run: |
           cd $(mktemp -d)
-          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.[] | select(.prerelease == true) | .assets[].browser_download_url'); do curl -LOJ "$url"; done
+          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases" | jq -r '.[] | select(.prerelease == true) | .assets[].browser_download_url'); do curl -LOJ "$url"; done
           find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
           #aarch64_arm64
           mv "./aria2-aarch64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_latest_Linux"
