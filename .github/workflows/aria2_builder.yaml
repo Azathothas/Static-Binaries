@@ -18,6 +18,11 @@ jobs:
         with:
           path: main
           
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget              
+          
       - name: Setup Env
         run: |
           # Create Output Dir
@@ -64,7 +69,7 @@ jobs:
           mv "./aria2-x86_64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_musl_Linux"
           mv "./aria2-x86_64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_libressl_musl_Linux"          
           #arm_abi
-          mv "./aria2-arm-linux-musleabi_static.zip_unzipped/aria2c/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_Linux" 
+          mv "./aria2-arm-linux-musleabi_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_Linux" 
           mv "./aria2-arm-linux-musleabi_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_libressl_musl_Linux"
           #mips 
           mv "./aria2-mips-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_Linux"
