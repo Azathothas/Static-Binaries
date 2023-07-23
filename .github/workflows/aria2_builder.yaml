@@ -117,9 +117,17 @@ jobs:
            echo '```console' >> ./aria2/README.md       
            /bin/bash -c 'PS4="$ ";ls -lh ./aria2 | awk "{print \$5, \$9}" | column -t' &>> ./aria2/README.md
            echo '```' >> ./aria2/README.md     
-           echo -e "" >> ./aria2/README.md
-           echo '---' >> ./aria2/README.md
-           echo -e "" >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md 
+           echo '---' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
+           echo '- #### Flags' >> ./aria2/README.md 
+           echo '```console' >> ./aria2/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static aria2c_aarch64_arm64_libressl_musl_latest_Linux --version' &>> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
+           echo '```' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md        
+           echo '---' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
         working-directory: main
         continue-on-error: true
         
