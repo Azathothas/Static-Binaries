@@ -3,7 +3,7 @@ name: Build || Fetch Tailscale Binaries
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 21 * * 7"  # 09:45 PM UTC Every Sunday --> 03:30 AM Nepal Time Every Monday
+    - cron: "45 21 * * 0"  # 09:45 PM UTC Every Sunday --> 03:30 AM Nepal Time Every Monday
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
   
