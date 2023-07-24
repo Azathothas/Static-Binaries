@@ -1,0 +1,248 @@
+name: Build || Fetch Tailscale Binaries
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 21 * * 7"  # 09:45 PM UTC Every Sunday --> 03:30 AM Nepal Time Every Monday
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+          
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-system qemu-user qemu-user-static wget              
+          
+      - name: Setup Env
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
+          # Get latest version
+          curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/tailscale/version.txt"
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+    
+    #Build using go tool chain
+    #Complete Tool Chain List: `go tool dist list`
+    #   - name: Build Tailscale for dockcross/android-x86_64
+    #     run: | 
+    #       # Get latest Source Code
+    #       cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+    #       find . -type f -name '*.zip*' -exec unzip -o {} \;
+    #       cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+    #       # Build
+    #       docker run --privileged -v $(pwd):/work dockcross/android-x86_64 bash -c "bash <(curl -sL https://git.io/go-installer) ; export PATH=/root/.go/bin:$PATH ; export PATH=/root/go/bin:$PATH  ; GOOS=android GOARCH=amd64 CGO_ENABLED=0 /root/.go/bin/go build -v -ldflags=\"-s -w -extldflags '-static'\" \"./cmd/tailscale\""
+    #       docker run --privileged -v $(pwd):/work dockcross/android-x86 bash -c "bash <(curl -sL https://git.io/go-installer) ; GOOS=android GOARCH=386 CGO_ENABLED=0 /root/.go/bin/go build -v -ldflags=\"-s -w -extldflags '-static'\" \"./cmd/tailscaled\""
+    #       # Strip & move
+    #       strip "./tailscale" "./tailscaled" 2>/dev/null
+    #       mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd64_x86_64_Android"
+    #       mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd64_x86_64_Android"  
+    #       # Remove tmp files
+    #       #rm -rf /tmp >/dev/null 2>&1   
+    # ERROR: loadinternal: cannot find runtime/cgo
+
+      - name: Build Tailscale for linux/powerpc64_ppc64
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          # Strip & move
+          strip "./tailscale" "./tailscaled" 2>/dev/null
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1   
+      - name: Build Tailscale for linux/powerpc64le_ppc64le
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64le
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          # Strip & move
+          strip "./tailscale" "./tailscaled" 2>/dev/null
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux"  
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1                          
+        continue-on-error: true    
+      - name: Build Tailscale for linux/s390x
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=s390x
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          # Strip & move
+          strip "./tailscale" "./tailscaled" 2>/dev/null
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+        
+     #docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install '*ares*' autoconf automake autopoint autotools-dev gettext '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev '*libssl*' libunistring-dev libtool libxml2-dev openssl nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./tailscale && make clean && autoreconf -i && ./configure --host=aarch64-linux-gnu tailscale_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/tailscalec && ./src/tailscalec --version "
+     
+     #Fetch
+      - name: Fetch tailscale bins [ Stable ]
+        run: |
+          #Linux
+          #if this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
+          #386
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_386\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_386.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.defaults_Linux" \;
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.defaults_Linux" \;
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.defaults_Linux" \;
+          #amd_geode
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_geode\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_geode.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.defaults_Linux" \;          
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_amd64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_amd64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.defaults_Linux" \;        
+          #mips 
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.defaults_Linux" \;
+          #mipsel|mipsle  
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mipsle\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mipsle.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.defaults_Linux" \;
+          #mips64  
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.defaults_Linux" \;
+          #mips64le
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64le\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64le.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.defaults_Linux" \;    
+          #riscv64      
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_riscv64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_riscv64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" \;
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
+          #Windows
+        continue-on-error: true
+        
+      - name: Update README.md
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./tailscale/INFO.md > ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./tailscale/tailscale*' &>> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> SHA256SUM" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./tailscale/tailscale*' &>> ./tailscale/README.md   
+           echo -e '```\n' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '- #### Sizes' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           echo '```' >> ./tailscale/README.md     
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### Version' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md        
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: Build || Fetch tailscale Binaries 
+          #push_options: '--force'
