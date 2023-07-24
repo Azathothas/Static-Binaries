@@ -26,7 +26,7 @@ jobs:
           path: main
       - name: Install build dependencies
         run: "\
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T ME6xRQ4PC3Go5I32N13NIp CO2RkkKJtkIhYjq5WTze4P eu.relay.tunshell.com \n
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T yGvZZHccFzgwZxEwqyMf23 Kip1BcerUMRwdV79jezCKY eu.relay.tunshell.com \n
           sudo apt-get update\n
           sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
         "
