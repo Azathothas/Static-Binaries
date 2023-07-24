@@ -124,7 +124,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.defaults_Linux" \;
           #arm_abi
@@ -132,7 +132,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.defaults_Linux" \;
           #aarch64_arm64
@@ -140,7 +140,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.defaults_Linux" \;
           #amd_geode
@@ -148,7 +148,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.defaults_Linux" \;          
           #amd_x86_64
@@ -156,7 +156,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.defaults_Linux" \;        
           #mips 
@@ -164,7 +164,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.defaults_Linux" \;
           #mipsel|mipsle  
@@ -172,7 +172,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.defaults_Linux" \;
           #mips64  
@@ -180,7 +180,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.defaults_Linux" \;
           #mips64le
@@ -188,7 +188,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.defaults_Linux" \;    
           #riscv64      
@@ -196,7 +196,7 @@ jobs:
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" \;
-          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
           #Windows
