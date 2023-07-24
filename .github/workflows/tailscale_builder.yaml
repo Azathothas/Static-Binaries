@@ -69,7 +69,9 @@ jobs:
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
           # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1   
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
       - name: Build Tailscale for linux/powerpc64le_ppc64le
         run: | 
           # Get latest Source Code
@@ -89,6 +91,7 @@ jobs:
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1                          
         continue-on-error: true    
+        
       - name: Build Tailscale for linux/s390x
         run: | 
           # Get latest Source Code
