@@ -20,10 +20,29 @@ jobs:
         with:
           path: main
           
-      - name: Install build dependencies
-        run: |
+      - name: Install CoreUtils
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-system qemu-user qemu-user-static wget              
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-system qemu-user qemu-user-static wget 
+          
+      - name: Install build dependencies
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
           
       - name: Setup Env
         run: |
