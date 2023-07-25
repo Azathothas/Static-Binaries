@@ -1,6 +1,6 @@
 
 ---
-- #### Download tailscale
+- #### Download [TailScale](https://tailscale.com/kb/installation/)
 > - **Sources**
 > > ```bash
 > > --> Android:
@@ -32,54 +32,92 @@ $env:PROCESSOR_ARCHITECTURE
 !# Index (ARCH || ALT_ARCH)
 
 !#For Linux
---> tailscalec_aarch64_arm64_musl_Linux || aarch64 || arm64 [64-bit] (GNU/Linux)
---> tailscalec_aarch64_arm64_musl_latest_Linux
---> tailscalec_aarch64_arm64_libressl_musl_Linux
---> tailscalec_aarch64_arm64_libressl_musl_latest_Linux
---> tailscalec_amd_x86_64_musl_Linux || amd x86_64 || x86_64 [64-bit] (GNU/Linux)
---> tailscalec_amd_x86_64_musl_latest_Linux
---> tailscalec_amd_x86_64_libressl_musl_Linux
---> tailscalec_amd_x86_64_libressl_musl_latest_Linux
---> tailscalec_arm_abi_musl_Linux || ARMv4 || ARMv5 || ARMv7 (?) [32-bit] {Hardware Floating-Point Unit (FPU) support : NO}
---> tailscalec_arm_abi_musl_latest_Linux
---> tailscalec_arm_abi_libressl_musl_Linux
---> tailscalec_arm_abi_libressl_musl_latest_Linux
---> //_gnueabihf_Linux || ARMv7 [32-bit] {Hardware Floating-Point Unit (FPU) support : YES}
---> // || x86_64 [32-bit] (GNU/Linux)
---> //_m68k_Linux || Motorola_NXP [32-bit] (SYSV)
---> tailscalec_mips_musl_Linux || MIPS (Big-Endian) [32-bit] (SYSV)
---> tailscalec_mips_musl_latest_Linux
---> tailscalec_mips_libressl_musl_Linux
---> tailscalec_mips_libressl_musl_latest_Linux
---> tailscalec_mips64_musl_Linux || MIPS (Big-Endian) [64-bit] (SYSV)
---> tailscalec_mips64_musl_latest_Linux
---> tailscalec_mips64_libressl_musl_Linux
---> tailscalec_mips64_libressl_musl_latest_Linux
---> //_mips64el_Linux || MIPSel (Little-Endian) [64-bit] (SYSV)
---> tailscalec_mipsel_musl_Linux || MIPSel (Little-Endian) [32-bit] (SYSV)
---> tailscalec_mipsel_musl_latest_Linux
---> tailscalec_mipsel_libressl_musl_Linux
---> tailscalec_mipsel_libressl_musl_latest_Linux
---> //powerpc_Linux || ppc || cisco 4500 [32-bit] (SYSV)
---> //powerpc64_Linux || ppc || cisco 4500 [32-bit] (SYSV)
---> //powerpc64le_Linux || ppc64le || cisco 7500 || OpenPOWER ELF V2 ABI (Little-Endian) [64-bit] (GNU/Linux)
---> //riscv32_Linux || UCB RISC-V || RVC [32-bit] (SYSV)
---> //riscv64_Linux || UCB RISC-V || RVC [64-bit] (SYSV)
---> //s390x_Linux || IBM S/390 [64-bit] (GNU/Linux)
+--> aarch64 || arm64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_aarch64_arm64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_aarch64_arm64_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_aarch64_arm64_systemd.service_Linux"
+
+--> Amd Geode || x86_64 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_geode_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_geode_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_geode_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_geode_systemd.service_Linux"
+
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_x86_64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_x86_64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_x86_64_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_x86_64_systemd.service_Linux"
+
+--> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) [32-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_arm_abi_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_arm_abi_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_arm_abi_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_arm_abi_systemd.service_Linux"
+
+--> i386 || Intel 80386 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_i386_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_i386_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_i386_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_i386_systemd.service_Linux"
+
+--> MIPS (Big-Endian) [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_mips_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips_systemd.service_Linux"
+
+--> MIPSel || MIPSle (Little-Endian) [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_mipsle_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mipsle_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mipsle_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mipsle_systemd.service_Linux"
+
+--> MIPS64 (Big-Endian) [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_mips64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64_systemd.service_Linux"
 
 
-!# Export
-export tailscale_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
+--> MIPS64le (Little-Endian) [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_mips64le_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64le_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64le_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_mips64le_systemd.service_Linux"
 
-!# Download Def
- curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/$tailscale_ARCH"
+
+--> powerpc64|| ppc64 || cisco 7500 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_powerpc64_ppc64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_powerpc64_ppc64_Linux"
+
+--> powerpc64le || ppc64le || cisco 7500 || OpenPOWER ELF V2 ABI (Little-Endian) [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux"
+
+
+--> risc64 || CB RISC-V || RVC [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_riscv64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_riscv64_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_riscv64_systemd.service_Linux"
+
+
+--> s390x || IBM S/390 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_s390x_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_s390x_Linux"
+
 
 ```
 ---
-- #### Install tailscale
+- #### Install TailScale
 ```bash
-!# Copy downloaded tailscale binaries to /usr/bin || /usr/local/bin
+!# Recommended way to install Tailscale is:
+ curl -fsSL https://tailscale.com/install.sh | sh
+!# But this requires `root` | `sudo` access and doesn't work on all ARCHS
 
+!# Copy downloaded tailscale binaries to /usr/bin || /usr/local/bin
 !# For $HOME/bin
  mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
 
@@ -87,13 +125,12 @@ export tailscale_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
  mv "$Path_To_tailscale_Binary" "/usr/bin/tailscale"
  mv "$Path_To_tailscaled_Binary" "/usr/bin/tailscaled"
 
+!# For Systemd Services, you have to move them to
+'/etc/systemd/system/' || '/etc/default/'
+!# Examples:
+ sudo cp "tailscaled_riscv64_systemd.service" "/etc/systemd/system/"
+ sudo cp "tailscaled_riscv64_systemd.defaults" "/etc/default/"
+
 !# Give Writeable Perms
  chmod +xwr /usr/bin/tailscale*
 ```
-
-
-
-
-
-
-h
