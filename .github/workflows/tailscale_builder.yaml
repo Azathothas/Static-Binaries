@@ -21,9 +21,10 @@ jobs:
           path: main
           
       - name: Install CoreUtils
+        run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-system qemu-user qemu-user-static wget 
-          
+
       - name: Install build dependencies
         run: "\
           sudo apt-get update\n
