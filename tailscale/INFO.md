@@ -9,6 +9,7 @@
 > > --> Linux:
 > >      - https://pkgs.tailscale.com/stable/#static [ Stable Releases ]
 > >      - Binaries for 'ppc64' | 'ppc64le' | 's390x' are compiled using dockercross
+> > 
 > > --> Windows:
 > >      - This rquires a GUI, so better to just download from: https://pkgs.tailscale.com/stable/#windows
 > > ```
@@ -116,6 +117,12 @@ $env:PROCESSOR_ARCHITECTURE
 !# Recommended way to install Tailscale is:
  curl -fsSL https://tailscale.com/install.sh | sh
 !# But this requires `root` | `sudo` access and doesn't work on all ARCHS
+!# Compile Dynamically using go (Mac OS etc.)
+  go install -v tailscale.com/cmd/tailscale@main
+  go install -v tailscale.com/cmd/tailscaled@main
+!# Equivalent of systemd.service
+sudo $HOME/go/bin/tailscaled install-system-daemon
+->> /Library/LaunchDaemons/com.tailscale.tailscaled.plist
 
 !# Copy downloaded tailscale binaries to /usr/bin || /usr/local/bin
 !# For $HOME/bin
@@ -131,6 +138,7 @@ $env:PROCESSOR_ARCHITECTURE
  sudo cp "tailscaled_riscv64_systemd.service" "/etc/systemd/system/"
  sudo cp "tailscaled_riscv64_systemd.defaults" "/etc/default/"
 
+!#
 !# Give Writeable Perms
  chmod +xwr /usr/bin/tailscale*
 ```
