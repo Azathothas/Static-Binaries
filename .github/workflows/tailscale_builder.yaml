@@ -83,7 +83,7 @@ jobs:
           export GOARCH=ppc64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 2>/dev/null
           # Strip & move
           strip "./tailscale" "./tailscaled" 2>/dev/null
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
@@ -107,7 +107,7 @@ jobs:
           # Strip & move
           strip "./tailscale" "./tailscaled" 2>/dev/null
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
-          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux"  
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 2>/dev/nul 
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1                          
         continue-on-error: true    
@@ -122,8 +122,8 @@ jobs:
           export GOOS=linux
           export GOARCH=s390x
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 2>/dev/nul
           # Strip & move
           strip "./tailscale" "./tailscaled" 2>/dev/null
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
