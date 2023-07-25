@@ -84,9 +84,8 @@ jobs:
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          # Strip & move
-          set -x
-          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
           sleep 6999
@@ -106,10 +105,10 @@ jobs:
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          # Strip & move
-          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
-          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 2>/dev/nul 
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1                          
         continue-on-error: true    
@@ -125,9 +124,9 @@ jobs:
           export GOARCH=s390x
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 2>/dev/nul
-          # Strip & move
-          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
           # Remove tmp files
