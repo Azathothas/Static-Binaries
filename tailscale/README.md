@@ -234,7 +234,7 @@ dccbbcb1f19cf455e41c9f2551733ab92433d162bd7d17564390db21f76bff93  ./tailscale/ta
 28M   tailscaled_riscv64_Linux
 287   tailscaled_riscv64_systemd.defaults_Linux
 676   tailscaled_riscv64_systemd.service_Linux
-8     version.txt
+5     version.txt
 ```
 
 ---
