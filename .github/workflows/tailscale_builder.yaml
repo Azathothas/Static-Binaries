@@ -240,7 +240,7 @@ jobs:
            echo '- #### Sizes' >> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
            echo '```console' >> ./tailscale/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
            echo '```' >> ./tailscale/README.md     
            echo -e "" >> ./tailscale/README.md 
            echo '---' >> ./tailscale/README.md 
