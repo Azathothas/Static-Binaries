@@ -83,9 +83,9 @@ jobs:
           export GOARCH=ppc64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" >/dev/null 2>&1  
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
           # Strip & move
-          strip "./tailscale" "./tailscaled" 2>/dev/null
+          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
           # Remove tmp files
@@ -105,7 +105,7 @@ jobs:
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
           # Strip & move
-          strip "./tailscale" "./tailscaled" 2>/dev/null
+          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 2>/dev/nul 
           # Remove tmp files
@@ -125,7 +125,7 @@ jobs:
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 2>/dev/nul
           # Strip & move
-          strip "./tailscale" "./tailscaled" 2>/dev/null
+          strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
           # Remove tmp files
@@ -142,7 +142,7 @@ jobs:
           #386
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_386\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_386.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.service_Linux" \;
@@ -150,7 +150,7 @@ jobs:
           #arm_abi
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.service_Linux" \;
@@ -158,7 +158,7 @@ jobs:
           #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm64.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.service_Linux" \;
@@ -166,7 +166,7 @@ jobs:
           #amd_geode
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_geode\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_geode.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.service_Linux" \;
@@ -174,7 +174,7 @@ jobs:
           #amd_x86_64
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_amd64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_amd64.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.service_Linux" \;
@@ -182,7 +182,7 @@ jobs:
           #mips 
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.service_Linux" \;
@@ -190,7 +190,7 @@ jobs:
           #mipsel|mipsle  
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mipsle\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mipsle.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.service_Linux" \;
@@ -198,7 +198,7 @@ jobs:
           #mips64  
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.service_Linux" \;
@@ -206,7 +206,7 @@ jobs:
           #mips64le
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64le\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64le.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.service_Linux" \;
@@ -214,7 +214,7 @@ jobs:
           #riscv64      
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_riscv64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_riscv64.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
-          find . -type f -name 'tailscale*' -exec strip {} \; 2>/dev/null
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
