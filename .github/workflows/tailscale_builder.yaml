@@ -23,7 +23,7 @@ jobs:
       - name: Install CoreUtils
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-system qemu-user qemu-user-static wget 
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       # - name: Install build dependencies
       #   run: "\
@@ -50,7 +50,7 @@ jobs:
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
           # Get latest version
-          curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/tailscale/version.txt"
+          curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/tailscale/version.txt"
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
     
     #Build using go tool chain
@@ -75,7 +75,7 @@ jobs:
       - name: Build Tailscale for linux/powerpc64_ppc64
         run: | 
           # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -95,7 +95,7 @@ jobs:
       - name: Build Tailscale for linux/powerpc64le_ppc64le
         run: | 
           # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -115,7 +115,7 @@ jobs:
       - name: Build Tailscale for linux/s390x
         run: | 
           # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -249,11 +249,11 @@ jobs:
            echo '```console' >> ./tailscale/README.md 
            /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
            /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md 
            echo '```' >> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md        
