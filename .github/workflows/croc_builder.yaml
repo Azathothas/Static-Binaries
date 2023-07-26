@@ -52,7 +52,7 @@ jobs:
           # Get latest version
           curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/croc/version.txt"
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-    
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
     #Build using go tool chain
     #Complete Tool Chain List: `go tool dist list`
 
@@ -396,5 +396,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Build || Fetch croc Binaries <-- ($VERSION)"
+          commit_message: "Build || Fetch croc Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
