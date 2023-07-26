@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Build Busybox and git auto commit
+name: Build Busybox
 
 on:
   workflow_dispatch:
