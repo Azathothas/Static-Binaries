@@ -1,0 +1,391 @@
+# Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
+name: Build busybox and git auto commit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 19 * * 0"  # 07:45 PM UTC Every Sunday --> 01:30 AM Nepal Time Every Monday
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: main
+
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/')
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash          
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/busybox/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/busybox"
+          # Get latest version
+          echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/' > "$GITHUB_WORKSPACE/main/busybox/version.txt"
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get latest URLs
+          #BusyBox
+          #export BUSYBOX_URL="https://github.com/mirror/busybox/archive/refs/tags/$(curl -qfsSL "https://api.github.com/repos/mirror/busybox/tags" | jq -r '.[0].name').tar.gz"
+          export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)"
+          #export BUSYBOX_URL="$BUSYBOX_URL"
+          #echo "$BUSYBOX_URL"
+          echo "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
+          #RISCV32
+          export RISCV32_TOOLCHAIN_URL=$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases/tags/$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases" | jq -r '.[] | select(.prerelease == true) | .tag_name' | head -n 1)" | jq -r '.assets[] | .browser_download_url' | grep -i 'riscv32-glibc-ubuntu-22.04-gcc')
+          echo "RISCV32_TOOLCHAIN_URL=$RISCV32_TOOLCHAIN_URL" >> $GITHUB_ENV
+
+      - name: Install build dependencies
+        if: env.versions_same != 'true'
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends build-essential wget ca-certificates \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          sudo mkdir -p /usr/local/rv32\n
+          wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
+          sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
+          echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
+          sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
+          mkdir busybox\n"
+          
+      - name: Download Busybox
+        run: wget -O- -q $BUSYBOX_URL | tar jxf -
+        working-directory: busybox
+
+    #Linux    
+     #amd_x86_64
+      - name: Build busybox for amd_x86_64 (GCC-Native)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for amd_x86_64 (MUSL-Native)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_musl_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true   
+
+      - name: Build busybox for aarch64 (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=aarch64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_aarch64_arm64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for aarch64 (MUSL-DockerCross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && cd "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME"
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make defconfig"
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
+          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make -j$(($(nproc)+1))"
+          cp "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME/busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_aarch64_arm64_musl_Linux"
+          cd .. && sudo rm -rf "./build" "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME" > /dev/null 2>&1
+        working-directory: busybox
+        continue-on-error: true                               
+
+      - name: Build busybox for arm-linux-gnueabi (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabi-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_arm_abi_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+        
+      - name: Build busybox for arm-linux-gnueabihf (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabihf-          
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_arm_gnueabihf_armv7l_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for arm-linux-gnueabihf_armv7l (MUSL-DockerCross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && cd "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME"
+          docker run --privileged -v $(pwd):/work dockcross/linux-armv7l-musl bash -c "make defconfig"
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
+          docker run --privileged -v $(pwd):/work dockcross/linux-armv7l-musl bash -c "make -j$(($(nproc)+1))"
+          cp "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME/busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_arm_gnueabihf_armv7l_musl_Linux"
+          cd .. && sudo rm -rf "./build" "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME" > /dev/null 2>&1
+        working-directory: busybox
+        continue-on-error: true  
+
+      - name: Build busybox for i686 (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=i686
+          export CROSS_COMPILE=i686-linux-gnu-        
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_i686_x86_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox   
+        continue-on-error: true
+
+      - name: Build busybox for m68k (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=m68k
+          export CROSS_COMPILE=m68k-linux-gnu-      
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_m68k_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+
+        working-directory: busybox     
+        continue-on-error: true
+      - name: Build busybox for mips-linux-gnu (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=mips
+          export CROSS_COMPILE=mips-linux-gnu-     
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_mips_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for mipsel-linux-gnu (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=mips
+          export CROSS_COMPILE=mipsel-linux-gnu-     
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_mipsel_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for mips64-linux-gnuabi64 (GCC-Cross)
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64-linux-gnuabi64-    
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_mips64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for mips64el-linux-gnuabi64
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64el-linux-gnuabi64-   
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_mips64el_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for powerpc
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=powerpc
+          export CROSS_COMPILE=powerpc-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc_ppc_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for powerpc64
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=powerpc64
+          export CROSS_COMPILE=powerpc64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64_ppc64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for powerpc64le-linux-gnu
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=powerpc
+          export CROSS_COMPILE=powerpc64le-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64le_ppc64le_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for riscv32-linux-gnu
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv32-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_riscv32_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for riscv64-linux-gnu
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv64-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_riscv64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Build busybox for s390x
+        run: |
+          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build ; cd build
+          export ARCH=s390x
+          export CROSS_COMPILE=s390x-linux-gnu-
+          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp busybox "$GITHUB_WORKSPACE/main/busybox/busybox_s390x_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        working-directory: busybox
+        continue-on-error: true
+
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           sudo chmod +xwr ./busybox/busy* 
+           cat ./busybox/INFO.md > ./busybox/README.md
+           echo -e "" >> ./busybox/README.md 
+           echo '---' >> ./busybox/README.md
+           echo '```console' >> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./busybox/busybox*' &>> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo -e "--> SHA256SUM" >> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./busybox/busybox*' &>> ./busybox/README.md   
+           echo -e '```\n' >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo '---' >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo '- #### Sizes' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md
+           echo '```console' >> ./busybox/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./busybox/busybox* | awk "{print \$5, \$9}" | column -t' &>> ./busybox/README.md
+           echo '```' >> ./busybox/README.md     
+           echo -e "" >> ./busybox/README.md 
+           echo '---' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md 
+           echo '- #### Version' >> ./busybox/README.md 
+           echo '```console' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux --version' &>> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux -h' &>> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md 
+           echo '```' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md        
+           echo '---' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      #https://github.com/stefanzweifel/git-auto-commit-action  
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Cross-Compile Busybox Binaries <-- v${{ env.VERSION }}"
+          #push_options: '--force'
