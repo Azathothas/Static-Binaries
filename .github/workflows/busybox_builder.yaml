@@ -83,10 +83,10 @@ jobs:
           g++-powerpc64le-linux-gnu \
           g++-riscv64-linux-gnu \
           g++-s390x-linux-gnu \
-          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          g++-sh4-linux-gnu libc6-dev-sh4-cross \
           musl \
           musl-dev \
-          musl-tools \
+          musl-tools \n
           sudo mkdir -p /usr/local/rv32\n
           wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
           sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
@@ -264,7 +264,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mips64_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for mips64el-linux-gnuabi64
+      - name: Build busybox for mips64el-linux-gnuabi64 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -278,7 +278,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mips64el_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for powerpc
+      - name: Build busybox for powerpc (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -292,7 +292,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc_ppc_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for powerpc64
+      - name: Build busybox for powerpc64 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -306,7 +306,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64_ppc64_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for powerpc64le-linux-gnu
+      - name: Build busybox for powerpc64le-linux-gnu (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -320,7 +320,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64le_ppc64le_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for riscv32-linux-gnu
+      - name: Build busybox for riscv32-linux-gnu (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -334,7 +334,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_riscv32_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for riscv64-linux-gnu
+      - name: Build busybox for riscv64-linux-gnu (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -348,7 +348,7 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_riscv64_gcc_Linux"
         continue-on-error: true
 
-      - name: Build busybox for s390x
+      - name: Build busybox for s390x (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
