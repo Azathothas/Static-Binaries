@@ -67,7 +67,7 @@ jobs:
         #if: env.versions_same != 'true'
         run: "\
           sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends build-essential wget ca-certificates \
+          sudo apt-get install -y --no-install-recommends build-essential ca-certificates wget  \
           file qemu-user-static \
           g++-aarch64-linux-gnu \
           g++-arm-linux-gnueabi \
@@ -84,6 +84,9 @@ jobs:
           g++-riscv64-linux-gnu \
           g++-s390x-linux-gnu \
           g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          musl \
+          musl-dev \
+          musl-tools \
           sudo mkdir -p /usr/local/rv32\n
           wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
           sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
@@ -101,8 +104,6 @@ jobs:
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          pwd ; echo -e "----\n$(pwd)-----\n"
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T jlx7WZgsiCIwDlB5yFvi7u o5LArcYAshTS871Aqh18Nw eu.relay.tunshell.com
           make defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           make -j$(($(nproc)+1))
