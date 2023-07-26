@@ -101,9 +101,9 @@ jobs:
           find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          make defconfig
           pwd ; echo -e "----\n$(pwd)-----\n"
           curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T jlx7WZgsiCIwDlB5yFvi7u o5LArcYAshTS871Aqh18Nw eu.relay.tunshell.com
+          make defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
           make -j$(($(nproc)+1))
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_gcc_Linux"
