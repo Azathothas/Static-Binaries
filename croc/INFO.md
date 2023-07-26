@@ -48,42 +48,79 @@ $env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH)
 
-!#For Linux
+!# DragonFlyBSD
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_DragonFlyBSD"
+
+!# FreeBSD
+--> aarch64 || arm64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_FreeBSD"
+--> Amd x86|| x86 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_FreeBSD"
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_FreeBSD"
+
+!# Linux
 --> aarch64 || arm64 [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_Linux"
-
+--> Amd x86 || x86 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_Linux"
 --> Amd x86_64 || x86_64 [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_Linux"
-
 --> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) [32-bit]
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_arm_abi_Linux"
-
 --> i386 || Intel 80386 [32-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_i386_Linux"
-
 --> MIPS (Big-Endian) [32-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_mips_Linux"
-
 --> MIPSel || MIPSle (Little-Endian) [32-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_mipsle_Linux"
-
 --> MIPS64 (Big-Endian) [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_mips64_Linux"
-
 --> MIPS64le (Little-Endian) [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_mips64le_Linux"
-
 --> powerpc64|| ppc64 || cisco 7500 [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_powerpc64_ppc64_Linux"
-
 --> powerpc64le || ppc64le || cisco 7500 || OpenPOWER ELF V2 ABI (Little-Endian) [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_powerpc64le_ppc64le_Linux"
-
 --> risc64 || CB RISC-V || RVC [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_riscv64_Linux"
-
 --> s390x || IBM S/390 [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_s390x_Linux"
+
+!# macOS
+--> aarch64 || arm64
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_macOS"
+--> Amd x86_64 || x86_64
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_x86_64_macOS"
+
+!# NetBSD
+--> Amd x86 || x86 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_NetBSD"
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_NetBSD"
+--> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) [32-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_arm_abi_NetBSD"
+
+!# OpenBSD
+--> aarch64 || arm64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_OpenBSD"
+--> Amd x86 || x86 [32-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_OpenBSD"
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_OpenBSD"
+--> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) [32-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_arm_abi_OpenBSD"
+
+#Windows
+--> aarch64 || arm64 [64-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_Windows.exe"
+--> Amd_x86 || x86 [32-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_Windows.exe"
+--> Amd x86_64 || x86_64 [64-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_Windows.exe"
+--> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) 
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_arm_Windows.exe"
 
 ```
 ---
