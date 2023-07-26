@@ -314,7 +314,7 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-ARM.tar.gz')
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
           find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_OpenBSD" \;
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_arm_abi_OpenBSD" \;
           #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-ARM64.tar.gz')
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
@@ -335,7 +335,7 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-ARM.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_Windows.exe" \;
+          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_arm_Windows.exe" \;
           #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-ARM64.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
