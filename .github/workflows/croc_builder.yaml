@@ -19,7 +19,30 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main
-          
+
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.tag_name' )
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            exit 0
+          else
+            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+          fi
+        shell: bash
+
+      - name: Continue with Next Steps
+        if: steps.check_version.outcome != 'success'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/croc/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+
       - name: Install CoreUtils
         run: |
           sudo apt-get update
@@ -53,6 +76,7 @@ jobs:
           curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/croc/version.txt"
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          
     #Build using go tool chain
     #Complete Tool Chain List: `go tool dist list`
 
