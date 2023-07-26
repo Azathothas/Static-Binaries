@@ -92,10 +92,6 @@ jobs:
           echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
           sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
           mkdir busybox\n"
-          
-      - name: Download Busybox
-        run: wget -O- -q $BUSYBOX_URL | tar jxf -
-        working-directory: busybox
 
     #Linux    
      #amd_x86_64
