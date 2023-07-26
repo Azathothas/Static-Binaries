@@ -67,7 +67,7 @@ jobs:
         #if: env.versions_same != 'true'
         run: "\
           sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends build-essential ca-certificates wget  \
+          sudo apt-get install -y --no-install-recommends b3sum build-essential ca-certificates ccache lzip '*glibc*' jq wget \
           file qemu-user-static \
           g++-aarch64-linux-gnu \
           g++-arm-linux-gnueabi \
@@ -110,21 +110,34 @@ jobs:
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_gcc_Linux"
           cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
         continue-on-error: true
+        
+      # - name: Build busybox for amd_x86_64 (MUSL-Native)
+      #   run: |
+      #     cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+      #     find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+      #     cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+      #     # Build
+      #     make defconfig
+      #     sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+      #     sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
+      #     make -j$(($(nproc)+1))
+      #     cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_musl_Linux"
+      #     cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+      #   continue-on-error: true  
 
-      - name: Build busybox for amd_x86_64 (MUSL-Native)
+      - name: Build busybox for amd_x86_64 (MUSL-DockerCross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          make defconfig
+          docker run --privileged -v $(pwd):/work dockcross/linux-x86_64-full bash -c "make defconfig"
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
-          make -j$(($(nproc)+1))
+          sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
+          docker run --privileged -v $(pwd):/work dockcross/linux-x86_64-full bash -c "make -j$(($(nproc)+1))"
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_musl_Linux"
-          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
-        continue-on-error: true   
-
+        continue-on-error: true 
+        
       - name: Build busybox for aarch64 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
