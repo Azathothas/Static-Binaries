@@ -98,7 +98,7 @@ jobs:
       - name: Build busybox for amd_x86_64 (GCC-Native)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           pwd ; echo -e "----\n$(pwd)-----\n"
@@ -113,7 +113,7 @@ jobs:
       - name: Build busybox for amd_x86_64 (MUSL-Native)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           make defconfig
@@ -127,7 +127,7 @@ jobs:
       - name: Build busybox for aarch64 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=aarch64
@@ -142,7 +142,7 @@ jobs:
       - name: Build busybox for aarch64 (MUSL-DockerCross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make defconfig"
@@ -155,7 +155,7 @@ jobs:
       - name: Build busybox for arm-linux-gnueabi (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=arm
@@ -169,7 +169,7 @@ jobs:
       - name: Build busybox for arm-linux-gnueabihf (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=arm
@@ -183,7 +183,7 @@ jobs:
       - name: Build busybox for arm-linux-gnueabihf_armv7l (MUSL-DockerCross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           docker run --privileged -v $(pwd):/work dockcross/linux-armv7l-musl bash -c "make defconfig"
@@ -196,7 +196,7 @@ jobs:
       - name: Build busybox for i686 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=i686
@@ -210,7 +210,7 @@ jobs:
       - name: Build busybox for m68k (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=m68k
@@ -224,7 +224,7 @@ jobs:
       - name: Build busybox for mips-linux-gnu (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=mips
@@ -238,7 +238,7 @@ jobs:
       - name: Build busybox for mipsel-linux-gnu (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=mips
@@ -252,7 +252,7 @@ jobs:
       - name: Build busybox for mips64-linux-gnuabi64 (GCC-Cross)
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=mips64
@@ -266,7 +266,7 @@ jobs:
       - name: Build busybox for mips64el-linux-gnuabi64
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=mips64
@@ -280,7 +280,7 @@ jobs:
       - name: Build busybox for powerpc
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=powerpc
@@ -294,7 +294,7 @@ jobs:
       - name: Build busybox for powerpc64
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=powerpc64
@@ -308,7 +308,7 @@ jobs:
       - name: Build busybox for powerpc64le-linux-gnu
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=powerpc
@@ -322,7 +322,7 @@ jobs:
       - name: Build busybox for riscv32-linux-gnu
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=riscv
@@ -336,7 +336,7 @@ jobs:
       - name: Build busybox for riscv64-linux-gnu
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=riscv
@@ -350,7 +350,7 @@ jobs:
       - name: Build busybox for s390x
         run: |
           cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
-          find . -type f -name '*.tar.gz*' -exec tar -xzvf {} \;
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
           export ARCH=s390x
