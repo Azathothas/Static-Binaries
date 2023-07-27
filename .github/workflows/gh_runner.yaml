@@ -3,15 +3,16 @@ name: Login --> gh-runner
 on:
   workflow_dispatch:
 env:
-  TSKEY: tskey-auth-keoQEr4CNTRL-hMFeukvsCZYwXV8caK8dZYbv74d8AqWBJ
+  #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+  TSKEY: tskey-auth-kRebui1CNTRL-DGuG2ZJUm3KPas2uUT6e4KWc32ntBeSz
   THOST: gh-runner
-  SOME_VAR_2: some_value_2
+  TUSER: runner
   
 jobs:
   build:
     runs-on: ubuntu-latest
     #Default Timeout= 6 Hr (360 Mins) : https://nesin.io/blog/github-action-timeout
-    # Docs: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+    #Docs: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
     timeout-minutes: 690000 
     permissions:
       contents: write
