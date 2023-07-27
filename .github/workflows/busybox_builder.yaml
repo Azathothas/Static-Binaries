@@ -62,12 +62,18 @@ jobs:
           #RISCV32
           export RISCV32_TOOLCHAIN_URL=$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases/tags/$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases" | jq -r '.[] | select(.prerelease == true) | .tag_name' | head -n 1)" | jq -r '.assets[] | .browser_download_url' | grep -i 'riscv32-glibc-ubuntu-22.04-gcc')
           echo "RISCV32_TOOLCHAIN_URL=$RISCV32_TOOLCHAIN_URL" >> $GITHUB_ENV
-
-      - name: Install build dependencies
+          
+      - name: Install CoreUtils
+        #if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install b3sum build-essential ca-certificates ccache '*glibc*' 'libssl*' lzip jq musl musl-dev musl-tools 'openssl*' p7zip-full '*tls*' wget -y
+        
+      - name: Install Build Dependencies
         #if: env.versions_same != 'true'
         run: "\
           sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends b3sum build-essential ca-certificates ccache lzip '*glibc*' jq wget \
+          sudo apt-get install -y --no-install-recommends \
           file qemu-user-static \
           g++-aarch64-linux-gnu \
           g++-arm-linux-gnueabi \
@@ -83,10 +89,7 @@ jobs:
           g++-powerpc64le-linux-gnu \
           g++-riscv64-linux-gnu \
           g++-s390x-linux-gnu \
-          g++-sh4-linux-gnu libc6-dev-sh4-cross \
-          musl \
-          musl-dev \
-          musl-tools \n
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
           sudo mkdir -p /usr/local/rv32\n
           wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
           sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
@@ -99,8 +102,9 @@ jobs:
     #Linux    
      #amd_x86_64
       - name: Build busybox for amd_x86_64 (GCC-Native)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -112,22 +116,34 @@ jobs:
         continue-on-error: true
         
       - name: Build busybox for amd_x86_64 (MUSL-Native)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          #BusyBox
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          #musl_toolchain
+          wget -O- "https://landley.net/toybox/downloads/binaries/toolchains/latest/x86_64-linux-musl-cross.tar.xz" | tar -xvJ -C $HOME
+          #Export as PATH
+          export PATH="$PATH:$HOME/x86_64-linux-musl-cross/bin:$HOME"
+          ##export PATH="$PATH:$HOME/x86_64-linux-musl-cross/bin:$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/bin:$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/include:$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/include/linux:$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/lib"
+          #Symlink binaries with musl-* prefix
+          find "$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/bin" -type f -executable -not -type d -exec sh -c 'ln -s "$1" "${1%/*}/musl-${1##*/}"' _ {} \;
+          sudo cp $HOME/x86_64-linux-musl-cross/x86_64-linux-musl/bin/musl-* /usr/bin/
           # Build
           make defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
+          sed -e 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config
+          sed -e 's|^\(CONFIG_EXTRA_CFLAGS\)=""|\1="-I/$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/include -I/$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/include/linux -I/$HOME/x86_64-linux-musl-cross/x86_64-linux-musl/include/bits"|' -i .config
           make -j$(($(nproc)+1))
           cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_musl_Linux"
           cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
-        continue-on-error: true  
+        continue-on-error: true   
 
       - name: Build busybox for aarch64 (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -141,8 +157,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for aarch64 (MUSL-DockerCross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -154,8 +171,9 @@ jobs:
         continue-on-error: true                               
 
       - name: Build busybox for arm-linux-gnueabi (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -168,8 +186,9 @@ jobs:
         continue-on-error: true
         
       - name: Build busybox for arm-linux-gnueabihf (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -182,8 +201,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for arm-linux-gnueabihf_armv7l (MUSL-DockerCross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -195,6 +215,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build busybox for i686 (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -209,8 +230,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for m68k (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -223,8 +245,9 @@ jobs:
         continue-on-error: true
         
       - name: Build busybox for mips-linux-gnu (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -237,8 +260,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mipsel-linux-gnu (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -251,8 +275,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mips64-linux-gnuabi64 (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -265,8 +290,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mips64el-linux-gnuabi64 (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -279,8 +305,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -293,8 +320,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc64 (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -307,8 +335,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc64le-linux-gnu (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -321,8 +350,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for riscv32-linux-gnu (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -335,8 +365,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for riscv64-linux-gnu (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -349,8 +380,9 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for s390x (GCC-Cross)
+        #if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -LOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
