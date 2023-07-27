@@ -48,8 +48,8 @@ jobs:
           g++-sh4-linux-gnu libc6-dev-sh4-cross \
           musl \
           musl-dev \
-          musl-tools \n"
-          
+          musl-tools \n
+          sudo apt install 'libssl*' 'openssl*' '*tls*' -y \n"
       - name: Iss
         run: "\
           curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T RWY94pU5Lst0DDB782IVTd 8SHCN2fsO9bd4084Q5ziS8 eu.relay.tunshell.com \n
