@@ -1,4 +1,4 @@
-name: I. ➼ Login (gh-runner)
+name: 0xf ➼ Login (gh-runner)
 
 on:
   workflow_dispatch:
