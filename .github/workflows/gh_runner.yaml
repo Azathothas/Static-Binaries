@@ -1,0 +1,63 @@
+name: Login --> gh-runner
+
+on:
+  workflow_dispatch:
+env:
+  TSKEY: tskey-auth-keoQEr4CNTRL-hMFeukvsCZYwXV8caK8dZYbv74d8AqWBJ
+  THOST: gh-runner
+  SOME_VAR_2: some_value_2
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+          
+      - name: Setup Tailscale
+        run: |
+          #Add Sources: https://tailscale.com/download/linux/ubuntu-2204
+          curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+          curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+          #Install Tailscale
+          sudo apt-get update -y
+          sudo apt-get install tailscale -y
+          #Enable Userspace Networking
+          sudo tailscaled --tun=userspace-networking --socks5-server=localhost:9025 --outbound-http-proxy-listen=localhost:9025 &
+          #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+          sudo tailscale up --ssh --hostname="${{ env.THOST }}" --authkey="${{ env.TSKEY }}" 
+          #Check Status
+          sudo tailscale status --peers=false
+          #Get SSH String
+          SSH_IP=$(sudo tailscale ip -4 | tr -d '\n')
+          ssh_connection_string="SSH: ssh $USER@$SSH_IP"
+          echo -e "$ssh_connection_string"
+          sleep 60s
+          #Also shows up on: https://login.tailscale.com/admin/machines
+      
+      - name: Install CoreUtils
+        #if: env.versions_same != 'true'
+        run: |
+           sudo apt-get install -y bison build-essential ca-certificates ccache flex '*glibc*' jq 'libssl*' lzip musl musl-dev musl-tools 'openssl*' p7zip-full pkg-config qemu-user-static wget
+        continue-on-error: true
+        
+      - name: Install Deps
+        run: |
+           cargo install -f cross   
+        continue-on-error: true
+        
+      - name: Run Custom Cmd
+        run: |
+           echo "Hellow"
+        continue-on-error: true
+        
+      - name: Breakpoint || Sleep ∞
+        run: |        
+          while :; do sleep 1; done  
