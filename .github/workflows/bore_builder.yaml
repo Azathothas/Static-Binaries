@@ -107,6 +107,7 @@ jobs:
           # Build
           export TARGET="aarch64-linux-android"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           rustup target add "$TARGET"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_Android"
@@ -126,6 +127,7 @@ jobs:
           # Build
           export TARGET="arm-linux-androideabi"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           rustup target add "$TARGET"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv_abi_Android"
@@ -145,6 +147,7 @@ jobs:
           # Build
           export TARGET="armv7-linux-androideabi"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           rustup target add "$TARGET"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_Android"
@@ -164,6 +167,7 @@ jobs:
           # Build
           export TARGET="i686-linux-android"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           rustup target add "$TARGET"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i686_Android"
@@ -173,24 +177,25 @@ jobs:
           #rm -rf /tmp >/dev/null 2>&1  
         continue-on-error: true  
 
-      - name: Build bore for x86_64_Android [cross-llvm-NDK]
-        #if: env.versions_same != 'true'
-        run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
-          find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
-          # Build
-          export TARGET="x86_64-linux-android"
-          export RUSTFLAGS="-C target-feature=+crt-static"
-          rustup target add "$TARGET"
-          cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_x86_64_Android"
-          #Del Docker Images
-          docker rmi -f $(docker images -q) >/dev/null 2>&1 
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1  
-        continue-on-error: true  
+      # - name: Build bore for x86_64_Android [cross-llvm-NDK]
+      #   #if: env.versions_same != 'true'
+      #   run: |
+      #     # Get latest Source Code
+      #     cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+      #     find . -type f -name '*.zip*' -exec unzip -o {} \;
+      #     cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+      #     # Build
+      #     export TARGET="x86_64-linux-android"
+      #     export RUSTFLAGS="-C target-feature=+crt-static"
+      #     echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+      #     rustup target add "$TARGET"
+      #     cross build --target "$TARGET" --release
+      #     mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_x86_64_Android"
+      #     #Del Docker Images
+      #     docker rmi -f $(docker images -q) >/dev/null 2>&1 
+      #     # Remove tmp files
+      #     #rm -rf /tmp >/dev/null 2>&1  
+      #   continue-on-error: true  
 
    ##Linux 
       - name: Build bore for aarch64_arm64_gcc [cross-GCC]
@@ -204,6 +209,7 @@ jobs:
           export TARGET="aarch64-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_gcc_Linux"
           #Del Docker Images
@@ -223,6 +229,7 @@ jobs:
           export TARGET="aarch64-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_musl_Linux"
           #Del Docker Images
@@ -242,6 +249,7 @@ jobs:
           export TARGET="i686-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_gcc_Linux"
           #Del Docker Images
@@ -261,6 +269,7 @@ jobs:
           export TARGET="x86_64-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_gcc_Linux"
           #Del Docker Images
@@ -280,6 +289,7 @@ jobs:
           export TARGET="i686-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_musl_Linux"
           #Del Docker Images
@@ -299,6 +309,7 @@ jobs:
           export TARGET="x86_64-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_musl_Linux"
           #Del Docker Images
@@ -318,6 +329,7 @@ jobs:
           export TARGET="arm-unknown-linux-gnueabi"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_gcc_Linux"
           #Del Docker Images
@@ -337,6 +349,7 @@ jobs:
           export TARGET="arm-unknown-linux-musleabi"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_musl_Linux"
           #Del Docker Images
@@ -356,6 +369,7 @@ jobs:
           export TARGET="arm-unknown-linux-gnueabihf"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_gcc_Linux"
           #Del Docker Images
@@ -375,6 +389,7 @@ jobs:
           export TARGET="arm-unknown-linux-musleabihf"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_musl_Linux"
           #Del Docker Images
@@ -394,6 +409,7 @@ jobs:
           export TARGET="armv7-unknown-linux-gnueabi"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_gcc_Linux"
           #Del Docker Images
@@ -413,6 +429,7 @@ jobs:
           export TARGET="armv7-unknown-linux-musleabi"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_musl_Linux"
           #Del Docker Images
@@ -432,6 +449,7 @@ jobs:
           export TARGET="armv7-unknown-linux-gnueabihf"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_gcc_Linux"
           #Del Docker Images
@@ -451,6 +469,7 @@ jobs:
           export TARGET="armv7-unknown-linux-musleabihf"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_musl_Linux"
           #Del Docker Images
@@ -470,6 +489,7 @@ jobs:
           export TARGET="i586-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_gcc_Linux"
           #Del Docker Images
@@ -489,6 +509,7 @@ jobs:
           export TARGET="i586-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_musl_Linux"
           #Del Docker Images
@@ -508,6 +529,7 @@ jobs:
           export TARGET="mips-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_gcc_Linux"
           #Del Docker Images
@@ -527,6 +549,7 @@ jobs:
           export TARGET="mips-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_musl_Linux"
           #Del Docker Images
@@ -546,6 +569,7 @@ jobs:
           export TARGET="mips64-unknown-linux-gnuabi64"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_gcc_Linux"
           #Del Docker Images
@@ -565,6 +589,7 @@ jobs:
           export TARGET="mips64-unknown-linux-muslabi64"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_musl_Linux"
           #Del Docker Images
@@ -584,6 +609,7 @@ jobs:
           export TARGET="mips64el-unknown-linux-muslabi64"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_abi64_musl_Linux"
           #Del Docker Images
@@ -603,6 +629,7 @@ jobs:
           export TARGET="mipsel-unknown-linux-musl"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_musl_Linux"
           #Del Docker Images
@@ -622,6 +649,7 @@ jobs:
           export TARGET="mipsel-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_gcc_Linux"
           #Del Docker Images
@@ -641,6 +669,7 @@ jobs:
           export TARGET="mips64el-unknown-linux-gnuabi64"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_muslabi64_Linux"
           #Del Docker Images
@@ -660,6 +689,7 @@ jobs:
           export TARGET="powerpc-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc_powerpc_gcc_Linux"
           #Del Docker Images
@@ -679,6 +709,7 @@ jobs:
           export TARGET="powerpc64-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64_powerpc64_gcc_Linux"
           #Del Docker Images
@@ -698,6 +729,7 @@ jobs:
           export TARGET="powerpc64le-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64le_powerpc64le_gcc_Linux"
           #Del Docker Images
@@ -717,6 +749,7 @@ jobs:
           export TARGET="riscv64gc-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_riscv64_gcc_Linux"
           #Del Docker Images
@@ -736,6 +769,7 @@ jobs:
           export TARGET="s390x-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_s390x_gcc_Linux"
           #Del Docker Images
@@ -755,6 +789,7 @@ jobs:
           export TARGET="sparc64-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_sparc64_gcc_Linux"
           #Del Docker Images
