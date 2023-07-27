@@ -10,7 +10,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    #Default Timeout= 6 Hr (360 Mins) : https://nesin.io/blog/github-action-timeout
+    # Docs: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+    timeout-minutes: 690000 
     permissions:
       contents: write
       
