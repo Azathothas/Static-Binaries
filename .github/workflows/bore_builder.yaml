@@ -1,5 +1,5 @@
 name: Build || Fetch Bore Binaries
-
+#RUNTIME: ~ 90 Mins
 on:
   workflow_dispatch:
   schedule:
@@ -70,7 +70,7 @@ jobs:
           g++-riscv64-linux-gnu \
           g++-s390x-linux-gnu \
           g++-sh4-linux-gnu libc6-dev-sh4-cross\n
-          cargo install -f cross\n"
+          cargo install cross --git https://github.com/cross-rs/cross\n"
           
       - name: Setup Env
         #if: env.versions_same != 'true'
@@ -85,6 +85,113 @@ jobs:
     #Build using rustup | rust-cross
     #Complete Tool Chain List: `rustup target list`
     #Cross Target List: https://github.com/cross-rs/cross#supported-targets
+
+   ##Android
+      - name: Install Android NDK
+        #if: env.versions_same != 'true'
+        run: |
+          #Download the Android NDK Toolchain
+          cd $(mktemp -d) && curl -qfSLJO "https://dl.google.com/android/repository/android-ndk-r25c-linux.zip"
+          #Unzip
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          mkdir -p "$HOME/.android/android-ndk" && mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "$HOME/.android/android-ndk" 
+        continue-on-error: true     
+          
+      - name: Build bore for aarch64_arm64_Android [cross-llvm-NDK]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="aarch64-linux-android"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv_abi_Android [cross-llvm-NDK]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-linux-androideabi"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv_abi_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abi_Android [cross-llvm-NDK]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-linux-androideabi"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for i686_Android [cross-llvm-NDK]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i686-linux-android"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i686_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for x86_64_Android [cross-llvm-NDK]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="x86_64-linux-android"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_x86_64_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
    ##Linux 
       - name: Build bore for aarch64_arm64_gcc [cross-GCC]
         #if: env.versions_same != 'true'
@@ -94,8 +201,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "aarch64-unknown-linux-gnu"
           export TARGET="aarch64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_gcc_Linux"
           #Del Docker Images
@@ -112,8 +220,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "aarch64-unknown-linux-musl"
           export TARGET="aarch64-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_musl_Linux"
           #Del Docker Images
@@ -130,8 +239,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "i686-unknown-linux-gnu"
           export TARGET="i686-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_gcc_Linux"
           #Del Docker Images
@@ -148,8 +258,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "x86_64-unknown-linux-gnu"
           export TARGET="x86_64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_gcc_Linux"
           #Del Docker Images
@@ -166,8 +277,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "i686-unknown-linux-musl"
           export TARGET="i686-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_musl_Linux"
           #Del Docker Images
@@ -184,8 +296,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "x86_64-unknown-linux-musl"
           export TARGET="x86_64-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_musl_Linux"
           #Del Docker Images
@@ -202,8 +315,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "arm-unknown-linux-gnueabi"
           export TARGET="arm-unknown-linux-gnueabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_gcc_Linux"
           #Del Docker Images
@@ -220,8 +334,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "arm-unknown-linux-musleabi"
           export TARGET="arm-unknown-linux-musleabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_musl_Linux"
           #Del Docker Images
@@ -238,8 +353,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "arm-unknown-linux-gnueabihf"
           export TARGET="arm-unknown-linux-gnueabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_gcc_Linux"
           #Del Docker Images
@@ -256,8 +372,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "arm-unknown-linux-musleabihf"
           export TARGET="arm-unknown-linux-musleabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_musl_Linux"
           #Del Docker Images
@@ -274,8 +391,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "armv7-unknown-linux-gnueabi"
           export TARGET="armv7-unknown-linux-gnueabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_gcc_Linux"
           #Del Docker Images
@@ -292,8 +410,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "armv7-unknown-linux-musleabi"
           export TARGET="armv7-unknown-linux-musleabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_musl_Linux"
           #Del Docker Images
@@ -310,8 +429,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "armv7-unknown-linux-gnueabihf"
           export TARGET="armv7-unknown-linux-gnueabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_gcc_Linux"
           #Del Docker Images
@@ -328,8 +448,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "armv7-unknown-linux-musleabihf"
           export TARGET="armv7-unknown-linux-musleabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_musl_Linux"
           #Del Docker Images
@@ -346,8 +467,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "i586-unknown-linux-gnu"
           export TARGET="i586-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_gcc_Linux"
           #Del Docker Images
@@ -364,8 +486,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "i586-unknown-linux-musl"
           export TARGET="i586-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_musl_Linux"
           #Del Docker Images
@@ -382,8 +505,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips-unknown-linux-gnu"
           export TARGET="mips-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_gcc_Linux"
           #Del Docker Images
@@ -400,8 +524,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips-unknown-linux-musl"
           export TARGET="mips-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_musl_Linux"
           #Del Docker Images
@@ -418,8 +543,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips64-unknown-linux-gnuabi64"
           export TARGET="mips64-unknown-linux-gnuabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_gcc_Linux"
           #Del Docker Images
@@ -436,8 +562,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips64-unknown-linux-muslabi64"
           export TARGET="mips64-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_musl_Linux"
           #Del Docker Images
@@ -454,8 +581,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips64el-unknown-linux-muslabi64"
           export TARGET="mips64el-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_abi64_musl_Linux"
           #Del Docker Images
@@ -472,8 +600,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mipsel-unknown-linux-musl"
           export TARGET="mipsel-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_musl_Linux"
           #Del Docker Images
@@ -490,8 +619,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mipsel-unknown-linux-gnu"
           export TARGET="mipsel-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_gcc_Linux"
           #Del Docker Images
@@ -508,8 +638,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "mips64el-unknown-linux-gnuabi64"
           export TARGET="mips64el-unknown-linux-gnuabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_muslabi64_Linux"
           #Del Docker Images
@@ -526,8 +657,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "powerpc-unknown-linux-gnu"
           export TARGET="powerpc-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc_powerpc_gcc_Linux"
           #Del Docker Images
@@ -544,8 +676,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "powerpc64-unknown-linux-gnu"
           export TARGET="powerpc64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64_powerpc64_gcc_Linux"
           #Del Docker Images
@@ -562,8 +695,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "powerpc64le-unknown-linux-gnu"
           export TARGET="powerpc64le-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64le_powerpc64le_gcc_Linux"
           #Del Docker Images
@@ -580,8 +714,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "riscv64gc-unknown-linux-gnu"
           export TARGET="riscv64gc-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_riscv64_gcc_Linux"
           #Del Docker Images
@@ -598,8 +733,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "s390x-unknown-linux-gnu"
           export TARGET="s390x-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_s390x_gcc_Linux"
           #Del Docker Images
@@ -616,8 +752,9 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          rustup target add "sparc64-unknown-linux-gnu"
           export TARGET="sparc64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
           cross build --target "$TARGET" --release
           mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_sparc64_gcc_Linux"
           #Del Docker Images
@@ -627,7 +764,7 @@ jobs:
         continue-on-error: true  
      
      #Fetch
-      - name: Fetch bore bins [ Stable ]
+      - name: Fetch Bore bins [ macOS || Windows ]
         #if: env.versions_same != 'true'
         run: |
           #macOS
@@ -658,7 +795,11 @@ jobs:
       - name: Cleanup >> Strip >> chmod
         #if: env.versions_same != 'true'
         run: |
-          find "$GITHUB_WORKSPACE/main/bore/" -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1
+          #Strip All Android Bins
+          "$HOME/.android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip" $GITHUB_WORKSPACE/main/bore/*_Android
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/bore/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
           find "$GITHUB_WORKSPACE/main/bore/" -type f -name 'bore*' -exec chmod +xwr {} \; >/dev/null 2>&1
         continue-on-error: true
         
@@ -673,7 +814,7 @@ jobs:
            /bin/bash -c 'PS4="$ "; set -x; file ./bore/bore*' &>> ./bore/README.md
            echo -e "" >> ./bore/README.md
            echo -e "--> SHA256SUM" >> ./bore/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./bore/bore*' &>> ./bore/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./bore/bore*' &>> ./bore/README.md   
            echo -e '```\n' >> ./bore/README.md
            echo -e "" >> ./bore/README.md
            echo '---' >> ./bore/README.md
