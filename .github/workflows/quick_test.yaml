@@ -48,7 +48,7 @@ jobs:
           g++-sh4-linux-gnu libc6-dev-sh4-cross \
           musl \
           musl-dev \
-          musl-tools \n
+          musl-tools \n"
           
       - name: Iss
         run: "\
