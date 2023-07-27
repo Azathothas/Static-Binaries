@@ -3,7 +3,7 @@ name: Build || Fetch Bore Binaries
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 19 * * 0"  # 07:45 PM UTC Every Sunday --> 01:30 AM Nepal Time Every Monday
+    - cron: "15 18 * * 0"  # 06:15 PM UTC Every Sunday --> 12:00 AM Nepal Time Every Monday
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
   
@@ -785,7 +785,7 @@ jobs:
           find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'bore.exe' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_Windows.exe" \;           
           #amd_x86_64
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'x86_64-pc-windows-msvc.zip ')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'x86_64-pc-windows-msvc.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'bore.exe' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_Windows.exe" \;               
