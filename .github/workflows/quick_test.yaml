@@ -24,9 +24,35 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: main
+          
       - name: Install build dependencies
+        #if: env.versions_same != 'true'
         run: "\
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T iTRcomZSSEqCc7puYBBtSf g3iwqUen036bI3xXDzgSG6 eu.relay.tunshell.com \n
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends b3sum build-essential ca-certificates ccache lzip '*glibc*' jq wget \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross \
+          musl \
+          musl-dev \
+          musl-tools \n
+          
+      - name: Iss
+        run: "\
+          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T RWY94pU5Lst0DDB782IVTd 8SHCN2fsO9bd4084Q5ziS8 eu.relay.tunshell.com \n
           sudo apt-get update\n
           sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
         "
