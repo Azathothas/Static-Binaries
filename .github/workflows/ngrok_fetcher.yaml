@@ -1,3 +1,4 @@
+#MAX_RUNTIME: ~ 5 mins
 name: Fetch ngrok Binaries
 
 on:
