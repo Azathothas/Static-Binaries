@@ -76,105 +76,105 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-arm.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" \;
          #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-amd64.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" \;
          #386
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-386.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1          
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD" \;
          #-------------------------#          
          #Linux
          #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-arm64.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux" \;
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-amd64.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" \;   
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" \;   
          #arm
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-arm.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" \;
          #i386 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-386.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux" \;
          #mips
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*'-exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux" \;
          #mipsle
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mipsle.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux" \;
          #mips64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips64.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux" \;
          #mips64le
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips64le.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux" \;
          #ppc64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-ppc64.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux" \;
          #ppc64le
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-ppc64le.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" \;          
+          find . -type f -name 'ngrok*'! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" \;          
          #s390x
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-s390x.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux" \;
          #-------------------------# 
          #macOS
          #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'darwin-arm64.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS" \;
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'darwin-amd64.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1            
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS" \;
          #-------------------------# 
          #Solaris
          #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'solaris-amd64.tgz')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" \;
          #-------------------------# 
          #Windows 
          #Windows 32-bit
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'windows-386.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_Windows.exe" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_Windows.exe" \;
          #Windows x86_64_amd64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'windows-amd64.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Windows.exe" \;
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Windows.exe" \;
          #Change Perms
           sudo chmod +xwr $GITHUB_WORKSPACE/main/ngrok/ngrok_* 
         continue-on-error: true
