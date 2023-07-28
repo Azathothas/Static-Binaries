@@ -34,6 +34,7 @@ jobs:
           chmod +xwr "./ngrok"
           # Get latest version
           export VERSION=$("./ngrok" --version | grep -o '[0-9.]\+')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/ngrok/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
@@ -43,6 +44,7 @@ jobs:
             echo "Building... --> $VERSION  (from $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
+          rm -rf $GITHUB_WORKSPACE/main/ngrok/ngrok*
         shell: bash
 
       - name: Compare Versions
@@ -63,11 +65,6 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/ngrok"
-          # Get latest version
-          curl -qfsSL "https://api.github.com/repos/ekzhang/ngrok/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/ngrok/version.txt"
-          export VERSION=$(cat $GITHUB_WORKSPACE/main/ngrok/version.txt)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          
 
       - name: Download @Latest Releases   
         if: env.versions_same != 'true' 
@@ -220,7 +217,7 @@ jobs:
            echo '- #### Sizes' >> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '```console' >> ./ngrok/README.md
-           /bin/bash -c 'PS4="$ "; ls -lh ./ngrok | awk "{print \$5, \$9}" | column -t' &>> ./ngrok/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./ngrok/ngrok* | awk "{print \$5, \$9}" | column -t' &>> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '```' >> ./ngrok/README.md          
            echo -e "" >> ./ngrok/README.md                   
