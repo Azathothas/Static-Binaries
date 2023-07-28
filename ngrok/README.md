@@ -103,26 +103,23 @@ OPTIONS:
 - #### Sizes
 
 ```console
-5     INFO.md
-7.1K  README.md
-22M   ngrok_386_FreeBSD
-7.9M  ngrok_aarch64_arm64_Linux
-25M   ngrok_aarch64_arm64_macOS
-24M   ngrok_amd_x86_64_Linux
-8.4M  ngrok_amd_x86_64_Solaris
-8.7M  ngrok_amd_x86_64_Windows.exe
-9.1M  ngrok_amd_x86_64_macOS
-8.5M  ngrok_amd_x86_Windows.exe
-8.1M  ngrok_arm_Linux
-8.1M  ngrok_i386_Linux
-7.4M  ngrok_mips64_Linux
-26M   ngrok_mips64le_Linux
-7.5M  ngrok_mips_Linux
-25M   ngrok_mipsle_Linux
-7.6M  ngrok_powerpc64_Linux
-7.6M  ngrok_powerpc64le_Linux
-8.2M  ngrok_s390x_Linux
-0     version.txt
+22M   ./ngrok/ngrok_386_FreeBSD
+7.9M  ./ngrok/ngrok_aarch64_arm64_Linux
+25M   ./ngrok/ngrok_aarch64_arm64_macOS
+24M   ./ngrok/ngrok_amd_x86_64_Linux
+8.4M  ./ngrok/ngrok_amd_x86_64_Solaris
+8.7M  ./ngrok/ngrok_amd_x86_64_Windows.exe
+9.1M  ./ngrok/ngrok_amd_x86_64_macOS
+8.5M  ./ngrok/ngrok_amd_x86_Windows.exe
+8.1M  ./ngrok/ngrok_arm_Linux
+8.1M  ./ngrok/ngrok_i386_Linux
+7.4M  ./ngrok/ngrok_mips64_Linux
+26M   ./ngrok/ngrok_mips64le_Linux
+7.5M  ./ngrok/ngrok_mips_Linux
+25M   ./ngrok/ngrok_mipsle_Linux
+7.6M  ./ngrok/ngrok_powerpc64_Linux
+7.6M  ./ngrok/ngrok_powerpc64le_Linux
+8.2M  ./ngrok/ngrok_s390x_Linux
 
 ```
 
