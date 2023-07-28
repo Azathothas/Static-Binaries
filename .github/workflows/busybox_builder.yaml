@@ -133,7 +133,7 @@ jobs:
       - name: Build busybox for aarch64_arm64_musl (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name aarch64_arm64_musl \
+          docker run --privileged --name aarch64_arm64_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:aarch64-musl \
             bash -c '
@@ -176,7 +176,7 @@ jobs:
       - name: Build busybox for amd_x86_64_musl (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name amd_x86_64_musl \
+          docker run --privileged --name amd_x86_64_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:x86_64-musl \
             bash -c '
@@ -219,7 +219,7 @@ jobs:
       - name: Build busybox for arm_abi_musl (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name arm_abi_musl \
+          docker run --privileged --name arm_abi_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:arm-musleabi \
             bash -c '
@@ -262,7 +262,7 @@ jobs:
       - name: Build busybox for arm_abihf_musl (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name arm_abihf_musl \
+          docker run --privileged --name arm_abihf_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:arm-musleabihf \
             bash -c '
@@ -290,7 +290,7 @@ jobs:
       - name: Build busybox for armv5te_abi_musl (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name armv5te_abi_musl \
+          docker run --privileged --name armv5te_abi_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:armv5te-musleabi \
             bash -c '
@@ -332,7 +332,7 @@ jobs:
       - name: Build busybox for armv7l_abihf_musl_Linux (MUSL-Docker)
         #if: env.versions_same != 'true'
         run: |
-          docker run -it --privileged --name armv7l_abihf_musl_Linux \
+          docker run --privileged --name armv7l_abihf_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
             blackdex/musl-toolchain:armv7-musleabihf \
             bash -c '
