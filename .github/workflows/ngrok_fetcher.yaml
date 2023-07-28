@@ -45,7 +45,6 @@ jobs:
             echo "Building... --> $VERSION  (from $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
-          rm -rf $GITHUB_WORKSPACE/main/ngrok/ngrok*
         shell: bash
 
       - name: Compare Versions
