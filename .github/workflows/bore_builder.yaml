@@ -1,5 +1,5 @@
 name: Build || Fetch Bore Binaries
-#RUNTIME: ~ 90 Mins
+#MAX_RUNTIME: ~ 90 Mins
 on:
   workflow_dispatch:
   schedule:
