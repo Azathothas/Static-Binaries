@@ -200,7 +200,7 @@ jobs:
            /bin/bash -c 'PS4="$ "; set -x; file ./ngrok/ngrok_*' &>> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo -e "--> SHA256SUM" >> ./ngrok/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./ngrok/ngrok_*' &>> ./ngrok/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./ngrok/ngrok_*' &>> ./ngrok/README.md   
            echo -e '```\n' >> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '---' >> ./ngrok/README.md
