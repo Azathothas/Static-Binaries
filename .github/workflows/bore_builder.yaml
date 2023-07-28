@@ -558,7 +558,7 @@ jobs:
           #rm -rf /tmp >/dev/null 2>&1  
         continue-on-error: true  
 
-      - name: Build bore for mips64_abi64_gcc [cross-GCC]
+      - name: Build bore for mipsel_gcc [cross-GCC]
         #if: env.versions_same != 'true'
         run: |
           # Get latest Source Code
@@ -566,52 +566,12 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          export TARGET="mips64-unknown-linux-gnuabi64"
+          export TARGET="mipsel-unknown-linux-gnu"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_gcc_Linux"
-          #Del Docker Images
-          docker rmi -f $(docker images -q) >/dev/null 2>&1
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1  
-        continue-on-error: true 
-
-      - name: Build bore for mips64_abi64_musl [cross-MUSL]
-        #if: env.versions_same != 'true'
-        run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
-          find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
-          # Build
-          export TARGET="mips64-unknown-linux-muslabi64"
-          rustup target add "$TARGET"
-          export RUSTFLAGS="-C target-feature=+crt-static"
-          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
-          cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_abi64_musl_Linux"
-          #Del Docker Images
-          docker rmi -f $(docker images -q) >/dev/null 2>&1
-          # Remove tmp files
-          #rm -rf /tmp >/dev/null 2>&1  
-        continue-on-error: true  
-
-      - name: Build bore for mips64el_abi64_musl [cross-MUSL]
-        #if: env.versions_same != 'true'
-        run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
-          find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
-          # Build
-          export TARGET="mips64el-unknown-linux-muslabi64"
-          rustup target add "$TARGET"
-          export RUSTFLAGS="-C target-feature=+crt-static"
-          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
-          cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_abi64_musl_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_gcc_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
@@ -637,8 +597,8 @@ jobs:
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1  
         continue-on-error: true  
-
-      - name: Build bore for mipsel_gcc [cross-GCC]
+        
+      - name: Build bore for mips64_gcc [cross-GCC]
         #if: env.versions_same != 'true'
         run: |
           # Get latest Source Code
@@ -646,19 +606,39 @@ jobs:
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
-          export TARGET="mipsel-unknown-linux-gnu"
+          export TARGET="mips64-unknown-linux-gnuabi64"
           rustup target add "$TARGET"
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_gcc_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true 
+
+      - name: Build bore for mips64_musl [cross-MUSL]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_musl_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1  
         continue-on-error: true  
-
-      - name: Build bore for mips64el_muslabi64_gcc [cross-GCC]
+        
+      - name: Build bore for mips64el_gcc [cross-GCC]
         #if: env.versions_same != 'true'
         run: |
           # Get latest Source Code
@@ -671,7 +651,27 @@ jobs:
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_muslabi64_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for mips64el_musl [cross-MUSL]
+        #if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64el-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_musl_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
@@ -691,7 +691,7 @@ jobs:
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc_powerpc_gcc_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc_ppc_gcc_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
@@ -711,7 +711,7 @@ jobs:
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64_powerpc64_gcc_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc64_ppc64_gcc_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
@@ -731,7 +731,7 @@ jobs:
           export RUSTFLAGS="-C target-feature=+crt-static"
           echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
           cross build --target "$TARGET" --release
-          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_ppc64le_powerpc64le_gcc_Linux"
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc64le_ppc64le_gcc_Linux"
           #Del Docker Images
           docker rmi -f $(docker images -q) >/dev/null 2>&1
           # Remove tmp files
