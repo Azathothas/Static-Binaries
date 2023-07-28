@@ -419,12 +419,10 @@ jobs:
            echo -e "" >> ./busybox/README.md 
            echo '---' >> ./busybox/README.md 
            echo -e "" >> ./busybox/README.md 
-           echo '- #### Version' >> ./busybox/README.md 
+           echo '- #### Bundled Commands' >> ./busybox/README.md 
            echo '```console' >> ./busybox/README.md 
            echo -e "" >> ./busybox/README.md           
-           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux --version' &>> ./busybox/README.md 
-           echo -e "" >> ./busybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux -h' &>> ./busybox/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux' &>> ./busybox/README.md 
            echo -e "" >> ./busybox/README.md
            echo -e "" >> ./busybox/README.md 
            echo '```' >> ./busybox/README.md 
