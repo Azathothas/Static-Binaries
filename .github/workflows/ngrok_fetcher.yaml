@@ -1,5 +1,5 @@
 name: Fetch ngrok Binaries
-#MAX_RUNTIME: ~ 05 mins
+
 on:
   workflow_dispatch:
   schedule:
