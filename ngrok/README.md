@@ -4,15 +4,15 @@ test
 ```console
 $ file ./ngrok/ngrok_386_FreeBSD ./ngrok/ngrok_aarch64_arm64_Linux ./ngrok/ngrok_aarch64_arm64_macOS ./ngrok/ngrok_amd_x86_64_Linux ./ngrok/ngrok_amd_x86_64_Solaris ./ngrok/ngrok_amd_x86_64_Windows.exe ./ngrok/ngrok_amd_x86_64_macOS ./ngrok/ngrok_amd_x86_Windows.exe ./ngrok/ngrok_arm_Linux ./ngrok/ngrok_i386_Linux ./ngrok/ngrok_mips64_Linux ./ngrok/ngrok_mips64le_Linux ./ngrok/ngrok_mips_Linux ./ngrok/ngrok_mipsle_Linux ./ngrok/ngrok_powerpc64_Linux ./ngrok/ngrok_powerpc64le_Linux ./ngrok/ngrok_s390x_Linux
 ./ngrok/ngrok_386_FreeBSD:            ELF 32-bit LSB executable, Intel 80386, version 1 (FreeBSD), statically linked, for FreeBSD 12.3, FreeBSD-style, Go BuildID=vAg5knqjWLpOw-fF58gq/aZit7WwPdsQ9ARMxOFVx/715XAMrxOcvIitWkqUVq/x8PVTTLvgFcQTWu8SsHU, stripped
-./ngrok/ngrok_aarch64_arm64_Linux:    gzip compressed data, original size modulo 2^32 23594496
+./ngrok/ngrok_aarch64_arm64_Linux:    ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=S4YDwdkW6mVxcnlhzNJY/kHA-W0wUOWZ4f65xw6BB/TP688kCyeuTx9GhrPWyW/wDidGBDBgmLP0ptR7Ila, stripped
 ./ngrok/ngrok_aarch64_arm64_macOS:    Mach-O 64-bit arm64 executable, flags:<NOUNDEFS|DYLDLINK|TWOLEVEL|PIE>
 ./ngrok/ngrok_amd_x86_64_Linux:       ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=o7o1gisVTKHBkCI2quyz/_l9x_3ioqgP-aP_Mxbs9/FUcoCYPFXjBrLcUcXGDO/HVwzQiKL8NelX5BQgNLy, stripped
 ./ngrok/ngrok_amd_x86_64_Solaris:     gzip compressed data, original size modulo 2^32 24012288
 ./ngrok/ngrok_amd_x86_64_Windows.exe: Zip archive data, at least v2.0 to extract, compression method=deflate
 ./ngrok/ngrok_amd_x86_64_macOS:       Zip archive data, at least v2.0 to extract, compression method=deflate
 ./ngrok/ngrok_amd_x86_Windows.exe:    Zip archive data, at least v2.0 to extract, compression method=deflate
-./ngrok/ngrok_arm_Linux:              gzip compressed data, original size modulo 2^32 23004672
-./ngrok/ngrok_i386_Linux:             gzip compressed data, original size modulo 2^32 22976000
+./ngrok/ngrok_arm_Linux:              ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, Go BuildID=RtV1IEXRDpHKZdDroHzX/BbYkWgPRcdB3DBDLfuDz/nctWlJccA1D-D8C6SLL-/2BsIqNXUAgRRPU_5OBvL, stripped
+./ngrok/ngrok_i386_Linux:             ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, Go BuildID=aWFW8RCZ-mmdhuyN69Fm/W4EyPSDRdbBDx88OBrs7/PmNc7qW4slZ4kNeWVt-A/Pe2cC4tl0coy2vYYMjRP, stripped
 ./ngrok/ngrok_mips64_Linux:           gzip compressed data, original size modulo 2^32 26805760
 ./ngrok/ngrok_mips64le_Linux:         ELF 64-bit LSB executable, MIPS, MIPS-III version 1 (SYSV), statically linked, Go BuildID=P3vISe0OteVVvaBDPsqo/rFDEDG1Bf0G4RviUe2Ec/ei5P65ukOIx_9s5IAFx7/Hgndgql2qhUqg2MdxPBK, stripped
 ./ngrok/ngrok_mips_Linux:             gzip compressed data, original size modulo 2^32 25888256
@@ -22,17 +22,16 @@ $ file ./ngrok/ngrok_386_FreeBSD ./ngrok/ngrok_aarch64_arm64_Linux ./ngrok/ngrok
 ./ngrok/ngrok_s390x_Linux:            gzip compressed data, original size modulo 2^32 25626112
 
 --> SHA256SUM
-$ sha256sum ./ngrok/ngrok_386_FreeBSD ./ngrok/ngrok_aarch64_arm64_Linux ./ngrok/ngrok_aarch64_arm64_macOS ./ngrok/ngrok_amd_x86_64_Linux ./ngrok/ngrok_amd_x86_64_Solaris ./ngrok/ngrok_amd_x86_64_Windows.exe ./ngrok/ngrok_amd_x86_64_macOS ./ngrok/ngrok_amd_x86_Windows.exe ./ngrok/ngrok_arm_Linux ./ngrok/ngrok_i386_Linux ./ngrok/ngrok_mips64_Linux ./ngrok/ngrok_mips64le_Linux ./ngrok/ngrok_mips_Linux ./ngrok/ngrok_mipsle_Linux ./ngrok/ngrok_powerpc64_Linux ./ngrok/ngrok_powerpc64le_Linux ./ngrok/ngrok_s390x_Linux
 29b05a3964346e88cf5b4576500a2e4b1984b0239bcb353fac5feeba4a420e42  ./ngrok/ngrok_386_FreeBSD
-8fb056376bc7c99b20342efc8fa428d7eb8ec6af9a2827c5579b0353bc98b05f  ./ngrok/ngrok_aarch64_arm64_Linux
+94053faa5f4ef5946c7c87f9096c982e040e05232c60c1c514d86e3dd21af4d7  ./ngrok/ngrok_aarch64_arm64_Linux
 2cad04ab739bcb9c43f8bb4105c00e2d543234888178938e1bcf31613bc946e8  ./ngrok/ngrok_aarch64_arm64_macOS
 d1b48aa25b7aa3ec515a687fd9d587bf13469376c97d07dfec728a2864d228fe  ./ngrok/ngrok_amd_x86_64_Linux
 41a83e9dee0f96188b120efbb01e8cbab8fe7f032e4ec1219da1ecc780fea072  ./ngrok/ngrok_amd_x86_64_Solaris
 c48450904a1266d868b8bab0928560dc54f950cbd963b882882068d753f44030  ./ngrok/ngrok_amd_x86_64_Windows.exe
 1ef6c4fa646a9af01825c773b78f30540cbd8ddf3f01716865d45d461a7dc242  ./ngrok/ngrok_amd_x86_64_macOS
 d562bc5ff3f6a952f5cef8d2ddf28a7f28694c947ef89236eef70f512f85563d  ./ngrok/ngrok_amd_x86_Windows.exe
-6d2677ead5954fe9a9d06622ec759c52420049cfc51a1f42a3ae9e069e6554a0  ./ngrok/ngrok_arm_Linux
-f314c836f723b5d1cdb780c1199a4902b3e807f87786a2b009a2f5f32c68111b  ./ngrok/ngrok_i386_Linux
+a5aedf281419519c94d4d10fe7de44fbb45efbd712772172fa96e8eb9e2a4b5e  ./ngrok/ngrok_arm_Linux
+fc5a51dd7425bae917b3ca35ea436674dff5eb387309ce5f40f95f15867151ff  ./ngrok/ngrok_i386_Linux
 abdd78bc7cb7c854d2fb153ecdc34b45476957dacb495e07fb6037623aa86c24  ./ngrok/ngrok_mips64_Linux
 d0da055c25b6931b67fe041c5dea74e36ef3e8836545fb09639db7bba241941e  ./ngrok/ngrok_mips64le_Linux
 c9f6e52ffe640c7dd6b4cb2d777f5b9fe3db7695687b400949e82708489e408f  ./ngrok/ngrok_mips_Linux
@@ -104,15 +103,15 @@ OPTIONS:
 
 ```console
 22M   ./ngrok/ngrok_386_FreeBSD
-7.9M  ./ngrok/ngrok_aarch64_arm64_Linux
+23M   ./ngrok/ngrok_aarch64_arm64_Linux
 25M   ./ngrok/ngrok_aarch64_arm64_macOS
 24M   ./ngrok/ngrok_amd_x86_64_Linux
 8.4M  ./ngrok/ngrok_amd_x86_64_Solaris
 8.7M  ./ngrok/ngrok_amd_x86_64_Windows.exe
 9.1M  ./ngrok/ngrok_amd_x86_64_macOS
 8.5M  ./ngrok/ngrok_amd_x86_Windows.exe
-8.1M  ./ngrok/ngrok_arm_Linux
-8.1M  ./ngrok/ngrok_i386_Linux
+22M   ./ngrok/ngrok_arm_Linux
+22M   ./ngrok/ngrok_i386_Linux
 7.4M  ./ngrok/ngrok_mips64_Linux
 26M   ./ngrok/ngrok_mips64le_Linux
 7.5M  ./ngrok/ngrok_mips_Linux
