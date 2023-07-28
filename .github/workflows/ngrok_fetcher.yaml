@@ -71,6 +71,7 @@ jobs:
         run: |
          #Download
          #-------------------------#
+          set -x
           #FreeBSD
           #arm
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-arm.tgz')
@@ -169,14 +170,15 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'windows-386.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_Windows.exe" \;
+          find . -type f -name '*ngrok.exe*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_Windows.exe" \;
          #Windows x86_64_amd64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'windows-amd64.zip')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Windows.exe" \;
+          find . -type f -name '*ngrok.exe*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Windows.exe" \;
          #Change Perms
           sudo chmod +xwr $GITHUB_WORKSPACE/main/ngrok/ngrok_* 
+          set +x
         continue-on-error: true
 
      #Cleanup
