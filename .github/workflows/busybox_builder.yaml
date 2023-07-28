@@ -1,6 +1,6 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
 name: Build Busybox Binaries
-#MAX_RUNTIME: ~ 90 Mins
+#MAX_RUNTIME: ~ 50 Mins
 on:
   workflow_dispatch:
   schedule:
