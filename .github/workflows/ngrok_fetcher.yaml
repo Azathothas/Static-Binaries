@@ -139,7 +139,7 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-ppc64le.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'ngrok*'! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" \;          
+          find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" \;          
          #s390x
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-s390x.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
@@ -161,7 +161,7 @@ jobs:
          #Solaris
          #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'solaris-amd64.tgz')
-          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" \;
          #-------------------------# 
