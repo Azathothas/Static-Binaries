@@ -2,11 +2,12 @@ www
 
 ---
 ```console
-$ file ./gost/gost_386_FreeBSD ./gost/gost_aarch64_arm64_Linux ./gost/gost_aarch64_arm64_Windows.exe ./gost/gost_aarch64_arm64_macOS ./gost/gost_amd_x86_64_Linux ./gost/gost_amd_x86_64_Windows.exe ./gost/gost_amd_x86_Windows.exe ./gost/gost_armv5_Linux ./gost/gost_armv6_Linux ./gost/gost_armv7_Linux ./gost/gost_i386_Linux ./gost/gost_mips64_Linux ./gost/gost_mips64le_Linux ./gost/gost_mips_hardfloat_Linux ./gost/gost_mips_softfloat_Linux ./gost/gost_mipsle_hardfloat_Linux ./gost/gost_mipsle_softfloat_Linux ./gost/gost_riscv64_Linux ./gost/gost_s390x_Linux ./gost/gost_x86_64_macOS
+$ file ./gost/gost_386_FreeBSD ./gost/gost_aarch64_arm64_Linux ./gost/gost_aarch64_arm64_Windows.exe ./gost/gost_aarch64_arm64_macOS ./gost/gost_amd_x86_64_FreeBSD ./gost/gost_amd_x86_64_Linux ./gost/gost_amd_x86_64_Windows.exe ./gost/gost_amd_x86_Windows.exe ./gost/gost_armv5_Linux ./gost/gost_armv6_Linux ./gost/gost_armv7_Linux ./gost/gost_i386_Linux ./gost/gost_mips64_Linux ./gost/gost_mips64le_Linux ./gost/gost_mips_hardfloat_Linux ./gost/gost_mips_softfloat_Linux ./gost/gost_mipsle_hardfloat_Linux ./gost/gost_mipsle_softfloat_Linux ./gost/gost_riscv64_Linux ./gost/gost_s390x_Linux ./gost/gost_x86_64_macOS
 ./gost/gost_386_FreeBSD:               ELF 32-bit LSB executable, Intel 80386, version 1 (FreeBSD), statically linked, Go BuildID=mb1UdGeezD7DLm26ZoI6/k5yriCs9NSnkFclyF7pD/AYDlJpp4kyI_tEDyW49J/cZtRWZJYB7HvJbgCvBZc, stripped
 ./gost/gost_aarch64_arm64_Linux:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=OVmBQl7Gp37Wjg7ZI_qx/g0eYkNTCnwuM5xLli1Kk/Eg-FeyzgT1hpmZFPausQ/FigF6hru-9SsYb6NVoAG, stripped
 ./gost/gost_aarch64_arm64_Windows.exe: PE32+ executable (console) Aarch64 (stripped to external PDB), for MS Windows
 ./gost/gost_aarch64_arm64_macOS:       Mach-O 64-bit arm64 executable, flags:<|DYLDLINK|PIE>
+./gost/gost_amd_x86_64_FreeBSD:        ELF 64-bit LSB executable, x86-64, version 1 (FreeBSD), statically linked, Go BuildID=zQ9sq0Sj2bRGKsptMS37/aRgqHF4LAlHqog8hwvQC/n-ShzisrSOIYbuKDIz9A/80bYOgSqJGFlbuilrZag, stripped
 ./gost/gost_amd_x86_64_Linux:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=INBPTVJ-SjJiWaxqKygl/sRufGGywXMD00Ao-TLnz/-vpw8TIHtDMQcEQ3efx7/nnR6q4ictV0EEY4aR_4h, stripped
 ./gost/gost_amd_x86_64_Windows.exe:    PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
 ./gost/gost_amd_x86_Windows.exe:       PE32 executable (console) Intel 80386 (stripped to external PDB), for MS Windows
@@ -29,6 +30,7 @@ $ file ./gost/gost_386_FreeBSD ./gost/gost_aarch64_arm64_Linux ./gost/gost_aarch
 62ba351055dda0aaa685ba20549d334d5a7af84b2809f6e5da7ae2ae443dae42  ./gost/gost_aarch64_arm64_Linux
 5eb3c5e057a4db31bfdb1d50ea932cc742ac7078a0a0d55fd72f7f4012d07510  ./gost/gost_aarch64_arm64_Windows.exe
 432b7aa977b231602b8d58e1f089a41fe543a1e4095e7e40e450fc088ba1c7ac  ./gost/gost_aarch64_arm64_macOS
+4475a191abe9b2b203d5a0f6b5fcb025c0492b7c041d1b1450cad6e290feecac  ./gost/gost_amd_x86_64_FreeBSD
 54247cfd5ca164811805063bdf36fbc48301117ff874f4a06cda4ba55bd6cd43  ./gost/gost_amd_x86_64_Linux
 f177fe31821dd761ce44ae482a8b98ea2c60ea3750a1e7ebe0775c976c0deb53  ./gost/gost_amd_x86_64_Windows.exe
 bbf10a9b7cbe10d1cce9a6e98f1357c5ede86b72b717486cc79f954fc1f607bf  ./gost/gost_amd_x86_Windows.exe
@@ -57,6 +59,7 @@ fb48ff201cfbf0303291f248ea95976879354685e754cdaa87879db55f9c6a82  ./gost/gost_x8
 13M  ./gost/gost_aarch64_arm64_Linux
 11M  ./gost/gost_aarch64_arm64_Windows.exe
 12M  ./gost/gost_aarch64_arm64_macOS
+12M  ./gost/gost_amd_x86_64_FreeBSD
 13M  ./gost/gost_amd_x86_64_Linux
 12M  ./gost/gost_amd_x86_64_Windows.exe
 12M  ./gost/gost_amd_x86_Windows.exe
