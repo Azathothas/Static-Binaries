@@ -71,7 +71,7 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'freebsd-amd64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_FreeBSD" \;
          #386
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'freebsd-386')
           find . -type f -name '*.gz' -exec gzip -d {} \;
@@ -212,7 +212,7 @@ jobs:
            echo '- #### Sizes' >> ./gost/README.md 
            echo -e "" >> ./gost/README.md
            echo '```console' >> ./gost/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./gost/gost* | awk "{print \$5, \$9}" | column -t' &>> ./gost/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./gost/gost* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./gost/README.md
            echo '```' >> ./gost/README.md     
            echo -e "" >> ./gost/README.md 
            echo '---' >> ./gost/README.md 
