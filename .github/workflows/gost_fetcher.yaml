@@ -24,7 +24,8 @@ jobs:
         id: check_version
         run: |
           # Get latest version
-          export VERSION=$(curl -qfsSL "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' )
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.tag_name' )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
@@ -57,7 +58,6 @@ jobs:
           # Get latest version
           #curl -qfsSL "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/gost/version.txt"
           #export VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
-          #echo "VERSION=$VERSION" >> $GITHUB_ENV
 
      #Fetch
       - name: Fetch gost bins
