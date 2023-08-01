@@ -28,7 +28,7 @@ jobs:
       - name: Check Version --> Twingate-Client
         id: check_version_client
         run: |
-          #Download a testb-bin & run
+          #Download a test-bin & run
           cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && sudo bash install.sh
           # Get latest twingate_version
           export TWINGATE_VERSION=$(twingate --version | grep -o '[0-9.]\+' | head -n 1)
@@ -47,19 +47,19 @@ jobs:
       - name: Check Version --> Twingate-Connector
         id: check_version_connector
         run: |
-          #Download a testb-bin & run
+          #Download a test-bin & run
           cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/connector/setup.sh" && sudo bash setup.sh
           # Get latest twingate_version
-          export TWINGATE_VERSION=$(twingate --version | grep -o '[0-9.]\+' | head -n 1)
-          echo "TWINGATE_VERSION=$TWINGATE_VERSION" >> $GITHUB_ENV
+          export TWINGATE_CONNECTOR_VERSION=$(twingate --version | grep -o '[0-9.]\+' | head -n 1)
+          echo "TWINGATE_CONNECTOR_VERSION=$TWINGATE_CONNECTOR_VERSION" >> $GITHUB_ENV
           # Get stored version
-          export STORED_TWINGATE_VERSION=$(cat $GITHUB_WORKSPACE/main/twingate/twingate_version.txt)
-          if [ "$TWINGATE_VERSION" == "$STORED_TWINGATE_VERSION" ]; then
-            echo "Twingate-Client Version $TWINGATE_VERSION is already fetched"
-            echo "twingate_versions_same=true" >> $GITHUB_ENV
+          export STORED_TWINGATE_CONNECTOR_VERSION=$(cat $GITHUB_WORKSPACE/main/twingate/twingate_connector_version.txt)
+          if [ "$TWINGATE_CONNECTOR_VERSION" == "$STORED_TWINGATE_CONNECTOR_VERSION" ]; then
+            echo "Twingate-Connector Version $TWINGATE_CONNECTOR_VERSION is already fetched"
+            echo "twingate_connector_versions_same=true" >> $GITHUB_ENV
           else
-            echo "fetching... Twingate-Client --> $VERSION  (from $STORED_TWINGATE_VERSION)"
-            echo "twingate_versions_same=false" >> $GITHUB_ENV
+            echo "fetching... Twingate-Connector --> $VERSION  (from $STORED_TWINGATE_CONNECTOR_VERSION)"
+            echo "twingate_connector_versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
         
@@ -81,7 +81,8 @@ jobs:
         #if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+          sudo apt-get install -y --no-install-recommends binutils bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+          pip3 install staticx
           
       - name: Setup Env
         #if: env.versions_same != 'true'
@@ -97,7 +98,7 @@ jobs:
             arm64v8/ubuntu:latest \
             bash -c '
               export DEBIAN_FRONTEND=noninteractive
-              DEBIAN_FRONTEND=noninteractive apt update -yq && DEBIAN_FRONTEND=noninteractive apt install apt-transport-https ca-certificates curl gnupg-agent -y
+              DEBIAN_FRONTEND=noninteractive apt update -yq && DEBIAN_FRONTEND=noninteractive apt install apt-transport-https ca-certificates curl gnupg-agent file -y
               curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && bash install.sh
               cp "/usr/bin/twingate" "/twingate_client_aarch64_arm64_dynamic_Linux"
               cp "/usr/bin/twingate-notifier" "/twingate_notifier_aarch64_arm64_dynamic_Linux"
@@ -139,16 +140,17 @@ jobs:
         #if: env.twingate_versions_same != 'true'
         run: |
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && sudo bash install.sh
-           cp "/usr/bin/twingate" "$GITHUB_WORKSPACE/main/twingate/twingate_client_aarch64_arm64_dynamic_Linux"
-           cp "/usr/bin/twingate-notifier" "$GITHUB_WORKSPACE/main/twingate/twingate_notifier_aarch64_arm64_dynamic_Linux"
+           cp "/usr/bin/twingate" "$GITHUB_WORKSPACE/main/twingate/twingate_client_amd_x86_64_dynamic_Linux"
+           cp "/usr/bin/twingate-notifier" "$GITHUB_WORKSPACE/main/twingate/twingate_notifier_amd_x86_64_dynamic_Linux"
         continue-on-error: true 
 
       - name: Extract Twingate-Connector for amd_x86_64 (Native)
         #if: twingate_connector_versions_same != 'true'
         run: |
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/connector/setup.sh" && sudo bash setup.sh
-           cp "/usr/bin/twingate-connector" "$GITHUB_WORKSPACE/main/twingate/twingate_connector_aarch64_arm64_dynamic_Linux"
-           cp "/usr/bin/twingate-connectorctl" "$GITHUB_WORKSPACE/main/twingate/twingate_connectorctl_aarch64_arm64_dynamic_Linux"
+           cp "/usr/bin/twingate-connector" "$GITHUB_WORKSPACE/main/twingate/twingate_connector_amd_x86_64_dynamic_Linux"
+           cp "/usr/bin/twingate-connectorctl" "$GITHUB_WORKSPACE/main/twingate/twingate_connectorctl_amd_x86_64_dynamic_Linux"
+
         continue-on-error: true 
 
   #arm32_v7 (Connector-Only)
