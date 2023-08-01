@@ -1,4 +1,4 @@
-#MAX_RUNTIME: ~ 10 mins
+#MAX_RUNTIME: ~ 15 mins
 name: Fetch Twingate Binaries
 
 on:
