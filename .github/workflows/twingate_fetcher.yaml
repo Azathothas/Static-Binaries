@@ -81,7 +81,8 @@ jobs:
         #if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends binutils bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+          sudo apt-get install -y --no-install-recommends autoconf automake autopoint binutils bison build-essential ca-certificates flex file jq patch patchelf pkg-config python3-pip qemu-user-static wget 
+          pip3 install scons
           pip3 install staticx
           
       - name: Setup Env
@@ -142,6 +143,9 @@ jobs:
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && sudo bash install.sh
            cp "/usr/bin/twingate" "$GITHUB_WORKSPACE/main/twingate/twingate_client_amd_x86_64_dynamic_Linux"
            cp "/usr/bin/twingate-notifier" "$GITHUB_WORKSPACE/main/twingate/twingate_notifier_amd_x86_64_dynamic_Linux"
+           #Make the Binaries Static
+           staticx --loglevel DEBUG "$GITHUB_WORKSPACE/main/twingate/twingate_client_amd_x86_64_dynamic_Linux" --strip "$GITHUB_WORKSPACE/main/twingate/twingate_client_amd_x86_64_staticx_Linux"
+           staticx --loglevel DEBUG "$GITHUB_WORKSPACE/main/twingate/twingate_notifier_amd_x86_64_dynamic_Linux" --strip "$GITHUB_WORKSPACE/main/twingate/twingate_notifier_amd_x86_64_staticx_Linux"
         continue-on-error: true 
 
       - name: Extract Twingate-Connector for amd_x86_64 (Native)
@@ -150,7 +154,9 @@ jobs:
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/connector/setup.sh" && sudo bash setup.sh
            cp "/usr/bin/twingate-connector" "$GITHUB_WORKSPACE/main/twingate/twingate_connector_amd_x86_64_dynamic_Linux"
            cp "/usr/bin/twingate-connectorctl" "$GITHUB_WORKSPACE/main/twingate/twingate_connectorctl_amd_x86_64_dynamic_Linux"
-
+           #Make the Binaries Static
+           staticx --loglevel DEBUG "$GITHUB_WORKSPACE/main/twingate/twingate_connector_amd_x86_64_dynamic_Linux" --strip "$GITHUB_WORKSPACE/main/twingate/twingate_connector_amd_x86_64_staticx_Linux"
+           staticx --loglevel DEBUG "$GITHUB_WORKSPACE/main/twingate/twingate_connectorctl_amd_x86_64_dynamic_Linux" --strip "$GITHUB_WORKSPACE/main/twingate/twingate_connectorctl_amd_x86_64_staticx_Linux"
         continue-on-error: true 
 
   #arm32_v7 (Connector-Only)
