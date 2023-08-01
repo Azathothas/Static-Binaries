@@ -226,14 +226,14 @@ jobs:
            echo -e "" >> ./twingate/README.md
            echo '- #### Versions' >> ./twingate/README.md
            echo '```console' >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ "; set -x;./twingate/twingate_client_aarch64_arm64_dynamic_Linux --version' &>> ./twingate/README.md
+           /bin/bash -c 'PS4="$ "; set -x;./twingate/twingate_client_amd_x86_64_dynamic_Linux --version' &>> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ "; ./twingate/twingate_client_aarch64_arm64_dynamic_Linux -h' &>> ./twingate/README.md 
+           /bin/bash -c 'PS4="$ "; ./twingate/twingate_client_amd_x86_64_dynamic_Linux -h' &>> ./twingate/README.md 
            echo -e "" >> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ "; set -x;./twingate/twingate_connector_aarch64_arm64_dynamic_Linux --version' &>> ./twingate/README.md
+           /bin/bash -c 'PS4="$ "; set -x;./twingate/twingate_connector_amd_x86_64_dynamic_Linux --version' &>> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ "; ./twingate/twingate_connector_aarch64_arm64_dynamic_Linux -h' &>> ./twingate/README.md
+           /bin/bash -c 'PS4="$ "; ./twingate/twingate_connector_amd_x86_64_dynamic_Linux -h' &>> ./twingate/README.md
            echo '```' >> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
            echo '---' >> ./twingate/README.md
