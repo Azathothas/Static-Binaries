@@ -134,7 +134,7 @@ jobs:
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_softfloat_Linux" \;
          #mips64
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips64' | grep -v 'mips64le')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64_Linux" \;
