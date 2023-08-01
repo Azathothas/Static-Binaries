@@ -1,0 +1,247 @@
+name: Fetch gost Binaries
+#MAX_RUNTIME: ~ 05 Mins
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 18 * * 2"  # 06:15 PM UTC Every Tuesday  --> 12:00 AM Nepal Time Every Wednesday
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  GIT_REPO: "ginuerzh/gost"
+  USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.tag_name' )
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Fetched"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Fetching... --> $VERSION  (from $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        #if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/gost/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Install CoreUtils
+        #if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+
+      - name: Setup Env
+        #if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/gost"
+          # Get latest version
+          #curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/gost/version.txt"
+          #export VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
+          #echo "VERSION=$VERSION" >> $GITHUB_ENV
+          
+     #Fetch
+      - name: Fetch gost bins
+        #if: env.versions_same != 'true'
+        run: |
+         #Download
+         #-------------------------#
+          set -x
+          #FreeBSD
+         #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'freebsd-amd64')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;
+         #386
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'freebsd-386')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1          
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_386_FreeBSD" \;  
+         #-------------------------#          
+         #Linux
+         #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-arm64')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Linux" \;
+         #amd64_x86_64 
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-amd64')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;   
+         #armv5
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-armv5')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv5_Linux" \;
+         #armv6
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-armv6')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv6_Linux" \;
+         #armv7
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-armv7')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv7_Linux" \;
+         #armv8
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-armv8')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv8_Linux" \;                      
+         #i386 
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-386.tgz')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_i386_Linux" \;
+         #mips-hardfloat
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mips-hardfloat')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_hardfloat_Linux" \;
+         #mips-softfloat
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mips-softfloat')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_softfloat_Linux" \;   
+         #mipsle-hardfloat
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mipsle-hardfloat')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_hardfloat_Linux" \;                 
+         #mipsle-softfloat
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mipsle-softfloat')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_softfloat_Linux" \;
+         #mips64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mips64')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64_Linux" \;
+         #mips64le
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-mips64le')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64le_Linux" \;       
+         #riscv64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-riscv64')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_riscv64_Linux" \;          
+         #s390x
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$GIT_REPO" | grep -i 'linux-s390x')
+          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_s390x_Linux" \;
+         #-------------------------#                  
+          #macOS
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'darwin-arm64')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_macOS" \;             
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'darwin-amd64')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_x86_64_macOS" \;                 
+          #Windows  
+         #-------------------------#                  
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-arm64')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Windows.exe" \;          
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-386')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_Windows.exe" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/"$GIT_REPO"/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-amd64')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Windows.exe" \;               
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        #if: env.versions_same != 'true'
+        run: |
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/gost/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/gost/" -type f -name 'gost*' -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+        
+      - name: Update README.md
+        #if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./gost/INFO.md > ./gost/README.md
+           echo -e "" >> ./gost/README.md 
+           echo '---' >> ./gost/README.md
+           echo '```console' >> ./gost/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./gost/gost*' &>> ./gost/README.md
+           echo -e "" >> ./gost/README.md
+           echo -e "--> SHA256SUM" >> ./gost/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./gost/gost*' &>> ./gost/README.md   
+           echo -e '```\n' >> ./gost/README.md
+           echo -e "" >> ./gost/README.md
+           echo '---' >> ./gost/README.md
+           echo -e "" >> ./gost/README.md
+           echo '- #### Sizes' >> ./gost/README.md 
+           echo -e "" >> ./gost/README.md
+           echo '```console' >> ./gost/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./gost/gost* | awk "{print \$5, \$9}" | column -t' &>> ./gost/README.md
+           echo '```' >> ./gost/README.md     
+           echo -e "" >> ./gost/README.md 
+           echo '---' >> ./gost/README.md 
+           echo -e "" >> ./gost/README.md 
+           echo '- #### Version' >> ./gost/README.md 
+           echo '```console' >> ./gost/README.md 
+           echo -e "" >> ./gost/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./gost/gost_amd_x86_64_Linux -V' &>> ./gost/README.md 
+           echo -e "" >> ./gost/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./gost/gost_amd_x86_64_Linux -h' &>> ./gost/README.md 
+           echo -e "" >> ./gost/README.md
+           echo -e "" >> ./gost/README.md 
+           echo '```' >> ./gost/README.md 
+           echo -e "" >> ./gost/README.md        
+           echo '---' >> ./gost/README.md 
+           echo -e "" >> ./gost/README.md 
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Fetch gost Binaries <-- ${{ env.VERSION }}"
+          #push_options: '--force'
