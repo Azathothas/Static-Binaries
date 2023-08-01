@@ -83,11 +83,11 @@ jobs:
           find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_386_FreeBSD" \;  
          #-------------------------#          
          #Linux
-         #aarch64_arm64
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-arm64')
+         #aarch64_arm64 || armv8
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv8')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Linux" \;  
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-amd64')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
@@ -107,12 +107,7 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv7')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv7_Linux" \;
-         #armv8
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv8')
-          find . -type f -name '*.tgz' -exec tar -xzvf {} \;
-          find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv8_Linux" \;                      
+          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv7_Linux" \;                    
          #i386 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-386.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
