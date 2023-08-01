@@ -71,96 +71,96 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'freebsd-amd64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;
          #386
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'freebsd-386')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1          
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_386_FreeBSD" \;  
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_386_FreeBSD" \;  
          #-------------------------#          
          #Linux
          #aarch64_arm64 || armv8
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv8')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Linux" \;  
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Linux" \;  
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-amd64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;   
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Linux" \;   
          #armv5
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv5')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv5_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv5_Linux" \;
          #armv6
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv6')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv6_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv6_Linux" \;
          #armv7
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-armv7')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv7_Linux" \;                    
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_armv7_Linux" \;                    
          #i386 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-386')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_i386_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_i386_Linux" \;
          #mips-hardfloat
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips-hardfloat')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_hardfloat_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_hardfloat_Linux" \;
          #mips-softfloat
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips-softfloat')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_softfloat_Linux" \;   
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips_softfloat_Linux" \;   
          #mipsle-hardfloat
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mipsle-hardfloat')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_hardfloat_Linux" \;                 
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_hardfloat_Linux" \;                 
          #mipsle-softfloat
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mipsle-softfloat')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_softfloat_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mipsle_softfloat_Linux" \;
          #mips64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips64' | grep -v 'mips64le')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64_Linux" \;
          #mips64le
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-mips64le')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64le_Linux" \;       
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_mips64le_Linux" \;       
          #riscv64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-riscv64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_riscv64_Linux" \;          
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_riscv64_Linux" \;          
          #s390x
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'linux-s390x')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_s390x_Linux" \;
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_s390x_Linux" \;
          #-------------------------#                  
           #macOS
           #aarch64_arm64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'darwin-arm64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_macOS" \;             
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_macOS" \;             
           #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'darwin-amd64')
           find . -type f -name '*.gz' -exec gzip -d {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'gost' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_x86_64_macOS" \;                 
+          find . -type f -name 'gost*' ! -name '*.gz*' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_x86_64_macOS" \;                 
           #Windows  
          #-------------------------#                  
           #aarch64_arm64
