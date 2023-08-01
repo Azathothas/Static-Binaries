@@ -167,17 +167,17 @@ jobs:
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-arm64')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name '*gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Windows.exe" \;          
+          find . -type f -name '*gost*.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_aarch64_arm64_Windows.exe" \;          
           #amd_x86
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-386')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name '*gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_Windows.exe" \;           
+          find . -type f -name '*gost*.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_Windows.exe" \;           
           #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'windows-amd64')
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           find . -type f -name 'gost*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name '*gost.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Windows.exe" \;  
+          find . -type f -name '*gost*.exe' -exec mv {} "$GITHUB_WORKSPACE/main/gost/gost_amd_x86_64_Windows.exe" \;  
           #-------------------------# 
            #Any leftovers
            set +x              
