@@ -1,10 +1,17 @@
+#MAX_RUNTIME: ~ 5 mins
 name: Fetch Toybox Binaries
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 19 * * 6"  # 7:00 PM UTC Every Saturday --> 12:45 AM Nepal Time Every Sunday
-  
+    - cron: "15 18 * * 1"  # 06:15 PM UTC Every Monday --> 12:00 AM Nepal Time Every Tuesday
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  DOWNLOAD_PAGE: "http://landley.net/toybox/bin/"
+  USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,86 +24,143 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: main
-      - name: Install build dependencies
-        run: "\
-          sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget \n"      
+
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get Latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/landley/toybox/tags" | jq -r '.[0].name' )
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/toybox/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Fetched & Updated"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/toybox/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+          # Get latest changelog
+
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
           
-      - name: Setup ENV
+      - name: Setup Env
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/toybox"
-     
-     #@latest: http://landley.net/toybox/downloads/binaries/latest/
-     #@latest: http://landley.net/toybox/bin/
-      - name: Download @Latest Releases    
+
+      - name: Download @Latest Releases   
+        if: env.versions_same != 'true' 
         run: |
          #Download
-          set -x; curl -qfsSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_arm64_aarch64"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv4l"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv5l"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7l"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7m"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i486"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i686"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox/toybox_m68k"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox/toybox_microblaze"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips64"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mipsel"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64le"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox/toybox_s390x"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh2eb"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4"
-          set -x; curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_x86_64"
-         #Change Perms
-          sudo chmod +xwr $GITHUB_WORKSPACE/main/toybox/toybox_* ; set +x
-        #continue-on-error: true
-        
-      - name: Generate '.base64' 
+         #-------------------------#
+          set -x 
+         #-------------------------#          
+         #Linux
+         #aarch64_arm64           
+          curl -qfSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_arm64_aarch64_Linux"
+         #amd64_x86_64  
+          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_amd64_x86_64_Linux"
+         #armv4l 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv4l_Linux"
+         #armv5l
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv5l_Linux"
+         #armv7l 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7l_Linux"
+         #armv7m 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7m_Linux"
+         #i486 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i486_Linux"
+         #i686 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i686_Linux"
+         #m68k 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox/toybox_m68k_Linux"
+         #microblaze 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox/toybox_microblaze_Linux"
+         #mips 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips_Linux"
+         #mipsel 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mipsel_Linux"
+         #mips64 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips64_Linux"
+         #powerpc 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc_Linux"
+         #powerpc64 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64_Linux"
+         #powerpc64le 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64le_Linux"
+         #s390x 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox/toybox_s390x_Linux"
+         #sh2eb 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh2eb_Linux"
+         #sh4 
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4_Linux"
+          
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
         run: |
-          cd "$GITHUB_WORKSPACE/main/toybox" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
-        working-directory: main
-        continue-on-error: true        
-        
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/toybox/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/toybox/" -type f -name 'toybox*' -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+
       - name: Update README.md
+        if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./toybox/INFO.md > ./toybox/README.md
            echo -e "" >> ./toybox/README.md 
            echo '---' >> ./toybox/README.md
            echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./toybox/toybox_*' &>> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo -e "--> METADATA" >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; file ./toybox/toybox_* | grep -v '.txt' '&>> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo -e "--> SHA256SUM" >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./toybox/toybox_*' &>> ./toybox/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./toybox/toybox_* | grep -v '.txt' ' &>> ./toybox/README.md   
            echo -e '```\n' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '---' >> ./toybox/README.md
-           echo '- #### Bundled Commands' >> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           echo '- #### Version' >> ./toybox/README.md
            echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./toybox/toybox_arm64_aarch64' &>> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux --version' &>> ./toybox/README.md
+           echo -e "" >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux --help' &>> ./toybox/README.md 
            echo '```' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '---' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '- #### Sizes' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
-           echo '```console' >> ./toybox/README.md           
-           /bin/bash -c 'PS4="$ ";ls -lh ./toybox | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md 
-           echo '```' >> ./toybox/README.md    
+           echo '```console' >> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./toybox/toybox* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
-           echo '---' >> ./toybox/README.md
-           echo -e "" >> ./toybox/README.md                    
+           echo '```' >> ./toybox/README.md          
+           echo -e "" >> ./toybox/README.md                   
         working-directory: main
         continue-on-error: true
-        
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Fetch latest ToyBox Bins
+          commit_message: "Fetch latest Toybox Bins <-- v${{ env.VERSION }}"
           #push_options: '--force'
