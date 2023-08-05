@@ -295,7 +295,7 @@ jobs:
             blackdex/musl-toolchain:armv5te-musleabi \
             bash -c '
               curl -qfLJO "$BUSYBOX_URL"
-              export PATH="$PATH:/usr/local/musl/arm-unknown-linux-musleabihf/bin"
+              export PATH="$PATH:/usr/local/musl/armv5te-unknown-linux-musleabi/bin"
               export ARCH=arm
               export CROSS_COMPILE=armv5te-unknown-linux-musleabi
               find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
