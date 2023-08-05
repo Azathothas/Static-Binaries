@@ -259,5 +259,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch latest Twingate Bins <-- Client-v${{ env.TWINGATE_VERSION }} && Connector-v${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          commit_message: "Fetch latest Twingate Bins <-- Client-v${{ env.TWINGATE_VERSION }} || Connector-v${{ env.TWINGATE_CONNECTOR_VERSION }}"
           #push_options: '--force'      
