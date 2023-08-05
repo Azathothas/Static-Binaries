@@ -199,10 +199,12 @@ jobs:
            echo -e "" >> ./ngrok/README.md 
            echo '---' >> ./ngrok/README.md
            echo '```console' >> ./ngrok/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./ngrok/ngrok_*' &>> ./ngrok/README.md
+           echo -e "" >> ./ngrok/README.md
+           echo -e "--> METADATA" >> ./ngrok/README.md
+           /bin/bash -c 'PS4="$ "; file ./ngrok/ngrok_* | grep -v '.txt' '&>> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo -e "--> SHA256SUM" >> ./ngrok/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./ngrok/ngrok_*' &>> ./ngrok/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./ngrok/ngrok_* | grep -v '.txt' ' &>> ./ngrok/README.md   
            echo -e '```\n' >> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '---' >> ./ngrok/README.md
@@ -219,7 +221,7 @@ jobs:
            echo '- #### Sizes' >> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '```console' >> ./ngrok/README.md
-           /bin/bash -c 'PS4="$ "; ls -lh ./ngrok/ngrok* | awk "{print \$5, \$9}" | column -t' &>> ./ngrok/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./ngrok/ngrok* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./ngrok/README.md
            echo -e "" >> ./ngrok/README.md
            echo '```' >> ./ngrok/README.md          
            echo -e "" >> ./ngrok/README.md                   
