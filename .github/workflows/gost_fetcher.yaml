@@ -32,7 +32,7 @@ jobs:
             echo "Version $VERSION is already Fetched"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Fetching... --> $VERSION  (from $STORED_VERSION)"
+            echo "Fetching... --> $VERSION (from <-- $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
