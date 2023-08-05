@@ -29,10 +29,10 @@ jobs:
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/curl/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
-            echo "Version $VERSION is already Fetched"
+            echo "Version $VERSION is already Fetched & Updated"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Fetching... --> $VERSION  (from $STORED_VERSION)"
+            echo "Fetching... --> v$VERSION (from <-- v$STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
@@ -194,7 +194,9 @@ jobs:
            echo -e "" >> ./curl/README.md 
            echo '---' >> ./curl/README.md
            echo '```console' >> ./curl/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./curl/curl* | grep -v '.txt' ' &>> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo -e "--> METADATA" >> ./curl/README.md
+           /bin/bash -c 'PS4="$ ";file ./curl/curl* | grep -v '.txt' ' &>> ./curl/README.md
            echo -e "" >> ./curl/README.md
            echo -e "--> SHA256SUM" >> ./curl/README.md
            /bin/bash -c 'PS4="$ ";sha256sum ./curl/curl* | grep -v '.txt' ' &>> ./curl/README.md   
