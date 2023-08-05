@@ -16,6 +16,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Get Sys-Info || Set User
+        run: |
+          # Print Basic Info
+          Write-Host "Current User: $env:USERNAME"
+          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "runneradmin" -Force)
+          Write-Host "Current Pass: runneradmin"
+          Write-Host "Hostname: $env:COMPUTERNAME"
+          Write-Host "Home: $env:HOMEDRIVE$env:HOMEPATH"
+          Write-Host "ENV_PATH: $env:PATH"
+          # Install winfetch
+          choco install winfetch -y
+          C:\tools\winfetch
+          # Install archey4
+          pip install archey4
+          archey
+        continue-on-error: true
 
       - name: Setup Tailscale
         run: |
@@ -32,21 +49,6 @@ jobs:
           Start-Sleep -Seconds 5
           Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="${{ env.THOST }}", --authkey="${{ env.TSKEY }}"
 
-      - name: Get Sys-Info
-        run: |
-          # Print Basic Info
-          Write-Host "Current User: $env:USERNAME"
-          Write-Host "Hostname: $env:COMPUTERNAME"
-          Write-Host "Home: $env:HOMEDRIVE$env:HOMEPATH"
-          Write-Host "ENV_PATH: $env:PATH"
-          # Install winfetch
-          choco install winfetch -y
-          winfetch
-          # Install archey4
-          pip install archey4
-          archey
-        continue-on-error: true
-        
       - name: Breakpoint || Sleep ∞
         run: |        
           while ($true) {Start-Sleep -Seconds 1}  
