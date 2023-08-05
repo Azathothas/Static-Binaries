@@ -1,6 +1,6 @@
 
 ---
-- #### Download [twingate](https://github.com/schollz/twingate#install)
+- #### Download [Twingate](https://github.com/schollz/twingate#install)
 > - **Sources**
 > > ```bash
 > > --> Linux:
