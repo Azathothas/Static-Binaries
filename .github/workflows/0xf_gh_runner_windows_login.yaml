@@ -23,6 +23,7 @@ jobs:
           Write-Host "Current User: $env:USERNAME"
           Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "runneradmin" -Force)
           Write-Host "Current Pass: runneradmin"
+          Write-Host "Is_Admin: $((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))"
           Write-Host "Hostname: $env:COMPUTERNAME"
           Write-Host "Home: $env:HOMEDRIVE$env:HOMEPATH"
           Write-Host "ENV_PATH: $env:PATH"
@@ -48,7 +49,24 @@ jobs:
           Add-WindowsCapability -Online -Name OpenSSH.Server*
           Start-Sleep -Seconds 5
           Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="${{ env.THOST }}", --authkey="${{ env.TSKEY }}"
-
+        continue-on-error: true
+        
+    #https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell    
+      - name: Start SSH 
+        run: |      
+         #Start Service
+          Start-Service sshd
+         #Add Public SSH Key
+          Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value "$((Invoke-RestMethod -Uri "https://github.com/azathothas.keys").Split("`n")[1])"
+         #Allow Passwords 
+          $configContent = Get-Content -Path "$env:ProgramData\ssh\sshd_config"
+          $configContent = $configContent -replace "#PasswordAuthentication yes", "PasswordAuthentication yes"
+          $configContent | Set-Content -Path "$env:ProgramData\ssh\sshd_config"
+          Restart-Service sshd
+         #Configure Firewall
+          if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it..." New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22} else {Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."}
+        continue-on-error: true
+        
       - name: Breakpoint || Sleep ∞
         run: |        
           while ($true) {Start-Sleep -Seconds 1}  
