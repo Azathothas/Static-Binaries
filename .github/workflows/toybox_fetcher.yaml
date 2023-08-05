@@ -37,7 +37,7 @@ jobs:
             echo "Version $VERSION is already Fetched & Updated"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+            echo "Building... --> $VERSION  (from <-- $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
@@ -136,10 +136,10 @@ jobs:
            echo '```console' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo -e "--> METADATA" >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; file ./toybox/toybox_* | grep -v '.txt' '&>> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; file ./toybox/toybox_* | grep -v '.txt' | grep -v '.base64' '&>> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo -e "--> SHA256SUM" >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./toybox/toybox_* | grep -v '.txt' ' &>> ./toybox/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./toybox/toybox_* | grep -v '.txt' | grep -v '.base64' ' &>> ./toybox/README.md   
            echo -e '```\n' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '---' >> ./toybox/README.md
@@ -156,7 +156,7 @@ jobs:
            echo '- #### Sizes' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; ls -lh ./toybox/toybox* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; ls -lh ./toybox/toybox* | grep -v '.txt' | grep -v '.base64' | awk "{print \$5, \$9}" | column -t' &>> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '```' >> ./toybox/README.md          
            echo -e "" >> ./toybox/README.md                   
@@ -168,5 +168,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch latest Toybox Bins <-- v${{ env.VERSION }}"
+          commit_message: "Fetched latest Toybox Bins <-- v${{ env.VERSION }}"
           #push_options: '--force'
