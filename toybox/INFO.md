@@ -21,9 +21,8 @@ echo %PROCESSOR_ARCHITECTURE%
 $env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH)
-https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox
 
-!# Index (ARCH || ALT_ARCH) 
+!# Linux
 --> arm64_aarch64 || arm64 [64-bit] (SYSV)
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_arm64_aarch64_Linux"
 --> AMD || x86_64 || [64-bit] (SYSV)
