@@ -230,7 +230,7 @@ jobs:
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
-          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_s390x_Linux"
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
