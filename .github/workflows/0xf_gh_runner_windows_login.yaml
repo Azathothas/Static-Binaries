@@ -21,7 +21,8 @@ jobs:
         run: |
           # Print Basic Info
           Write-Host "Current User: $env:USERNAME"
-          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "runneradmin" -Force)
+          # Set a password, usually slight complex so it meets minimum requirments
+          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "0xff_WIN1337f#" -Force)
           Write-Host "Current Pass: runneradmin"
           Write-Host "Is_Admin: $((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))"
           Write-Host "Hostname: $env:COMPUTERNAME"
