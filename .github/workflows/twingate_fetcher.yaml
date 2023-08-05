@@ -222,10 +222,10 @@ jobs:
            echo -e "" >> ./twingate/README.md 
            echo '---' >> ./twingate/README.md
            echo '```console' >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./twingate/twingate_*' &>> ./twingate/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./twingate/twingate_* | grep -v '.txt' ' &>> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
            echo -e "--> SHA256SUM" >> ./twingate/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./twingate/twingate_*' &>> ./twingate/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./twingate/twingate_* | grep -v '.txt' ' &>> ./twingate/README.md   
            echo -e '```\n' >> ./twingate/README.md
            echo -e "" >> ./twingate/README.md
            echo '---' >> ./twingate/README.md
@@ -259,5 +259,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch latest Twingate Bins <-- Twingate-Client-v${{ env.TWINGATE_VERSION }} && Twingate-Connector-v${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          commit_message: "Fetch latest Twingate Bins <-- Client-v${{ env.TWINGATE_VERSION }} && Connector-v${{ env.TWINGATE_CONNECTOR_VERSION }}"
           #push_options: '--force'      
