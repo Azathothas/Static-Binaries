@@ -886,10 +886,10 @@ jobs:
            echo -e "" >> ./busybox/README.md 
            echo '---' >> ./busybox/README.md
            echo '```console' >> ./busybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./busybox/busybox*' &>> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./busybox/busybox* | grep -v '.txt' ' &>> ./busybox/README.md
            echo -e "" >> ./busybox/README.md
            echo -e "--> SHA256SUM" >> ./busybox/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./busybox/busybox*' &>> ./busybox/README.md   
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./busybox/busybox* | grep -v '.txt' ' &>> ./busybox/README.md   
            echo -e '```\n' >> ./busybox/README.md
            echo -e "" >> ./busybox/README.md
            echo '---' >> ./busybox/README.md
@@ -897,7 +897,7 @@ jobs:
            echo '- #### Sizes' >> ./busybox/README.md 
            echo -e "" >> ./busybox/README.md
            echo '```console' >> ./busybox/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./busybox/busybox* | awk "{print \$5, \$9}" | column -t' &>> ./busybox/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./busybox/busybox* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./busybox/README.md
            echo '```' >> ./busybox/README.md     
            echo -e "" >> ./busybox/README.md 
            echo '---' >> ./busybox/README.md 
