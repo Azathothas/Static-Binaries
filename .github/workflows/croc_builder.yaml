@@ -399,10 +399,12 @@ jobs:
            echo -e "" >> ./croc/README.md 
            echo '---' >> ./croc/README.md
            echo '```console' >> ./croc/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md
+           echo -e "" >> ./croc/README.md
+           echo -e "--> METADATA" >> ./croc/README.md
+           /bin/bash -c 'PS4="$ "; file ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md
            echo -e "" >> ./croc/README.md
            echo -e "--> SHA256SUM" >> ./croc/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md   
+           /bin/bash -c 'PS4="$ "; sha256sum ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md   
            echo -e '```\n' >> ./croc/README.md
            echo -e "" >> ./croc/README.md
            echo '---' >> ./croc/README.md
