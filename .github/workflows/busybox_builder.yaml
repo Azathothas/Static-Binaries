@@ -29,10 +29,10 @@ jobs:
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
-            echo "Version $VERSION is already built & compiled"
+            echo "Version $VERSION is already Built & Compiled"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+            echo "Building... --> v$VERSION (from <-- v$STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash          
