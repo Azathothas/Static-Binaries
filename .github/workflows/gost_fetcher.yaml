@@ -38,20 +38,20 @@ jobs:
         shell: bash
 
       - name: Compare Versions
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/gost/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/gost"
@@ -61,7 +61,7 @@ jobs:
 
      #Fetch
       - name: Fetch gost bins
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
          #Download
          #-------------------------#
@@ -185,7 +185,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/gost/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -194,17 +194,19 @@ jobs:
         continue-on-error: true
         
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
            cd "$GITHUB_WORKSPACE/main"
            cat ./gost/INFO.md > ./gost/README.md
            echo -e "" >> ./gost/README.md 
            echo '---' >> ./gost/README.md
            echo '```console' >> ./gost/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./gost/gost*' &>> ./gost/README.md
+           echo -e "" >> ./gost/README.md
+           echo -e "--> METATDATA" >> ./gost/README.md
+           /bin/bash -c 'PS4="$ "; file ./gost/gost* | grep -v '.txt' ' &>> ./gost/README.md
            echo -e "" >> ./gost/README.md
            echo -e "--> SHA256SUM" >> ./gost/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./gost/gost*' &>> ./gost/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./gost/gost* | grep -v '.txt' ' &>> ./gost/README.md   
            echo -e '```\n' >> ./gost/README.md
            echo -e "" >> ./gost/README.md
            echo '---' >> ./gost/README.md
