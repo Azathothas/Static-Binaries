@@ -846,10 +846,10 @@ jobs:
            echo -e "" >> ./bore/README.md 
            echo '---' >> ./bore/README.md
            echo '```console' >> ./bore/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./bore/bore*' &>> ./bore/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md
            echo -e "" >> ./bore/README.md
            echo -e "--> SHA256SUM" >> ./bore/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./bore/bore*' &>> ./bore/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md   
            echo -e '```\n' >> ./bore/README.md
            echo -e "" >> ./bore/README.md
            echo '---' >> ./bore/README.md
@@ -857,7 +857,7 @@ jobs:
            echo '- #### Sizes' >> ./bore/README.md 
            echo -e "" >> ./bore/README.md
            echo '```console' >> ./bore/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./bore/bore* | awk "{print \$5, \$9}" | column -t' &>> ./bore/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./bore/bore* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./bore/README.md
            echo '```' >> ./bore/README.md     
            echo -e "" >> ./bore/README.md 
            echo '---' >> ./bore/README.md 
