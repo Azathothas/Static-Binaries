@@ -25,6 +25,7 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.tag_name' )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
