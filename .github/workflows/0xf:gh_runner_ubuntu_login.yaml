@@ -1,4 +1,4 @@
-name: 0xf ➼ Login (gh-runner)
+name: 0xf ➼ Login (gh-runner) Ubuntu_22.04
 
 on:
   workflow_dispatch:
