@@ -97,7 +97,7 @@ $env:PROCESSOR_ARCHITECTURE
 $ file ./curl/curl_DOS ./curl/curl_aarch64_arm64_Linux ./curl/curl_aarch64_arm64_macOS ./curl/curl_amd_x86_64_Linux ./curl/curl_amd_x86_64_Windows.exe ./curl/curl_amd_x86_64_macOS ./curl/curl_amd_x86_Windows.exe ./curl/curl_arm32_Android ./curl/curl_arm64_Android ./curl/curl_arm_x64_Windows.exe ./curl/curl_armhf_arm32_Android ./curl/curl_armv7_Linux ./curl/curl_i686_Linux ./curl/curl_lite_DOS ./curl/curl_mips64_Linux ./curl/curl_mips64el_Linux ./curl/curl_mips_Android ./curl/curl_mips_Linux ./curl/curl_mipsel_Android ./curl/curl_mipsel_Linux ./curl/curl_powerpc64le_Linux ./curl/curl_powerpc_Linux ./curl/curl_riscv64_Linux ./curl/curl_s390x_Linux ./curl/curl_tiny_DOS ./curl/curl_x64_Android ./curl/curl_x86_64_Android ./curl/curl_x86_Android
 $ grep -v .txt
 ./curl/curl_DOS:                    MS-DOS executable, COFF for MS-DOS, DJGPP go32 DOS extender, UPX compressed
-./curl/curl_aarch64_arm64_Linux:    Mach-O 64-bit arm64 executable, flags:<NOUNDEFS|DYLDLINK|TWOLEVEL|PIE>
+./curl/curl_aarch64_arm64_Linux:    ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
 ./curl/curl_aarch64_arm64_macOS:    Mach-O 64-bit arm64 executable, flags:<NOUNDEFS|DYLDLINK|TWOLEVEL|PIE>
 ./curl/curl_amd_x86_64_Linux:       XZ compressed data, checksum CRC64
 ./curl/curl_amd_x86_64_Windows.exe: PE32+ executable (console) x86-64, for MS Windows
@@ -127,9 +127,9 @@ $ grep -v .txt
 
 --> SHA256SUM
 fc6b3d39195df7af245b211c2cc9e8b22ff8624d14ca67703db1862f782defcd  ./curl/curl_DOS
-eeec242083888bbb12deb31e7c897f4f32a3c11a381f0ae41ece985dcd4ece1e  ./curl/curl_aarch64_arm64_Linux
+f12c20dd2270a1c040b1c749cd8dcf367d05e318598564a3669d5af4221bd8b3  ./curl/curl_aarch64_arm64_Linux
 eeec242083888bbb12deb31e7c897f4f32a3c11a381f0ae41ece985dcd4ece1e  ./curl/curl_aarch64_arm64_macOS
-3c6cfb9f124dc0f9f8b3cc7bf03619c41ba7492f6509544d30f41f05ae299aa0  ./curl/curl_amd_x86_64_Linux
+34b00b08bb30cf131fdba42882d7c4b12e55afb29c3bb46ebc9143a85482118e  ./curl/curl_amd_x86_64_Linux
 16b86dcf2fcd33aa336eda70fe126c9e34d2e95161b01323c517d6782f3a78ee  ./curl/curl_amd_x86_64_Windows.exe
 3c6cfb9f124dc0f9f8b3cc7bf03619c41ba7492f6509544d30f41f05ae299aa0  ./curl/curl_amd_x86_64_macOS
 c6694c5bb5904312a7aa8b872a4a0e438a91203417b4e1d35b7d1d817db9ffe5  ./curl/curl_amd_x86_Windows.exe
@@ -163,9 +163,9 @@ dae2da497625e1125ef290ecb33ad88ef2a5de4bc4e11e50fa944718db614646  ./curl/curl_s3
 
 ```console
 1.2M  ./curl/curl_DOS
-5.3M  ./curl/curl_aarch64_arm64_Linux
+6.1M  ./curl/curl_aarch64_arm64_Linux
 5.3M  ./curl/curl_aarch64_arm64_macOS
-2.2M  ./curl/curl_amd_x86_64_Linux
+2.5M  ./curl/curl_amd_x86_64_Linux
 6.2M  ./curl/curl_amd_x86_64_Windows.exe
 2.2M  ./curl/curl_amd_x86_64_macOS
 4.5M  ./curl/curl_amd_x86_Windows.exe
