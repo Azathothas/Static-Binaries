@@ -37,13 +37,13 @@ jobs:
             echo "Version $VERSION is already Fetched & Updated"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Building... --> $VERSION  (from <-- $STORED_VERSION)"
+            echo "Building... --> v$VERSION  (from <-- v$STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
 
       - name: Compare Versions
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/toybox/version.txt
@@ -51,19 +51,19 @@ jobs:
           # Get latest changelog
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
           
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/toybox"
 
       - name: Download @Latest Releases   
-        #if: env.versions_same != 'true' 
+        if: env.versions_same != 'true' 
         run: |
          #Download
          #-------------------------#
@@ -112,7 +112,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/toybox/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -121,14 +121,14 @@ jobs:
         continue-on-error: true
 
       - name: Generate '.base64' 
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           cd "$GITHUB_WORKSPACE/main/toybox" && find . -type f ! -name '*.md' ! -name '*.base64' ! -name '*.txt' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
         working-directory: main
         continue-on-error: true        
         
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./toybox/INFO.md > ./toybox/README.md
