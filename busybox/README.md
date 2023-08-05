@@ -41,8 +41,6 @@ $env:PROCESSOR_ARCHITECTURE
 --> ARM_abihf [32-bit]
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_arm_abihf_gcc_Linux"
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_arm_abihf_musl_Linux"
---> ARMv5te_abi [32-bit]
--->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_armv5te_abi_musl_Linux"
 --> ARMv7_abi [32-bit]
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_armv7_abi_gcc_Linux"
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_armv7_abi_musl_Linux"
@@ -103,71 +101,73 @@ $env:PROCESSOR_ARCHITECTURE
 ---
 ```console
 $ file ./busybox/busybox_aarch64_arm64_gcc_Linux ./busybox/busybox_aarch64_arm64_musl_Linux ./busybox/busybox_amd_x86_64_gcc_Linux ./busybox/busybox_amd_x86_64_musl_Linux ./busybox/busybox_arm_abi_gcc_Linux ./busybox/busybox_arm_abi_musl_Linux ./busybox/busybox_arm_abihf_gcc_Linux ./busybox/busybox_arm_abihf_musl_Linux ./busybox/busybox_armv7l_abihf_musl_Linux ./busybox/busybox_i686_x86_gcc_Linux ./busybox/busybox_m68k_gcc_Linux ./busybox/busybox_m68k_linux_musl_Linux ./busybox/busybox_mips64_gcc_Linux ./busybox/busybox_mips64_musl_Linux ./busybox/busybox_mips64el_gcc_Linux ./busybox/busybox_mips64el_musl_Linux ./busybox/busybox_mips_gcc_Linux ./busybox/busybox_mips_musl_Linux ./busybox/busybox_mipsel_gcc_Linux ./busybox/busybox_mipsel_musl_Linux ./busybox/busybox_powerpc64_gcc_Linux ./busybox/busybox_powerpc64_musl_Linux ./busybox/busybox_powerpc64le_gcc_Linux ./busybox/busybox_powerpc64le_musl_Linux ./busybox/busybox_powerpc_gcc_Linux ./busybox/busybox_powerpc_musl_Linux ./busybox/busybox_riscv32_gcc_Linux ./busybox/busybox_riscv64_gcc_Linux ./busybox/busybox_riscv64_musl_Linux ./busybox/busybox_s390x_gcc_Linux ./busybox/busybox_s390x_musl_Linux
-./busybox/busybox_aarch64_arm64_gcc_Linux:  ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0cb8c7674086fa2ee808dce1da2e8c75c6fab7ba, for GNU/Linux 3.7.0, stripped
+$ grep -v .txt
+./busybox/busybox_aarch64_arm64_gcc_Linux:  ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ecf0670533b09f95115784734bf2fa9899d1181f, for GNU/Linux 3.7.0, stripped
 ./busybox/busybox_aarch64_arm64_musl_Linux: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_amd_x86_64_gcc_Linux:     ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=8d074adc8470c8af98b96bcd19cfa9872ace0818, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_amd_x86_64_gcc_Linux:     ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=da44b80a6f31ea5934ee36490b683e13a773a91a, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_amd_x86_64_musl_Linux:    ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_arm_abi_gcc_Linux:        ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=2271db4a09d28e9a962e5dd01b076fa4057a4881, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_arm_abi_gcc_Linux:        ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=edb96212e30170ba7a0ea974ce378aa91189e4bb, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_arm_abi_musl_Linux:       ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_arm_abihf_gcc_Linux:      ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=ccff45ca31e88652688269ea6cb18d957319a31b, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_arm_abihf_gcc_Linux:      ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, BuildID[sha1]=7eaa4cd2667e8289cb33535f7664a6cf7f5de738, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_arm_abihf_musl_Linux:     ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), static-pie linked, stripped
 ./busybox/busybox_armv7l_abihf_musl_Linux:  ELF 32-bit LSB pie executable, ARM, EABI5 version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_i686_x86_gcc_Linux:       ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=92372bfa25016ef9cf1ff4959ea2e260b13e9413, for GNU/Linux 3.2.0, stripped
-./busybox/busybox_m68k_gcc_Linux:           ELF 32-bit MSB executable, Motorola m68k, 68020, version 1 (SYSV), statically linked, BuildID[sha1]=9a064db98230474928d86ef912f59ba1eb22ada4, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_i686_x86_gcc_Linux:       ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4ff68f42c7faedd12ca076fab19262a7ebee3884, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_m68k_gcc_Linux:           ELF 32-bit MSB executable, Motorola m68k, 68020, version 1 (SYSV), statically linked, BuildID[sha1]=e070d8a4d824466ad4e3098f5aa459cd2ae01299, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_m68k_linux_musl_Linux:    ELF 32-bit MSB pie executable, Motorola m68k, 68020, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_mips64_gcc_Linux:         ELF 64-bit MSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=227a2c668a20d209bf44a01eddb8099c4e949fa8, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_mips64_gcc_Linux:         ELF 64-bit MSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=dc67912006aa814fc5be2a64a8b371754d1868f3, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_mips64_musl_Linux:        ELF 64-bit MSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_mips64el_gcc_Linux:       ELF 64-bit LSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=88d3bb6490848aaea85792a6cfd5d4e312760b28, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_mips64el_gcc_Linux:       ELF 64-bit LSB executable, MIPS, MIPS64 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=fa4776a4af75dff9131534537dbf734c3af5c044, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_mips64el_musl_Linux:      ELF 64-bit LSB pie executable, MIPS, MIPS-III version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_mips_gcc_Linux:           ELF 32-bit MSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=2731c2e42cb563b8af07e66a2614f5d8078d4c86, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_mips_gcc_Linux:           ELF 32-bit MSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=2a7b9d22e4a8d913ae55b9544daa96827257eea8, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_mips_musl_Linux:          ELF 32-bit MSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_mipsel_gcc_Linux:         ELF 32-bit LSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=eee7218f264ec41b15c8a89a23cb0859bbe55a8d, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_mipsel_gcc_Linux:         ELF 32-bit LSB executable, MIPS, MIPS32 rel2 version 1 (SYSV), statically linked, BuildID[sha1]=5bea25c86c7c9c96a1e85f17770b279b86d0ee52, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_mipsel_musl_Linux:        ELF 32-bit LSB pie executable, MIPS, MIPS-I version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_powerpc64_gcc_Linux:      ELF 64-bit MSB executable, 64-bit PowerPC or cisco 7500, Power ELF V1 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=53f971418f4850ad6b72f105970988ee58b8bb95, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_powerpc64_gcc_Linux:      ELF 64-bit MSB executable, 64-bit PowerPC or cisco 7500, Power ELF V1 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a7f4b706c172e97292080b844eeb036ba7d5ad0f, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_powerpc64_musl_Linux:     ELF 64-bit MSB pie executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_powerpc64le_gcc_Linux:    ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=50c22e79925d65dbcb17ebbffaafeb9594b1017e, for GNU/Linux 3.10.0, stripped
+./busybox/busybox_powerpc64le_gcc_Linux:    ELF 64-bit LSB executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3175d3991a5247c72a3863fde5ad311f25286d67, for GNU/Linux 3.10.0, stripped
 ./busybox/busybox_powerpc64le_musl_Linux:   ELF 64-bit LSB pie executable, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_powerpc_gcc_Linux:        ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, BuildID[sha1]=afbe409342604f522d664ce9e1844d21e587754d, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_powerpc_gcc_Linux:        ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, BuildID[sha1]=e23d383e50a7e77370e0510f1840ad643c680165, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_powerpc_musl_Linux:       ELF 32-bit MSB pie executable, PowerPC or cisco 4500, version 1 (SYSV), static-pie linked, stripped
 ./busybox/busybox_riscv32_gcc_Linux:        ELF 32-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, for GNU/Linux 5.4.0, stripped
-./busybox/busybox_riscv64_gcc_Linux:        ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=58a3980e2e0048a0febb139ed4f9319264cddcca, for GNU/Linux 4.15.0, stripped
+./busybox/busybox_riscv64_gcc_Linux:        ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), statically linked, BuildID[sha1]=0279ee81e2272ae4a8bb669fa555912034e80d5b, for GNU/Linux 4.15.0, stripped
 ./busybox/busybox_riscv64_musl_Linux:       ELF 64-bit LSB pie executable, UCB RISC-V, RVC, double-float ABI, version 1 (SYSV), static-pie linked, stripped
-./busybox/busybox_s390x_gcc_Linux:          ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0f5dfe2660e078f489bf8cb2501f29d46c555136, for GNU/Linux 3.2.0, stripped
+./busybox/busybox_s390x_gcc_Linux:          ELF 64-bit MSB executable, IBM S/390, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2a03010d170c2e3aa628cc4535b7cef22d4dc80d, for GNU/Linux 3.2.0, stripped
 ./busybox/busybox_s390x_musl_Linux:         ELF 64-bit MSB pie executable, IBM S/390, version 1 (SYSV), static-pie linked, stripped
 
 --> SHA256SUM
 $ sha256sum ./busybox/busybox_aarch64_arm64_gcc_Linux ./busybox/busybox_aarch64_arm64_musl_Linux ./busybox/busybox_amd_x86_64_gcc_Linux ./busybox/busybox_amd_x86_64_musl_Linux ./busybox/busybox_arm_abi_gcc_Linux ./busybox/busybox_arm_abi_musl_Linux ./busybox/busybox_arm_abihf_gcc_Linux ./busybox/busybox_arm_abihf_musl_Linux ./busybox/busybox_armv7l_abihf_musl_Linux ./busybox/busybox_i686_x86_gcc_Linux ./busybox/busybox_m68k_gcc_Linux ./busybox/busybox_m68k_linux_musl_Linux ./busybox/busybox_mips64_gcc_Linux ./busybox/busybox_mips64_musl_Linux ./busybox/busybox_mips64el_gcc_Linux ./busybox/busybox_mips64el_musl_Linux ./busybox/busybox_mips_gcc_Linux ./busybox/busybox_mips_musl_Linux ./busybox/busybox_mipsel_gcc_Linux ./busybox/busybox_mipsel_musl_Linux ./busybox/busybox_powerpc64_gcc_Linux ./busybox/busybox_powerpc64_musl_Linux ./busybox/busybox_powerpc64le_gcc_Linux ./busybox/busybox_powerpc64le_musl_Linux ./busybox/busybox_powerpc_gcc_Linux ./busybox/busybox_powerpc_musl_Linux ./busybox/busybox_riscv32_gcc_Linux ./busybox/busybox_riscv64_gcc_Linux ./busybox/busybox_riscv64_musl_Linux ./busybox/busybox_s390x_gcc_Linux ./busybox/busybox_s390x_musl_Linux
-e6ee492704555b6765991199bcd4a3540e1e5cad1c4ce6a170940a9d2db20f70  ./busybox/busybox_aarch64_arm64_gcc_Linux
-93656f3a0c014fca0b15551d9cceee786c7dcdd82dcda4e0745cebdfbf5965a7  ./busybox/busybox_aarch64_arm64_musl_Linux
-b1484abba3d2d559b4616b998b043051222bf5d3f6f6fe368fd36350ffb6cdec  ./busybox/busybox_amd_x86_64_gcc_Linux
-31ec2c1080a7e8ae45749668aead9d6287af1ba45637989b5bc73f4978bc6060  ./busybox/busybox_amd_x86_64_musl_Linux
-ee52816b3e440dd846df542e557f8ed54af7b13c72d4ef22d0a7af37214e732b  ./busybox/busybox_arm_abi_gcc_Linux
-00c290a748ca214890b4274c6cf79e2e902bb751979e1ddc8883d2c257b72050  ./busybox/busybox_arm_abi_musl_Linux
-6daa0a680c23a83afc1cca3dca1fd5bbe23ee9d7bc440825d298efdbe732adda  ./busybox/busybox_arm_abihf_gcc_Linux
-1853671c0367aeadd839cb28f612d7b0d72373ce63da3a8fd5f49da4234c8a46  ./busybox/busybox_arm_abihf_musl_Linux
-a444b2150be10c3239589ddedff9ac83fd5e97856899c823d2743da6906fda61  ./busybox/busybox_armv7l_abihf_musl_Linux
-5492e1a771b0d86a40f0d3f02c5c5dfb1cc64d39e8cda87ebeb7eff94fb19e8d  ./busybox/busybox_i686_x86_gcc_Linux
-92be7edd6f304f7ed8f6d81fe5b5e2f2685660a6ca2c22e450a145c63a0a5b62  ./busybox/busybox_m68k_gcc_Linux
-38f733035112b3b7acdf42f76007f07c4c29b8a22003f5717792b490a91bd3ba  ./busybox/busybox_m68k_linux_musl_Linux
-5fcda3160a0bb0758e2f5d2d468a8626728c359aa4193ada8a76240874181997  ./busybox/busybox_mips64_gcc_Linux
-e1557c877dab9a63afca6c86149ed2416717d9a95708f32ee10c75601aad9a47  ./busybox/busybox_mips64_musl_Linux
-02d39d1da5184a758985cb43bd1569570bf91aa6e1fd169e43a09fdcc660789a  ./busybox/busybox_mips64el_gcc_Linux
-850a5ddee21e232fbf5f1ec51e3a76f2956000e3c0aa67e95952b6766bee5c8f  ./busybox/busybox_mips64el_musl_Linux
-a16d772269ea6f37760176d088336b8ce6ad24e76ae741a37d6b4dc1bbc1c9fe  ./busybox/busybox_mips_gcc_Linux
-4f38e3ed3c3afa2d849604ee0bd4b127e47a4560cbb7831ab11b09b8f758567d  ./busybox/busybox_mips_musl_Linux
-b29e5ca0567ffc20aa52c25f51d038f2b0b8b4ec096a45a6c78e43ae955a8f9b  ./busybox/busybox_mipsel_gcc_Linux
-51ace4d3fe3a42f12e413d3a3b64544d63d4e7a5dba90e24e29e97e43897e5a4  ./busybox/busybox_mipsel_musl_Linux
-eeefe0ee8e49f65987cd6bcfe8372f9da6d25753bac5b6f5b1c48c1604bfbf37  ./busybox/busybox_powerpc64_gcc_Linux
-2e124d8fedd4bf5c00ffe3bb49b3ae07eea31eda185f12862221c365eee37b85  ./busybox/busybox_powerpc64_musl_Linux
-101cd0a9ba985919d3768e07b499d5b61672ed16ab0c5d41dd696956966f6827  ./busybox/busybox_powerpc64le_gcc_Linux
-216e0769c2828d19c79c5952a23be081eaf52d53cec9aba6bf300325ef933e09  ./busybox/busybox_powerpc64le_musl_Linux
-dce7a81c8dbc4cc248c7b01a91b7e442efa03f86db8e8c6747b8c82756219848  ./busybox/busybox_powerpc_gcc_Linux
-5739439879d2abb7adbd1c726ecb86be252389b6249c5c58ac46a020dd583c95  ./busybox/busybox_powerpc_musl_Linux
-52109cf38b8a735af611a1bdd36feb83f64367def63af4fd65773be3989c0be5  ./busybox/busybox_riscv32_gcc_Linux
-08692d257b8b8a53b05c5e068ba2817e552bb3451be8c3abb139604acf52e0cf  ./busybox/busybox_riscv64_gcc_Linux
-c670ff5266305ba59a3397e051c12abf9e0fc08b5b28a0a47061452ebb6ad960  ./busybox/busybox_riscv64_musl_Linux
-c860b7340cc036d105acac25d0851d1231bdd8220dcc9032b6ce7ae0d347644a  ./busybox/busybox_s390x_gcc_Linux
-8bc191eacf3b8b56cf268ce72c1d930f32b79eba3e7b231b8ecbc3f37861459b  ./busybox/busybox_s390x_musl_Linux
+$ grep -v .txt
+2c73b1c2340d12ea662cb002046507f1f26773b9410635896ead0d538c699c23  ./busybox/busybox_aarch64_arm64_gcc_Linux
+ccf1e3f588a680054a1115a280f397f6a7e66dc7f6d3d4f87b83ba6828dd8f77  ./busybox/busybox_aarch64_arm64_musl_Linux
+31d295d0937cc26157315b5c2df948f649dec03928c9ec08fe79fdb1d9f6d933  ./busybox/busybox_amd_x86_64_gcc_Linux
+1e494dda0681112da9e0deec2ecb621e725b0f078f8448345b7e9ae2fe0e7947  ./busybox/busybox_amd_x86_64_musl_Linux
+06caaa8b34c0220789e008671e92d9f45c53aec01f4314079c5e802292d84223  ./busybox/busybox_arm_abi_gcc_Linux
+14a9f3d91d8792104ae2a7a3f44b244060aaedd661d082fe7f6b8129123539f8  ./busybox/busybox_arm_abi_musl_Linux
+1b1c8f1c56089d27a02142671cba3fef9d17534558cd6fafcc7d29e6329e14f5  ./busybox/busybox_arm_abihf_gcc_Linux
+ab29d635e0fca66a274ce99073822f302f475970d985a20d489e82a929f11989  ./busybox/busybox_arm_abihf_musl_Linux
+fd3a8be6b2210305876d4540ba8442ca7041a4065fcc9526356759fd93ec7119  ./busybox/busybox_armv7l_abihf_musl_Linux
+b7fb256f050b80f968073c324a5780aa63ba9634235b2de21b7043564151fc0c  ./busybox/busybox_i686_x86_gcc_Linux
+3ab4d24fab7faf004cab3749040f5045c381587188d14359e0c4a2fbb8dc6440  ./busybox/busybox_m68k_gcc_Linux
+9c8df35baa28c6a12d0593d82874237082422546ff561685dbffbc59b85e0475  ./busybox/busybox_m68k_linux_musl_Linux
+6a98d1ea7f619f285fa10c4a48d774525735670ed15f85319a01d5f1ded0a6f7  ./busybox/busybox_mips64_gcc_Linux
+d18fd9f02339ce8688cc102828ef57755325c26110f50d4527e4c32e50b50c2d  ./busybox/busybox_mips64_musl_Linux
+3ee4f42a532953bf2cdf8252d91367ec856b8a1619d38cfdc087eb36fe914824  ./busybox/busybox_mips64el_gcc_Linux
+2250b13f50dc287eea1583011cf273a088e1cd601f86dea04c1b147e9d672f56  ./busybox/busybox_mips64el_musl_Linux
+9ade5f6f9bf543420155b5cfc9dbff34c771b970dfd1f7cfdcf58d762511623d  ./busybox/busybox_mips_gcc_Linux
+ab35833d93b88de72b2f1a153312f36f91086217286e6e88590ebe079c3f114e  ./busybox/busybox_mips_musl_Linux
+08ac02e26fcb3c8385991d917db776d252333f215cdf327d6d4aa61effdfa348  ./busybox/busybox_mipsel_gcc_Linux
+5065114dc7caedf68fcc1cd1c417936e04b1f45f308a004bf6d5dbd657bcfdbc  ./busybox/busybox_mipsel_musl_Linux
+cb5e6610527ea67341c237ec636bd25e065b4f9f274104c2f24b0159b7434f73  ./busybox/busybox_powerpc64_gcc_Linux
+770694781e71537a3572485fa8881c0f2f8f9530ff87be2d25a8ccb4c6f6b134  ./busybox/busybox_powerpc64_musl_Linux
+b1278a569dba52d65b81eb5cdd443e2f3bed31e85933ae376e0c09436eba3eff  ./busybox/busybox_powerpc64le_gcc_Linux
+9a08745c69ba00098371af9369a2784e5e735e742982839f19d4aad0037c7db5  ./busybox/busybox_powerpc64le_musl_Linux
+60e7d1c835cbc048fe162296fb1b0a4d1ebb40fab8f70591bae4f1c691c5d61d  ./busybox/busybox_powerpc_gcc_Linux
+61e37fd9aeebe65ac6a2f2c978f7b9abb91eb427c6460bc2ad9951a252a5990c  ./busybox/busybox_powerpc_musl_Linux
+6787fea8ca0a1d5bba51f7536f00ba9fdbc2b71e54d4b8d418ab2f676a289679  ./busybox/busybox_riscv32_gcc_Linux
+3c336a0ae58f371de2af7cb39220a9a9561889ff5b9db16e57dea9712ed54658  ./busybox/busybox_riscv64_gcc_Linux
+fb2ac2853eb962aec254876a41bf7a5aa6d77d15bc27dd831af4a5a094ad1c88  ./busybox/busybox_riscv64_musl_Linux
+f68eada42cd9d4cd0126aefa7cb759d738ad8a85dc8737e4aa290ab1366e4a07  ./busybox/busybox_s390x_gcc_Linux
+dc590cc436c180ec8667f11c8f6d642991b0a5e8454bc7500ed14df44cc89322  ./busybox/busybox_s390x_musl_Linux
 ```
 
 
@@ -215,7 +215,7 @@ c860b7340cc036d105acac25d0851d1231bdd8220dcc9032b6ce7ae0d347644a  ./busybox/busy
 ```console
 
 $ ./busybox/busybox_amd_x86_64_gcc_Linux
-BusyBox v1.36.1 (2023-08-05 05:37:09 UTC) multi-call binary.
+BusyBox v1.36.1 (2023-08-05 06:49:05 UTC) multi-call binary.
 BusyBox is copyrighted by many authors between 1998-2015.
 Licensed under GPLv2. See source distribution for detailed
 copyright notices.
