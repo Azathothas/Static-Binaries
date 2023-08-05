@@ -846,7 +846,9 @@ jobs:
            echo -e "" >> ./bore/README.md 
            echo '---' >> ./bore/README.md
            echo '```console' >> ./bore/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md
+           echo -e "" >> ./bore/README.md
+           echo -e "--> METADATA" >> ./bore/README.md
+           /bin/bash -c 'PS4="$ "; file ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md
            echo -e "" >> ./bore/README.md
            echo -e "--> SHA256SUM" >> ./bore/README.md
            /bin/bash -c 'PS4="$ ";sha256sum ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md   
