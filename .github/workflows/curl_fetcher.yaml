@@ -91,12 +91,12 @@ jobs:
          #-------------------------#     
          #Linux
          #aarch64_arm64 || armv8
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'arm64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'arm64' | grep -v 'macos')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tgz*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_Linux" \;  
          #amd64_x86_64 
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'amd64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'amd64' | grep -v 'macos')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tgz*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Linux" \;   
@@ -115,7 +115,7 @@ jobs:
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tgz*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips_Linux" \;
-         #mipsle
+         #mipsel
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mipsel' | grep -v 'mips64')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
