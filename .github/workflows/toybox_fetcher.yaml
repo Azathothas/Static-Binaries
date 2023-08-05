@@ -30,6 +30,7 @@ jobs:
         run: |
           # Get Latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/landley/toybox/tags" | jq -r '.[0].name' )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/toybox/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
@@ -70,44 +71,45 @@ jobs:
          #-------------------------#          
          #Linux
          #aarch64_arm64           
-          curl -qfSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_arm64_aarch64_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_arm64_aarch64_Linux" 2>/dev/null
          #amd64_x86_64  
-          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_amd64_x86_64_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_amd64_x86_64_Linux" 2>/dev/null
          #armv4l 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv4l_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv4l_Linux" 2>/dev/null
          #armv5l
-          curl -qfSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv5l_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv5l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv5l_Linux" 2>/dev/null
          #armv7l 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7l_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7l_Linux" 2>/dev/null
          #armv7m 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7m_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-armv7m" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv7m_Linux" 2>/dev/null
          #i486 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i486_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i486" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i486_Linux" 2>/dev/null
          #i686 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i686_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-i686" -o "$GITHUB_WORKSPACE/main/toybox/toybox_i686_Linux" 2>/dev/null
          #m68k 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox/toybox_m68k_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-m68k" -o "$GITHUB_WORKSPACE/main/toybox/toybox_m68k_Linux" 2>/dev/null
          #microblaze 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox/toybox_microblaze_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-microblaze" -o "$GITHUB_WORKSPACE/main/toybox/toybox_microblaze_Linux" 2>/dev/null
          #mips 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips_Linux" 2>/dev/null
          #mipsel 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mipsel_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mipsel" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mipsel_Linux" 2>/dev/null
          #mips64 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips64_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-mips64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_mips64_Linux" 2>/dev/null
          #powerpc 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc_Linux" 2>/dev/null
          #powerpc64 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64_Linux" 2>/dev/null
          #powerpc64le 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64le_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64le_Linux" 2>/dev/null
          #s390x 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox/toybox_s390x_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox/toybox_s390x_Linux" 2>/dev/null
          #sh2eb 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh2eb_Linux"
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh2eb_Linux" 2>/dev/null
          #sh4 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4_Linux"
-          
+          curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4_Linux" 2>/dev/null
+         #End
+          set -x
         continue-on-error: true
 
      #Cleanup
@@ -120,6 +122,12 @@ jobs:
           find "$GITHUB_WORKSPACE/main/toybox/" -type f -name 'toybox*' -exec chmod +xwr {} \; >/dev/null 2>&1
         continue-on-error: true
 
+      - name: Generate '.base64' 
+        run: |
+          cd "$GITHUB_WORKSPACE/main/toybox" && find . -type f ! -name '*.md' ! -name '*.base64' ! -name '*.txt' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+        working-directory: main
+        continue-on-error: true        
+        
       - name: Update README.md
         if: env.versions_same != 'true'
         run: |  
