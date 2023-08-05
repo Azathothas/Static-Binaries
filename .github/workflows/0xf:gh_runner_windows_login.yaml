@@ -1,0 +1,30 @@
+name: 0xf ➼ Login (gh-runner) Windows
+
+on:
+  workflow_dispatch:
+env:
+  #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+  TSKEY: tskey-auth-ksYVhg1CNTRL-A5QDDdH66vU2pVMcgBy2wUYwzgL4Sv2F
+  THOST: gh-runner
+  TUSER: runner
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 720  # Adjust the timeout as needed
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Tailscale
+        run: |
+          # Download the installer
+          Invoke-WebRequest -Uri "https://pkgs.tailscale.com/unstable/tailscale-setup-1.47.36.exe" -OutFile "tailscale-setup.exe"
+          # Set it up
+          Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet"
+          # Run the service
+          Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale-ipn.exe"
+          Start-Sleep -Seconds 4
+          Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--ssh", "--unattended", --hostname="${{ env.THOST }}", --authkey="${{ env.TSKEY }}"
+          Start-Sleep -Seconds 60
