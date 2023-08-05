@@ -39,7 +39,7 @@ jobs:
             echo "Twingate-Client Version $TWINGATE_VERSION is already fetched"
             echo "twingate_versions_same=true" >> $GITHUB_ENV
           else
-            echo "fetching... Twingate-Client --> $VERSION  (from $STORED_TWINGATE_VERSION)"
+            echo "Fetching... Twingate-Client --> v$VERSION (from <-- v$STORED_TWINGATE_VERSION)"
             echo "twingate_versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
@@ -58,7 +58,7 @@ jobs:
             echo "Twingate-Connector Version $TWINGATE_CONNECTOR_VERSION is already fetched"
             echo "twingate_connector_versions_same=true" >> $GITHUB_ENV
           else
-            echo "fetching... Twingate-Connector --> $VERSION  (from $STORED_TWINGATE_CONNECTOR_VERSION)"
+            echo "fetching... Twingate-Connector --> v$VERSION (from <-- v$STORED_TWINGATE_CONNECTOR_VERSION)"
             echo "twingate_connector_versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
