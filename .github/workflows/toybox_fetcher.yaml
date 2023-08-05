@@ -73,7 +73,7 @@ jobs:
          #aarch64_arm64           
           curl -qfSL "http://landley.net/toybox/bin/toybox-aarch64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_arm64_aarch64_Linux" 2>/dev/null
          #amd64_x86_64  
-          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_amd64_x86_64_Linux" 2>/dev/null
+          curl -qfSL "http://landley.net/toybox/bin/toybox-x86_64" -o "$GITHUB_WORKSPACE/main/toybox/toybox_amd_x86_64_Linux" 2>/dev/null
          #armv4l 
           curl -qfSL "http://landley.net/toybox/bin/toybox-armv4l" -o "$GITHUB_WORKSPACE/main/toybox/toybox_armv4l_Linux" 2>/dev/null
          #armv5l
@@ -104,8 +104,6 @@ jobs:
           curl -qfSL "http://landley.net/toybox/bin/toybox-powerpc64le" -o "$GITHUB_WORKSPACE/main/toybox/toybox_powerpc64le_Linux" 2>/dev/null
          #s390x 
           curl -qfSL "http://landley.net/toybox/bin/toybox-s390x" -o "$GITHUB_WORKSPACE/main/toybox/toybox_s390x_Linux" 2>/dev/null
-         #sh2eb 
-          curl -qfSL "http://landley.net/toybox/bin/toybox-sh2eb" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh2eb_Linux" 2>/dev/null
          #sh4 
           curl -qfSL "http://landley.net/toybox/bin/toybox-sh4" -o "$GITHUB_WORKSPACE/main/toybox/toybox_sh4_Linux" 2>/dev/null
          #End
@@ -146,11 +144,11 @@ jobs:
            echo -e "" >> ./toybox/README.md
            echo '---' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
-           echo '- #### Version' >> ./toybox/README.md
+           echo '- #### Bundled Commands' >> ./toybox/README.md
            echo '```console' >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux --version' &>> ./toybox/README.md
+           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux --help' &>> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
-           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux --help' &>> ./toybox/README.md 
+           /bin/bash -c 'PS4="$ "; ./toybox/toybox_amd_x86_64_Linux' &>> ./toybox/README.md 
            echo '```' >> ./toybox/README.md
            echo -e "" >> ./toybox/README.md
            echo '---' >> ./toybox/README.md
