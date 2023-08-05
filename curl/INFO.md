@@ -1,6 +1,6 @@
 
 ---
-- #### Download Curl
+- #### Download [Curl](https://curl.se/download.html)
 > - Nothing is rebuilt/re-compiled
 > - This is just a mirror, with the following sources
 > > ```bash
@@ -35,40 +35,37 @@ $env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH) 
 !# For Android
---> curl_armhf_arm32_Android
---> curl_arm32_Android             
---> curl_arm64_Android     
---> curl_mips_Android               
---> curl_mipsel_Android  
---> curl_x86_Android  
---> curl_x86_64_Android            
---> curl_x64_Android               
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_armhf_arm32_Android"
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_arm32_Android"             
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_arm64_Android"     
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_mips_Android"               
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_mipsel_Android"  
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_x86_Android"  
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_x86_64_Android"            
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_x64_Android"               
 !# DOS
---> curl_DOS
---> curl_lite_DOS                  
---> curl_tiny_DOS  
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_DOS"
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_lite_DOS"                  
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_tiny_DOS"  
 !#For Linux
---> curl_aarch64_arm64_Linux       
---> curl_aarch64_arm64_http3_Linux 
---> curl_amd64_x86_64_Linux       
---> curl_amd64_x86_64_http3_Linux  
---> curl_armhf_Linux               
---> curl_armv7_Linux               
---> curl_i386_Linux                    
---> curl_or1k_OpenRISC_Linux       
---> curl_ppc64le_powerpc64le_Linux
---> curl_riscv64_Linux             
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_aarch64_arm64_Linux"       
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_aarch64_arm64_http3_Linux" 
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd64_x86_64_Linux"       
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd64_x86_64_http3_Linux"  
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_armhf_Linux"               
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_armv7_Linux"               
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_i386_Linux"                    
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_or1k_OpenRISC_Linux"       
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_ppc64le_powerpc64le_Linux"
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_riscv64_Linux"             
 !# For Windows
---> curl_amd_x86_Windows.exe    
---> curl_amd_x86_64_Windows.exe    
---> curl_arm_x64_Windows.exe  
-
-!# Export
-export CURL_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
-
-!# Download
- curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/$CURL_ARCH"
-
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd_x86_Windows.exe"    
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd_x86_64_Windows.exe"    
+--> wget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_arm_x64_Windows.exe" 
+  -- Addtionally, using 'Invoke-Webrequest'
+--> Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd_x86_Windows.exe" -OutFile "curl.exe"   
+--> Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd_x86_64_Windows.exe" -OutFile "curl.exe"    
+--> Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_arm_x64_Windows.exe" -OutFile "curl.exe"  
 ```
 ---
 - #### Install Curl
