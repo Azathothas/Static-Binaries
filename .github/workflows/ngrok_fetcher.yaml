@@ -42,7 +42,7 @@ jobs:
             echo "Version $VERSION is already built & compiled"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Building... --> $VERSION  (from $STORED_VERSION)"
+            echo "Building... --> v$VERSION (from <-- v$STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
