@@ -1,4 +1,75 @@
-gsd
+
+---
+- #### Download [Twingate](https://github.com/schollz/twingate#install)
+> - **Sources**
+> > ```bash
+> > --> Linux:
+> >   - All binaries are downloaded using official apt sources inside containers
+> >     - 'https://binaries.twingate.com/client/linux/install.sh' !# Client
+> >     - 'https://binaries.twingate.com/connector/setup.sh'      !# Connector 
+> >   - They are then extracted and optionally made static using 'StaticX' !# https://github.com/JonathonReinhart/staticx
+> > 
+> > ```
+> > 
+```bash
+!# Get CPU Arch (Android)
+[ADB]
+adb shell getprop ro.product.cpu.abi
+[Termux]
+getprop ro.product.cpu.abi
+
+!# Get CPU Arch (Linux)
+ uname -m || dpkg --print-architecture
+
+!# Get CPU Arch (Windows)
+[cmd prompt]
+echo %PROCESSOR_ARCHITECTURE%
+[Powershell]
+$env:PROCESSOR_ARCHITECTURE
+
+!# Index (ARCH || ALT_ARCH)
+
+!# Linux
+--> aarch64 || arm64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_client_aarch64_arm64_dynamic_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_connector_aarch64_arm64_dynamic_Linux"
+--> Amd x86_64 || x86_64 [64-bit] (SYSV)
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_client_amd_x86_64_dynamic_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_client_amd_x86_64_staticx_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_connector_amd_x86_64_dynamic_Linux"
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_connector_amd_x86_64_staticx_Linux"
+--> ARM_abi|| ARMv4 || ARMv5 || ARMv7 (?) [32-bit]
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/twingate/twingate_connector_arm32v7_dynamic_Linux"
+
+```
+---
+- #### Install Twingate
+```bash
+!# Recommended way to install Twingate is:
+
+!# Linux
+--> Client  !# Requires ROOT
+ curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && sudo bash "./install.sh"
+--> Connector !# Requires ROOT
+ curl -qfsSLO "https://binaries.twingate.com/connector/setup.sh" && sudo bash "./setup.sh"
+
+!# Windows
+--> Client
+  https://api.twingate.com/download/windows
+--> Connector
+  !# This is just a linux binary being run and passed through multipass (https://multipass.run/install)
+  https://www.twingate.com/docs/deploy-connector-on-windows-with-chocolatey
+
+!# Copy downloaded twingate binaries to /usr/bin || /usr/local/bin
+!# For $HOME/bin
+ mkdir -p "$HOME/bin" && export PATH="$HOME/bin:$PATH"
+
+!# Move Downloaded twingate binaries to that DIR
+ mv "$Path_To_twingate_Binary" "/usr/bin/twingate"
+ 
+!# Give Writeable Perms
+ chmod +xwr /usr/bin/twingate*
+```
 
 ---
 ```console
@@ -23,19 +94,19 @@ $ file ./twingate/twingate_client_aarch64_arm64_dynamic_Linux ./twingate/twingat
 --> SHA256SUM
 84133c8482b8f9984ce9d4cc6004faa9a21566d81c3463f8ccc334fb1988b933  ./twingate/twingate_client_aarch64_arm64_dynamic_Linux
 759e5d5359bb94f317c1ba3bb8774e916e22c84e19e294b6dec2884b6bc88fc6  ./twingate/twingate_client_amd_x86_64_dynamic_Linux
-a8b436f2a6b97edfbe3604fcbe1227e9234d5be248994cff3ff0414032c28a63  ./twingate/twingate_client_amd_x86_64_staticx_Linux
+61b89ff8d27a61bdcf5d8478af5f0e859eeb117c71bd10165726667525870c24  ./twingate/twingate_client_amd_x86_64_staticx_Linux
 14eaa51e13c28b1427f6873c3a3c8d2050ba734f1a3f82bda0047deccc1dc429  ./twingate/twingate_connector_aarch64_arm64_dynamic_Linux
 5bc344135e916ffd6dc8a80e3620eac7cc0a5c4511ecabb4e5516a60e144d4e3  ./twingate/twingate_connector_amd_x86_64_dynamic_Linux
-da9087f313fc67147efea1c3d412a86388e672892605357b1ef02e2ef649941d  ./twingate/twingate_connector_amd_x86_64_staticx_Linux
+8846254fb933d3849d0902bb601f2603c7dd72699987c837f36f1739cade3b4d  ./twingate/twingate_connector_amd_x86_64_staticx_Linux
 b22e7be8af7adab1f9754e470ad522f0704d0a98c55ff18df039e2dcb3a0bc44  ./twingate/twingate_connector_arm32v7_dynamic_Linux
 f5a49dc8658cecab5ba333a9914617f57186d1cac7806a98c9d393f210f0aad0  ./twingate/twingate_connector_version.txt
 b5cdb6fecde63c38fdf1c5d4ed8b9acb9e7bddfa5139bce91d02406e71695d55  ./twingate/twingate_connectorctl_aarch64_arm64_dynamic_Linux
 2acd07b920c03f4c00f9718a9d1b5d5d840fddb1085ee05088a2ff74cb52b596  ./twingate/twingate_connectorctl_amd_x86_64_dynamic_Linux
-1356e824d33a81e31862349a4a3d1fe4d39107993ebff8c86125f10c29211cd9  ./twingate/twingate_connectorctl_amd_x86_64_staticx_Linux
+ffa5ca198f1dbad29b1c4b55cdd466fb1ca5f0266d9361af77137788b70d8669  ./twingate/twingate_connectorctl_amd_x86_64_staticx_Linux
 4b53979d86e7c820442d0f78203201c9a6c0b98e68a58d96c7ae28eb0a1f2f3f  ./twingate/twingate_connectorctl_arm32v7_dynamic_Linux
 4e3f52ccc2aa56f8b8ae437fee8aa576021cacf960592ab9e2b81fcc45f8d6a9  ./twingate/twingate_notifier_aarch64_arm64_dynamic_Linux
 1c831727a010482150660a2fc75a17017d8c43803ef730d662c91f93d339cbca  ./twingate/twingate_notifier_amd_x86_64_dynamic_Linux
-5b2b58f8b69cf175c761ca39add6d1d6da556629fb0cb6818d9c70ce5e176604  ./twingate/twingate_notifier_amd_x86_64_staticx_Linux
+a062250fa8c06e7752b5d14b5b81000f376aba828bed9281b6b471948e8f63fd  ./twingate/twingate_notifier_amd_x86_64_staticx_Linux
 f5a49dc8658cecab5ba333a9914617f57186d1cac7806a98c9d393f210f0aad0  ./twingate/twingate_version.txt
 ```
 
