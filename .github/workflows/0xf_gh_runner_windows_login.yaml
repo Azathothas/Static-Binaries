@@ -25,9 +25,28 @@ jobs:
           Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet"
           # Run the service
           Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale-ipn.exe"
-          Start-Sleep -Seconds 4
-          # TailScale SSH is not supported on windows: 
+          Start-Sleep -Seconds 5
+          # TailScale SSH is not supported on windows: https://github.com/tailscale/tailscale/issues/4697
+          # Instead rely on a manual approach
           Add-WindowsCapability -Online -Name OpenSSH.Server*
-          Start-Sleep -Seconds 10
+          Start-Sleep -Seconds 5
           Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="${{ env.THOST }}", --authkey="${{ env.TSKEY }}"
-          Start-Sleep -Seconds 60
+
+      - name: Get Sys-Info
+        run: |
+          # Print Basic Info
+          Write-Host "Current User: $env:USERNAME"
+          Write-Host "Hostname: $env:COMPUTERNAME"
+          Write-Host "Home: $env:HOMEDRIVE$env:HOMEPATH"
+          Write-Host "ENV_PATH: $env:PATH"
+          # Install winfetch
+          choco install winfetch -y
+          winfetch
+          # Install archey4
+          pip install archey4
+          archey
+        continue-on-error: true
+        
+      - name: Breakpoint || Sleep ∞
+        run: |        
+          while ($true) {Start-Sleep -Seconds 1}  
