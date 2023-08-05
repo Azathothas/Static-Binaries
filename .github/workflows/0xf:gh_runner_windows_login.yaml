@@ -1,4 +1,4 @@
-name: 0xf ➼ Login (gh-runner) Windows
+name: 0xf ➼ Login (gh-runner) Windows-Server-2022
 
 on:
   workflow_dispatch:
