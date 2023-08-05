@@ -5,7 +5,7 @@ on:
 env:
   #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
   TSKEY: tskey-auth-ksYVhg1CNTRL-A5QDDdH66vU2pVMcgBy2wUYwzgL4Sv2F
-  THOST: gh-runner
+  THOST: gh-runner-windows
   TUSER: runner
 
 jobs:
