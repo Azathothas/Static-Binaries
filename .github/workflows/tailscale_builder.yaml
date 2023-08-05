@@ -20,7 +20,33 @@ jobs:
         with:
           path: main
           
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/tailscale/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+
       - name: Install CoreUtils
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
@@ -46,12 +72,12 @@ jobs:
       #     g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
           
       - name: Setup Env
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
           # Get latest version
           curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/tailscale/version.txt"
-          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
     
     #Build using go tool chain
     #Complete Tool Chain List: `go tool dist list`
@@ -72,7 +98,76 @@ jobs:
     #       #rm -rf /tmp >/dev/null 2>&1   
     # ERROR: loadinternal: cannot find runtime/cgo
 
+      - name: Build Tailscale (Combined) for linux/aarch64_arm64
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=arm64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/amd_x86_64
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=amd64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/arm
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=arm
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/i386
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=386
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
       - name: Build Tailscale for linux/powerpc64_ppc64
+        if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -84,15 +179,18 @@ jobs:
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64_ppc64_Linux"
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1  
         continue-on-error: true  
         
       - name: Build Tailscale for linux/powerpc64le_ppc64le
+        if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -104,15 +202,18 @@ jobs:
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux" 
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1                          
         continue-on-error: true    
         
       - name: Build Tailscale for linux/s390x
+        if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -124,10 +225,12 @@ jobs:
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
           CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux"
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
@@ -136,6 +239,7 @@ jobs:
      
      #Fetch
       - name: Fetch tailscale bins [ Stable ]
+        if: env.versions_same != 'true'
         run: |
           #Linux
           #if this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
@@ -223,16 +327,19 @@ jobs:
         continue-on-error: true
         
       - name: Update README.md
+        if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./tailscale/INFO.md > ./tailscale/README.md
            echo -e "" >> ./tailscale/README.md 
            echo '---' >> ./tailscale/README.md
            echo '```console' >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./tailscale/tailscale*' &>> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> METADATA" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
            echo -e "" >> ./tailscale/README.md
            echo -e "--> SHA256SUM" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./tailscale/tailscale*' &>> ./tailscale/README.md   
+           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
            echo -e '```\n' >> ./tailscale/README.md
            echo -e "" >> ./tailscale/README.md
            echo '---' >> ./tailscale/README.md
@@ -240,7 +347,7 @@ jobs:
            echo '- #### Sizes' >> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
            echo '```console' >> ./tailscale/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
            echo '```' >> ./tailscale/README.md     
            echo -e "" >> ./tailscale/README.md 
            echo '---' >> ./tailscale/README.md 
@@ -267,5 +374,5 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Build || Fetch tailscale Binaries 
+          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
