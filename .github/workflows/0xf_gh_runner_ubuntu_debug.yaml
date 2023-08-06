@@ -1,4 +1,4 @@
-name: 0xf ➼ Login (gh-runner) Ubuntu_22.04
+name: 0xf ➼ Debug (gh-runner) Ubuntu-22.04
 #Image: https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 on:
   workflow_dispatch:
