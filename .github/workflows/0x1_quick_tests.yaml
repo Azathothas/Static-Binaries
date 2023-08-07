@@ -29,12 +29,11 @@ jobs:
           name: "Tailscale ${{ env.VERSION }}"
           tag_name: "tailscale"
           body: "$GITHUB_WORKSPACE/main/tailscale/INFO.md"
-          automatic_release_tag: "latest"
           prerelease: false
           draft: false
           generate_release_notes: false
           token: "${{ secrets.GITHUB_TOKEN }}"
           files: |
-            $GITHUB_WORKSPACE/main/tailscale/*_Linux
-            $GITHUB_WORKSPACE/main/tailscale/*_macOS
-            $GITHUB_WORKSPACE/main/tailscale/*.exe
+            ./tailscale/*_Linux
+            ./tailscale/*_macOS
+            ./tailscale/*.exe
