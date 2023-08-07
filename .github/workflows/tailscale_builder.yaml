@@ -31,7 +31,7 @@ jobs:
    #Incase changes were made after workflow ran      
       - name: Pull latest changes from main
         run: |
-          git pull origin main
+          cd "$GITHUB_WORKSPACE" && git pull origin main
           
       - name: Check Version
         id: check_version
@@ -137,7 +137,7 @@ jobs:
    #Incase changes were made after workflow ran      
       - name: Pull latest changes from main
         run: |
-          git pull origin main
+          cd "$GITHUB_WORKSPACE" && git pull origin main
           
       - name: Check Version
         id: check_version
