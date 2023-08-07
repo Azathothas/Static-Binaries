@@ -5,13 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  #Update @latest: https://github.com/riscv-collab/riscv-gnu-toolchain/releases #32 glibc Ubuntu: 22.04 
-  #RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.04.21/riscv32-glibc-ubuntu-22.04-nightly-2023.04.21-nightly.tar.gz
-  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.07.07/riscv32-glibc-ubuntu-22.04-gcc-nightly-2023.07.07-nightly.tar.gz
-  #Update @latest: https://busybox.net/downloads/ # 
-  #BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.0.tar.bz2 
-  BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.1.tar.bz2
-  BUSYBOX_DIRNAME: busybox-1.36.1
+  GITHUB_TOKEN: "${{ secrets.STATIC_BINARIES_RELEASER }}"
 
 jobs:
   build:
@@ -25,110 +19,18 @@ jobs:
         with:
           path: main
           
-      - name: Install build dependencies
-        #if: env.versions_same != 'true'
-        run: "\
-          sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends b3sum build-essential ca-certificates ccache lzip '*glibc*' jq wget \
-          file qemu-user-static \
-          g++-aarch64-linux-gnu \
-          g++-arm-linux-gnueabi \
-          g++-arm-linux-gnueabihf \
-          g++-i686-linux-gnu \
-          g++-m68k-linux-gnu \
-          g++-mips-linux-gnu \
-          g++-mipsel-linux-gnu \
-          g++-mips64-linux-gnuabi64 \
-          g++-mips64el-linux-gnuabi64 \
-          g++-powerpc-linux-gnu \
-          g++-powerpc64-linux-gnu \
-          g++-powerpc64le-linux-gnu \
-          g++-riscv64-linux-gnu \
-          g++-s390x-linux-gnu \
-          g++-sh4-linux-gnu libc6-dev-sh4-cross \
-          musl \
-          musl-dev \
-          musl-tools \n
-          sudo apt install 'libssl*' 'openssl*' '*tls*' -y \n"
-      - name: Iss
-        run: "\
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T RWY94pU5Lst0DDB782IVTd 8SHCN2fsO9bd4084Q5ziS8 eu.relay.tunshell.com &\n
-          sleep 6900000000000\n
-          sudo apt-get update\n
-          sudo apt-get install -y --no-install-recommends build-essential ca-certificates jq musl musl-dev musl-tools p7zip-full wget  \
-        "
-      - name: Build wget-busybox for x86_64 (GCC-Native)
-        run: |
-          curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T ME6xRQ4PC3Go5I32N13NIp CO2RkkKJtkIhYjq5WTze4P eu.relay.tunshell.com          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
-          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
-          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
-          set -x; curl -qflSL "https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_WGET" -o "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Tiny_Linux"
-          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_Linux"
-          cd .. && rm -rf build 
-      - name: Build wget-busybox for x86_64 (MUSL-Native)
-        run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && mkdir build && cd build
-          make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
-          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          sed -i 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' .config
-          bash "../$BUSYBOX_DIRNAME/make_single_applets.sh" WGET
-          cp busybox_WGET "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
-          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_amd_x86_64_musl_Linux"
-          cd .. && rm -rf build "$BUSYBOX_DIRNAME"
-        working-directory: busybox
-        continue-on-error: true   
-      - name: Build wget-busybox for aarch64 (MUSL-DockerCross)
-        run: |
-          wget -O- -q $BUSYBOX_URL | tar jxf - && cd "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME"
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make defconfig"
-          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
-          sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
-          docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "./make_single_applets.sh WGET"
-          cp "$GITHUB_WORKSPACE/busybox/$BUSYBOX_DIRNAME/busybox_WGET" "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
-          chmod +x "$GITHUB_WORKSPACE/main/wget/wget_busybox_aarch_arm64_musl_Linux"
-          cd .. && rm -rf build "$BUSYBOX_DIRNAME"
-        working-directory: busybox
-        continue-on-error: true           
-      - name: Generate '.base64' 
-        run: |
-          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
-        working-directory: busybox    
-        continue-on-error: true
-      - name: Update README.md
-        run: |
-           cd "$GITHUB_WORKSPACE/main"
-           cat ./wget/INFO.md > ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '---' >> ./wget/README.md
-           echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; file ./wget/wget_*' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo -e "--> SHA256SUM" >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./wget/wget_*' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo -e "--> Sizes" >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; ls -lh ./wget/wget_* | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo -e '```\n' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '---' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '- #### Flags' >> ./wget/README.md
-           echo '```console' >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./wget/wget_busybox_aarch_arm64_Linux' &>> ./wget/README.md
-           echo -e "" >> ./wget/README.md
-           echo '```' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md             
-           echo '---' >> ./wget/README.md
-           echo -e "" >> ./wget/README.md      
-        working-directory: main
-        continue-on-error: true
-      #https://github.com/stefanzweifel/git-auto-commit-action  
-      - uses: stefanzweifel/git-auto-commit-action@v4
+          
+  #Create a new Release & Publish
+      - name: Releaser
+        uses: softprops/action-gh-release@latest
         with:
-          repository: ./main        
-          commit_user_name: Azathothas # defaults to "github-actions[bot]"
-          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: Cross-Compile || Fetch latest Wget Binaries 
-          #push_options: '--force'
+          body_path: "$GITHUB_WORKSPACE/main/tailscale/INFO.md"
+          automatic_release_tag: 'latest'
+          prerelease: false
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          name: "Tailscale ${{ env.VERSION }}"
+          tag_name: "tailscale"
+          files: |
+            $GITHUB_WORKSPACE/main/tailscale/*_Linux
+            $GITHUB_WORKSPACE/main/tailscale/*_macOS
+            $GITHUB_WORKSPACE/main/tailscale/*.exe
