@@ -24,7 +24,9 @@ jobs:
         id: check_version
         run: |
           # Get latest version
-          export VERSION=$(echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/')
+          #export VERSION=$(echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/')
+          cd $(mktemp -d) && git clone https://git.busybox.net/busybox && cd busybox
+          export VERSION=$(git tag --sort=-creatordate | head -n 1)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
@@ -32,7 +34,7 @@ jobs:
             echo "Version $VERSION is already Built & Compiled"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Building... --> v$VERSION (from <-- v$STORED_VERSION)"
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash          
@@ -44,22 +46,30 @@ jobs:
           echo $VERSION > $GITHUB_WORKSPACE/main/busybox/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
+
+      - name: Download Latest Source Code (Hacky Scraping)
+        #if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" 
+          export BUSYBOX_URL="$BUSYBOX_URL" >> $GITHUB_ENV
+          curl -qfLJ "$BUSYBOX_URL" -o "$HOME/busybox.tar.bz2"
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and tar
+        #if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/busybox.tar.bz2" ]; then
+            cd $(mktemp -d) && git clone https://git.busybox.net/busybox
+            tar -cjvf ./busybox.tar.bz2 ./busybox && mv "./busybox.tar.bz2" "$HOME/"
+          fi
+        continue-on-error: false
+        
       - name: Setup Env
         if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/busybox"
-          # Get latest version
-          echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/' > "$GITHUB_WORKSPACE/main/busybox/version.txt"
-          export VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          # Get latest URLs
-          #BusyBox
-          #export BUSYBOX_URL="https://github.com/mirror/busybox/archive/refs/tags/$(curl -qfsSL "https://api.github.com/repos/mirror/busybox/tags" | jq -r '.[0].name').tar.gz"
-          export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)"
-          #export BUSYBOX_URL="$BUSYBOX_URL"
-          #echo "$BUSYBOX_URL"
-          echo "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
           #RISCV32
           export RISCV32_TOOLCHAIN_URL=$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases/tags/$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases" | jq -r '.[] | select(.prerelease == true) | .tag_name' | head -n 1)" | jq -r '.assets[] | .browser_download_url' | grep -i 'riscv32-glibc-ubuntu-22.04-gcc')
           echo "RISCV32_TOOLCHAIN_URL=$RISCV32_TOOLCHAIN_URL" >> $GITHUB_ENV
@@ -104,7 +114,7 @@ jobs:
       - name: Build busybox for aarch64_arm64_gcc (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -163,7 +173,7 @@ jobs:
       - name: Build busybox for amd_x86_64 (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -205,7 +215,7 @@ jobs:
       - name: Build busybox for arm_abi_gcc (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -248,7 +258,7 @@ jobs:
       - name: Build busybox for arm_abihf_gcc (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -361,7 +371,7 @@ jobs:
       - name: Build busybox for i686_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -376,7 +386,7 @@ jobs:
       - name: Build busybox for m68k_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -421,7 +431,7 @@ jobs:
       - name: Build busybox for mips_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -466,7 +476,7 @@ jobs:
       - name: Build busybox for mipsel_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -511,7 +521,7 @@ jobs:
       - name: Build busybox for mips64_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -556,7 +566,7 @@ jobs:
       - name: Build busybox for mips64el_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -601,7 +611,7 @@ jobs:
       - name: Build busybox for powerpc_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -646,7 +656,7 @@ jobs:
       - name: Build busybox for powerpc64_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -691,7 +701,7 @@ jobs:
       - name: Build busybox for powerpc64le_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -736,7 +746,7 @@ jobs:
       - name: Build busybox for riscv32_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -781,7 +791,7 @@ jobs:
       - name: Build busybox for riscv64_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -826,7 +836,7 @@ jobs:
       - name: Build busybox for s390x_gcc_Linux (GCC-Native)
         if: env.versions_same != 'true'
         run: |
-          cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -924,5 +934,24 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Cross-Compile Busybox Binaries <-- v${{ env.VERSION }}"
+          commit_message: "Cross-Compile Busybox Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "busybox ${{ env.VERSION }}"
+          tag_name: "busybox_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://git.busybox.net/busybox/log/?h=${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/busybox#install-busybox_
+          files: |
+            ${{github.workspace}}/main/busybox/*_Linux
