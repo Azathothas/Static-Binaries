@@ -38,6 +38,12 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale && cd tailscale
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
@@ -144,6 +150,12 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale && cd tailscale
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
@@ -154,7 +166,7 @@ jobs:
             echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
-        shell: bash
+        shell: bash   
 
       - name: Compare Versions
         #if: env.versions_same != 'true'
