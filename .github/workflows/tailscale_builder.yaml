@@ -535,13 +535,22 @@ jobs:
           #push_options: '--force'
           
   #Create a new Release & Publish
-      - uses: 'marvinpinto/action-automatic-releases@latest'
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: 'latest'
+          name: "Tailscale ${{ env.VERSION }}"
+          tag_name: "tailscale_${{ env.VERSION }}"
           prerelease: false
-          title: 'Tailscale ${{ env.VERSION }}'
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/tailscale/tailscale/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/tailscale#install-tailscale_
           files: |
-            $GITHUB_WORKSPACE/main/tailscale/*_Linux
-            $GITHUB_WORKSPACE/main/tailscale/*_macOS
-            $GITHUB_WORKSPACE/main/tailscale/*.exe
+            ${{github.workspace}}/main/tailscale/*_Linux
+            ${{github.workspace}}/main/tailscale/*_macOS
+            ${{github.workspace}}/main/tailscale/*.exe
