@@ -476,7 +476,7 @@ jobs:
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
          #-------------------------#          
          #Windows
-          WINDOWS_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]')
+          WINDOWS_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -v 'ipn')
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
          #-------------------------#          
           set +x 
