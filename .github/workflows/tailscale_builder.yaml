@@ -11,7 +11,8 @@ env:
   DOWNLOAD_PAGE: "https://pkgs.tailscale.com/stable/?mode=json"
   # https://i.redd.it/o6xypg00uac91.png
   USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
-  
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+ 
 jobs:
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
   build_on_macos:
@@ -523,7 +524,8 @@ jobs:
            echo -e "" >> ./tailscale/README.md 
         working-directory: main
         continue-on-error: true
-        
+
+   #Commit & Push     
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
@@ -531,3 +533,15 @@ jobs:
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
+          
+  #Create a new Release & Publish
+      - uses: 'marvinpinto/action-automatic-releases@latest'
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: 'latest'
+          prerelease: false
+          title: 'Tailscale ${{ env.VERSION }}'
+          files: |
+            $GITHUB_WORKSPACE/main/tailscale/*_Linux
+            $GITHUB_WORKSPACE/main/tailscale/*_macOS
+            $GITHUB_WORKSPACE/main/tailscale/*.exe
