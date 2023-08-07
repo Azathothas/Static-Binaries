@@ -28,7 +28,7 @@ jobs:
         with:
           name: "Tailscale ${{ env.VERSION }}"
           tag_name: "tailscale"
-          body_path: "$GITHUB_WORKSPACE/main/tailscale/INFO.md"
+          body: "$GITHUB_WORKSPACE/main/tailscale/INFO.md"
           automatic_release_tag: "latest"
           prerelease: false
           draft: false
