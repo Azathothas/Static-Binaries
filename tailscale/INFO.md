@@ -119,6 +119,11 @@ curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/t
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_merged_s390x_Linux"
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_s390x_Linux"
 
+!#For Windows
+--> x86 || x86_64 || arm64
+-->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_setup_Windows.exe"
+!# Or using powershell
+-->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_setup_Windows.exe" -OutFile "tailscale-setup.exe"
 
 ```
 ---
@@ -156,7 +161,6 @@ sudo $HOME/go/bin/tailscaled install-system-daemon
 
 !# Give Writeable Perms
  chmod +xwr /usr/bin/tailscale*
-
 
 --> Windows
 !# In PowerShell, To Install
