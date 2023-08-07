@@ -52,7 +52,7 @@ jobs:
         run: | 
           # Get latest Source Code
           export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" 
-          export "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
+          echo "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
           curl -qfLJ "$BUSYBOX_URL" -o "$HOME/busybox.tar.bz2"
         continue-on-error: true
 
@@ -60,8 +60,9 @@ jobs:
         #if: env.versions_same != 'true'
         run: |
           if [ ! -f "$HOME/busybox.tar.bz2" ]; then
-            cd $(mktemp -d) && git clone https://git.busybox.net/busybox
-            tar -cjvf ./busybox.tar.bz2 ./busybox && mv "./busybox.tar.bz2" "$HOME/"
+            cd $(mktemp -d) && git clone "https://git.busybox.net/busybox"
+            pushd ./busybox && git checkout "${{ env.VERSION }}" && popd 
+            tar -cjvf ./busybox.tar.bz2 ./busybox && mv "./busybox.tar.bz2" "$HOME/"  
           fi
         continue-on-error: false
         
