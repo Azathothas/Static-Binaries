@@ -40,7 +40,7 @@ jobs:
         shell: bash          
 
       - name: Compare Versions
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/busybox/version.txt
@@ -66,7 +66,7 @@ jobs:
         continue-on-error: false
         
       - name: Setup Env
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/busybox"
@@ -75,13 +75,13 @@ jobs:
           echo "RISCV32_TOOLCHAIN_URL=$RISCV32_TOOLCHAIN_URL" >> $GITHUB_ENV
           
       - name: Install CoreUtils
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install b3sum build-essential ca-certificates ccache '*glibc*' 'libssl*' lzip jq musl musl-dev musl-tools 'openssl*' p7zip-full '*tls*' wget -y
         
       - name: Install Build Dependencies
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: "\
           sudo apt-get update\n
           sudo apt-get install -y --no-install-recommends \
@@ -112,7 +112,7 @@ jobs:
 
     ##Linux    
       - name: Build busybox for aarch64_arm64_gcc (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -128,7 +128,7 @@ jobs:
         continue-on-error: true
 
     #   - name: Build busybox for aarch64 (MUSL-Docker: blackdex/musl-toolchainCross)
-    #     if: env.versions_same != 'true'
+    #     #if: env.versions_same != 'true'
     #     run: |
     #       cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
     #       find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -142,7 +142,7 @@ jobs:
     #     continue-on-error: true               
                     
       - name: Build busybox for aarch64_arm64_musl #(MUSL-Docker: blackdex/musl-toolchain)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name aarch64_arm64_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -171,7 +171,7 @@ jobs:
 
      #amd_x86_64
       - name: Build busybox for amd_x86_64 (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -185,7 +185,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for amd_x86_64_musl #(MUSL-Docker: blackdex/musl-toolchain)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name amd_x86_64_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -213,7 +213,7 @@ jobs:
         continue-on-error: true   
 
       - name: Build busybox for arm_abi_gcc (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -228,7 +228,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for arm_abi_musl #(MUSL-Docker: blackdex/musl-toolchain)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name arm_abi_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -256,7 +256,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build busybox for arm_abihf_gcc (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -271,7 +271,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for arm_abihf_musl #(MUSL-Docker: blackdex/musl-toolchain)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name arm_abihf_musl \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -299,7 +299,7 @@ jobs:
         continue-on-error: true  
 
       # - name: Build busybox for armv5te_abi_musl #(MUSL-Docker: blackdex/musl-toolchain)
-      #   if: env.versions_same != 'true'
+      #   #if: env.versions_same != 'true'
       #   run: |
       #     docker run --privileged --name armv5te_abi_musl \
       #       -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -327,7 +327,7 @@ jobs:
       #   continue-on-error: true  
 
       # - name: Build busybox for arm-linux-gnueabihf_armv7l (MUSL-Docker: blackdex/musl-toolchainCross)
-      #   if: env.versions_same != 'true'
+      #   #if: env.versions_same != 'true'
       #   run: |
       #     cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
       #     find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -341,7 +341,7 @@ jobs:
       #   continue-on-error: true  
 
       - name: Build busybox for armv7l_abihf_musl_Linux #(MUSL-Docker: blackdex/musl-toolchain)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name armv7l_abihf_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -369,7 +369,7 @@ jobs:
         continue-on-error: true    
 
       - name: Build busybox for i686_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -384,7 +384,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for m68k_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -399,7 +399,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for m68k_linux_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name m68k_linux_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -429,7 +429,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for mips_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -444,7 +444,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mips_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name mips_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -474,7 +474,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for mipsel_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -489,7 +489,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mipsel_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name mipsel_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -519,7 +519,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for mips64_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -534,7 +534,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mips64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name mips64_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -564,7 +564,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for mips64el_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -579,7 +579,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for mips64el_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name mips64el_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -609,7 +609,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for powerpc_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -624,7 +624,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name powerpc_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -654,7 +654,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for powerpc64_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -669,7 +669,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name powerpc64_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -699,7 +699,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for powerpc64le_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -714,7 +714,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for powerpc64le_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name powerpc64le_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -744,7 +744,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for riscv32_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -759,7 +759,7 @@ jobs:
         continue-on-error: true
 
       # - name: Build busybox for riscv32_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-      #   if: env.versions_same != 'true'
+      #   #if: env.versions_same != 'true'
       #   run: |
       #     docker run --privileged --name riscv32_musl_Linux \
       #       -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -789,7 +789,7 @@ jobs:
       #   continue-on-error: true 
 
       - name: Build busybox for riscv64_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -804,7 +804,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for riscv64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name riscv64_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -834,7 +834,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build busybox for s390x_gcc_Linux (GCC-Native)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
           find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
@@ -849,7 +849,7 @@ jobs:
         continue-on-error: true
 
       - name: Build busybox for s390x_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           docker run --privileged --name s390x_musl_Linux \
             -e "BUSYBOX_URL=${BUSYBOX_URL}" \
@@ -880,7 +880,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/busybox/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -889,7 +889,7 @@ jobs:
         continue-on-error: true
 
       - name: Update README.md
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            sudo chmod +xwr ./busybox/busy* 
@@ -941,6 +941,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
+        #if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "busybox ${{ env.VERSION }}"
