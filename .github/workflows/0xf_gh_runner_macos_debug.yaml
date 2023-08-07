@@ -1,0 +1,60 @@
+name: 0xf ➼ Debug (gh-runner) macOS-12
+#Image: https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+on:
+  workflow_dispatch:
+env:
+  #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+  TSKEY: tskey-auth-ksYVhg1CNTRL-A5QDDdH66vU2pVMcgBy2wUYwzgL4Sv2F
+  THOST: gh-runner-macos
+  TUSER: runner
+  
+jobs:
+  build:
+    runs-on: macos-latest
+    #Default Timeout= 6 Hr (360 Mins) : https://nesin.io/blog/github-action-timeout
+    #Docs: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+    timeout-minutes: 690000 
+    permissions:
+      contents: write
+      
+    steps:
+        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+          
+      - name: Setup Tailscale
+        run: |
+          # https://github.com/tailscale/tailscale/wiki/Tailscaled-on-macOS
+          go install -v tailscale.com/cmd/tailscale@main
+          go install -v tailscale.com/cmd/tailscaled@main
+          sudo tailscaled --tun=userspace-networking --socks5-server=localhost:9025 --outbound-http-proxy-listen=localhost:9025 &
+          #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+          sudo tailscale up --ssh --hostname="${{ env.THOST }}" --authkey="${{ env.TSKEY }}" 
+          #Check Status
+          sudo tailscale status --peers=false
+          #Get SSH String
+          SSH_IP=$(sudo tailscale ip -4 | tr -d '\n')
+          ssh_connection_string="SSH: ssh $USER@$SSH_IP"
+          echo -e "$ssh_connection_string"
+          #Also shows up on: https://login.tailscale.com/admin/machines
+      
+      # - name: Install CoreUtils
+      #   #if: env.versions_same != 'true'
+      #   run: |
+      #      sudo apt-get install -y bison build-essential ca-certificates ccache flex '*glibc*' jq 'libssl*' lzip musl musl-dev musl-tools 'openssl*' p7zip-full pkg-config qemu-user-static wget
+      #   continue-on-error: true
+        
+      # - name: Install Deps
+      #   run: |
+      #      cargo install -f cross   
+      #   continue-on-error: true
+        
+      - name: Run Custom Cmd
+        run: |
+           echo "Hellow"
+        continue-on-error: true
+      - name: Breakpoint || Sleep ∞
+        run: |
+          while :; do sleep 1; done  
