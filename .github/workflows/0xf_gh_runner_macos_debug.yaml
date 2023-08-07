@@ -29,11 +29,11 @@ jobs:
           # https://github.com/tailscale/tailscale/wiki/Tailscaled-on-macOS
           go install -v tailscale.com/cmd/tailscale@main
           go install -v tailscale.com/cmd/tailscaled@main
-          sudo tailscaled --tun=userspace-networking --socks5-server=localhost:9025 --outbound-http-proxy-listen=localhost:9025 &
+          sudo $HOME/go/bin/tailscaled --tun=userspace-networking --socks5-server=localhost:9025 --outbound-http-proxy-listen=localhost:9025 &
           #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
-          sudo tailscale up --ssh --hostname="${{ env.THOST }}" --authkey="${{ env.TSKEY }}" 
+          sudo $HOME/go/bin/tailscale up --ssh --hostname="${{ env.THOST }}" --authkey="${{ env.TSKEY }}" 
           #Check Status
-          sudo tailscale status --peers=false
+          sudo $HOME/go/bin/tailscale status --peers=false
           #Get SSH String
           SSH_IP=$(sudo tailscale ip -4 | tr -d '\n')
           ssh_connection_string="SSH: ssh $USER@$SSH_IP"
