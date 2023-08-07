@@ -6,6 +6,11 @@ on:
     - cron: "45 21 * * 0"  # 09:45 PM UTC Every Sunday --> 03:30 AM Nepal Time Every Monday
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  DOWNLOAD_PAGE: "https://pkgs.tailscale.com/stable/?mode=json"
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
   
 jobs:
   build:
@@ -38,7 +43,7 @@ jobs:
         shell: bash
 
       - name: Compare Versions
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/tailscale/version.txt
@@ -46,7 +51,7 @@ jobs:
 
 
       - name: Install CoreUtils
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
@@ -72,7 +77,7 @@ jobs:
       #     g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
           
       - name: Setup Env
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
@@ -99,7 +104,7 @@ jobs:
     # ERROR: loadinternal: cannot find runtime/cgo
 
       - name: Build Tailscale (Combined) for linux/aarch64_arm64
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -116,7 +121,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/amd_x86_64
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -133,7 +138,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/arm
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -150,7 +155,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/i386
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -167,7 +172,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale for linux/powerpc64_ppc64
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -190,7 +195,7 @@ jobs:
         continue-on-error: true  
         
       - name: Build Tailscale for linux/powerpc64le_ppc64le
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -213,7 +218,7 @@ jobs:
         continue-on-error: true    
         
       - name: Build Tailscale for linux/s390x
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
@@ -239,10 +244,14 @@ jobs:
      
      #Fetch
       - name: Fetch tailscale bins [ Stable ]
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
-          #Linux
-          #if this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
+         #-------------------------#
+         # If this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
+         # Example: curl -qfsLJO "https://pkgs.tailscale.com/stable/$(curl -qfsSL \"${{ env.DOWNLOAD_PAGE }}\" -H \"${{ env.USER_AGENT }}\" | jq -r '.Tarballs.\"arm\"')"
+          set -x ; set +e
+         #-------------------------#          
+         #Linux        
           #386
           cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_386\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_386.tar.gz" 
           find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
@@ -323,11 +332,15 @@ jobs:
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
-          #Windows
+         #-------------------------#          
+         #Windows
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$(curl -qfsSL \"${{ env.DOWNLOAD_PAGE }}\" -H \"${{ env.USER_AGENT }}\" | jq -r '.Exes[])" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
+         #-------------------------#          
+          set +x 
         continue-on-error: true
         
       - name: Update README.md
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./tailscale/INFO.md > ./tailscale/README.md
