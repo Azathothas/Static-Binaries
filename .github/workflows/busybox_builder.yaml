@@ -52,7 +52,7 @@ jobs:
         run: | 
           # Get latest Source Code
           export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" 
-          export BUSYBOX_URL="$BUSYBOX_URL" >> $GITHUB_ENV
+          export "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
           curl -qfLJ "$BUSYBOX_URL" -o "$HOME/busybox.tar.bz2"
         continue-on-error: true
 
