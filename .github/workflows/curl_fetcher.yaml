@@ -7,6 +7,11 @@ on:
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,6 +30,12 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/stunnel/static-curl && cd static-curl
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV          
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/curl/version.txt)
@@ -64,8 +75,8 @@ jobs:
         #if: env.versions_same != 'true'
         run: |
          #Download
+          set -x ; set +e
          #-------------------------#
-          set -x
          #Android
          #armhf
           curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/armhf/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_armhf_arm32_Android"
@@ -234,3 +245,26 @@ jobs:
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "Fetch curl Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "Curl ${{ env.VERSION }}"
+          tag_name: "curl_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://curl.se/changes.html_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/curl#install-curl_
+          files: |
+            ${{github.workspace}}/main/curl/*_Android
+            ${{github.workspace}}/main/curl/*DOS
+            ${{github.workspace}}/main/curl/*_Linux
+            ${{github.workspace}}/main/curl/*_macOS
+            ${{github.workspace}}/main/curl/*.exe
