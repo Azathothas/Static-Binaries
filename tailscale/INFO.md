@@ -14,7 +14,7 @@
 > >        - Build Flag: CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
 > >
 > > --> Windows:
-> >      - This requires a GUI, so better to just download from: 'https://pkgs.tailscale.com/stable/#windows'
+> >      - https://pkgs.tailscale.com/stable/#static [ Stable Releases ]
 > > ```
 > > 
 ```bash
@@ -124,6 +124,7 @@ curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/t
 ---
 - #### Install TailScale
 ```bash
+--> Linux || macOS
 !# Recommended way to install Tailscale is:
  curl -fsSL https://tailscale.com/install.sh | sh
 !# But this requires `root` | `sudo` access and doesn't work on all ARCHS
@@ -155,4 +156,11 @@ sudo $HOME/go/bin/tailscaled install-system-daemon
 
 !# Give Writeable Perms
  chmod +xwr /usr/bin/tailscale*
+
+
+--> Windows
+!# In PowerShell, To Install
+Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet" ; Start-Sleep -Seconds 10
+!# To enable & Run
+Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="$HOSTNAME", --authkey="$TSKEY"
 ```
