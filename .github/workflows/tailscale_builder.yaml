@@ -15,6 +15,7 @@ env:
 jobs:
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
   build_on_ubuntu:
+    needs: build_on_macos  #Wait for macOS builds to finish before checking out the repo
     runs-on: ubuntu-latest
     
     permissions:
@@ -50,6 +51,21 @@ jobs:
           echo $VERSION > $GITHUB_WORKSPACE/main/tailscale/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
+      - name: Download Latest Source Code (Github_API)
+        #if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        #if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/tailscale.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
+            zip -ro "./tailscale.zip" "./tailscale" && mv "./tailscale.zip" "$HOME/"
+          fi
+        continue-on-error: false
 
       - name: Install CoreUtils
         #if: env.versions_same != 'true'
@@ -107,10 +123,10 @@ jobs:
       - name: Build Tailscale (Combined) for linux/aarch64_arm64
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=arm64
@@ -124,10 +140,10 @@ jobs:
       - name: Build Tailscale (Combined) for linux/amd_x86_64
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=amd64
@@ -141,10 +157,10 @@ jobs:
       - name: Build Tailscale (Combined) for linux/arm
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=arm
@@ -158,10 +174,10 @@ jobs:
       - name: Build Tailscale (Combined) for linux/i386
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=386
@@ -175,10 +191,10 @@ jobs:
       - name: Build Tailscale for linux/powerpc64_ppc64
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=ppc64
@@ -198,10 +214,10 @@ jobs:
       - name: Build Tailscale for linux/powerpc64le_ppc64le
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=ppc64le
@@ -221,10 +237,10 @@ jobs:
       - name: Build Tailscale for linux/s390x
         #if: env.versions_same != 'true'
         run: | 
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=linux
           export GOARCH=s390x
@@ -422,18 +438,29 @@ jobs:
           fi
         shell: bash          
 
-      - name: Download Latest Source Code
+      - name: Download Latest Source Code (Github_API)
         #if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        #if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/tailscale.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
+            zip -ro "./tailscale.zip" "./tailscale" && mv "./tailscale.zip" "$HOME/"
+          fi
         continue-on-error: false
-        
+
       - name: Build Tailscale for darwin/amd64 (macos_amd64)
         #if: env.versions_same != 'true'
         run: | 
-          cd $(mktemp -d) && unzip -o "$HOME/tailscale.zip"
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=darwin
           export GOARCH=amd64
@@ -451,8 +478,10 @@ jobs:
       - name: Build Tailscale for darwin/arm64 (macos_arm64)
         #if: env.versions_same != 'true'
         run: | 
-          cd $(mktemp -d) && unzip -o "$HOME/tailscale.zip"
-          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
           # Build
           export GOOS=darwin
           export GOARCH=arm64
@@ -469,44 +498,7 @@ jobs:
       - name: Update README.md
         #if: env.versions_same != 'true'
         run: |  
-           cd "$GITHUB_WORKSPACE/main"
-           cat ./tailscale/INFO.md > ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md 
-           echo '---' >> ./tailscale/README.md
-           echo '```console' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo -e "--> METADATA" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo -e "--> SHA256SUM" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
-           echo -e '```\n' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo '---' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo '- #### Sizes' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           echo '```console' >> ./tailscale/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
-           echo '```' >> ./tailscale/README.md     
-           echo -e "" >> ./tailscale/README.md 
-           echo '---' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-           echo '- #### Version' >> ./tailscale/README.md 
-           echo '```console' >> ./tailscale/README.md 
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-           echo '```' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md        
-           echo '---' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-        working-directory: main
+          echo "This is done by Ubuntu-Builder"
         continue-on-error: true
         
       - uses: stefanzweifel/git-auto-commit-action@v4
