@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Quick Build Test
+name: 0xa ➼ Quick Tests
 
 on:
   workflow_dispatch:
