@@ -34,6 +34,6 @@ jobs:
           generate_release_notes: false
           token: "${{ secrets.GITHUB_TOKEN }}"
           files: |
-            ${{GITHUB_WORKSPACE}}/main/tailscale/*_Linux
-            ${{GITHUB_WORKSPACE}}/main/tailscale/*_macOS
-            ${{GITHUB_WORKSPACE}}/main/tailscale/*.exe
+            ${{github.workspace}/main/tailscale/*_Linux
+            ${{github.workspace}/main/tailscale/*_macOS
+            ${{github.workspace}/main/tailscale/*.exe
