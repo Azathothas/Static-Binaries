@@ -13,7 +13,8 @@ env:
   USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
   
 jobs:
-  build:
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+  build_on_ubuntu:
     runs-on: ubuntu-latest
     
     permissions:
@@ -334,9 +335,135 @@ jobs:
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
          #-------------------------#          
          #Windows
-          curl -qfsLJ "https://pkgs.tailscale.com/stable/$(curl -qfsSL \"${{ env.DOWNLOAD_PAGE }}\" -H \"${{ env.USER_AGENT }}\" | jq -r '.Exes[])" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$(curl -qfsSL \"${{ env.DOWNLOAD_PAGE }}\" -H \"${{ env.USER_AGENT }}\" | jq -r '.Exes[]')" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
          #-------------------------#          
           set +x 
+        continue-on-error: true
+        
+      - name: Update README.md
+        #if: env.versions_same != 'true'
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./tailscale/INFO.md > ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> METADATA" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> SHA256SUM" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
+           echo -e '```\n' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '- #### Sizes' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           echo '```' >> ./tailscale/README.md     
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### Version' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md        
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+        working-directory: main
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
+          #push_options: '--force'
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+  build_on_macos:
+    #Not necessary as this finishes very quickly
+    #needs: build_on_ubuntu  # Let Linux Builds Finish First
+    runs-on: macos-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash          
+
+      - name: Download Latest Source Code
+        #if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+        continue-on-error: false
+        
+      - name: Build Tailscale for darwin/amd64 (macos_amd64)
+        #if: env.versions_same != 'true'
+        run: | 
+          cd $(mktemp -d) && unzip -o "$HOME/tailscale.zip"
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=darwin
+          export GOARCH=amd64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_macOS"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_macOS"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_macOS"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+
+      - name: Build Tailscale for darwin/arm64 (macos_arm64)
+        #if: env.versions_same != 'true'
+        run: | 
+          cd $(mktemp -d) && unzip -o "$HOME/tailscale.zip"
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=darwin
+          export GOARCH=arm64
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_macOS"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_macOS"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_macOS"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
         
       - name: Update README.md
