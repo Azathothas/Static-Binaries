@@ -390,9 +390,7 @@ jobs:
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_s390x_Linux"
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux.upx" & 
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux.upx" & 
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_s390x_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_s390x_Linux.upx" & 
+          # Not Supported: https://github.com/upx/upx/issues/17
           # Remove tmp files
           #rm -rf /tmp >/dev/null 2>&1        
         continue-on-error: true
@@ -507,8 +505,7 @@ jobs:
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux.upx" &
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux.upx" &
+          # Not Supported: https://github.com/upx/upx/issues/272
           #Services & Defaults
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.defaults_Linux" \;
@@ -520,8 +517,7 @@ jobs:
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux.upx" & 
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux.upx" &
+          # Not Supported: https://github.com/upx/upx/issues/272
           #Services & Defaults
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.defaults_Linux" \;   
@@ -533,8 +529,7 @@ jobs:
           find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" \;
           find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux.upx" & 
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux.upx" &     
+          # Being Considered: https://github.com/upx/upx/issues/649 
           #Services & Defaults
           find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;    
@@ -555,32 +550,22 @@ jobs:
 
          #-------------------------#          
          #Windows
-         #aarch64 || amd_x86_64 -> Exes
+         #aarch64 || amd_x86_64 -> Exes (Compressing with upx offers very little ~ 99 % ratio)
           #main
           WINDOWS_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -v 'ipn')
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
-          #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe.upx" &
           #ipn
           WINDOWS_IPN_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -i 'ipn')
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_IPN_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_ipn_setup_Windows.exe"
-          #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_ipn_setup_Windows.exe" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_ipn_setup_Windows.exe.upx" &
-         #aarch64 || arm64 -> MSI  
+         #aarch64 || arm64 -> MSI  (Can't be compressed with upx)
           WINDOWS_ARM64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'arm64')
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_ARM64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Windows.msi"
-          #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Windows.msi" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Windows.msi.upx" &
          #amd || x86_64 -> MSI  
           WINDOWS_AMD64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'amd64') 
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_AMD64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Windows.msi"
-          #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Windows.msi" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Windows.msi.upx" &
          #amd || x86 -> MSI  
           WINDOWS_X86_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'x86') 
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_X86_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_x86_Windows.msi" 
-          #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_x86_Windows.msi" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_x86_Windows.msi.upx" &
          #-------------------------#          
           set +x 
         continue-on-error: true
@@ -591,7 +576,7 @@ jobs:
           while ps aux | grep -q "[u]px"; do
               echo "Waiting for upx processes to finish..."
               ps aux | grep "[u]px"
-              sleep 5  
+              sleep 20  
           done  
         shell: bash           
         continue-on-error: false
