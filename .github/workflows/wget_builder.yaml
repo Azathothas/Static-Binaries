@@ -797,6 +797,15 @@ jobs:
           docker rmi -f $(docker images -q) >/dev/null 2>&1 
         continue-on-error: true  
 
+  #Windows 
+      - name: Fetch wget for windows
+        run: |
+          for url in $(curl -s "https://api.github.com/repos/lifenjoiner/wget-for-windows/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*mingw32*.zip' -exec unzip -j -o {} -d win32 \; && cp "./win32/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_lite_Windows.exe"
+          find . -type f -name '*WinTLS*.7z' -exec 7z x {} -o"win32_TLS" -y \; && cp "./win32_TLS/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_WinTLS_lite_Windows.exe" 
+          find . -type f -name '*mingw64*.zip' -exec unzip -j -o {} -d win64 \; && cp "./win64/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_x64_lite_Windows.exe"
+        continue-on-error: true
+        
      #Cleanup
       - name: Cleanup >> Strip >> chmod
         #if: env.versions_same != 'true'
@@ -807,6 +816,13 @@ jobs:
           find "$GITHUB_WORKSPACE/main/wget/" -type f -name 'wget*' -exec chmod +xwr {} \; >/dev/null 2>&1
         continue-on-error: true
 
+  #Base64        
+      - name: Generate '.base64' 
+        run: |
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+        continue-on-error: true
+
+  #Update Readme      
       - name: Update README.md
         #if: env.versions_same != 'true'
         run: |
@@ -818,10 +834,10 @@ jobs:
            echo '```console' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo -e "--> METADATA" >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; file ./wget/wget* | grep -v '.txt' ' &>> ./wget/README.md
+           /bin/bash -c 'PS4="$ "; file ./wget/wget* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' ' &>> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo -e "--> SHA256SUM" >> ./wget/README.md
-           /bin/bash -c 'PS4="$ "; sha256sum ./wget/wget* | grep -v '.txt' ' &>> ./wget/README.md   
+           /bin/bash -c 'PS4="$ "; sha256sum ./wget/wget* | grep -v '.txt' | grep -v '.md' ' &>> ./wget/README.md   
            echo -e '```\n' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '---' >> ./wget/README.md
@@ -829,15 +845,15 @@ jobs:
            echo '- #### Sizes' >> ./wget/README.md 
            echo -e "" >> ./wget/README.md
            echo '```console' >> ./wget/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.md' | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
            echo '```' >> ./wget/README.md     
            echo -e "" >> ./wget/README.md 
            echo '---' >> ./wget/README.md 
            echo -e "" >> ./wget/README.md 
-           echo '- #### Bundled Commands' >> ./wget/README.md 
+           echo '- #### Flags' >> ./wget/README.md 
            echo '```console' >> ./wget/README.md 
            echo -e "" >> ./wget/README.md           
-           /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_amd_x86_64_gcc_Linux' &>> ./wget/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_busybox_amd_x86_64_gcc_Linux' &>> ./wget/README.md 
            echo -e "" >> ./wget/README.md
            echo -e "" >> ./wget/README.md 
            echo '```' >> ./wget/README.md 
@@ -875,3 +891,5 @@ jobs:
             `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/wget#install-wget_
           files: |
             ${{github.workspace}}/main/wget/*_Linux
+            ${{github.workspace}}/main/wget/*exe
+            ${{github.workspace}}/main/wget/*base64
