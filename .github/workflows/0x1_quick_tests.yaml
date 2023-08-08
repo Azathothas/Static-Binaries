@@ -28,67 +28,59 @@ jobs:
           sudo find . -type f -name 'upx' -exec mv {} "$(which upx)" \;  
         continue-on-error: false
         
+  #Update Readme      
       - name: Update README.md
         #if: env.versions_same != 'true'
         run: |
+           set +e
            cd "$GITHUB_WORKSPACE/main"
-           cat ./tailscale/INFO.md > ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md 
-           echo '---' >> ./tailscale/README.md
-           echo '```console' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo -e "--> METADATA" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo -e "--> SHA256SUM" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
-           echo -e '```\n' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo '---' >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md
-           echo '- #### Sizes' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           echo '```console' >> ./tailscale/README.md       
-           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
-           echo '```' >> ./tailscale/README.md   
-           echo -e "" >> ./tailscale/README.md 
-           echo '---' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-           echo '- #### UPX' >> ./tailscale/README.md 
-           echo '```console' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           #/bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name '*upx' -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk '/^testing/ || /->/ { print }' ' &>> ./tailscale/README.md   
+           sudo chmod +xwr ./wget/wget* 
+           cat ./wget/INFO.md > ./wget/README.md
+           echo -e "" >> ./wget/README.md 
+           echo '---' >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> METADATA" >> ./wget/README.md
            {
-              /bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name "*upx" -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk "/^testing/ || /->/ { print }" 2>&1'
-           } >> ./tailscale/README.md
-           echo -e "" >> ./tailscale/README.md 
-           echo '```' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           echo '---' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-           echo '- #### Version' >> ./tailscale/README.md 
-           echo '```console' >> ./tailscale/README.md 
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md
-           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
-           echo '```' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md        
-           echo '---' >> ./tailscale/README.md 
-           echo -e "" >> ./tailscale/README.md 
+              /bin/bash -c 'PS4="$ "; file ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
+           } >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo -e "--> SHA256SUM" >> ./wget/README.md
+           {
+              /bin/bash -c 'PS4="$ "; sha256sum ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
+           } >> ./wget/README.md
+           echo -e '```\n' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '---' >> ./wget/README.md
+           echo -e "" >> ./wget/README.md
+           echo '- #### Sizes' >> ./wget/README.md 
+           echo -e "" >> ./wget/README.md
+           echo '```console' >> ./wget/README.md
+           {
+              /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.md' | awk "{print \$5, \$9}" | column -t 2>&1' 
+           } >> ./wget/README.md
+           echo '```' >> ./wget/README.md     
+           echo -e "" >> ./wget/README.md 
+           echo '---' >> ./wget/README.md 
+           echo -e "" >> ./wget/README.md 
+           echo '- #### Flags' >> ./wget/README.md 
+           echo '```console' >> ./wget/README.md 
+           echo -e "" >> ./wget/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_busybox_amd_x86_64_gcc_Linux' &>> ./wget/README.md 
+           echo -e "" >> ./wget/README.md
+           echo -e "" >> ./wget/README.md 
+           echo '```' >> ./wget/README.md 
+           echo -e "" >> ./wget/README.md        
+           echo '---' >> ./wget/README.md 
+           echo -e "" >> ./wget/README.md 
         working-directory: main
         continue-on-error: true
 
-
-   #Commit & Push     
+      #https://github.com/stefanzweifel/git-auto-commit-action  
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
-          #push_options: '--force'          
+          commit_message: "Cross-Compile wget Binaries <-- ${{ env.VERSION }}"
+          #push_options: '--force'        
