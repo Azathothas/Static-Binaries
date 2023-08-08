@@ -19,21 +19,67 @@ jobs:
         with:
           path: main
           
-          
-  #Create a new Release & Publish
-  # Repo: https://github.com/softprops/action-gh-release
-  # Market-Place: https://github.com/marketplace/actions/gh-release
-      - name: Releaser
-        uses: softprops/action-gh-release@v0.1.15
+      - name: Update README.md
+        #if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./tailscale/INFO.md > ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> METADATA" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> SHA256SUM" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
+           echo -e '```\n' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '- #### Sizes' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           echo '```' >> ./tailscale/README.md   
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### UPX' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           #/bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name '*upx' -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk '/^testing/ || /->/ { print }' ' &>> ./tailscale/README.md   
+           {
+              /bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name "*upx" -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk "/^testing/ || /->/ { print }"'
+           } >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### Version' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md        
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+        working-directory: main
+        continue-on-error: true
+
+
+   #Commit & Push     
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          name: "Tailscale ${{ env.VERSION }}"
-          tag_name: "tailscale"
-          body: "$GITHUB_WORKSPACE/main/tailscale/INFO.md"
-          prerelease: false
-          draft: false
-          generate_release_notes: false
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          files: |
-            ${{github.workspace}}/main/tailscale/*_Linux
-            ${{github.workspace}}/main/tailscale/*_macOS
-            ${{github.workspace}}/main/tailscale/*.exe
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
+          #push_options: '--force'          
