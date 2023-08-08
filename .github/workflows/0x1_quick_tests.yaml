@@ -42,12 +42,12 @@ jobs:
            echo -e "" >> ./wget/README.md
            echo -e "--> METADATA" >> ./wget/README.md
            {
-              /bin/bash -c 'PS4="$ "; file ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
+              /bin/bash -c 'PS4="$ "; file ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' ' 
            } >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo -e "--> SHA256SUM" >> ./wget/README.md
            {
-              /bin/bash -c 'PS4="$ "; sha256sum ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
+              /bin/bash -c 'PS4="$ "; sha256sum ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' ' 
            } >> ./wget/README.md
            echo -e '```\n' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
@@ -57,7 +57,7 @@ jobs:
            echo -e "" >> ./wget/README.md
            echo '```console' >> ./wget/README.md
            {
-              /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.md' | awk "{print \$5, \$9}" | column -t 2>&1' 
+              /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.md' | awk "{print \$5, \$9}" | column -t ' 
            } >> ./wget/README.md
            echo '```' >> ./wget/README.md     
            echo -e "" >> ./wget/README.md 
