@@ -610,10 +610,7 @@ jobs:
            echo '- #### UPX' >> ./tailscale/README.md 
            echo '```console' >> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
-           #/bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name '*upx' -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk '/^testing/ || /->/ { print }' ' &>> ./tailscale/README.md   
-           {
-              /bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name "*upx" -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk "/^testing/ || /->/ { print }"'
-           } >> ./tailscale/README.md
+           {/bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name "*upx" -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk "/^testing/ || /->/ { print }" 2>&1'} >> ./tailscale/README.md
            echo -e "" >> ./tailscale/README.md 
            echo '```' >> ./tailscale/README.md 
            echo -e "" >> ./tailscale/README.md
