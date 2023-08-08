@@ -468,6 +468,18 @@ f5ab74df534947f7445480f7f1312790da73bb6ce5c89e3a1a9d0a2761bc815d  ./tailscale/ta
 - #### UPX
 ```console
 
+testing ./tailscale/tailscale_amd_x86_64_macOS.upx [OK]
+  12695376 ->   3727376   29.36%   macho/amd64   ./tailscale/tailscale_amd_x86_64_macOS.upx
+testing ./tailscale/tailscale_ipn_setup_Windows.exe.upx [OK]
+  43389488 ->  43376688   99.97%    win32/pe     ./tailscale/tailscale_ipn_setup_Windows.exe.upx
+testing ./tailscale/tailscale_setup_Windows.exe.upx [OK]
+  52307736 ->  52010776   99.43%    win32/pe     ./tailscale/tailscale_setup_Windows.exe.upx
+testing ./tailscale/tailscale_merged_amd_x86_64_macOS.upx [OK]
+  23063760 ->   6258704   27.14%   macho/amd64   ./tailscale/tailscale_merged_amd_x86_64_macOS.upx
+testing ./tailscale/tailscale_merged_aarch64_arm64_macOS.upx [OK]
+  22761778 ->   7733264   33.97%   macho/arm64   ./tailscale/tailscale_merged_aarch64_arm64_macOS.upx
+testing ./tailscale/tailscaled_amd_x86_64_macOS.upx [OK]
+  18017312 ->   5111824   28.37%   macho/amd64   ./tailscale/tailscaled_amd_x86_64_macOS.upx
 
 ```
 
