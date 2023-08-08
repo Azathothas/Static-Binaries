@@ -158,9 +158,3 @@ Retrieve files via HTTP or FTP
 	-o LOGFILE	Log messages to FILE
 	-U STR		Use STR for User-Agent header
 	-Y on/off	Use proxy
-
-
-```
-
----
-
