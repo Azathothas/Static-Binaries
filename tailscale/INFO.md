@@ -43,6 +43,10 @@ echo %PROCESSOR_ARCHITECTURE%
 $env:PROCESSOR_ARCHITECTURE
 
 !# Index (ARCH || ALT_ARCH)
+!# For upx, simply append .upx
+!# Example: curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Linux"
+!#     Upx: curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Linux.upx"
+
 
 !#For Linux
 --> aarch64 || arm64 [64-bit] (SYSV)
@@ -145,6 +149,11 @@ $env:PROCESSOR_ARCHITECTURE
 ---
 - #### Install TailScale
 ```bash
+--> For '.upx' packed files, you must decompress
+upx -d "$BIN.upx" -o "$BIN"
+!# And also optionally verify sha256sum (Compare it with sha256sum pasted on this page)
+sham256sum "$UNPACKED_UPX_BIN"
+
 --> Linux || macOS
 !# Recommended way to install Tailscale is:
  curl -fsSL https://tailscale.com/install.sh | sh
