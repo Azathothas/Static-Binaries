@@ -799,6 +799,7 @@ jobs:
 
   #Windows 
       - name: Fetch wget for windows
+        #if: env.versions_same != 'true'
         run: |
           for url in $(curl -s "https://api.github.com/repos/lifenjoiner/wget-for-windows/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
           find . -type f -name '*mingw32*.zip' -exec unzip -j -o {} -d win32 \; && cp "./win32/wget.exe" "$GITHUB_WORKSPACE/main/wget/wget_amd_x86_lite_Windows.exe"
@@ -817,9 +818,10 @@ jobs:
         continue-on-error: true
 
   #Base64        
-      - name: Generate '.base64' 
+      - name: Generate '.base64'
+        #if: env.versions_same != 'true'
         run: |
-          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
+          cd "$GITHUB_WORKSPACE/main/wget" && find . -type f ! -name '*.md' ! -name '*.base64' ! -name '*.txt' -exec sh -c 'base64 -w 0 "$1" > "$1.base64"' _ {} \;
         continue-on-error: true
 
   #Update Readme      
