@@ -32,6 +32,7 @@ jobs:
       - name: Update README.md
         #if: env.versions_same != 'true'
         run: |
+           set -x
            cd "$GITHUB_WORKSPACE/main"
            sudo chmod +xwr ./wget/wget* 
            cat ./wget/INFO.md > ./wget/README.md
