@@ -128,10 +128,10 @@ $env:PROCESSOR_ARCHITECTURE
 !# Or using powershell
 -->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_setup_Windows.exe" -OutFile "tailscale_setup.exe"
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_ipn_setup_Windows.exe"
--->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_ipn_setup_Windows.exe" -OutFile "tailscale_ipn_setup.exe""
+-->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_ipn_setup_Windows.exe" -OutFile "tailscale_ipn_setup.exe"
 --> aarch64 || arm64 -> MSI  
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Windows.msi" 
--->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Windows.msi" -OutFile "tailscale_am64_setup.msi"
+-->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Windows.msi" -OutFile "tailscale_arm64_setup.msi"
 --> amd || x86_64 -> MSI  
 -->  curl -qfSLO "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_x86_64_Windows.msi"
 -->  Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_x86_64_Windows.msi" -OutFile "tailscale_amd64_setup.msi"
@@ -180,7 +180,7 @@ sudo $HOME/go/bin/tailscaled install-system-daemon
 ```
 ```powershell
 --> Windows
-!# Using '.exe'
+!# Using '.exe' [Recommended]
 !# In PowerShell, To Install
 Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet" ; Start-Sleep -Seconds 10
 !# To enable & Run
@@ -188,12 +188,16 @@ Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" 
 
 !# Using '.msi'
 !# Ref: https://github.com/tailscale/tailscale/issues/2137#issuecomment-1137058471
-# Note that | Out-Host makes sure powershell waits for the installer to finish
-& msiexec /i "tailscale-setup-1.24.2-amd64.msi" /quiet | Out-Host
-& "C:\Program Files\Tailscale\tailscale-ipn.exe"
-sleep 4
-& "C:\Program Files\Tailscale\tailscale.exe" up --unattended --authkey=<yourkeyhere>
-sleep 2
+!# Note that | Out-Host makes sure powershell waits for the installer to finish
+!# This runs the installer which places: "tailscale.exe" | "tailscaled.exe" | "tailscale-ipn.exe" >>  "C:\Program Files\Tailscale\"
+& msiexec /i "tailscale-setup.msi" /quiet | Out-Host
+!# IPN --> Establishes connection between TailScale Cloud Control Panel & Local [https://pkg.go.dev/tailscale.com/ipn]
+& "C:\Program Files\Tailscale\tailscale-ipn.exe" ; Start-Sleep -Seconds 10
+!# This starts Tailscale in unattended mode
+Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="$HOSTNAME", --authkey="$TSKEY" ; Start-Sleep -Seconds 10
+
+!# For Troubleshooting:
+!# Restart Tailscale daemons & Services
 net stop Tailscale
 net start Tailscale
 sleep 4
