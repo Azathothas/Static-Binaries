@@ -7,7 +7,10 @@
 > >      - Built using dockercross (Dynamic Only)
 > >      - Currently this fails with: loadinternal: cannot find runtime/cgo
 > >      - Maybe : https://chat.openai.com/share/541d5f9a-c40d-4eed-8f62-f9e6fa97022a
-> >  
+> >              : https://github.com/ykasidit/android_ndk_c_rust_go_builder
+> >              : https://github.com/xxf098/go-tun2socks-build/blob/lite/.github/workflows/main.yml
+> >              : https://pkg.go.dev/golang.org/x/mobile/cmd/gomobile?utm_source=godoc
+> > 
 > > --> Linux:
 > >      - https://pkgs.tailscale.com/stable/#static [ Stable Releases ]
 > >      - Binaries for 'ppc64' | 'ppc64le' | 's390x' are compiled using go crosscompile
@@ -15,9 +18,9 @@
 > >        - !# https://tailscale.com/kb/1207/small-tailscale/
 > >        - Build Flag: CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
 > >
-> > --> Linux:
+> > --> macOS:
 > >      - All binaries are compiled & built using macOS runner Image & go cross compile
-> >      - 'tailscale_merged' is a combined & smaller binary with some omitted features, built using same flags as Linux's
+> >      - 'tailscale_merged' is a combined & smaller binary with some omitted features, built using same flags as Linux
 > > 
 > > --> Windows:
 > >      - https://pkgs.tailscale.com/stable/#static [ Stable Releases ]
@@ -161,10 +164,31 @@ sudo $HOME/go/bin/tailscaled install-system-daemon
 
 !# Give Writeable Perms
  chmod +xwr /usr/bin/tailscale*
-
+```
+```powershell
 --> Windows
+!# Using '.exe'
 !# In PowerShell, To Install
 Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet" ; Start-Sleep -Seconds 10
 !# To enable & Run
 Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="$HOSTNAME", --authkey="$TSKEY"
+
+!# Using '.msi'
+!# Ref: https://github.com/tailscale/tailscale/issues/2137#issuecomment-1137058471
+# Note that | Out-Host makes sure powershell waits for the installer to finish
+& msiexec /i "tailscale-setup-1.24.2-amd64.msi" /quiet | Out-Host
+& "C:\Program Files\Tailscale\tailscale-ipn.exe"
+sleep 4
+& "C:\Program Files\Tailscale\tailscale.exe" up --unattended --authkey=<yourkeyhere>
+sleep 2
+net stop Tailscale
+net start Tailscale
+sleep 4
+& "C:\Program Files\Tailscale\tailscale.exe" status
+sleep 2
+net stop Tailscale
+taskkill /im tailscale-ipn.exe /f
+net start Tailscale
+sleep 4
+& "C:\Program Files\Tailscale\tailscale.exe" status
 ```
