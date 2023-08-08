@@ -149,7 +149,8 @@ $env:PROCESSOR_ARCHITECTURE
 ---
 - #### Install TailScale
 ```bash
---> For '.upx' packed files, you must decompress
+--> For '.upx' packed files: check if it's not corrupted: https://github.com/Azathothas/Static-Binaries/tree/main/tailscale#upx
+!# Decompress
 upx -d "$BIN.upx" -o "$BIN"
 !# And also optionally verify sha256sum (Compare it with sha256sum pasted on this page)
 sham256sum "$UNPACKED_UPX_BIN"
