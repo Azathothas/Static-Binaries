@@ -1,5 +1,5 @@
 # Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
-name: Build wget Binaries (From Busybox)
+name: Build || Fetch wget Binaries (From Busybox)
 #MAX_RUNTIME: ~ 50 Mins
 on:
   workflow_dispatch:
