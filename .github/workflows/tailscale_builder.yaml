@@ -58,14 +58,14 @@ jobs:
         shell: bash          
 
       - name: Download Latest Source Code (Github_API)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
         continue-on-error: true
 
       - name: Clone repository if curl fails and zip
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           if [ ! -f "$HOME/tailscale.zip" ]; then
             cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
@@ -74,7 +74,7 @@ jobs:
         continue-on-error: false
 
       - name: Build Tailscale for darwin/amd64 (macos_amd64)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -95,7 +95,7 @@ jobs:
         continue-on-error: true
 
       - name: Build Tailscale for darwin/arm64 (macos_arm64)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -115,7 +115,7 @@ jobs:
         continue-on-error: true
 
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           echo "This is done by Ubuntu-Builder"
         continue-on-error: true
@@ -170,21 +170,21 @@ jobs:
         shell: bash   
 
       - name: Compare Versions
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/tailscale/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Download Latest Source Code (Github_API)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Get latest Source Code
           curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
         continue-on-error: true
 
       - name: Clone repository if curl fails and zip
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           if [ ! -f "$HOME/tailscale.zip" ]; then
             cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
@@ -193,13 +193,13 @@ jobs:
         continue-on-error: false
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       - name: Install upX
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && curl -qfLJO "$(curl -s https://api.github.com/repos/upx/upx/releases/latest | jq -r '.assets[].browser_download_url' | grep -i 'amd64_linux')"
           find . -type f -name '*tar*' -exec tar -xvf {} \;
@@ -207,7 +207,7 @@ jobs:
         continue-on-error: false
         
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
@@ -235,13 +235,13 @@ jobs:
     # ERROR: loadinternal: cannot find runtime/cgo
 
       - name: Delete Existing UPX Bins (II)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           find "$GITHUB_WORKSPACE/main/tailscale" -type f -name '*.upx' -exec rm {} \;       
         continue-on-error: false
 
       - name: Build Tailscale (Combined) for linux/aarch64_arm64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -260,7 +260,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/amd_x86_64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -279,7 +279,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/arm
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -298,7 +298,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale (Combined) for linux/i386
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -317,7 +317,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build Tailscale for linux/powerpc64_ppc64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -344,7 +344,7 @@ jobs:
         continue-on-error: true  
         
       - name: Build Tailscale for linux/powerpc64le_ppc64le
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -371,7 +371,7 @@ jobs:
         continue-on-error: true    
         
       - name: Build Tailscale for linux/s390x
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
@@ -399,7 +399,7 @@ jobs:
      
      #Fetch
       - name: Fetch tailscale bins [ Stable ]
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
          #-------------------------#
          # If this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
@@ -571,7 +571,7 @@ jobs:
         continue-on-error: true
 
       - name: Wait for UPX
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           while ps aux | grep -q "[u]px"; do
               echo "Waiting for upx processes to finish..."
@@ -582,7 +582,7 @@ jobs:
         continue-on-error: false
 
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
            cd "$GITHUB_WORKSPACE/main"
            cat ./tailscale/INFO.md > ./tailscale/README.md
@@ -648,7 +648,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "Tailscale ${{ env.VERSION }}"
