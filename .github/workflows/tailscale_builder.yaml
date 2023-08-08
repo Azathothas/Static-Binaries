@@ -552,6 +552,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
+        #if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "Tailscale ${{ env.VERSION }}"
