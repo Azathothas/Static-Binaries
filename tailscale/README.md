@@ -468,18 +468,70 @@ f5ab74df534947f7445480f7f1312790da73bb6ce5c89e3a1a9d0a2761bc815d  ./tailscale/ta
 - #### UPX
 ```console
 
+testing ./tailscale/tailscale_merged_powerpc64_ppc64_Linux.upx [OK]
+  22282240 ->   5249988   23.56%   linux/ppc64   ./tailscale/tailscale_merged_powerpc64_ppc64_Linux.upx
 testing ./tailscale/tailscale_amd_x86_64_macOS.upx [OK]
   12695376 ->   3727376   29.36%   macho/amd64   ./tailscale/tailscale_amd_x86_64_macOS.upx
 testing ./tailscale/tailscale_ipn_setup_Windows.exe.upx [OK]
   43389488 ->  43376688   99.97%    win32/pe     ./tailscale/tailscale_ipn_setup_Windows.exe.upx
+testing ./tailscale/tailscaled_mips_Linux.upx [OK]
+  29722822 ->  11526868   38.78%   linux/mips    ./tailscale/tailscaled_mips_Linux.upx
 testing ./tailscale/tailscale_setup_Windows.exe.upx [OK]
   52307736 ->  52010776   99.43%    win32/pe     ./tailscale/tailscale_setup_Windows.exe.upx
 testing ./tailscale/tailscale_merged_amd_x86_64_macOS.upx [OK]
   23063760 ->   6258704   27.14%   macho/amd64   ./tailscale/tailscale_merged_amd_x86_64_macOS.upx
+testing ./tailscale/tailscaled_aarch64_arm64_Linux.upx [OK]
+  27697397 ->  11920496   43.04%   linux/arm64   ./tailscale/tailscaled_aarch64_arm64_Linux.upx
+testing ./tailscale/tailscaled_amd_geode_Linux.upx [OK]
+  18681116 ->   5330916   28.54%   linux/i386    ./tailscale/tailscaled_amd_geode_Linux.upx
+testing ./tailscale/tailscale_amd_x86_64_Linux.upx [OK]
+  12430760 ->   3609476   29.04%   linux/amd64   ./tailscale/tailscale_amd_x86_64_Linux.upx
+testing ./tailscale/tailscale_aarch64_arm64_macOS.upx [OK]
+  12357906 ->   3276816   26.52%   macho/arm64   ./tailscale/tailscale_aarch64_arm64_macOS.upx
+testing ./tailscale/tailscale_merged_arm_Linux.upx [OK]
+  21757952 ->   5270196   24.22%    linux/arm    ./tailscale/tailscale_merged_arm_Linux.upx
 testing ./tailscale/tailscale_merged_aarch64_arm64_macOS.upx [OK]
   22761778 ->   7733264   33.97%   macho/arm64   ./tailscale/tailscale_merged_aarch64_arm64_macOS.upx
+testing ./tailscale/tailscaled_mipsle_Linux.upx [OK]
+  29577555 ->  11471048   38.78%  linux/mipsel   ./tailscale/tailscaled_mipsle_Linux.upx
+testing ./tailscale/tailscale_mipsle_Linux.upx [OK]
+  18727941 ->   7442880   39.74%  linux/mipsel   ./tailscale/tailscale_mipsle_Linux.upx
+testing ./tailscale/tailscale_i386_Linux.upx [OK]
+  11819636 ->   3231972   27.34%   linux/i386    ./tailscale/tailscale_i386_Linux.upx
+testing ./tailscale/tailscale_merged_powerpc64le_ppc64le_Linux.upx [OK]
+  22282240 ->   5470220   24.55%  linux/ppc64le  ./tailscale/tailscale_merged_powerpc64le_ppc64le_Linux.upx
+testing ./tailscale/tailscale_powerpc64_ppc64_Linux.upx [OK]
+  11927552 ->   2987328   25.05%   linux/ppc64   ./tailscale/tailscale_powerpc64_ppc64_Linux.upx
+testing ./tailscale/tailscale_mips_Linux.upx [OK]
+  18825008 ->   7482564   39.75%   linux/mips    ./tailscale/tailscale_mips_Linux.upx
+testing ./tailscale/tailscale_powerpc64le_ppc64le_Linux.upx [OK]
+  11927552 ->   3145412   26.37%  linux/ppc64le  ./tailscale/tailscale_powerpc64le_ppc64le_Linux.upx
+testing ./tailscale/tailscale_merged_i386_Linux.upx [OK]
+  21667840 ->   6158728   28.42%   linux/i386    ./tailscale/tailscale_merged_i386_Linux.upx
+testing ./tailscale/tailscaled_amd_x86_64_Linux.upx [OK]
+  19657336 ->   5755164   29.28%   linux/amd64   ./tailscale/tailscaled_amd_x86_64_Linux.upx
+testing ./tailscale/tailscaled_arm_abi_Linux.upx [OK]
+  26909164 ->  11387980   42.32%    linux/arm    ./tailscale/tailscaled_arm_abi_Linux.upx
 testing ./tailscale/tailscaled_amd_x86_64_macOS.upx [OK]
   18017312 ->   5111824   28.37%   macho/amd64   ./tailscale/tailscaled_amd_x86_64_macOS.upx
+testing ./tailscale/tailscale_merged_aarch64_arm64_Linux.upx [OK]
+  21889024 ->   5436840   24.84%   linux/arm64   ./tailscale/tailscale_merged_aarch64_arm64_Linux.upx
+testing ./tailscale/tailscaled_powerpc64le_ppc64le_Linux.upx [OK]
+  19136512 ->   4793072   25.05%  linux/ppc64le  ./tailscale/tailscaled_powerpc64le_ppc64le_Linux.upx
+testing ./tailscale/tailscale_aarch64_arm64_Linux.upx [OK]
+  17354087 ->   7676480   44.23%   linux/arm64   ./tailscale/tailscale_aarch64_arm64_Linux.upx
+testing ./tailscale/tailscaled_powerpc64_ppc64_Linux.upx [OK]
+  19136512 ->   4599732   24.04%   linux/ppc64   ./tailscale/tailscaled_powerpc64_ppc64_Linux.upx
+testing ./tailscale/tailscaled_i386_Linux.upx [OK]
+  18644252 ->   5319980   28.53%   linux/i386    ./tailscale/tailscaled_i386_Linux.upx
+testing ./tailscale/tailscale_amd_geode_Linux.upx [OK]
+  11848308 ->   3236336   27.31%   linux/i386    ./tailscale/tailscale_amd_geode_Linux.upx
+testing ./tailscale/tailscale_merged_amd_x86_64_Linux.upx [OK]
+  23019520 ->   6554268   28.47%   linux/amd64   ./tailscale/tailscale_merged_amd_x86_64_Linux.upx
+testing ./tailscale/tailscale_arm_abi_Linux.upx [OK]
+  17195614 ->   7441724   43.28%    linux/arm    ./tailscale/tailscale_arm_abi_Linux.upx
+testing ./tailscale/tailscaled_aarch64_arm64_macOS.upx [OK]
+  17675394 ->   4538384   25.68%   macho/arm64   ./tailscale/tailscaled_aarch64_arm64_macOS.upx
 
 ```
 
