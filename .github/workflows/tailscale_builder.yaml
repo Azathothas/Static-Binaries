@@ -476,8 +476,22 @@ jobs:
           find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;          
          #-------------------------#          
          #Windows
+         #aarch64 || amd_x86_64 -> Exes
+          #main
           WINDOWS_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -v 'ipn')
           curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
+          #ipn
+          WINDOWS_IPN_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -i 'ipn')
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_IPN_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_ipn_setup_Windows.exe"
+         #aarch64 || arm64 -> MSI  
+          WINDOWS_ARM64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'arm64')
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_ARM64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Windows.msi"
+         #amd || x86_64 -> MSI  
+          WINDOWS_AMD64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'amd64') 
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_AMD64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Windows.msi"
+         #amd || x86 -> MSI  
+          WINDOWS_X86_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'x86') 
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_X86_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_x86_Windows.msi" 
          #-------------------------#          
           set +x 
         continue-on-error: true
@@ -554,3 +568,4 @@ jobs:
             ${{github.workspace}}/main/tailscale/*_Linux
             ${{github.workspace}}/main/tailscale/*_macOS
             ${{github.workspace}}/main/tailscale/*.exe
+            ${{github.workspace}}/main/tailscale/*.msi
