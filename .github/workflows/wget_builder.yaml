@@ -826,43 +826,34 @@ jobs:
 
   #Update Readme      
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
-           set +e
            cd "$GITHUB_WORKSPACE/main"
-           sudo chmod +xwr ./wget/wget* 
            cat ./wget/INFO.md > ./wget/README.md
            echo -e "" >> ./wget/README.md 
            echo '---' >> ./wget/README.md
            echo '```console' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo -e "--> METADATA" >> ./wget/README.md
-           {
-              /bin/bash -c 'PS4="$ "; file ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
-           } >> ./wget/README.md
+           /bin/bash -c 'PS4="$ ";file ./wget/wget* | grep -v '.txt' | grep -v '.base64' ' &>> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo -e "--> SHA256SUM" >> ./wget/README.md
-           {
-              /bin/bash -c 'PS4="$ "; sha256sum ./wget/* | grep -v '.txt' | grep -v '.md' | grep -v '.base64' 2>&1' 
-           } >> ./wget/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./wget/wget* | grep -v '.txt' | grep -v '.base64' ' &>> ./wget/README.md   
            echo -e '```\n' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '---' >> ./wget/README.md
            echo -e "" >> ./wget/README.md
            echo '- #### Sizes' >> ./wget/README.md 
            echo -e "" >> ./wget/README.md
-           echo '```console' >> ./wget/README.md
-           {
-              /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.md' | awk "{print \$5, \$9}" | column -t 2>&1' 
-           } >> ./wget/README.md
-           echo '```' >> ./wget/README.md     
+           echo '```console' >> ./wget/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v '.txt' | grep -v '.base64' | awk "{print \$5, \$9}" | column -t' &>> ./wget/README.md
+           echo '```' >> ./wget/README.md   
            echo -e "" >> ./wget/README.md 
            echo '---' >> ./wget/README.md 
            echo -e "" >> ./wget/README.md 
            echo '- #### Flags' >> ./wget/README.md 
            echo '```console' >> ./wget/README.md 
-           echo -e "" >> ./wget/README.md           
-           /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_busybox_amd_x86_64_gcc_Linux' &>> ./wget/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_amd_x86_64_Linux' &>> ./wget/README.md 
            echo -e "" >> ./wget/README.md
            echo -e "" >> ./wget/README.md 
            echo '```' >> ./wget/README.md 
