@@ -91,7 +91,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_FreeBSD" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_FreeBSD.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_FreeBSD.upx" 2>/dev/null
 
          #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-amd64.tgz')
@@ -99,7 +99,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_FreeBSD" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_FreeBSD.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_FreeBSD.upx" 2>/dev/null
 
          #386
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'freebsd-386.tgz')
@@ -107,7 +107,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1          
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_386_FreeBSD.upx" 2>/dev/null
 
          #-------------------------#          
          #Linux
@@ -117,7 +117,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_Linux.upx" 2>/dev/null
 
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-amd64.tgz')
@@ -125,7 +125,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" \;   
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Linux.upx" 2>/dev/null
 
          #arm
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-arm.tgz')
@@ -133,15 +133,15 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux.upx" &
-
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_arm_Linux.upx" 2>/dev/null
+          
          #i386 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-386.tgz')
           find . -type f -name '*.tgz' -exec tar -xzvf {} \;
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_i386_Linux.upx" 2>/dev/null
 
          #mips
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips.tgz')
@@ -149,7 +149,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips_Linux.upx" 2>/dev/null
 
          #mipsle
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mipsle.tgz')
@@ -157,7 +157,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mipsle_Linux.upx" 2>/dev/null
 
          #mips64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips64.tgz')
@@ -165,7 +165,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64_Linux.upx" 2>/dev/null
 
          #mips64le
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-mips64le.tgz')
@@ -173,7 +173,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_mips64le_Linux.upx" 2>/dev/null
 
          #ppc64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-ppc64.tgz')
@@ -181,7 +181,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64_Linux.upx" 2>/dev/null
 
          #ppc64le
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-ppc64le.tgz')
@@ -189,7 +189,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" \;  
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_powerpc64le_Linux.upx" 2>/dev/null
         
          #s390x
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'linux-s390x.tgz')
@@ -197,7 +197,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_s390x_Linux.upx" 2>/dev/null
 
          #-------------------------# 
          #macOS
@@ -207,7 +207,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_aarch64_arm64_macOS.upx" 2>/dev/null
 
          #amd64_x86_64 
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "$DOWNLOAD_PAGE" -H "User-Agent: $USER_AGENT" |  grep -o 'https://bin.equinox.io[^"]*' | grep 'darwin-amd64.zip')
@@ -215,7 +215,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1            
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_macOS.upx" 2>/dev/null
 
          #-------------------------# 
          #Solaris
@@ -225,7 +225,7 @@ jobs:
           find . -type f -name 'ngrok*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'ngrok*' ! -name '*.*' -exec mv {} "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" \;
           #Compress with upx
-          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris" -o "$GITHUB_WORKSPACE/main/ngrok/ngrok_amd_x86_64_Solaris.upx" 2>/dev/null
 
          #-------------------------# 
          #Windows 
