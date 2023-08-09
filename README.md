@@ -1,5 +1,17 @@
 - #### 📦 Status
-[![Fetch aria2 Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml)
+> - [![Fetch aria2 Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml)
+> - [![Build Busybox Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/busybox_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/busybox_builder.yaml)
+> - [![Build || Fetch Bore Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/bore_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/bore_builder.yaml)
+> - [![Build || Fetch croc Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/croc_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/croc_builder.yaml)
+> - [![Fetch curl Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/curl_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/curl_fetcher.yaml)
+> - [![Fetch gost Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/gost_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/gost_fetcher.yaml)
+> - [![Build Massdns Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/massdns_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/massdns_builder.yaml)
+> - [![Build Masscan Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/masscan_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/masscan_builder.yaml)
+> - [![Fetch ngrok Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/ngrok_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/ngrok_fetcher.yaml)
+> - [![Build || Fetch Tailscale Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/tailscale_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/tailscale_builder.yaml)
+> - [![Fetch Toybox Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/toybox_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/toybox_fetcher.yaml)
+> - [![Fetch Twingate Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/twingate_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/twingate_fetcher.yaml)
+> - [![Build || Fetch wget Binaries (From Busybox)](https://github.com/Azathothas/Static-Binaries/actions/workflows/wget_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/wget_builder.yaml)
 
 ---
 - #### Build Info
@@ -19,9 +31,9 @@
 ```
 ---
 - #### Similar Repos
-> - [Static Busybox Binaries](https://github.com/Azathothas/Busybox-Static-Binaries) **`aarch64 (ARM)` `arm_gnueabi` `arm_gnueabihf` `ARMv4` `ARMv5` `ARMv7` `i686` `m68k` `mips` `mipsel` `mips64` `mips64el` `powerpc` `powerpc64` `powerpc64le` `riscv32` `riscv64` `s390x` `x86_64`**
-> - [Binary Tools](https://github.com/mosajjal/binary-tools) **`aarch64 (ARM)` `x64`**
-> - [Static Binaries](https://github.com/ryanwoodsmall/static-binaries) **`aarch64 (ARM)` `armhf` `i686` `or1k` `riscv64` `x86_64`**
-> - [Android Static Bins](https://github.com/bol-van/bins) **`aarch64 (ARM)` `armhf` `mips` `mipsel` `x86` `x86_64`**
-> - [Cross Compiled Android Bins](https://github.com/Zackptg5/Cross-Compiled-Binaries-Android) **`aarch64 (ARM)` `arm64` `x86` `x86_64`** 
+> - [borestad/static-binaries](https://github.com/borestad/static-binaries) **`x86_64` `upx`**
+> - [mosajjal/binary-tools](https://github.com/mosajjal/binary-tools) **`aarch64 (ARM)` `x64`**
+> - [ryanwoodsmall/static-binaries](https://github.com/ryanwoodsmall/static-binaries) **`aarch64 (ARM)` `armhf` `i686` `or1k` `riscv64` `x86_64`**
+> - [bol-van/bins](https://github.com/bol-van/bins) **`Android` `aarch64 (ARM)` `armhf` `mips` `mipsel` `x86` `x86_64`**
+> - [Zackptg5/Cross-Compiled-Binaries-Android](https://github.com/Zackptg5/Cross-Compiled-Binaries-Android) **`aarch64 (ARM)` `arm64` `x86` `x86_64`** 
 ---
