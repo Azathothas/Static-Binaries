@@ -302,9 +302,9 @@ jobs:
       - name: Fetch croc bins [ Stable ]
         #if: env.versions_same != 'true'
         run: |
-        #--------------#
+         #--------------#
           set +e ; set -x
-        #--------------#  
+         #--------------#  
           #DragonFlyBSD
           #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'DragonFlyBSD-64bit.tar.gz')
