@@ -270,7 +270,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "Twingate-Connector ${{ env.TWINGATE_CONNECTOR_VERSION }}"
-          tag_name: "twingate_connector ${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          tag_name: "twingate_connector_${{ env.TWINGATE_CONNECTOR_VERSION }}"
           prerelease: false
           draft: false
           generate_release_notes: false
