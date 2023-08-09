@@ -83,7 +83,6 @@ jobs:
         run: |
          #Download
            set -x ; set +e
-           rm -rf $GITHUB_WORKSPACE/main/ngrok/*upx
          #-------------------------#
           #FreeBSD
           #arm
