@@ -1,4 +1,5 @@
-name: Build || Fetch aria2 Binaries
+name: Fetch aria2 Binaries
+#MAX_RUNTIME:
 
 on:
   workflow_dispatch:
