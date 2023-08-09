@@ -1,5 +1,5 @@
 name: Build || Fetch Tailscale Binaries
-#MAX_RUNTIME: 05 (macOS) + 15 (Linux)
+#MAX_RUNTIME: 15 (macOS) + 45 (Linux)
 on:
   workflow_dispatch:
   schedule:
