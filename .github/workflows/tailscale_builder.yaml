@@ -211,9 +211,6 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
-          # Get latest version
-          curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/tailscale/version.txt"
-        continue-on-error: false
 
     #Build using go tool chain
     #Complete Tool Chain List: `go tool dist list`
