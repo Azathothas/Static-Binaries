@@ -18,70 +18,22 @@ jobs:
       - uses: actions/checkout@v3
         with:
           path: main
-
-          
-      - name: Install upX
-        #if: env.versions_same != 'true'
-        run: |
-          cd $(mktemp -d) && curl -qfLJO "$(curl -s https://api.github.com/repos/upx/upx/releases/latest | jq -r '.assets[].browser_download_url' | grep -i 'amd64_linux')"
-          find . -type f -name '*tar*' -exec tar -xvf {} \;
-          sudo find . -type f -name 'upx' -exec mv {} "$(which upx)" \;  
-        continue-on-error: false
-        
-      - name: Update README.md
-        #if: env.versions_same != 'true'
-        run: |
-          set -x
-          cd "$GITHUB_WORKSPACE/main"
-          sudo chmod +xwr ./wget/wget* 
-          cat ./wget/INFO.md > ./wget/README.md
-          echo -e "" >> ./wget/README.md 
-          echo '---' >> ./wget/README.md
-          echo '```console' >> ./wget/README.md
-          echo -e "" >> ./wget/README.md
-          echo -e "--> METADATA" >> ./wget/README.md
-          {
-            /bin/bash -c 'PS4="$ "; file ./wget/* | grep -v ".txt" | grep -v ".md" | grep -v ".base64" '
-          } >> ./wget/README.md
-          echo -e "" >> ./wget/README.md
-          echo -e "--> SHA256SUM" >> ./wget/README.md
-          {
-            /bin/bash -c 'PS4="$ "; sha256sum ./wget/* | grep -v ".txt" | grep -v ".md" | grep -v ".base64" '
-          } >> ./wget/README.md
-          echo -e '```\n' >> ./wget/README.md
-          echo -e "" >> ./wget/README.md
-          echo '---' >> ./wget/README.md
-          echo -e "" >> ./wget/README.md
-          echo '- #### Sizes' >> ./wget/README.md 
-          echo -e "" >> ./wget/README.md
-          echo '```console' >> ./wget/README.md
-          {
-            /bin/bash -c 'PS4="$ ";ls -lh ./wget/wget* | grep -v ".txt" | grep -v ".md" | awk "{print \$5, \$9}" | column -t '
-          } >> ./wget/README.md
-          echo '```' >> ./wget/README.md     
-          echo -e "" >> ./wget/README.md 
-          echo '---' >> ./wget/README.md 
-          echo -e "" >> ./wget/README.md 
-          echo '- #### Flags' >> ./wget/README.md 
-          echo '```console' >> ./wget/README.md 
-          echo -e "" >> ./wget/README.md           
-          /bin/bash -c 'PS4="$ "; set -x; ./wget/wget_busybox_amd_x86_64_gcc_Linux' &>> ./wget/README.md 
-          echo -e "" >> ./wget/README.md
-          echo -e "" >> ./wget/README.md 
-          echo '```' >> ./wget/README.md 
-          echo -e "" >> ./wget/README.md        
-          echo '---' >> ./wget/README.md 
-          echo -e "" >> ./wget/README.md 
-        working-directory: main
-        continue-on-error: true
-
-
-
-      #https://github.com/stefanzweifel/git-auto-commit-action  
-      - uses: stefanzweifel/git-auto-commit-action@v4
+ #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        #if: twingate_connector_versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          repository: ./main        
-          commit_user_name: Azathothas # defaults to "github-actions[bot]"
-          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Cross-Compile wget Binaries <-- ${{ env.VERSION }}"
-          #push_options: '--force'        
+          name: "Twingate-Connector ${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          tag_name: "twingate_connector_${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://www.twingate.com/changelog/connector_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/twingate#install-twingate_
+          files: |
+            ${{github.workspace}}/main/twingate/*_connector*_Linux
