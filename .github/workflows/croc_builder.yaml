@@ -1,5 +1,5 @@
 name: Build || Fetch croc Binaries
-#MAX_RUNTIME:
+#MAX_RUNTIME: 15 Minutes
 
 on:
   workflow_dispatch:
