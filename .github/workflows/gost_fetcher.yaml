@@ -7,6 +7,12 @@ on:
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,19 +31,25 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/ginuerzh/gost && cd gost
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV          
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
           if [ "$VERSION" == "$STORED_VERSION" ]; then
-            echo "Version $VERSION is already Fetched"
+            echo "Version $VERSION is already Fetched & Updated"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Fetching... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "Fetching... --> v$VERSION (from <-- v$STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
 
-      - name: Compare Versions
+      - name: Update Version
         if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
@@ -55,17 +67,14 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/gost"
-          # Get latest version
-          #curl -qfsSL "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/gost/version.txt"
-          #export VERSION=$(cat $GITHUB_WORKSPACE/main/gost/version.txt)
 
      #Fetch
       - name: Fetch gost bins
         if: env.versions_same != 'true'
         run: |
          #Download
+          set -x ; set +e
          #-------------------------#
-          set -x 
           #FreeBSD
          #amd_x86_64
           cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ginuerzh/gost/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'freebsd-amd64')
@@ -241,3 +250,26 @@ jobs:
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "Fetch gost Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "gost ${{ env.VERSION }}"
+          tag_name: "gost_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/ginuerzh/gost/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/gost#install-gost_
+          files: |
+            ${{github.workspace}}/main/gost/*.exe
+            ${{github.workspace}}/main/gost/*_FreeBSD
+            ${{github.workspace}}/main/gost/*_Linux
+            ${{github.workspace}}/main/gost/*_macOS
