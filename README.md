@@ -1,3 +1,5 @@
+- #### 📦 Status
+[![Fetch aria2 Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/aria2_fetcher.yaml)
 
 ---
 - #### Build Info
