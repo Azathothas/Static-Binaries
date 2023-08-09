@@ -226,6 +226,7 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 13M   aria2c_mipsel_musl_latest_Linux
 9.5M  aria2c_x86_64_Android
 11M   aria2c_x86_Android
+7     version.txt
 ```
 
 ---
