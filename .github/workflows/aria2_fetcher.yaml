@@ -66,7 +66,10 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/aria2"
-     
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
      #Fetch
       - name: Fetch aria2 bins [ Stable ]
         if: env.versions_same != 'true'
@@ -176,7 +179,7 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch aria2 Binaries <-- ${{ env.VERSION }}"
+          commit_message: "✅ Fetch aria2 Binaries 📦 <-- ${{ env.VERSION }} "
           #push_options: '--force'
 
   #Create a new Release & Publish
