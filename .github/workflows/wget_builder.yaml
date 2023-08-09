@@ -826,7 +826,7 @@ jobs:
 
   #Update Readme      
       - name: Update README.md
-        if: env.versions_same != 'true'
+        #if: env.versions_same != 'true'
         run: |
            cd "$GITHUB_WORKSPACE/main"
            cat ./wget/INFO.md > ./wget/README.md
