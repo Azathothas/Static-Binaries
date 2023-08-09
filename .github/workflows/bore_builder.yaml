@@ -25,6 +25,12 @@ jobs:
         run: |
           # Get latest version
           export VERSION=$(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/ekzhang/bore && cd bore
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           # Get stored version
           export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/bore/version.txt)
@@ -44,6 +50,22 @@ jobs:
           echo $VERSION > $GITHUB_WORKSPACE/main/bore/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
+      - name: Download Latest Source Code (Github_API)
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url') -o "$HOME/bore.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/bore.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/ekzhang/bore.git 
+            zip -ro "./bore.zip" "./bore" && mv "./bore.zip" "$HOME/"
+          fi
+        continue-on-error: false
+        
       - name: Install CoreUtils
         if: env.versions_same != 'true'
         run: |
@@ -78,10 +100,6 @@ jobs:
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/bore"
-          # Get latest version
-          curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/bore/version.txt"
-          export VERSION=$(cat $GITHUB_WORKSPACE/main/bore/version.txt)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
           
     #Build using rustup | rust-cross
     #Complete Tool Chain List: `rustup target list`
@@ -101,8 +119,8 @@ jobs:
       - name: Build bore for aarch64_arm64_Android [cross-llvm-NDK]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -121,8 +139,8 @@ jobs:
       - name: Build bore for armv_abi_Android [cross-llvm-NDK]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -141,8 +159,8 @@ jobs:
       - name: Build bore for armv7_abi_Android [cross-llvm-NDK]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -161,8 +179,8 @@ jobs:
       - name: Build bore for i686_Android [cross-llvm-NDK]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -202,8 +220,8 @@ jobs:
       - name: Build bore for aarch64_arm64_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -222,8 +240,8 @@ jobs:
       - name: Build bore for aarch64_arm64_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -242,8 +260,8 @@ jobs:
       - name: Build bore for amd_x86_i686_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -262,8 +280,8 @@ jobs:
       - name: Build bore for amd_x86_64_gcc [cargo-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -282,8 +300,8 @@ jobs:
       - name: Build bore for amd_x86_i686_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -302,8 +320,8 @@ jobs:
       - name: Build bore for amd_x86_64_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -322,8 +340,8 @@ jobs:
       - name: Build bore for arm_abi_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -342,8 +360,8 @@ jobs:
       - name: Build bore for arm_abi_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -362,8 +380,8 @@ jobs:
       - name: Build bore for arm_abihf_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -382,8 +400,8 @@ jobs:
       - name: Build bore for arm_abihf_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -402,8 +420,8 @@ jobs:
       - name: Build bore for armv7_abi_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -422,8 +440,8 @@ jobs:
       - name: Build bore for armv7_abi_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -442,8 +460,8 @@ jobs:
       - name: Build bore for armv7_abihf_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -462,8 +480,8 @@ jobs:
       - name: Build bore for armv7_abihf_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -482,8 +500,8 @@ jobs:
       - name: Build bore for i586_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -502,8 +520,8 @@ jobs:
       - name: Build bore for i586_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -522,8 +540,8 @@ jobs:
       - name: Build bore for mips_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -542,8 +560,8 @@ jobs:
       - name: Build bore for mips_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -562,8 +580,8 @@ jobs:
       - name: Build bore for mipsel_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -582,8 +600,8 @@ jobs:
       - name: Build bore for mipsel_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -602,8 +620,8 @@ jobs:
       - name: Build bore for mips64_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -622,8 +640,8 @@ jobs:
       - name: Build bore for mips64_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -642,8 +660,8 @@ jobs:
       - name: Build bore for mips64el_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -662,8 +680,8 @@ jobs:
       - name: Build bore for mips64el_musl [cross-MUSL]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -682,8 +700,8 @@ jobs:
       - name: Build bore for powerpc_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -702,8 +720,8 @@ jobs:
       - name: Build bore for powerpc64_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -722,8 +740,8 @@ jobs:
       - name: Build bore for powerpc64le_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -742,8 +760,8 @@ jobs:
       - name: Build bore for riscv64_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -762,8 +780,8 @@ jobs:
       - name: Build bore for s390x_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -782,8 +800,8 @@ jobs:
       - name: Build bore for sparc64_gcc [cross-GCC]
         if: env.versions_same != 'true'
         run: |
-          # Get latest Source Code
-          cd $(mktemp -d) && curl -qfLOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
           find . -type f -name '*.zip*' -exec unzip -o {} \;
           cd $(find . -maxdepth 1 -type d | grep -v '^.$')
           # Build
@@ -800,7 +818,7 @@ jobs:
         continue-on-error: true  
      
      #Fetch
-      - name: Fetch Bore bins [ macOS || Windows ]
+      - name: Fetch Bore bins ( macOS || Windows )
         if: env.versions_same != 'true'
         run: |
           #macOS
@@ -887,3 +905,26 @@ jobs:
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "Build || Fetch bore Binaries <-- ${{ env.VERSION }}"
           #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "bore ${{ env.VERSION }}"
+          tag_name: "bore_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/bore/bore/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/bore#install-bore_
+          files: |
+            ${{github.workspace}}/main/bore/*_Android
+            ${{github.workspace}}/main/bore/*.exe
+            ${{github.workspace}}/main/bore/*_Linux
+            ${{github.workspace}}/main/bore/*_macOS
