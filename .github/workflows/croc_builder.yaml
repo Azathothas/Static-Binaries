@@ -484,7 +484,7 @@ jobs:
           generate_release_notes: false
           token: "${{ secrets.GITHUB_TOKEN }}"          
           body: |
-            `Changelog`: _https://github.com/croc/croc/releases/tag/${{ env.VERSION }}_
+            `Changelog`: _https://github.com/schollz/croc/releases/tag/${{ env.VERSION }}_
             
             `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/croc#install-croc_
           files: |
