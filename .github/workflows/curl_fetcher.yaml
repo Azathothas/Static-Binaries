@@ -50,20 +50,20 @@ jobs:
         shell: bash
 
       - name: Compare Versions
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/curl/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/curl"
@@ -73,7 +73,7 @@ jobs:
 
      #Fetch
       - name: Fetch curl bins
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
          #Download
           set -x ; set +e
@@ -189,7 +189,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/curl/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -199,7 +199,7 @@ jobs:
         
         
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
            cd "$GITHUB_WORKSPACE/main"
            cat ./curl/INFO.md > ./curl/README.md
