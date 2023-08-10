@@ -51,20 +51,20 @@ jobs:
         shell: bash
 
       - name: Compare Versions
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/ngrok/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       - name: Install upX
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           cd $(mktemp -d) && curl -qfLJO "$(curl -s https://api.github.com/repos/upx/upx/releases/latest | jq -r '.assets[].browser_download_url' | grep -i 'amd64_linux')"
           find . -type f -name '*tar*' -exec tar -xvf {} \;
@@ -73,13 +73,13 @@ jobs:
         continue-on-error: true
 
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/ngrok"
 
       - name: Download @Latest Releases   
-        #if: env.versions_same != 'true' 
+        if: env.versions_same != 'true' 
         run: |
          #Download
            set -x ; set +e
@@ -211,7 +211,7 @@ jobs:
         continue-on-error: true
 
       - name: Wait for UPX
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           while ps aux | grep -q "[u]px"; do
               echo "Waiting for upx processes to finish..."
@@ -223,7 +223,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/ngrok/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -232,7 +232,7 @@ jobs:
         continue-on-error: true
 
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./ngrok/INFO.md > ./ngrok/README.md
@@ -287,7 +287,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "ngrok ${{ env.VERSION }}"
