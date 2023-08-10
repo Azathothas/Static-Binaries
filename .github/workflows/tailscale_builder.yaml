@@ -1,9 +1,10 @@
 name: Build || Fetch Tailscale Binaries
-#MAX_RUNTIME: 70 Minutes 45 23 * * * [23:30 (11:30 PM) UTC --> (05H+45M) 05:15 AM NPT ]
+#MAX_RUNTIME: 70 Minutes 45 23 * * * [23:45 (11:45 PM) UTC --> (05H+45M) 05:30 AM NPT ]
+
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 23 * * 0" 
+    - cron: "45 23 * * *" 
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
