@@ -1,10 +1,10 @@
 name: Fetch ngrok Binaries
-#MAX_RUNTIME: 15 Minutes 45 21 * * * [21:45 (9:45 PM) UTC --> (05H+45M) 03:30 AM NPT ]
+#MAX_RUNTIME: 15 Minutes 00 22 * * * [22:45 (10:00 PM) UTC --> (05H+45M) 03:45 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 21 * * *" 
+    - cron: "00 22 * * *" 
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
