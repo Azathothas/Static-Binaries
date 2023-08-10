@@ -1,10 +1,10 @@
 name: Build || Fetch croc Binaries
-#MAX_RUNTIME: 15 Minutes 00 21 * * * [21:00 (9:00 PM) UTC --> (05H+45M) 02:45 AM NPT ]
+#MAX_RUNTIME: 15 Minutes 15 21 * * * [21:15 (09:15 PM) UTC --> (05H+45M) 03:00 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "00 21 * * *"  
+    - cron: "15 21 * * *"  
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
