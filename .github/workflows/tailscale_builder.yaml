@@ -1,9 +1,9 @@
 name: Build || Fetch Tailscale Binaries
-#MAX_RUNTIME: 15 (macOS) + 45 (Linux)
+#MAX_RUNTIME: 70 Minutes 45 23 * * * [23:30 (11:30 PM) UTC --> (05H+45M) 05:15 AM NPT ]
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 21 * * 0"  # 09:45 PM UTC Every Sunday --> 03:30 AM Nepal Time Every Monday
+    - cron: "45 23 * * 0" 
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
@@ -632,13 +632,20 @@ jobs:
         working-directory: main
         continue-on-error: true
 
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+
    #Commit & Push     
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
+          commit_message: "✅ Build || Fetch Tailscale Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'
           
   #Create a new Release & Publish
