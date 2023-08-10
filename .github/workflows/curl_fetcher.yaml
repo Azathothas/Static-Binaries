@@ -1,10 +1,10 @@
 name: Fetch curl Binaries
-#MAX_RUNTIME: 15 Minutes 15 21 * * * [21:15 (9:15 PM) UTC --> (05H+45M) 03:00 AM NPT ]
+#MAX_RUNTIME: 15 Minutes 30 21 * * * [21:30 (09:30 PM) UTC --> (05H+45M) 03:15 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 21 * * *"
+    - cron: "30 21 * * *"
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
