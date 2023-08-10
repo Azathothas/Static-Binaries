@@ -3,8 +3,8 @@ name: Build || Fetch wget Binaries (From Busybox)
 #MAX_RUNTIME: ~ 50 Mins
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "45 19 * * 0"  # 07:45 PM UTC Every Sunday --> 01:30 AM Nepal Time Every Monday
+  #schedule:
+  #  - cron: "* * * * 0"  # Manually Run this on new successful builds of Busybox
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
