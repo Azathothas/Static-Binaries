@@ -1,16 +1,17 @@
-#MAX_RUNTIME: ~ 15 mins
 name: Fetch Twingate Binaries
+#MAX_RUNTIME: 30 Minutes 15 01 * * * [24:00 (01:15 AM) UTC --> (05H+45M) 06:45 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 18 * * 5"  # 06:15 PM UTC Every Friday --> 12:00 AM Nepal Time Every Sat
+    - cron: "15 01 * * *" 
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
 env:
   DOWNLOAD_PAGE: "https://www.twingate.com/download"
   USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
   
 jobs:
   build:
@@ -254,12 +255,19 @@ jobs:
         working-directory: main
         continue-on-error: true
 
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch latest Twingate Bins <-- Client-${{ env.TWINGATE_VERSION }} || Connector-${{ env.TWINGATE_CONNECTOR_VERSION }}"
+          commit_message: "✅ Fetch latest Twingate Bins 📦 <-- Client-${{ env.TWINGATE_VERSION }} || Connector-${{ env.TWINGATE_CONNECTOR_VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'      
 
   #Create a new Release & Publish
