@@ -1,12 +1,12 @@
 name: Fetch gost Binaries
-#MAX_RUNTIME: ~ 05 Mins
+#MAX_RUNTIME: 15 Minutes 30 21 * * * [21:30 (9:30 PM) UTC --> (05H+45M) 03:15 AM NPT ]
+
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 18 * * 2"  # 06:15 PM UTC Every Tuesday  --> 12:00 AM Nepal Time Every Wednesday
+    - cron: "30 21 * * *"  
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
-
 
 env:
   # https://i.redd.it/o6xypg00uac91.png
@@ -26,6 +26,13 @@ jobs:
         with:
           path: main
 
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
       - name: Check Version
         id: check_version
         run: |
@@ -248,7 +255,7 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Fetch gost Binaries <-- ${{ env.VERSION }}"
+          commit_message: "✅ Fetch gost Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'
 
   #Create a new Release & Publish
