@@ -1,10 +1,10 @@
 name: Build Busybox Binaries
-#MAX_RUNTIME: 60 Minutes 45 20 * * * [20:45 (8:45 PM) UTC --> (05H+45M) 02:30 AM NPT ]
+#MAX_RUNTIME: 60 Minutes 15 20 * * * [20:15 (08:15 PM) UTC --> (05H+45M) 02:00 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 20 * * *"  
+    - cron: "15 20 * * *"  
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
