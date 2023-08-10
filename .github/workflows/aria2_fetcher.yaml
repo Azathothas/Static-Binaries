@@ -1,10 +1,10 @@
 name: Fetch aria2 Binaries
-#MAX_RUNTIME:
+#MAX_RUNTIME: 15 Minutes --> 15 18 * * * [18:15 (6:15 PM) UTC --> (05H+45M) 12:00 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 21 * * 6"  # 09:45 PM UTC Every Saturday --> 03:30 AM Nepal Time Every Sunday
+    - cron: "15 18 * * *" 
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
