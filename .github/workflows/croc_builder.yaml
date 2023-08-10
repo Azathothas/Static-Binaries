@@ -1,13 +1,12 @@
 name: Build || Fetch croc Binaries
-#MAX_RUNTIME: 15 Minutes
+#MAX_RUNTIME: 15 Minutes 00 21 * * * [21:00 (9:00 PM) UTC --> (05H+45M) 02:45 AM NPT ]
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 20 * * 0"  # 08:45 PM UTC Every Sunday --> 02:30 AM Nepal Time Every Monday
+    - cron: "00 21 * * *"  
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
-
 
 env:
   # https://i.redd.it/o6xypg00uac91.png
@@ -27,6 +26,14 @@ jobs:
         with:
           path: main
 
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
       - name: Check Version & Compare
         id: check_version
         run: |
@@ -467,7 +474,7 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Build || Fetch croc Binaries <-- ${{ env.VERSION }}"
+          commit_message: "✅ Build || Fetch croc Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'
 
   #Create a new Release & Publish
