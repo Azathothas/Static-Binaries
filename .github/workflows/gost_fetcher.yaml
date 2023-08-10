@@ -50,27 +50,27 @@ jobs:
         shell: bash
 
       - name: Update Version
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/gost/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
 
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/gost"
 
      #Fetch
       - name: Fetch gost bins
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
          #Download
           set -x ; set +e
@@ -194,7 +194,7 @@ jobs:
 
      #Cleanup
       - name: Cleanup >> Strip >> chmod
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           #Strip All Linux Bins
           find "$GITHUB_WORKSPACE/main/gost/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
@@ -203,7 +203,7 @@ jobs:
         continue-on-error: true
         
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
            cd "$GITHUB_WORKSPACE/main"
            cat ./gost/INFO.md > ./gost/README.md
@@ -262,7 +262,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "gost ${{ env.VERSION }}"
