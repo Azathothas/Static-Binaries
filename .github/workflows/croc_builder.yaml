@@ -50,21 +50,21 @@ jobs:
         shell: bash    
 
       - name: Update Version
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/croc/version.txt
           echo "Updated version.txt with the latest version $VERSION"
 
       - name: Download Latest Source Code (Github_API)
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           # Get latest Source Code
           curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.zipball_url') -o "$HOME/croc.zip"     
         continue-on-error: true
 
       - name: Clone repository if curl fails and zip
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           if [ ! -f "$HOME/croc.zip" ]; then
             cd $(mktemp -d) && git clone https://github.com/schollz/croc.git 
@@ -73,7 +73,7 @@ jobs:
         continue-on-error: false    
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
@@ -99,7 +99,7 @@ jobs:
       #     g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
           
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/croc"
@@ -108,7 +108,7 @@ jobs:
     #Complete Tool Chain List: `go tool dist list`
 
       - name: Build croc for linux/386
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -127,7 +127,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/loong64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -146,7 +146,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/mips
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -165,7 +165,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/mipsle
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -184,7 +184,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/mips64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -203,7 +203,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/mips64le
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -222,7 +222,7 @@ jobs:
         continue-on-error: true  
 
       - name: Build croc for linux/powerpc64_ppc64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -241,7 +241,7 @@ jobs:
         continue-on-error: true  
         
       - name: Build croc for linux/powerpc64le_ppc64le
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -260,7 +260,7 @@ jobs:
         continue-on-error: true
 
       - name: Build croc for linux/riscv64
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -279,7 +279,7 @@ jobs:
         continue-on-error: true 
 
       - name: Build croc for linux/s390x
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: | 
           #Get the zip
           cd $(mktemp -d) && cp "$HOME/croc.zip" .
@@ -299,7 +299,7 @@ jobs:
      
      #Fetch
       - name: Fetch croc bins [ Stable ]
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
          #--------------#
           set +e ; set -x
@@ -421,7 +421,7 @@ jobs:
         continue-on-error: true
         
       - name: Update README.md
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |  
            cd "$GITHUB_WORKSPACE/main"
            cat ./croc/INFO.md > ./croc/README.md
@@ -480,7 +480,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "croc ${{ env.VERSION }}"
