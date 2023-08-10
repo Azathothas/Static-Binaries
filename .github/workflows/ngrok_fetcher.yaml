@@ -1,5 +1,5 @@
 name: Fetch ngrok Binaries
-#MAX_RUNTIME: 15 Minutes 00 22 * * * [22:45 (10:00 PM) UTC --> (05H+45M) 03:45 AM NPT ]
+#MAX_RUNTIME: 15 Minutes 00 22 * * * [22:00 (10:00 PM) UTC --> (05H+45M) 03:45 AM NPT ]
 
 on:
   workflow_dispatch:
