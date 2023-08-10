@@ -1,10 +1,10 @@
-# Fork: https://github.com/shutingrz/busybox-static-binaries-fat/tree/main
 name: Build Busybox Binaries
-#MAX_RUNTIME: ~ 50 Mins
+#MAX_RUNTIME: 60 Minutes 45 20 * * * [20:45 (8:45 PM) UTC --> (05H+45M) 02:30 AM NPT ]
+
 on:
   workflow_dispatch:
   schedule:
-    - cron: "45 19 * * 0"  # 07:45 PM UTC Every Sunday --> 01:30 AM Nepal Time Every Monday
+    - cron: "45 20 * * *"  
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
@@ -20,6 +20,14 @@ jobs:
         with:
           path: main
 
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
       - name: Check Version
         id: check_version
         run: |
@@ -45,7 +53,6 @@ jobs:
           # Update version.txt with the latest version
           echo $VERSION > $GITHUB_WORKSPACE/main/busybox/version.txt
           echo "Updated version.txt with the latest version $VERSION"
-
 
       - name: Download Latest Source Code (Hacky Scraping)
         if: env.versions_same != 'true'
@@ -935,7 +942,7 @@ jobs:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Cross-Compile Busybox Binaries <-- ${{ env.VERSION }}"
+          commit_message: "✅ Cross-Compile Busybox Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'
 
   #Create a new Release & Publish
