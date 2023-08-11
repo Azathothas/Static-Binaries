@@ -44,7 +44,7 @@ jobs:
             echo "Version $VERSION is already Fetched & Updated"
             echo "versions_same=true" >> $GITHUB_ENV
           else
-            echo "Fetching... --> v$VERSION (from <-- v$STORED_VERSION)"
+            echo "Fetching... --> $VERSION (from <-- $STORED_VERSION)"
             echo "versions_same=false" >> $GITHUB_ENV
           fi
         shell: bash
@@ -61,7 +61,10 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
-
+          curl -qfsSL "https://zyedidia.github.io/eget.sh" | bash
+          sudo mv ./eget* "/usr/local/bin/eget"
+          sudo chmod +xwr "/usr/local/bin/eget"
+          
       - name: Setup Env
         if: env.versions_same != 'true'
         run: |
