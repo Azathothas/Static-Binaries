@@ -87,11 +87,43 @@ $env:PROCESSOR_ARCHITECTURE
 ```
 ```powershell
 --> Windows
-!# Check if these work (Skip .zip/msi if these work)
+
+!# Using '.msi' [Recommended]
+!# Note that | Out-Host makes sure powershell waits for the installer to finish
+!# Auto Installs to `C:\Program Files (x86)\OpenSSH` & Starts sshd in the background
+msiexec /i openssh.msi
+!# For logs 
+msiexec /i openssh.msi /l*vx install.log
+
+# Generate Host Keys
+  . "C:\Program Files (x86)\OpenSSH\ssh-keygen.exe" -A
+#Fix Perms 
+#https://github.com/PowerShell/Win32-OpenSSH/wiki/OpenSSH-utility-scripts-to-fix-file-permissions
+  . "C:\Program Files (x86)\OpenSSH\FixHostFilePermissions.ps1" -Confirm:$false | Out-Null
+  . "C:\Program Files (x86)\OpenSSH\FixUserFilePermissions.ps1" -Confirm:$false | Out-Null
+
+#Add Public SSH Key
+  New-Item -Path "$env:USERPROFILE\.ssh" -ItemType Directory -Force
+  #Add SSH Keys
+  (Invoke-RestMethod -Uri "https://github.com/Azathothas.keys").Split("`n") | ForEach-Object { if (-not [string]::IsNullOrWhiteSpace($_)) { Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value $_ } }
+#Configure SSH Config
+  $filePath = Join-Path $env:ProgramData "ssh\sshd_config"; if (-not (Test-Path $filePath)) { New-Item -Path (Split-Path $filePath) -Name "sshd_config" -ItemType File }; Add-Content -Path $filePath -Value "PasswordAuthentication yes`nAllowTcpForwarding yes`nPubkeyAuthentication yes"
+#Configure Firewall
+  New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName "OpenSSH-Server-In-TCP"
+  New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Outbound -Action Allow -DisplayName "OpenSSH-Server-Out-TCP"
+  New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName "OpenSSH-Server-In-TCP-EdgeTraversal" -EdgeTraversalPolicy Allow
+  if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it..." New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22} else {Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."}
+# Finally Start
+Get-Process -Name sshd
+Stop-Process -Name sshd -Force 2>$null
+Get-Process -Name sshd
+Start-Process -Wait -FilePath "C:\Program Files (x86)\OpenSSH\sshd.exe" -WindowStyle Hidden & ; Start-Sleep 5
+#--------------------------------------------------------------------------#
+!# Check if these work (Skip .zip if these work)
   Add-WindowsCapability -Online -Name OpenSSH.Server*
   choco install openssh -y | Out-Null
-
-!# Using '.zip' [Recommended]
+#--------------------------------------------------------------------------#
+!# Using '.zip' (Only if .msi doesn't work)
 !# In PowerShell, To Install
  Expand-Archive -Path .\openssh.zip -Verbose 
  mv openssh C:\Program Files\OpenSSH-Win64
@@ -108,8 +140,8 @@ $env:PROCESSOR_ARCHITECTURE
   . "C:\Program Files\OpenSSH-Win64\FixUserFilePermissions.ps1" -Confirm:$false | Out-Null
  #Add Public SSH Key
   New-Item -Path "$env:USERPROFILE\.ssh" -ItemType Directory -Force
-  #Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value "$((Invoke-RestMethod -Uri "${{ env.SSH_PUBLIC_KEY_URL }}").Split("`n")[1])"
-  (Invoke-RestMethod -Uri "${{ env.SSH_PUBLIC_KEY_URL }}").Split("`n") | ForEach-Object { if (-not [string]::IsNullOrWhiteSpace($_)) { Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value $_ } }
+  #Add SSH Keys
+  (Invoke-RestMethod -Uri "https://github.com/Azathothas.keys").Split("`n") | ForEach-Object { if (-not [string]::IsNullOrWhiteSpace($_)) { Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value $_ } }
  #Configure SSH Config
   $filePath = Join-Path $env:ProgramData "ssh\sshd_config"; if (-not (Test-Path $filePath)) { New-Item -Path (Split-Path $filePath) -Name "sshd_config" -ItemType File }; Add-Content -Path $filePath -Value "PasswordAuthentication yes`nAllowTcpForwarding yes`nPubkeyAuthentication yes"
  #Configure Firewall
@@ -120,11 +152,7 @@ $env:PROCESSOR_ARCHITECTURE
  # Finally Start
 Start-Process -Wait -FilePath "C:\Program Files\OpenSSH-Win64\sshd.exe" -WindowStyle Hidden ; Start-Sleep 5
 
-
-!# Using '.msi'
-!# Note that | Out-Host makes sure powershell waits for the installer to finish
-
-
+#--------------------------------------------------------------------------#
 !# For Troubleshooting:
 !# Restart openssh daemons & Services
 Stop-Process -Name sshd -Force 2>$null
