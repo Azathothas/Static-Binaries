@@ -65,21 +65,21 @@ jobs:
         shell: bash
         
       - name: Update Version for Twingate_Client
-        #if: env.twingate_versions_same != 'true'
+        if: env.twingate_versions_same != 'true'
         run: |
           # Update twingate_version.txt with the latest version
           echo $TWINGATE_VERSION > $GITHUB_WORKSPACE/main/twingate/twingate_version.txt
           echo "Updated version.txt with the latest version $TWINGATE_VERSION"
 
       - name: Update Version for Twingate_Connector
-        #if: env.twingate_connector_versions_same != 'true'
+        if: env.twingate_connector_versions_same != 'true'
         run: |
           # Update twingate_connector_version.txt with the latest version
           echo $TWINGATE_CONNECTOR_VERSION > $GITHUB_WORKSPACE/main/twingate/twingate_connector_version.txt
           echo "Updated version.txt with the latest version $TWINGATE_CONNECTOR_VERSION"
 
       - name: Install CoreUtils
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends autoconf automake autopoint binutils bison build-essential ca-certificates flex file jq patch patchelf pkg-config python3-pip qemu-user-static wget 
@@ -87,14 +87,14 @@ jobs:
           pip3 install staticx
           
       - name: Setup Env
-        #if: env.versions_same != 'true'
+        if: env.versions_same != 'true'
         run: |
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/twingate"
 
   #aarch64_arm64
       - name: Extract Twingate-Client for aarch64_arm64 (Docker)
-        #if: env.twingate_versions_same != 'true'
+        if: env.twingate_versions_same != 'true'
         run: |
           docker run --privileged --name aarch64_arm64 \
             arm64v8/ubuntu:latest \
@@ -116,7 +116,7 @@ jobs:
         continue-on-error: true  
 
       - name: Extract Twingate-Connector for aarch64_arm64 (Docker)
-        #if: twingate_connector_versions_same != 'true'
+        if: twingate_connector_versions_same != 'true'
         run: |
           docker run --privileged --name aarch64_arm64 \
             arm64v8/ubuntu:latest \
@@ -139,7 +139,7 @@ jobs:
 
   #amd_x86_64
       - name: Extract Twingate-Client for amd_x86_64 (Native)
-        #if: env.twingate_versions_same != 'true'
+        if: env.twingate_versions_same != 'true'
         run: |
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/client/linux/install.sh" && sudo bash install.sh
            cp "/usr/bin/twingate" "$GITHUB_WORKSPACE/main/twingate/twingate_client_amd_x86_64_dynamic_Linux"
@@ -150,7 +150,7 @@ jobs:
         continue-on-error: true 
 
       - name: Extract Twingate-Connector for amd_x86_64 (Native)
-        #if: twingate_connector_versions_same != 'true'
+        if: twingate_connector_versions_same != 'true'
         run: |
            cd $(mktemp -d) && curl -qfsSLO "https://binaries.twingate.com/connector/setup.sh" && sudo bash setup.sh
            cp "/usr/bin/twingate-connector" "$GITHUB_WORKSPACE/main/twingate/twingate_connector_amd_x86_64_dynamic_Linux"
@@ -162,7 +162,7 @@ jobs:
 
   #arm32_v7 (Connector-Only)
       - name: Extract Twingate-Connector for arm32v7 (Docker)
-        #if: twingate_connector_versions_same != 'true'
+        if: twingate_connector_versions_same != 'true'
         run: |
           docker run --privileged --name arm32v7 \
             arm32v7/ubuntu:latest \
@@ -274,7 +274,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        #if: twingate_connector_versions_same != 'true'
+        if: twingate_connector_versions_same != 'true'
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: "Twingate-Connector ${{ env.TWINGATE_CONNECTOR_VERSION }}"
