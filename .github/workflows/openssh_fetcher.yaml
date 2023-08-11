@@ -172,7 +172,7 @@ jobs:
            echo -e "" >> ./openssh/README.md           
            /bin/bash -c 'PS4="$ "; set -x; ./openssh/sshd_amd_x86_64_Linux -h' &>> ./openssh/README.md 
            echo -e "" >> ./openssh/README.md
-           /bin/bash -c 'PS4="$ "; set -x; ./openssh/sftp_server_amd_x86_64_Linux -h' &>> ./openssh/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./openssh/sftp_server_amd_x86_64_Linux -help' &>> ./openssh/README.md 
            echo -e "" >> ./openssh/README.md
            echo -e "" >> ./openssh/README.md 
            echo '```' >> ./openssh/README.md 
