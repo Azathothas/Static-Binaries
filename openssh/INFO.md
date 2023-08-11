@@ -68,6 +68,9 @@ $env:PROCESSOR_ARCHITECTURE
 ---
 - #### Install openssh
 ```bash
+!# If have conda, then install via conda
+ conda install -c conda-forge openssh
+
 
 --> Linux 
 !# Copy downloaded openssh binaries to /usr/bin || /usr/local/bin
