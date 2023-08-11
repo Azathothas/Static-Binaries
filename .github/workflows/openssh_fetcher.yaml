@@ -4,7 +4,7 @@ name: Fetch OpenSSH Binaries
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 21 * * *"
+    - cron: "15 22 * * *"
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
