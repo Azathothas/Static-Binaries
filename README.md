@@ -8,6 +8,7 @@
 > - [![Build Massdns Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/massdns_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/massdns_builder.yaml)
 > - [![Build Masscan Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/masscan_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/masscan_builder.yaml)
 > - [![Fetch ngrok Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/ngrok_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/ngrok_fetcher.yaml)
+> - [![Fetch OpenSSH Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/openssh_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/openssh_fetcher.yaml)
 > - [![Build || Fetch Tailscale Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/tailscale_builder.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/tailscale_builder.yaml)
 > - [![Fetch Toybox Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/toybox_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/toybox_fetcher.yaml)
 > - [![Fetch Twingate Binaries](https://github.com/Azathothas/Static-Binaries/actions/workflows/twingate_fetcher.yaml/badge.svg)](https://github.com/Azathothas/Static-Binaries/actions/workflows/twingate_fetcher.yaml)
