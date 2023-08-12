@@ -68,6 +68,9 @@ $env:PROCESSOR_ARCHITECTURE
 ---
 - #### Install openssh
 ```bash
+!# If have conda, then install via conda
+ conda install -c conda-forge openssh
+
 
 --> Linux 
 !# Copy downloaded openssh binaries to /usr/bin || /usr/local/bin
@@ -183,8 +186,8 @@ Get-Process -Name sshd
 ./openssh/sshd_config_armv7_eabihf_Linux:    ASCII text
 
 --> SHA256SUM
-a20f087b995a62048f6c910ccd8474ae47c63067554f0dcebecce216044fdeba  ./openssh/INFO.md
-3f62d41316fd7f742f9d3f2a68112187435205ece11365e7ea756d13ab134425  ./openssh/README.md
+b199e119075255d47303b9040322ce41a8ad362ca2da8f5da7376bce11cca8f3  ./openssh/INFO.md
+f025f0eb9aa21666f995d5d7ef8c5f3e0988fffa795265baa48f54ac05a45949  ./openssh/README.md
 1c151437e0de8868872616e1c448acf81d774c280eacb4ad963e4a51d5095c09  ./openssh/openssh_aarch64_arm64_Windows.msi
 fff11e929f50ab25bf1b38d9fb6116d11e44496fe39498d1b2bd0267f9ea9c2f  ./openssh/openssh_aarch64_arm64_Windows.zip
 b6bdb7afd888ce1de6bab9edc5d624d00e7fb41a767c92bc91fc4771e84f870d  ./openssh/openssh_aarch_arm_Windows.zip
@@ -195,9 +198,9 @@ fb7a69d41bb049c15b6ce1747d2894da46db88a2b4ab1c777418e88d5568a083  ./openssh/open
 f59a3f9946f355a79fe43b031a2721417a3ef559a246358ea2a9671ab04b07af  ./openssh/sftp_server_aarch64_arm64_Linux
 28218d668c0bb45642f34ebc3a1ca8d9f297f2075c8d767a191eddb6db5413e9  ./openssh/sftp_server_amd_x86_64_Linux
 5ab82532f651404bbdab17b8209634c08bda01d9c1392d21d6670021a08fdd9b  ./openssh/sftp_server_armv7_eabihf_Linux
-f07defd28294bed6e178236a61fea0eb3ce1bd3a8c59b2b19f03e2c30f1e9246  ./openssh/sshd_aarch64_arm64_Linux
-79e90637067ad93806629be8525a2d03c17be8f97aed920ab4c48a01497bbe97  ./openssh/sshd_amd_x86_64_Linux
-627429bfa8d4aafcf7252653e690215e567f6f143c08d3e6d8f1086293bcde28  ./openssh/sshd_armv7_eabihf_Linux
+c507fd6432a9004c672b8437a912e9f8ae59632b3aa362119a2b64f398bfca21  ./openssh/sshd_aarch64_arm64_Linux
+3d25a0b6022736f4ec000919253189771eebec8d5c6c6e84e3da5f5a13a6913f  ./openssh/sshd_amd_x86_64_Linux
+7c41a163ae870df440bceca32978b880f1ab16f0d4d4d55e726fe422542af641  ./openssh/sshd_armv7_eabihf_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_aarch64_arm64_Linux
 f6c2fbaffc1fc3f4f426171d38091206ae1bcc2f8a2dff03cefa5f3519e55a72  ./openssh/sshd_config_amd_x86_64_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_armv7_eabihf_Linux
@@ -209,8 +212,8 @@ b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd
 - #### Sizes
 
 ```console
-7.1K  ./openssh/INFO.md
-13K   ./openssh/README.md
+9.5K  ./openssh/INFO.md
+15K   ./openssh/README.md
 5.1M  ./openssh/openssh_aarch64_arm64_Windows.msi
 3.9M  ./openssh/openssh_aarch64_arm64_Windows.zip
 3.7M  ./openssh/openssh_aarch_arm_Windows.zip
