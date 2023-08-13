@@ -460,6 +460,11 @@ jobs:
            echo -e "" >> ./croc/README.md 
         working-directory: main
         continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
         
       - name: Get DateTime
         if: env.versions_same != 'true'
