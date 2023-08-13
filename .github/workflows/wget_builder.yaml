@@ -863,6 +863,11 @@ jobs:
         working-directory: main
         continue-on-error: true
 
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+
       #https://github.com/stefanzweifel/git-auto-commit-action  
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
