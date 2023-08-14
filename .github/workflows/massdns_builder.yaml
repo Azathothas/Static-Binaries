@@ -130,6 +130,11 @@ jobs:
            echo -e "" >> ./massdns/README.md
         working-directory: main
         continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
         
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
