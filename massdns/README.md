@@ -75,17 +75,17 @@ export MASSDNS_ARCH="$YOUR_CPU_ARCH_FROM_LIST_ABOVE"
 ---
 ```console
 $ file ./massdns/massdns_linux_arm64_aarch64_gcc ./massdns/massdns_linux_arm64_aarch64_musl ./massdns/massdns_linux_s390x_gcc ./massdns/massdns_linux_x86_64_gcc
-./massdns/massdns_linux_arm64_aarch64_gcc:  ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, BuildID[sha1]=2894f20d848b3146ed452b9233f67aa0fc240c73, for GNU/Linux 5.4.0, stripped
+./massdns/massdns_linux_arm64_aarch64_gcc:  ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, BuildID[sha1]=51f4b88bddd72391f5d6f5dee475950afb110742, for GNU/Linux 5.4.0, stripped
 ./massdns/massdns_linux_arm64_aarch64_musl: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
-./massdns/massdns_linux_s390x_gcc:          ELF 64-bit MSB executable, IBM S/390, version 1 (SYSV), statically linked, BuildID[sha1]=abb8dd6e8d87ca4810dc6c957c92d58e41a3b633, for GNU/Linux 5.4.0, stripped
-./massdns/massdns_linux_x86_64_gcc:         ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=c015694e26e428703cf1f80c270272a3d93b008a, for GNU/Linux 3.2.0, stripped
+./massdns/massdns_linux_s390x_gcc:          ELF 64-bit MSB executable, IBM S/390, version 1 (SYSV), statically linked, BuildID[sha1]=22e89cc7840a9038133d5f6a4d2428ba27fb3f81, for GNU/Linux 5.4.0, stripped
+./massdns/massdns_linux_x86_64_gcc:         ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=61d34c0fd892625188e2872e6f65e3471717f65f, for GNU/Linux 3.2.0, stripped
 
 --> SHA256SUM
 $ sha256sum ./massdns/massdns_linux_arm64_aarch64_gcc ./massdns/massdns_linux_arm64_aarch64_musl ./massdns/massdns_linux_s390x_gcc ./massdns/massdns_linux_x86_64_gcc
-faaefe5d8bdb0fa1bb06ddf46b6a4292f8ef9823a78df7da1d20bf6b3af9d70d  ./massdns/massdns_linux_arm64_aarch64_gcc
-2c9278c848e293b80331aa79a915b37a3913ed3d35173c181f7d7876ee6a0c87  ./massdns/massdns_linux_arm64_aarch64_musl
-e9a8d0d25dfb5ce50bc7033d73f2572b3551ac27349b781bf66bfb41708b27d5  ./massdns/massdns_linux_s390x_gcc
-f4c96cea8bf49e367decce1732e81a1c95bf9044eb894f2857ac5605506e75da  ./massdns/massdns_linux_x86_64_gcc
+e12a1154f7f448def085d402f4453e306f238c7fb442883e8b49f3fed5c54aae  ./massdns/massdns_linux_arm64_aarch64_gcc
+67a05eaba66c942b375222f72a3ce5315c79c3ada42d605aaa4b202ad2859472  ./massdns/massdns_linux_arm64_aarch64_musl
+7fb115957fca6b8604c6e35d5e031b8474f77e27633f0433d577d83e8277ef68  ./massdns/massdns_linux_s390x_gcc
+987a6ca67234f5aa6ab2abdc1d24d1b712a8b5cc85796587b021f1d8e7f506ab  ./massdns/massdns_linux_x86_64_gcc
 ```
 
 
