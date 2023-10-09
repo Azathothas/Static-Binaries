@@ -121,7 +121,7 @@ jobs:
           echo "This is done by Ubuntu-Builder"
         continue-on-error: true
         
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
@@ -646,7 +646,7 @@ jobs:
           echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
 
    #Commit & Push     
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
