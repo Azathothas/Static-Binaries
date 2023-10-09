@@ -32,6 +32,7 @@
 ```
 ---
 - #### Similar Repos
+> - [Azathothas/Toolpacks](https://github.com/Azathothas/Toolpacks) **`x86_64` `Static-Compiled`**
 > - [borestad/static-binaries](https://github.com/borestad/static-binaries) **`x86_64` `upx`**
 > - [mosajjal/binary-tools](https://github.com/mosajjal/binary-tools) **`aarch64 (ARM)` `x64`**
 > - [ryanwoodsmall/static-binaries](https://github.com/ryanwoodsmall/static-binaries) **`aarch64 (ARM)` `armhf` `i686` `or1k` `riscv64` `x86_64`**
