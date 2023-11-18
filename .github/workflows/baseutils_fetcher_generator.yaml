@@ -66,19 +66,52 @@ jobs:
          #Download
           set -x ; set +e
          #-------------------------#
-          #----------#         
+          #----------#
+          ##bash
+          eget "robxu9/bash-static" --asset "aarch64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/bash"
+          eget "robxu9/bash-static" --asset "x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/bash"
+          #----------#
+          ##bore
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/bore/bore_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/bore"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/bore/bore_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/bore"
+          ##busybox
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/busybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/busybox"
+          #----------#
           ##coreutils
           eget "Azathothas/static-toolbox" --tag "coreutils" --asset "coreutils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "coreutils" --asset "coreutils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-          #----------#          
+          #----------#
+          ##croc
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/croc"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/croc"
+          #----------#
+          ##Curl
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/curl"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd64_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/curl"
+          #----------#
           ##FindUtils
           eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-          #----------#          
+          #----------#
+          ##git
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git"          
+          eget "Azathothas/static-toolbox" --tag "git" --asset "gitk_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gitk"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_cvsserver_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-cvsserver"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_receive_pack_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-receive-pack"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_shell_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-shell"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_upload_archive_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-upload-archive"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_upload_pack_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-upload-pack"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "scalar_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/scalar"
+          #----------#
+          ##gost##
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/gost/gost_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/gost"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/gost/gost_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gost"
+          #----------#
           ##gzip
           eget "Azathothas/static-toolbox" --tag "gzip" --asset "gzip_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "gzip" --asset "gzip_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-          #----------#          
+          #----------#
           ##kmod
           eget "Azathothas/static-toolbox" --tag "kmod" --asset "kmod_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "kmod" --asset "kmod_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
@@ -101,6 +134,10 @@ jobs:
           #which
           eget "Azathothas/static-toolbox" --tag "misc" --asset "which_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/which"
           eget "Azathothas/static-toolbox" --tag "misc" --asset "which_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/which"
+          #----------#
+          ##ngrok##
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/ngrok/ngrok_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ngrok"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/ngrok/ngrok_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ngrok"
           #----------#
           ##OpenSSH##
           #x86_64
@@ -144,9 +181,27 @@ jobs:
           eget "Azathothas/static-toolbox" --tag "procps" --asset "procps_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "procps" --asset "procps_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
           #----------#
+          ##slirp4netns
+          eget "rootless-containers/slirp4netns" --asset "aarch64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/slirp4netns"
+          eget "rootless-containers/slirp4netns" --asset "x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/slirp4netns"
+          #----------#
+          ##TailScale
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/tailscale"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/tailscaled"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/tailscale"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/tailscaled"
+          #----------#
+          ##toybox
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_arm64_aarch64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/toybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/toybox"
+          #----------#
           ##util-linux
           eget "Azathothas/static-toolbox" --tag "linux" --asset "util_linux_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "linux" --asset "util_linux_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##wget
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/wget_busybox_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/wget-busybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/wget_busybox_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/wget-busybox"
           #----------#
           ##xz-utils
           eget "Azathothas/static-toolbox" --tag "xz" --asset "xz_utils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
