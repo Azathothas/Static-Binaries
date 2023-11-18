@@ -40,6 +40,16 @@ jobs:
           sudo chmod +xwr "/usr/local/bin/eget"
         continue-on-error: true
 
+      - name: Install 7z
+        run: |
+          set -x ; set +e
+          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/7z" --to "/usr/local/bin/7z"
+          sudo chmod +xwr "/usr/local/bin/7z"
+          sudo cp "/usr/local/bin/7z" "/usr/bin/7z"
+          sudo chmod +xwr "/usr/bin/7z"
+          7z -h
+        continue-on-error: true
+
       - name: Setup Env
         run: |
           # Create Output Dir
@@ -49,7 +59,7 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
           #x86_64
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-
+          
      #Fetch
       - name: Fetch baseutils
         run: |
@@ -219,6 +229,59 @@ jobs:
           commit_message: "✅ Fetch BaseUtils 📦 <-- at ${{ env.NEPALI_TIME }} ⌚"
           #push_options: '--force'
 
+      - name: Archive Binaries (.tar | .7z)
+        run: |
+          #Presets
+          set +e ; set -x
+          #--------------#
+          mkdir -p /tmp/releases
+          cd /tmp 
+          # Compress to tar (size ~ orignal_size, maybe slight increase)
+          ##aarch64_arm64
+          #tar
+          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.tar" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.7z" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          ##armv7_eabihf
+          #tar
+          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.tar" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.7z" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          ##x86_64
+          #tar
+          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.tar" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.7z" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+        continue-on-error: true
+
+      - name: Create Body for Release
+        run: |
+          set +e
+          cd "/tmp/releases"
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '---' >> /tmp/RELEASE_NOTE.md
+          echo '```console' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo "Details: 'https://github.com/Azathothas/Static-Binaries/tree/main/baseutils'" >> /tmp/RELEASE_NOTE.md    
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo -e "--> METADATA" >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ "; file ./* | grep -v '.txt' '&>> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo -e "--> SHA256SUM" >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ ";sha256sum ./* | grep -v '.txt' ' &>> /tmp/RELEASE_NOTE.md  
+          echo -e '```\n' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '---' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md         
+          echo '- #### Sizes' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '```console' >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ "; ls -lh ./* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '```' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+        continue-on-error: true
+
       - name: Get Safe_DateTime
         run: |
           # Date Time
@@ -238,8 +301,7 @@ jobs:
           draft: false
           generate_release_notes: false
           token: "${{ secrets.GITHUB_TOKEN }}"
-          body: |
-            `BaseUtils`: _https://github.com/Azathothas/Static-Binaries/tree/main/baseutils_
+          body_path: "/tmp/RELEASE_NOTE.md"
           files: |
-            ${{github.workspace}}/main/baseutils/aarch64_arm64/*
-            ${{github.workspace}}/main/baseutils/x86_64/*
+            /tmp/releases/*
+        continue-on-error: true
