@@ -239,19 +239,28 @@ jobs:
           # Compress to tar (size ~ orignal_size, maybe slight increase)
           ##aarch64_arm64
           #tar
-          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.tar" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          tar -cvf "/tmp/releases/baseutils_aarch64_arm64.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.tar" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_aarch64_arm64.tar" -lahr
           #.7z
           7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.7z" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_aarch64_arm64.7z" -lahr
           ##armv7_eabihf
           #tar
-          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.tar" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          tar -cvf "/tmp/releases/baseutils_armv7_eabihf.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.tar" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_armv7_eabihf.tar" -lahr
           #.7z
           7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.7z" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_armv7_eabihf.7z" -lahr
           ##x86_64
           #tar
-          7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.tar" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          tar -cvf "/tmp/releases/baseutils_x86_64.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.tar" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_x86_64.tar" -lahr
           #.7z
           7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.7z" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_x86_64.7z" -lahr
         continue-on-error: true
 
       - name: Create Body for Release
@@ -303,5 +312,10 @@ jobs:
           token: "${{ secrets.GITHUB_TOKEN }}"
           body_path: "/tmp/RELEASE_NOTE.md"
           files: |
-            /tmp/releases/*
+            /tmp/releases/baseutils_aarch64_arm64.tar
+            /tmp/releases/baseutils_aarch64_arm64.7z
+            /tmp/releases/baseutils_armv7_eabihf.tar
+            /tmp/releases/baseutils_armv7_eabihf.7z
+            /tmp/releases/baseutils_x86_64.tar
+            /tmp/releases/baseutils_x86_64.7z
         continue-on-error: true
