@@ -153,9 +153,9 @@ $ sha256sum ./aria2/aria2c_aarch64_arm64_Android ./aria2/aria2c_aarch64_arm64_Wi
 cb2bd8beafb566ef55d217837edff00e3f660aa6050927b5f9b68651ff4ba51a  ./aria2/aria2c_aarch64_arm64_Android
 8aeaf6bcf7f4e897acbfc5dde154e1894403aa89722bddc45468d4e6a734d50f  ./aria2/aria2c_aarch64_arm64_Windows.exe
 58e68bf7fb255e0d775f056fc8595acaea5985e89b0735609b4b7b0b5a340d49  ./aria2/aria2c_aarch64_arm64_libressl_musl_Linux
-3bc37956fb8118065a25f9597ba89224322266c80f66626f9646efd524d6f517  ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux
+7109ba4d1d1927268a43204435c4501b3cc5dde404e8ff3b603799b38118eb7c  ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux
 fbc44931d8e8545e34f3cb2a1cc9586dbc60c1dd7189e398c643f318f1ee706d  ./aria2/aria2c_aarch64_arm64_musl_Linux
-f5efeb89f07b8cb2b8c5d89ac87a5cf564cb25e6771e2d31c1849e7509c792d4  ./aria2/aria2c_aarch64_arm64_musl_latest_Linux
+61b14317be10afb5d1ee332ab5f74e7623384de3c0e0f4cdcbc436aebcec6883  ./aria2/aria2c_aarch64_arm64_musl_latest_Linux
 793502af1321f715dff1b19fe6a3c686d71be83c52fa017868d30b31eb8f02b7  ./aria2/aria2c_aarch_arm_Android
 4d1b9e7ea2da74b0fc24953a19650b5f27c21808de6cb9a4b3b2eb453e5bb703  ./aria2/aria2c_amd_x86_64_libressl_musl_Linux
 4dba76c80d5a05ab6fe0e752138394df203f4ce3cd89f6aaa6ec6d2608b01fa3  ./aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux
@@ -198,7 +198,7 @@ a10f9dce07065edd25b832d653b0e0949e4a498d738bc5903013dea981b50054  ./aria2/aria2c
 8.1M  aria2c_aarch64_arm64_libressl_musl_Linux
 8.1M  aria2c_aarch64_arm64_libressl_musl_latest_Linux
 11M   aria2c_aarch64_arm64_musl_Linux
-12M   aria2c_aarch64_arm64_musl_latest_Linux
+11M   aria2c_aarch64_arm64_musl_latest_Linux
 7.5M  aria2c_aarch_arm_Android
 8.3M  aria2c_amd_x86_64_libressl_musl_Linux
 8.3M  aria2c_amd_x86_64_libressl_musl_latest_Linux
@@ -250,11 +250,11 @@ GNU General Public License for more details.
 ** Configuration **
 Enabled Features: Async DNS, BitTorrent, Firefox3 Cookie, GZip, HTTPS, Message Digest, Metalink, XML-RPC, SFTP
 Hash Algorithms: sha-1, sha-224, sha-256, sha-384, sha-512, md5, adler32
-Libraries: zlib/1.3.0.zlib-ng libxml2/2.12.0 sqlite3/3.44.0 OpenSSL/2.0.0 c-ares/1.22.0 libssh2/1.11.0
+Libraries: zlib/1.3.0.zlib-ng libxml2/2.12.0 sqlite3/3.44.0 OpenSSL/2.0.0 c-ares/1.22.1 libssh2/1.11.0
 Compiler: gcc 11.2.1 20211120
   built by  x86_64-pc-linux-gnu
   targeting aarch64-unknown-linux-musl
-  on        Nov 18 2023 01:11:24
+  on        Nov 21 2023 04:31:23
 System: Linux 6.2.0-1016-azure #16~22.04.1-Ubuntu SMP Tue Oct 10 17:11:51 UTC 2023 aarch64
 
 Report bugs to https://github.com/aria2/aria2/issues
