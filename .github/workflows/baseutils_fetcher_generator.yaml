@@ -4,7 +4,7 @@ name: Fetch BaseUtils Binaries
 on:
   workflow_dispatch:
   schedule:
-    - cron: "* * */7 * *"  #Every 7 Days
+    - cron: "0 0 */7 * *"  #Every 7 Days
   # https://crontab.guru
   # https://savvytime.com/converter/utc-to-nepal-kathmandu
 
