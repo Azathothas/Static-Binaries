@@ -23710,3 +23710,2011 @@ c98e01eff7a65f6d2d8020f2ab6b1c16f4bba1f3b853f45b8b9f66dc263cda32  ./baseutils/x8
 
 ---
 
+
+---
+```console
+
+--> METATDATA
+
+[+] aarch64_arm64:
+
+./baseutils/aarch64_arm64/[:               ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/addpart:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ae59cc57878aa76537573284c1427a64411c0c94, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/agetty:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=278ba3a90d440620525b5d2c0ad945b22fccefd0, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/awk:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/b2sum:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/base32:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/base64:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/basename:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/basenc:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/bash:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped
+./baseutils/aarch64_arm64/blkdiscard:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c39c7d32042eb89710558692bd0f9cdd8548613e, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/blkid:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e54c654f3db74d55159609ac455e65574d3cef44, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/blkpr:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f1df66bf6d0cb7a5807487cc6751255367380dcb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/blkzone:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fb786db8f22cf147010bc6b8c4170f97cf25c6aa, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/blockdev:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=94bf2294536af2ee877a99a14e33d1e97ae77f5b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/bore:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/busybox:         ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
+./baseutils/aarch64_arm64/cal:             ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7ee8a1f99740b6e0568070f1778208d85fa077c8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/cat:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/cfdisk:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fe6d460b512ce591159575931d02616541198828, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/chcon:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/chcpu:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9adc77b8c02de97fcda632cc225b666e7f3d0d24, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/chgrp:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/chmem:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c2f2396ab60b780c8c8fd348d7535cb16b4987c5, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/chmod:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/choom:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6cda562d3b4a524c2213339487607cee5ac50585, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/chown:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/chroot:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/chrt:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=29d51c550b105e7eefa4bad25912fdc17ce76b63, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/cksum:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/col:             ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d6163ee9be5efb5b4ca8559c74717a8b42b87c26, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/colcrt:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=cb5cbf116396dd5c11e53b81a5c0ab5e6c9062de, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/colrm:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a92f67715b47a5b0b22c2f127a677ce97855c4ad, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/column:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d3373f195c12614cbb001c6d16bae07fb857921c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/comm:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/cp:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/croc:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=VLgqFwpCQ3RJE-ZMEsgF/RBWMLdmFBAiFdDOk6fac/yAA5pKShcUhXSHdUXWTS/z-9wArQG1js_wzDIYxo0, stripped
+./baseutils/aarch64_arm64/csplit:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ctrlaltdel:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=212cc88925721ff88aef8a4a9ca662d95fa3fd88, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/curl:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/cut:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/date:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/dcgen:           Perl script text executable
+./baseutils/aarch64_arm64/dd:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/delpart:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1678e1b6b7d4fc9c0cf5babe9536fd90294ea8f1, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/depmod:          empty
+./baseutils/aarch64_arm64/df:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/dir:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/dircolors:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/dirname:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/dmesg:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=34979ea2795cdd609ae69d268ca1434af481e76e, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/du:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/echo:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/eject:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b4c52a7cca6b7e0c7bfb1b766605ab0b89bccdeb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/enosys:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=18488711abb6a92f006b64444eb19a3f60b3f83c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/env:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/expand:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/expr:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/factor:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/fadvise:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9263bed1432b3fca446e6986deca84236a57c79a, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fallocate:       ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=87ceefc4635021045da249a53ad858cddcc75f7c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/false:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/fdisk:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c7401e9bd6fbbc9af6656abefec1b5a103af8815, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fincore:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dba247b4eb529ce7126399054fcfab253bac185c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/find:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/findfs:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5a6b366ddf60f7456b0fb7b9fbeb1fe4c0d2d17d, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/findmnt:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=634b866e60b6d9d6133a9922e5ee77135daf7b52, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/flock:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0db25bada5b26a54c234ca4386318d3e002a97cb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fmt:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/fold:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/frcode:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/free:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3f8a076fe04db6436e46e6d63763bc192a848852, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fsck:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7b7f4b05bd346ea2cb960130bf3ee6c3207ec0e2, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fsck.cramfs:     ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=8958ed2daa07863e12f2f19c34566463446ee290, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fsck.minix:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dc4a18b7490a3972426e83154748b69d2f45b5b8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fsfreeze:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dccd595969ae26e1b34df8cad0a4d0a0b583ca7d, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/fstrim:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1636bf765316fbb6ce844bc7a434a50256ea3abe, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/gawk:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/getlimits:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/getopt:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=da4b3e311e0fbb0d5ec89ebbe35e3bbc41a097cb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ginstall:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/gost:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=OVmBQl7Gp37Wjg7ZI_qx/g0eYkNTCnwuM5xLli1Kk/Eg-FeyzgT1hpmZFPausQ/FigF6hru-9SsYb6NVoAG, stripped
+./baseutils/aarch64_arm64/grep:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2f8f5d688a48b530e2108d2925f7628fba2b6ac4, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/groups:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/gunzip:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/gzexe:           Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/gzip:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/hardlink:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=55a59732c6158a0eea686780b2348a64aa30f8bf, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/head:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/hexdump:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=20e1a8acb530cd7e44c6b2ff92f8351664f30670, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/hostid:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/hwclock:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=05950a6eef7ff8c35a2f98a62ed83eb94ad20db6, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/id:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/insmod:          empty
+./baseutils/aarch64_arm64/ionice:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=261d9ac180c68c34d9bf5d90861d313b801235a3, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ipcmk:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=844a9ffb21dbabcc729cde847f1f1d12dc4d6ba6, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ipcrm:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=87e9660ce728975d59805f336833c943061edb98, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ipcs:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4c6c21963540110666c06fad5eed83d21204a299, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/irqtop:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2aab7153a93d712e8414e82617dcdc2cd3f3ddcf, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/isosize:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=164cc0c23b592901f4d807e81ec21d9520b17c80, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/join:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/kill:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=88deafef97aa94ad2a40800aaf7df243cc558d7b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/kmod:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/last:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5934cc7a812b1c84ff435b403aba834de539da01, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lastb:           empty
+./baseutils/aarch64_arm64/ldattach:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b0268769f17c6738daf8d58e1b053a0ce8ee9eca, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/link:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/linux32:         empty
+./baseutils/aarch64_arm64/linux64:         empty
+./baseutils/aarch64_arm64/ln:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/locate:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/logger:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=96053023d3b6e74667fa19920c0410ee06eb1d07, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/logname:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/look:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e072b3e02d67927ea20458d02ba330b719c45606, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/losetup:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f4fbf190e61a462824ae1f7135525e2fe67ddbff, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ls:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/lsblk:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=683ccde4add6846b39f65c4071eaf4cdb9851e7b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsclocks:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=599d0c75a57e193ab3e53cf951c032b2a1bb6562, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lscpu:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=76105eeb11f3fcf078933832386a64c9258616f1, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsfd:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=85f42341fce4f43ba8e403cf90a62ed208ed0693, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsipc:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d41f68f8325520303bc6707dc965a963c004d274, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsirq:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=927abb8593da23c652455fd4a82f49993c761e35, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lslocks:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c5a1e90f74c7c61712bf9b0eea0952d4c1f86afb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lslogins:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0c2d30ab42828582b61ae9c9afda08373160270b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsmem:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b03f00aed28f0d0724d8152e93f3a8b643c97e8b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lsmod:           empty
+./baseutils/aarch64_arm64/lsns:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1f01270f5a4b455405d9816a7a0bccfcdf798080, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/lzcat:           empty
+./baseutils/aarch64_arm64/lzcmp:           empty
+./baseutils/aarch64_arm64/lzdiff:          empty
+./baseutils/aarch64_arm64/lzegrep:         empty
+./baseutils/aarch64_arm64/lzfgrep:         empty
+./baseutils/aarch64_arm64/lzgrep:          empty
+./baseutils/aarch64_arm64/lzless:          empty
+./baseutils/aarch64_arm64/lzma:            empty
+./baseutils/aarch64_arm64/lzmadec:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/lzmainfo:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/lzmore:          empty
+./baseutils/aarch64_arm64/make-prime-list: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/mcookie:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e665c912f64bad8b39b91f3052980e4867e03c47, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/md5sum:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/mesg:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2df315aa9a91d985d1696a484c7d4e130a697991, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mkdir:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/mkfifo:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/mkfs:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f2799148fa06742e0a450bc4a90ed232e5b5aa56, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mkfs.bfs:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=32b51beae7a7c57194e76bcee1ce84cbf57756b0, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mkfs.cramfs:     ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7e654346c5505d7138e676d2b1ecbaba7aca6a6b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mkfs.minix:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=75b0bb316540721c7a764f45155e8971f34d67bf, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mknod:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/mkswap:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=545daf92ed100ae4c60762e75c14d2e1a0a2e8d3, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mktemp:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/modinfo:         empty
+./baseutils/aarch64_arm64/modprobe:        empty
+./baseutils/aarch64_arm64/more:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3b806239ef68e8c6086de287600224bdcaf4543b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mount:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f4cef858ad3f96b9ea81ed65d169843a96887ec8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mountpoint:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=673cb54f4b5cedcabb02ec341ace34b1617c7247, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/mv:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/namei:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bde1f5595a94d51d9c91a6cbdfb92ea9ad0301d8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ngrok:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=1DkA2p63xVPREOrCSoRc/vOtXVf-1FYGgVzhRuXdA/9dAsXP958g20Kms1j4_k/atnIFIMKsrV7--b74PA7, stripped
+./baseutils/aarch64_arm64/nice:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/nl:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/nohup:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/nologin:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c8b579bec488d82d9202f2b8ebdab84ed5dede6c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/nproc:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/nsenter:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=71da446efad44d1a6b2e78e665a248f5b7e43b7d, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/numfmt:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/od:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/partx:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=56465e47c44674c95c1e8cb3b785207bb1e81058, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/paste:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/pathchk:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/pgrep:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0757ae438782e66a87e7beefc534fa5b9f62547f, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pidof:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=81f20974f37f5174663702a2ced064393353070f, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pidwait:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0757ae438782e66a87e7beefc534fa5b9f62547f, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pinky:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/pipesz:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=052f43e65ea2c722943ec46b1f1ef1470f842a58, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pivot_root:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f2a530950caaf16978a7800233e7df921a62aaf0, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pkill:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0757ae438782e66a87e7beefc534fa5b9f62547f, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pmap:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5106de20edc61178cdf0c2b31b11ba0acbc096b3, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/pr:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/printenv:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/printf:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/prlimit:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=53a5f70b0b9d39c84a1fbadc7e69071744665cf1, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ps:              ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f398d6296b826cb1a7ba344ddfdbb6e9922d2d45, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ptx:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/pwd:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/pwdx:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3bb20c99469001204763a9dc391ff1f3cc2eba2a, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/readlink:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/readprofile:     ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=17091c0b09e41e182f8b765f85d590a2a346fbb7, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/realpath:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/rename:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1aba9f14c17df52b78bd79ebbc748d53a05350c9, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/renice:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=371ee00725f496f6ffdefd5b269d10059d5ad8ae, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/resizepart:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7d47ef5393c1f520e92f51a746dd7d80ef10c2f8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/rev:             ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=40135ce19529ab82870eb8f403eb5f6788ea3bf9, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/rfkill:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=68426b49862068f194ad0ed1fb521a0e78779c67, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/rm:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/rmdir:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/rmmod:           empty
+./baseutils/aarch64_arm64/rtcwake:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=eb84171bfdb3f87c3499c47fd6a8ae877ad8ba68, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/runcon:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/scp:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/script:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=06430e49e060a30a46ea178189cc32ed1530c80e, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/scriptlive:      ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7a108681dea05c5538cf89dfbf89aab46bd24989, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/scriptreplay:    ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=73095b692d3642873c4c1e97910fa57fb98520bb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sed:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/seq:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/setarch:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=aa46710c92dccccc12a239f5fcbf555aa92edb22, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/setpgid:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c58707515a51ae1d22cc5924103d7475c6e4356e, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/setpriv:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3c1c292f7c7c66484eb7cb2a7f4f451cb20f3f92, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/setsid:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dbd17224dfcf0b90acbc9c3919c22e15d6e6b509, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/setterm:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6debaaed12ce69d695c5029e607a2b59f167bacc, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sfdisk:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ba76e055e284cd29f4fd137ae2847e7b15ecf437, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sftp:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sftp-server:     ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sha1sum:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sha224sum:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sha256sum:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sha384sum:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sha512sum:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/shred:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/shuf:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/slabtop:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f5965a79577e6695860707597b945812368de165, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sleep:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/slirp4netns:     ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dae9ed8be8482fe56b092fd0083665030ad8caab, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sort:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/split:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh-add:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh-agent:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh-keygen:      ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh-keyscan:     ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/ssh-keysign:     ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sshd:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sshd_config:     ASCII text
+./baseutils/aarch64_arm64/stat:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/stdbuf:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/stty:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sulogin:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=34ed4c41c17163b83688cfa91b141ceddac568e4, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sum:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/swaplabel:       ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=748d0fa265d5258d73222f19b68b3a613a68774c, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/swapoff:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1899b466eecb18dee11658dc602927ae619f3e68, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/swapon:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fbe32f978eb21a7a3ccb2c4c6e7cbfc225f74472, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/switch_root:     ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=90e39dfa1dfb09f5c0596e5e3017118bcfd03385, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/sync:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/sysctl:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=999eafecb828699b62cb85379e1368b0ac9fb179, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/tac:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tail:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tailscale:       ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=Urn5LVoDnAObKCbE3tfJ/W2lZBJx48wC8Du9G1can/9VMX6F3UPJypjwyAZGX4/sz8yUXcwb3K1JaCAy-PW, with debug_info, not stripped
+./baseutils/aarch64_arm64/tailscaled:      ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=NckaT_3ZqPA0SPL8Yx0S/EPn9Ds6P7Fz2ZsjYTi0R/lO-kLIr_ysH1dAJG3Ju9/ROYbKErEiZmh50BOBaVJ, with debug_info, not stripped
+./baseutils/aarch64_arm64/tar:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/taskset:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1512cb142f1e2122204d076fb8b7b54bc94321fb, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/tee:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/test:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/timeout:         ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tload:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=08665c9d1ef55e6d44a1ad7417db0b4c815cadac, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/top:             ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1ba6ff1d705377ace659e566ed87fd3a2ba51c7b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/touch:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/toybox:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tr:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/true:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/truncate:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tsort:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/tty:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/uclampset:       ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bfc9d573000eb7876c7540898961973d4ace02e2, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/ul:              ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f7df27d2647e3eba775618d92f318b7651f3dee5, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/umount:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b035c997144746156963b10aa0dc2c2b394075dd, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/uname:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/uname26:         empty
+./baseutils/aarch64_arm64/uncompress:      empty
+./baseutils/aarch64_arm64/unexpand:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/uniq:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/unlink:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/unlzma:          empty
+./baseutils/aarch64_arm64/unshare:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=8d4955ff120edc1c4f2d207ccdfd89c5c4207564, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/unxz:            empty
+./baseutils/aarch64_arm64/updatedb:        POSIX shell script, ASCII text executable
+./baseutils/aarch64_arm64/uptime:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b72ee523595d85ae22f5e1a09737147657e378ba, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/users:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/utmpdump:        ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ed4e8c3b4a36bfdb8bab24492c0ef24e3045eb3b, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/uuidd:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6119241d4df8bc3595fae66faf77d78bd1ad3a4e, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/uuidgen:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=38faa72d5893fc4d07c3f53ed829fd7ad37c8444, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/uuidparse:       ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d9d3925e37ca0190e3b50634947582e371e92528, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/vdir:            ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/vmstat:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=20f661234918d44f5b5c3ee4364602bb7822c063, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/waitpid:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=acca47cb36b99d82c80ee6857df951956d1059a8, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/wall:            ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7ee21fc3865841312231e8848da11aac375a1cf7, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/watch:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4d2fae38083061002d184b45ebc2385f0cc4374d, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/wc:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/wdctl:           ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=191f2a28263bb21f319daf64fd8b93595dd7fd84, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/wget-busybox:    ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), static-pie linked, stripped
+./baseutils/aarch64_arm64/whereis:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=69a47da9af1fe4ebd42a505d4ad7237c3ee4cd5a, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/which:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/who:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/whoami:          ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/wipefs:          ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9d1111a3b825bcc1f6cd355ba0d093f511d4f279, for GNU/Linux 3.7.0, stripped
+./baseutils/aarch64_arm64/xargs:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/xz:              ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/xzcat:           empty
+./baseutils/aarch64_arm64/xzcmp:           empty
+./baseutils/aarch64_arm64/xzdec:           ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/xzdiff:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/xzegrep:         empty
+./baseutils/aarch64_arm64/xzfgrep:         empty
+./baseutils/aarch64_arm64/xzgrep:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/xzless:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/xzmore:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/yes:             ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./baseutils/aarch64_arm64/zcat:            Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zcmp:            Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zdiff:           Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zegrep:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zfgrep:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zforce:          Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zgrep:           Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zless:           Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zmore:           Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/znew:            Bourne-Again shell script, ASCII text executable
+./baseutils/aarch64_arm64/zramctl:         ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7b6af5cf3d4db68244a71cab3ce86a1f40a49b20, for GNU/Linux 3.7.0, stripped
+
+[+] armv7_eabihf:
+
+./baseutils/armv7_eabihf/scp:         ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/sftp:        ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/sftp-server: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh:         ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh-add:     ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh-agent:   ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh-keygen:  ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh-keyscan: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/ssh-keysign: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/sshd:        ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+./baseutils/armv7_eabihf/sshd_config: ASCII text
+
+[+] x86_64:
+
+./baseutils/x86_64/[:                  ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/addpart:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=dd56705c8c8666c01ff700c27e8c242709437ffd, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/agetty:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=805d1236cdb2902d697fc91d9ee0f14cf189abe0, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/awk:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/b2sum:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/base32:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/base64:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/basename:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/basenc:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/bash:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/blkdiscard:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f0aae2e0b92f60c4f35d50c22982c578af64d47f, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/blkid:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d2270dfa8923838bf334d0c0c81c512f02416292, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/blkpr:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5085413558cc2ec3bf8bccaff62c90d7f5d8f9de, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/blkzone:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c5d65aaa8793f1f8c5510075b1a6b71d5240e693, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/blockdev:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=eeb91cd9879a9636fb3d9527838a35518eb5909b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/bore:               ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
+./baseutils/x86_64/busybox:            ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
+./baseutils/x86_64/cal:                ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0851d1ef6edae94af519612fb814433029eb11ae, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/cat:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/cfdisk:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=64ae31eea17b1b42b24de937d852620949992ebf, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/chcon:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/chcpu:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=faa3ba33e91b629316a6b0671af5d1d7240ab9f2, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/chgrp:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/chmem:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=14fa4cc7b7ab7b91af25045b42246b0ca5f2e58f, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/chmod:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/choom:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fabb8619ddb7a32b565d2c4e1bc8f5741cceecc1, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/chown:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/chroot:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/chrt:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5b7d425f59ffa3d96e093fa38f2433fadff5f91d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/cksum:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/col:                ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a7b13822c314a49601601af209fc459ffa085865, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/colcrt:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a2579cd133165ee3d1b3e01c2786c28489c5883c, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/colrm:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=91e2576deca713fec447af7fb07303ac1535fc8d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/column:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d808a541e5e4c805a2dff6a13ac093fd5e644d86, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/comm:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/cp:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/croc:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=KJUX_XoG3GVLIxoXYtti/15qaIEq5gNk8-D7oG-ol/Pdg7S09yeL0ayrIBnprc/5-tqEfOoLtuMm6gQ83Qk, stripped
+./baseutils/x86_64/csplit:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ctrlaltdel:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d4a5877a203b571fa47cb1b108588db1ea3646a9, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/curl:               ASCII text, with no line terminators
+./baseutils/x86_64/cut:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/date:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/dcgen:              Perl script text executable
+./baseutils/x86_64/dd:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/delpart:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f326b5ccc0277e62c54f359c45e17cf9aa290f5e, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/depmod:             empty
+./baseutils/x86_64/df:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/dir:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/dircolors:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/dirname:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/dmesg:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=cb5298f9862f5d2df8b2b0dc3ac1cbb7d1909b20, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/du:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/echo:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/eject:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=22bec9d44b74adae5b15f9d6338f0901c0399067, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/enosys:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6e1808f7a18028c7b299005e0421318634e03e89, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/env:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/expand:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/expr:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/factor:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/fadvise:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c8be428d2f25a1a0954e01aa32fd4ba869887ad2, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fallocate:          ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2ea661b6ec015ab1f584d3d50cbe61a32699e5d1, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/false:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/fdisk:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a1c8cee32d3143f1689ccd695c30f1edc488355c, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fincore:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=05cc093e1758bafd9c7d24fdb9e6a595f2b4f6b6, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/find:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/findfs:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=03e9e8461f79a8753b468ee84701cc5d040bcd34, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/findmnt:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=43c7520790347e83e52fe80094415bbe9847be71, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/flock:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=449615822e7c69693d07425bf0acba9ab48c84b0, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fmt:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/fold:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/frcode:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/free:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a34fd8f54778cdfc5f8e927aa81c0e756ff7c4d7, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fsck:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3f75fb1e966ae9e7ac8882ececc39a568ccc8069, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fsck.cramfs:        ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=15c812ae79ba5c84b44fcfe35c13565e325b07b0, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fsck.minix:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=588a8f08ac9f56a8aa464cc342510834d086b8a6, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fsfreeze:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=770d1ac19a78c5fd9e02c4b886f4274644248c66, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/fstrim:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=577d551026bdc41863181944ef8d0ea2cbe4cc54, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/gawk:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/getlimits:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/getopt:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e0d30d37d8ac429235e953b3b4d5923fd25efa8b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ginstall:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/git:                ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e446c49d9af668b63325adb32a959439b2d98f4d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/git-cvsserver:      Perl script text executable
+./baseutils/x86_64/git-receive-pack:   ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e446c49d9af668b63325adb32a959439b2d98f4d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/git-shell:          ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=223437d338a8846c607372a88e1d6943bdae7bb9, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/git-upload-archive: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e446c49d9af668b63325adb32a959439b2d98f4d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/git-upload-pack:    ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e446c49d9af668b63325adb32a959439b2d98f4d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/gitk:               POSIX shell script, Unicode text, UTF-8 text executable
+./baseutils/x86_64/gost:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=INBPTVJ-SjJiWaxqKygl/sRufGGywXMD00Ao-TLnz/-vpw8TIHtDMQcEQ3efx7/nnR6q4ictV0EEY4aR_4h, stripped
+./baseutils/x86_64/grep:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=03fc4dcd2baedcebe63255ff40773cd244618203, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/groups:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/gunzip:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/gzexe:              Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/gzip:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/hardlink:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=823e1d87d388f95bb644a1ea8d6978a41c0644ff, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/head:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/hexdump:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d4ada6f9cdab81e018c0ca92ee4dc27bfcb4c9d8, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/hostid:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/hwclock:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=28e23653ed79115c18e4d6f21924803e3db4ae43, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/i386:               empty
+./baseutils/x86_64/id:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/insmod:             empty
+./baseutils/x86_64/ionice:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=f28391896f5b6ea756534b65b827e4eb79bbbc14, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ipcmk:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e3fd8e6eae51012ba687168be64d1d3d2e2c3585, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ipcrm:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5af05ef1796584533fd5695d6c71d55cdcead880, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ipcs:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e2b366c6a66f7dc67f9970e02c19b3692008eeb8, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/irqtop:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bb1c5fb169356dd2b0d3187f982ca3cb317e431f, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/isosize:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4226aaea1565a044179fccdcaba950a02a9b85a2, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/join:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/kill:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=8fe334591ece0bfda28d31af0ba4fa1150d2fa0e, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/kmod:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/last:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e3bf5ec311442725d32f540a477d7f3db00ff017, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lastb:              empty
+./baseutils/x86_64/ldattach:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d2a3dcfc716d02a062e819fc4398064920fb6263, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/link:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/linux32:            empty
+./baseutils/x86_64/linux64:            empty
+./baseutils/x86_64/ln:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/locate:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/logger:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=769c6ba46b27c83a048ede7726f676cf0240dc97, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/logname:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/look:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=eaf4fc1ac4b1a3d37e905dc27d7d0113d2152ef7, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/losetup:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7a762394abb529f87171a700335936a96544fcbd, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ls:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/lsblk:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d229360cff274937948febde8d6ac63f13b3a2f0, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsclocks:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1f84cb2db2adad4a467d6ca2870fc80169431f66, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lscpu:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b055f20c5b8679a984d1f0a2a06e0ad0ea570936, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsfd:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fff53526fb42a4fd5269cd13031a409272d0dfb9, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsipc:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7bda6de57c344c4ae72e193f1f90acc2b90470fb, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsirq:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c52d904c772d8a1d6db435aa6ccd71bb7b082821, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lslocks:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c418cc1ffedd90ef0b3097228951f9fde78d7fba, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lslogins:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a654d45a972ada4f9c6654c30c8921f1ec128c45, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsmem:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6a94a6a561f4af150eb173bd699951ee1e8a39eb, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lsmod:              empty
+./baseutils/x86_64/lsns:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d3a836be94949872571e85ff9afb9ee8a4a0ae3b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/lzcat:              empty
+./baseutils/x86_64/lzcmp:              empty
+./baseutils/x86_64/lzdiff:             empty
+./baseutils/x86_64/lzegrep:            empty
+./baseutils/x86_64/lzfgrep:            empty
+./baseutils/x86_64/lzgrep:             empty
+./baseutils/x86_64/lzless:             empty
+./baseutils/x86_64/lzma:               empty
+./baseutils/x86_64/lzmadec:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/lzmainfo:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/lzmore:             empty
+./baseutils/x86_64/make-prime-list:    ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/mcookie:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=975e1a54d53369e0c2a5082874adb9ba7bb86751, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/md5sum:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/mesg:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a305b9ca744f07f9aa4dedc9085f879dfa4c59c5, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mkdir:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/mkfifo:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/mkfs:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=12fea8171927603fd5dcbbf126f32639dc9870cf, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mkfs.bfs:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bcff209086cfbf545622b60a8c1733e7996783eb, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mkfs.cramfs:        ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=8edb45de7c71e6364af4de41b06e76e195750004, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mkfs.minix:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=22a0163afdcb92de71002814d2ed3707b42807c7, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mknod:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/mkswap:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0143402a97e3d1794e90a0b4b5649783ae717870, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mktemp:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/modinfo:            empty
+./baseutils/x86_64/modprobe:           empty
+./baseutils/x86_64/more:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=5175509d082e9da8028f00a2a650ec6e190b53cf, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mount:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ddf4210fcb9abc1194823710036c09f9d679e24a, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mountpoint:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ce0f3e805dd5756515dc929a0769d8094b6feb9c, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/mv:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/namei:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c4e2358cb11d93ba750fba16c76d5fc9af49d816, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ngrok:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=RNgfoMwSrc66J0aHdNW4/FuLR3CxZacjuMoq9mHzj/P4wmfV6OHbSOlUuoCbW0/fDPZKsUorttuatbXP4DS, stripped
+./baseutils/x86_64/nice:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/nl:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/nohup:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/nologin:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=25c8fc54eedb59db9c98b72480e8006af9da8f06, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/nproc:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/nsenter:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1a76e790f66ea43aeb24d8aca95ee77485fab110, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/numfmt:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/od:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/partx:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=44a73b9047d599455b25c6a114ac383f64fb49cc, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/paste:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/pathchk:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/pgrep:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a78f3f150588bc50ffc03bff19b32c4a1f17f99d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pidof:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=41dff5a6edb8a7dc6ac79b227c4d3d3b59fe206e, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pidwait:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a78f3f150588bc50ffc03bff19b32c4a1f17f99d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pinky:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/pipesz:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c936fecd6d193640825d91dde0508252ee4cae38, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pivot_root:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=207f2d952d8dc7f334f23ce8d838ca86416c3a8c, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pkill:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a78f3f150588bc50ffc03bff19b32c4a1f17f99d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pmap:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=7a29761b0944d4b112c4db43ae7b79dd0707987c, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/pr:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/printenv:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/printf:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/prlimit:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=eebce8077b163b86ba42a22bb041de95a67dce01, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ps:                 ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9acba5c42f9e1e235577c10a32c090a4a1c4ed45, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ptx:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/pwd:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/pwdx:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4daf2c819ec90e1101fe834265d2f66040a5c9d4, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/readlink:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/readprofile:        ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=fcec7e06ece125caa889d3d325b2a0f77beef850, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/realpath:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/rename:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=74692f70726bccbc29810bce4d80069077066390, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/renice:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=0194c29023f11e5f0b63243b4dcf77eefd1ceae1, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/resizepart:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=d73c6a933a05aeda8edd324477417137b64e9f6d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/rev:                ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2d270b377a8e924afac8e466b8766ed6b58c5040, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/rfkill:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1a4c9daeff58b6b42774c6fb4598f85c877f95b5, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/rm:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/rmdir:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/rmmod:              empty
+./baseutils/x86_64/rtcwake:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b44128d09a0c1c013f8708540a207f3e6da9c0bd, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/runcon:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/scalar:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=2b63257e7a97cb7c551d6464ceaa6209877f763b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/scp:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/script:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=9b8a149531a4ff0074bd95c830a1d7fbf91b0cf9, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/scriptlive:         ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=913a2b99f9bcb75531e0a8675094ec4fb948579d, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/scriptreplay:       ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=61d7aa984000eb97b0baed81528ae80ee87390ad, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sed:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/seq:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/setarch:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c0e95983db176f49b84ee285f57eda9a86fe638f, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/setpgid:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a7af4dc251e7dbf9f0fa83848be76ad407782ee5, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/setsid:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1dcd56bdedb02b637ef08a2252938c4f8cd103a5, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/setterm:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a39ab187c857969cc2b2856356d027d185734e05, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sfdisk:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e5e704b326d4b88a9733b65582ca37133b4bed95, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sftp:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sftp-server:        ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sha1sum:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sha224sum:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sha256sum:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sha384sum:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sha512sum:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/shred:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/shuf:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/slabtop:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=af852d971fa284cbb6d746d400aaba496ad9bc7b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sleep:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/slirp4netns:        ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=16c8705c362a64ddd0a9a57caaffc82b1e6ac45b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sort:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/split:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh-add:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh-agent:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh-keygen:         ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh-keyscan:        ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/ssh-keysign:        ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sshd:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sshd_config:        ASCII text
+./baseutils/x86_64/stat:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/stdbuf:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/stty:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sulogin:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=95f70ae105b3ccc3e3253b2bdbd5c2a6d1dbfab7, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sum:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/swaplabel:          ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=99744a954be1b58b6c6c4bbdd3f0f19189eefcce, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/swapoff:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4591fa91344593d38d602ab4f7019f02fc63d31a, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/swapon:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=e3adf4a7066d5dfc1f203741f82c191e01bbff39, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/switch_root:        ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=55ee89f644282b33afb71149fb8f937893d654a5, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/sync:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/sysctl:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c6c4f3a2d6928d132fba9a87dce2aaf955b858b8, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/tac:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tail:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tailscale:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=ski7sRzaeH_dkXLOnZ1U/3ugwv5GK5lLqSBH2yMx5/uhNqRpzRq-zk6Xcu7xiv/chXH9kRX3McfOIktTmii, stripped
+./baseutils/x86_64/tailscaled:         ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=FU1n4Xfj_IkXQhEiPROZ/MTFz6TTKhTKpm3RKlSmD/z-s658kqL9SdokU9mv8t/iMgN0O97sX1oFKPXJpA_, stripped
+./baseutils/x86_64/tar:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/taskset:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1bb2023f67cfd4a02bbe4ee4b2a73174c4fb5bf2, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/tee:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/test:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/timeout:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tload:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=229bf9f867061b199fe85f688723aa7c54e27fce, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/top:                ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=edf4c798900f5d0b307595666b435c7f34d48d7e, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/touch:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/toybox:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tr:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/true:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/truncate:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tsort:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/tty:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/uclampset:          ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=b01c18b07461f21de67c22e54e4e9d2905304f73, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/ul:                 ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=293cc9708f777f98f3179fc7a3cb6f215a997eec, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/umount:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6465298ba6d4378e1bf0fcfe689fd641394a2c2b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/uname:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/uname26:            empty
+./baseutils/x86_64/uncompress:         empty
+./baseutils/x86_64/unexpand:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/uniq:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/unlink:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/unlzma:             empty
+./baseutils/x86_64/unshare:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3e37133eb9ce463b4f49ea21feeef44e5962feab, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/unxz:               empty
+./baseutils/x86_64/updatedb:           POSIX shell script, ASCII text executable
+./baseutils/x86_64/uptime:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=62bb0fd59cfcae0dac5dd56e3e14e49053c522a9, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/users:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/utmpdump:           ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=de8f6bdcb1819b4ebd4d31c600bce8f1cee17e5b, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/uuidd:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=1e8f6d86ae0475963a54fb55a92005d0c0c11b0e, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/uuidgen:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=350cba8953f944b760b80d7ff2ca8f3138845e86, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/uuidparse:          ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=21dcd2cdee140b878acc6accbcac741534be932a, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/vdir:               ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/vmstat:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=15f84e45d606dbc77ce500b0360ef26103a274f8, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/waitpid:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=bd30f6286e6c8825d8c4f683eda5d7ebfbf55147, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/wall:               ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=a6e5e13d45e327e48ac1f00e91c2cf4491a49857, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/watch:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=ffe3ec5d84c6748fd6c29feded099bff2ca7a05a, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/wc:                 ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/wdctl:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=af3ad9c725bd84c4d4c9be9a9b14bc3cb0a95b01, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/wget-busybox:       ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
+./baseutils/x86_64/whereis:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=c5bc262b950fe1168c89eee2f9a963d3a6c8f0cc, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/which:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/who:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/whoami:             ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/wipefs:             ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=4395160f7b6fd1b63511acfa2b23c4a6794518c4, for GNU/Linux 3.2.0, stripped
+./baseutils/x86_64/x86_64:             empty
+./baseutils/x86_64/xargs:              ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/xz:                 ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, stripped
+./baseutils/x86_64/xzcat:              empty
+./baseutils/x86_64/xzcmp:              empty
+./baseutils/x86_64/xzdec:              ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, stripped
+./baseutils/x86_64/xzdiff:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/xzegrep:            empty
+./baseutils/x86_64/xzfgrep:            empty
+./baseutils/x86_64/xzgrep:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/xzless:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/xzmore:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/yes:                ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+./baseutils/x86_64/zcat:               Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zcmp:               Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zdiff:              Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zegrep:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zfgrep:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zforce:             Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zgrep:              Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zless:              Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zmore:              Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/znew:               Bourne-Again shell script, ASCII text executable
+./baseutils/x86_64/zramctl:            ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=6baeb1ec8b7bc7918ab9e2daea2f913ceb4f5a68, for GNU/Linux 3.2.0, stripped
+
+--> SHA256SUM
+
+[+] aarch64_arm64:
+
+e2830b1b315e05e2aaf037986b732ec687a4ee0fdbef68f6a661bb90554bdbae  ./baseutils/aarch64_arm64/[
+a3f67d426d4778adffbe6867471b3d4c19060259a0c7efb48b0ed670f626f897  ./baseutils/aarch64_arm64/addpart
+82dcaef18d2a108580072040c8ab745949e1dc153c00d14a7dbf17e52b406bac  ./baseutils/aarch64_arm64/agetty
+c42438cd4c2503b147ed1820b2ff2dad5b437e6b485c1733103454ef626b53ee  ./baseutils/aarch64_arm64/awk
+6696ff0ee1f9d838e97032c7456e8317096feb69698a9324e57411c6d4ac9abb  ./baseutils/aarch64_arm64/b2sum
+33a3122be8c1e8df1579b52defe5d632ef7c757e7f9d3727ddb6149b2ddb833e  ./baseutils/aarch64_arm64/base32
+b26b5084159ab087f77c88eb0bbaceeeb26a398e2912badb172c6d3aa3fba874  ./baseutils/aarch64_arm64/base64
+fc00f2b59d1b2d9c2615e893a3fc63120e4ec47274002f3ebcd99fbb728e6217  ./baseutils/aarch64_arm64/basename
+ffcf6f20405ec01a8eef4fd45c3dc3244152c7c40970368ff924f7729808a9f4  ./baseutils/aarch64_arm64/basenc
+8877ad33344af461ed801066322fd9a7808cd73e4e81087da228e32e8fad54ca  ./baseutils/aarch64_arm64/bash
+bc998a101622e22f87e434ed4270de4d8672b309fccdf23f59f75020fce9fb87  ./baseutils/aarch64_arm64/blkdiscard
+f0c08e2315020df22aefc6aea11997f4b26c356c2346285d37144d2b5f0cf546  ./baseutils/aarch64_arm64/blkid
+f2768940b3ea755b616ee4f6745064ff971f59aff7ab5afc14ea83fe4dc3128f  ./baseutils/aarch64_arm64/blkpr
+e5c1eb56ddcac105bacd2e9a92a708126382e30d1c9d5482783ba5cd3cbf778a  ./baseutils/aarch64_arm64/blkzone
+2af7e8ae61cb09da549e55e01cc5c7596d8339213df68eadd364518fdc0fc98a  ./baseutils/aarch64_arm64/blockdev
+5032f9302457e2f421779ef8c8f4cd1cf0b0a48a1c48ca54c37d4bfc53eb9689  ./baseutils/aarch64_arm64/bore
+89e8e12b6933d966fab05b3935223f085b4de055e35f775aacc4b795e0445865  ./baseutils/aarch64_arm64/busybox
+bda1718d38fb18d90c6770b44f08208e639e1ece8f17bce8f2b4183a8e28b775  ./baseutils/aarch64_arm64/cal
+fa8a7d03904caabf539c1a3368474433f00953793a659c86663c07de987297f6  ./baseutils/aarch64_arm64/cat
+03306147ea500dde9fe87edaeb7a6fce64e99ade9ac2a29526b4de033f83aa8a  ./baseutils/aarch64_arm64/cfdisk
+25581a1049158c6da87c282ab1b9e6bc2482d9a6b32001bcd1e8399cb0db9608  ./baseutils/aarch64_arm64/chcon
+e8a4a044bb4963ed2b17950ef83ec464e5ce48ed04cc184f1ad48a803cd2d458  ./baseutils/aarch64_arm64/chcpu
+ae85f722b6c76ada674b01045477b79b8d6a6fe3f6e474dbcb76e465c33fca99  ./baseutils/aarch64_arm64/chgrp
+245c319af2cce26956d2f2327a82d7ffa250eae86b6dea0327bfebc88d6d1088  ./baseutils/aarch64_arm64/chmem
+b9e56f1cd5242a970d2f81f3c94cf6e07f0d95e3c9cba1dfb3d30c964dc96020  ./baseutils/aarch64_arm64/chmod
+4df21318727573d480e2886800fa93e816dd2f3d4548fd068a5632c98937b794  ./baseutils/aarch64_arm64/choom
+733667143df7d3548569c06c82e4d392cfe3f78447bc2e6a1e622023bc62b94f  ./baseutils/aarch64_arm64/chown
+aad7c53af2832d47d91da9c9340f8e9449d311561b7886d7e1fcd3980f52aa68  ./baseutils/aarch64_arm64/chroot
+89aa1960b84912a3bcb389210434e68b5062ce1eead8619a1a65c54cefbd3484  ./baseutils/aarch64_arm64/chrt
+698193eeae42d0e916854d7e005f98b34ee1eb3a576e0e15a96b114597e9eab0  ./baseutils/aarch64_arm64/cksum
+0449f215bd3b7210ce9d18117b16c681a75f819bd4a6ff4aab6b839b2431520a  ./baseutils/aarch64_arm64/col
+c0088b62e78d84bf013dac86452e268b5df47f9943768a2ac1c97bad38ac9aa2  ./baseutils/aarch64_arm64/colcrt
+2dd451ed7119e760c54bad36c40a3a86c94b6a3c7b6465473a0e007823f968f1  ./baseutils/aarch64_arm64/colrm
+93e5a69084b89db20c5d46c5fd2a68cd4f3e44d207d1c5126127517030f1e1ee  ./baseutils/aarch64_arm64/column
+734ba42d04d7a87d9e4bf949b656b4cd3fbdd952edb6aa9d7ff01978c7014831  ./baseutils/aarch64_arm64/comm
+773cc65d794857c52721cbcc0b1e404882f333109639ba2e8e001a4c4e31a96d  ./baseutils/aarch64_arm64/cp
+c110c384712a51f397f2a67880f2d1722b03f8b56eacdcff8ab72b96a9c86334  ./baseutils/aarch64_arm64/croc
+1703f452a22c6103c7027bda82527ce479d0b6685fc2de401bf44512cbde3890  ./baseutils/aarch64_arm64/csplit
+56cfc9ac5bfb044117b78ab548e71a7c13700acf082ca6224b6fafb6d83244d8  ./baseutils/aarch64_arm64/ctrlaltdel
+94f800ccde6c2f755ebe1b89c222c25501c4a2ce80f1a94bbe7db6a56dbb80c6  ./baseutils/aarch64_arm64/curl
+168417429cb035a8827873088f06704ba00eeea2a01be6bc4473d68ae182db06  ./baseutils/aarch64_arm64/cut
+f54897db8a2bf3a3c994eeb9e2a9ed59d946de9769c9b2735978cd4396739958  ./baseutils/aarch64_arm64/date
+fc3d63cefc465e3c91466776684280f67f8c6e994cbc459445d2e630a02b4540  ./baseutils/aarch64_arm64/dcgen
+355d01219fbf4889462207db867d66618637cdf3f42daa2fb6841f8bbc1f9a6f  ./baseutils/aarch64_arm64/dd
+2b5f59ae1a1075a21aed7d2fc5032e9bfd3827f0b70cc2823e5b0a9af6508f78  ./baseutils/aarch64_arm64/delpart
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/depmod
+a53664061bcf385059b8aec786d736f8c57a23a7feffe0bb3756410eef4f5525  ./baseutils/aarch64_arm64/df
+73e13ab7b96d19e30edf9161c09b86e35dd4401d51eada710f53911770222510  ./baseutils/aarch64_arm64/dir
+7b82596d0f1ee0419f24fc69c7527ef32d6e45369b269d37e2e6e64561c669f4  ./baseutils/aarch64_arm64/dircolors
+c0bd2c4794d0fdc3831a1707f497ebb1a22962b020674b6d3cb0b8a5608cfa0f  ./baseutils/aarch64_arm64/dirname
+ad8b5cfd42bdf3288bdf4981740c2cf3dc05181643763be275bd255d7d32fe80  ./baseutils/aarch64_arm64/dmesg
+d05614aca7b5b3dba3520693c4163b67bc0dd797aa194c56b410a38685ec9216  ./baseutils/aarch64_arm64/du
+93d019ec452c6f149502973793baf9981d3b5b5522cfbfd88baf86b9c1d530a6  ./baseutils/aarch64_arm64/echo
+f8f67c4cb3d68f0bb67dde2065e238eb878bf1f72823d5d3bd1e70d7d5173505  ./baseutils/aarch64_arm64/eject
+3ce367eb65af3e5aa6044d7b06c7429d02476e6f003cc2bd6e14157e78b467cd  ./baseutils/aarch64_arm64/enosys
+09ade5a587cd9a008cc602c3bfa4ed423a353dd7b959f94b6b217dd830f44325  ./baseutils/aarch64_arm64/env
+e2ff3225fb1d67afc707e90da80a284ef4f6a9816978c585f3539df3d27cbb8d  ./baseutils/aarch64_arm64/expand
+1cb0b4d450eb8e7c04dd1b7b366761c5d5d739b0baf2ec0caf6e0a4af8b8adc7  ./baseutils/aarch64_arm64/expr
+5c9b324c57afb29c627961edc76194d78dbd6413924a0a575266fd964da2d8d2  ./baseutils/aarch64_arm64/factor
+20dc3bd7835b19d78a495bd3e494f917d6e4730109e70df5dee561f2197208ea  ./baseutils/aarch64_arm64/fadvise
+fc6c79f6bd243645d395731d33e97be26274d43d8cf16291da094057d061619b  ./baseutils/aarch64_arm64/fallocate
+b26b1348ffedcfceddf75aff94f32586f4506b78ddb0eb2b231fa21862a82381  ./baseutils/aarch64_arm64/false
+5d95d658c0f308490008ea0454f3accfebcb113f9caf1f7929a67b364a40ec11  ./baseutils/aarch64_arm64/fdisk
+326c2603df8af4fe09b821c2e82614a14b1e4277fa2fcd35144ded8468598b30  ./baseutils/aarch64_arm64/fincore
+d3914be7bf49ee3acb37f0b3a9d3f39866774e623f531a6c65453c887ee3b6a2  ./baseutils/aarch64_arm64/find
+c9872b8d52b514bb54ac5f709fe263c16dbe23d0744ba05d968d56faaa77507c  ./baseutils/aarch64_arm64/findfs
+e06c6ac89ae02856cc880022058f274f5947a1db8fa3df8d8b31111f0c79e5d1  ./baseutils/aarch64_arm64/findmnt
+273245a6bcb3ef89e01f415c284b76ace9e6f5555a207aa6c1e483cfd3905266  ./baseutils/aarch64_arm64/flock
+6c4559c225bc810f30d67c3ad112098cafa5723c3b71002ba8b7b49f1c83b01c  ./baseutils/aarch64_arm64/fmt
+83561017fb832ed308b0b3c6cc37db317c8747f1b989555fc33aaa29bcb2e692  ./baseutils/aarch64_arm64/fold
+de4d6396a4120ebd658b0410bcdaf0600acd788e3071e0314c4a47bb892aea4f  ./baseutils/aarch64_arm64/frcode
+723f125a62cf8a9858627f8afad9b3cd4f5f7c21dbabbd28ef294099d2b75cb2  ./baseutils/aarch64_arm64/free
+1e8e48c17fa654895934aade522a37a27911f664f18aa47a369c16d4628c374b  ./baseutils/aarch64_arm64/fsck
+6fe642d41190ef0c1d2b56016badd10586053a01bd95f8620a4a6690451400a0  ./baseutils/aarch64_arm64/fsck.cramfs
+4a711b873c79669fd20be36ecec99e7fcd9c9473513b4c515e4e04db91a71bcc  ./baseutils/aarch64_arm64/fsck.minix
+e138bd488462530d2f2bf634e4b4a87fa1daf4c7712add529998f7e39114033f  ./baseutils/aarch64_arm64/fsfreeze
+4114568500d05d76772d75bb777dca5fad266ad1426b58be2659430b7e6dfff0  ./baseutils/aarch64_arm64/fstrim
+c42438cd4c2503b147ed1820b2ff2dad5b437e6b485c1733103454ef626b53ee  ./baseutils/aarch64_arm64/gawk
+fe06697d9c03e6066b0eb5b2163904ef12dc9f04215da26b62b60cec7ef9ee91  ./baseutils/aarch64_arm64/getlimits
+af2a52d1453745d5be91279e9cb98bfb7fcd0319fd2cec6a55ab8848d2836806  ./baseutils/aarch64_arm64/getopt
+c8571bd6ac2cd52e663d1f065e307bcc8549387af8a01764af5d1ec3f59a67a7  ./baseutils/aarch64_arm64/ginstall
+62ba351055dda0aaa685ba20549d334d5a7af84b2809f6e5da7ae2ae443dae42  ./baseutils/aarch64_arm64/gost
+631c39fef43235732f549889bf8547cbe68d72e5fe5f824625bef667bac8cba9  ./baseutils/aarch64_arm64/grep
+3b7d99e7f337e0661e50d5999f422c8471c690a8bfaa6f14c27304a031d37954  ./baseutils/aarch64_arm64/groups
+de8967490f4c367f45bc5f1865f515b5a2f4c4b46c2aebc4eac3b949a649ffad  ./baseutils/aarch64_arm64/gunzip
+2143a1b2c35d8209499d0b583dab7d59aa7125845726b0004b475e9208e5a0f8  ./baseutils/aarch64_arm64/gzexe
+d58087c5b690469ec918b47739791ac170f3b05280e17566de35c62a7537f67c  ./baseutils/aarch64_arm64/gzip
+410e0c8ffd6f03a5bbdef3b0b7585aef6315806918df2b337b21d3de0be26543  ./baseutils/aarch64_arm64/hardlink
+1898dd54c30caf890afb13b8ef0e126a2c29c1eee29be65125bf3a6f6daf5efa  ./baseutils/aarch64_arm64/head
+196ffc5df2f05d1d2f4d7f42f88cdf2ab8aaaee429ee773d53efbd38a87e6e1e  ./baseutils/aarch64_arm64/hexdump
+2014bcf94bb696a5549f5f98653107ab5a8a49b23cdd5d01fbeb1d691f4c0ac2  ./baseutils/aarch64_arm64/hostid
+15bce495e26692994459f4c4653360cab444464d8606d1242ceba22afb9a9a1d  ./baseutils/aarch64_arm64/hwclock
+52faeef3fcdfb4b24703b2e07c7c0b419a2d750517d98da3490c5baa306cecce  ./baseutils/aarch64_arm64/id
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/insmod
+b7a82867ff59f5a8dd536368b034f48480869e4c879eb58fb095b7657d61f0be  ./baseutils/aarch64_arm64/ionice
+e18695937b1f39c68eba8b36f673f7958bef86995f0e917f744d9383d2068f10  ./baseutils/aarch64_arm64/ipcmk
+04962dd1da681c01578ef65b80a112157be59e0da6ddb518a9c4735597bd60a0  ./baseutils/aarch64_arm64/ipcrm
+216d3051cb0e2531943bdb0352d443da3790d6c5f785a59b46380ce9075f9601  ./baseutils/aarch64_arm64/ipcs
+1d994435ce8bcdcf2a47b7427f43c947ff6453c83b22eac8c1daf482f221d1df  ./baseutils/aarch64_arm64/irqtop
+24c563d33b8dfe26875f2234b014c7940885947e253e1bdbea865438c0993eb0  ./baseutils/aarch64_arm64/isosize
+b06457aa61a72904710fa774b0573f3c27acaee4deafa3bd8a4fe8f7575ebd25  ./baseutils/aarch64_arm64/join
+88902b8a10e7c40ced24e8686a4b30c4be9463fdb9784c3597d1fa9f622f1087  ./baseutils/aarch64_arm64/kill
+538c6b8b1266ebcf1f311b8d36edc462e5c7ce901ba1877c9e084116f0fb27f4  ./baseutils/aarch64_arm64/kmod
+fa593b1f819eb21ac8e94d5f94e077036ffac80d6a77b704d1162b2d21f6b422  ./baseutils/aarch64_arm64/last
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lastb
+07ed5a0b7dd1c9f5cdd2a454686ccdfcdf20a7e222779713ab1d0f8a8570b32a  ./baseutils/aarch64_arm64/ldattach
+6c2a34f25ab4f1ae7be7c37a8cbcb2bbf9b314780ff15b599aa26d7f4b96978e  ./baseutils/aarch64_arm64/link
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/linux32
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/linux64
+409b263a605711b339e5822484a7b48eb0a647ca324a1f426d7b4362c0a18ecc  ./baseutils/aarch64_arm64/ln
+a395230123d6975f6b3b1fe8c1c13cd1a64b40ad621ef05deb7f422b98bd0dbb  ./baseutils/aarch64_arm64/locate
+56635422f9a28bbe143e41a531d1e3e7461536464871f90837740738cd3c1d9e  ./baseutils/aarch64_arm64/logger
+bb32be207baf99d8f2de22913a18a18bf700999e7f585a67abe045aab8f832a1  ./baseutils/aarch64_arm64/logname
+504b15adb1d5af8bde2dc74c09a55033edaa7f2372a2e8e3edf57f561a42d734  ./baseutils/aarch64_arm64/look
+a3d04dd2725eb4d0a84bb74b6b30f2b2b4612319536ed063052c9a5748eb7fcf  ./baseutils/aarch64_arm64/losetup
+e3e1d7393504dee73167470de7d5fa7269dd6d7c92f3a53304b14790d2d562ba  ./baseutils/aarch64_arm64/ls
+76a1de35a331307083dc4db3882563f09ef2d819610c6630cbe2589873b79973  ./baseutils/aarch64_arm64/lsblk
+0d05a1d5d7b357132b51bcc9f12e2625d3d85712766fdbf147ec7d5ca8ae0974  ./baseutils/aarch64_arm64/lsclocks
+f5e2432f57600d42f6743af8a65bd1fc1b0bdf65af9fcb763f766b8c6732e8bc  ./baseutils/aarch64_arm64/lscpu
+96c3d5e32f0d94abded7de35dface9f8ce2027f8c8be886ed9080a2cd1b8789c  ./baseutils/aarch64_arm64/lsfd
+30c46b2d8f1d8578f90f4376a29c1fb03587ffb32e2b9ccc545b3a19412f64d5  ./baseutils/aarch64_arm64/lsipc
+6a8eac5d6db27ebb9033e5e0df42126384918c4c6ef1fd199aee0a576b563d61  ./baseutils/aarch64_arm64/lsirq
+98ceaf13edcc9aaf7c22333af5b0aff1dc2e085fd4a90ce16245f59c963d5141  ./baseutils/aarch64_arm64/lslocks
+30c02e3c8a8db79b217246db10a92e731b34832fd1205a2d07ac359765087811  ./baseutils/aarch64_arm64/lslogins
+9efdf926f322418f833a5af4faaf43ff023d49441b3889e9e1a34efee972f3f6  ./baseutils/aarch64_arm64/lsmem
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lsmod
+44d798f0bba7cca6a380d125a6d1d97e0be630ef7bca07f5356f3ea30da40449  ./baseutils/aarch64_arm64/lsns
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzcat
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzcmp
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzdiff
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzegrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzfgrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzgrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzless
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzma
+a823173f6d606f8765653688e1bf66764d36b2251d12275130ad21747c5e7fca  ./baseutils/aarch64_arm64/lzmadec
+d4f677b3c4525ea8609504fce20b4813ab20983a07b3ef16b5e2192df43e3d3c  ./baseutils/aarch64_arm64/lzmainfo
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/lzmore
+0cb039d8e0f53616798bdf8727688199dcdbe934221dcc7a4fe034f808be96df  ./baseutils/aarch64_arm64/make-prime-list
+ba24bb9f7852ea1527bd8d5c54528f0d26254bb83b65744454c34c8ca255273e  ./baseutils/aarch64_arm64/mcookie
+ca2c0e5707fc4e30bb17ad440b0d8702e3543cb1a221c7a2cc29566a4b0440b1  ./baseutils/aarch64_arm64/md5sum
+c666852044eeb19d105946b641dc4952c2d38082b516713737be2b1076cb60c0  ./baseutils/aarch64_arm64/mesg
+e1bcdcbc013fe3fe6a567aeb50b08dd729b07107ccce992a0e3e1def66e08426  ./baseutils/aarch64_arm64/mkdir
+ccdee82b6713d2e0563ff8943b4f16498524e2062c51729cfb78767eb301dbfb  ./baseutils/aarch64_arm64/mkfifo
+2a921566b47a5f95b2bbc8e4585d9da9ff62c71652731a64b7a2de9921a3d98f  ./baseutils/aarch64_arm64/mkfs
+a1ab39c3f0a33fc93ce7e2d0c4f58f2fa46c8cfe767cdbac0e1391a6f933803e  ./baseutils/aarch64_arm64/mkfs.bfs
+5d9b760ce332b37037976097f25f4fd1c9038f4a0b6ceb7e7d9f6cf972406e24  ./baseutils/aarch64_arm64/mkfs.cramfs
+dbc5c0aaff3623b56e6555ec5cf3e39bfb0345826c152df7778a66cc11544adb  ./baseutils/aarch64_arm64/mkfs.minix
+9bc80a6c0a5411ede80d07d48e862d3bf87e845a6172a3f19c89cfd1a6d0076f  ./baseutils/aarch64_arm64/mknod
+a4ece896bbd1c304588f84a431244013247c0817f636d7464bef8f748fdc9f23  ./baseutils/aarch64_arm64/mkswap
+51789f28143138402c4928ae2f9290e754eb5af24b0103f572e858b75525f378  ./baseutils/aarch64_arm64/mktemp
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/modinfo
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/modprobe
+a4eaeeb09c68e87402cc492b37e6ea2b45a2566d7018abba60a7ac0d11ea4b36  ./baseutils/aarch64_arm64/more
+351941a7b6c0fa6cb7a793a3b3d1fcc7d20911b7c652f190d560bb6e0a421cd1  ./baseutils/aarch64_arm64/mount
+2e1c7c486b85b17e6b40684931fb4470058453d5c7749e1a8b0a30921601c1ad  ./baseutils/aarch64_arm64/mountpoint
+c441a20d311eff20acf92f8a05c7eb194cbc1ccfe3452e112a13745d065f9095  ./baseutils/aarch64_arm64/mv
+0fa3c16e4bd264e07af336092f8504def7de208d421843d3ab644e92cf2a7db2  ./baseutils/aarch64_arm64/namei
+203ac71b0af764438ad6b0fc27df71e2e8c10204eec88d670dc78f4b92dc9116  ./baseutils/aarch64_arm64/ngrok
+1adc11e47515d88cbe8992739a4841fdf08d0da2410f0ad217861af013136f32  ./baseutils/aarch64_arm64/nice
+a2d7da63e5c2b465f43434ff16ce289278802b3a54959c250d1ccced6db13375  ./baseutils/aarch64_arm64/nl
+294c75c700e5cf4db3e5ec25fbe49bcc470910b2893e86f7def14cdc8d423bf5  ./baseutils/aarch64_arm64/nohup
+177e378b6b6194b407f1e1a0b100a80073ddd82a74108c21d97aafec8e576683  ./baseutils/aarch64_arm64/nologin
+05f238be07cb81cba5435ccbf88c99a1cf5892392680498039e634ad0bc174dd  ./baseutils/aarch64_arm64/nproc
+68a5305de475ef598b2795e8af9faade70821012048f192c88065ae31b0c1d3a  ./baseutils/aarch64_arm64/nsenter
+4260043dc07d03766dd248b17309c791a87ea1333606a745d376c8b471fb51a2  ./baseutils/aarch64_arm64/numfmt
+a1fb0045f79d9776fc1bb01227e9c022fe62fb20b104c49f496d1b4a07e715ae  ./baseutils/aarch64_arm64/od
+6d3eba73bd8bcdd2d83934fddbb7bed91bfa65e58c6a50809df2af8d48b3fb78  ./baseutils/aarch64_arm64/partx
+6038de0f9e563a434c4f063711488ac0a2715ba7fa7aa9aa63d356034cf3be21  ./baseutils/aarch64_arm64/paste
+33572fcb6958f22e9ae0a831c99a08cb3719ab0ca72145aedaa11e0ee81dae9f  ./baseutils/aarch64_arm64/pathchk
+d443da927eca5fe97a16942b88899795f91fa65f9599da39c6183f5660d647e4  ./baseutils/aarch64_arm64/pgrep
+57e065a6a9a20c2522eb7498151b6b5d2e559c72dec1fd9abbda75daab05ef8b  ./baseutils/aarch64_arm64/pidof
+d443da927eca5fe97a16942b88899795f91fa65f9599da39c6183f5660d647e4  ./baseutils/aarch64_arm64/pidwait
+df249770b36b13d051bd08f071e97441df41bb79e8690850e2e2eb40fd1d791f  ./baseutils/aarch64_arm64/pinky
+88039b82eaceff4c1d52b8ff23e77301c2533abbec789dbb25ed0c04560e17dd  ./baseutils/aarch64_arm64/pipesz
+aeff558954b6fe6a2a95ab47e5e677e549f8235ca6ad0009ac83d62ccefd01b6  ./baseutils/aarch64_arm64/pivot_root
+d443da927eca5fe97a16942b88899795f91fa65f9599da39c6183f5660d647e4  ./baseutils/aarch64_arm64/pkill
+0dcdffc59cfaf02f6bbb52bff380166b8e5e65e5dda8150fbabd3ede3f43d66e  ./baseutils/aarch64_arm64/pmap
+99c46e5ad9ff0ad06b05eaaa6d10f949c165be3aa1b8264531916704ca943734  ./baseutils/aarch64_arm64/pr
+678f9161e899695774f25ad5ed267abcc889b5cd006f4563bafdc5d992ccad69  ./baseutils/aarch64_arm64/printenv
+fc5a9f75ff1f98522cb1c642fbe16097c232d1350aa9cd44f786c6d20434539a  ./baseutils/aarch64_arm64/printf
+7e26026f33c068bec053836829f0bfc0d802885e00326595e3bc7ef41bc97983  ./baseutils/aarch64_arm64/prlimit
+036b1fa55fa0b0e159acfb49373deb8936bedd5f77bf091c3a483ae2be771c1e  ./baseutils/aarch64_arm64/ps
+4f7a611470fc9288155a0f6990cc7eba0740aadb8c537b23660398a6c21ead52  ./baseutils/aarch64_arm64/ptx
+07000ab690b60e33664298efddbe941b7020a60b071af45203c7e72e3112e121  ./baseutils/aarch64_arm64/pwd
+82135fbdd57f56b97e1d085563c7bbd4a816a836d6f702fb7da9eefddd0a0b6e  ./baseutils/aarch64_arm64/pwdx
+bad2b9f4e9e17ceac47e72aedab4f09b5142c935da3373feb0943aa90b7782a3  ./baseutils/aarch64_arm64/readlink
+9dafba14c8d1652a170da9b14c195cfa934737f6da10a1c606fb9498c077fcd0  ./baseutils/aarch64_arm64/readprofile
+18d1c430eadbdc0dfd0c1ddda20d9ddd98d5d30f81cc75a7799873bf806020fd  ./baseutils/aarch64_arm64/realpath
+e60d5f19347c9263885d09b3ff319916a00c9185190f53e5ab5b54244fca0245  ./baseutils/aarch64_arm64/rename
+8fd9d0a42b279ec6478c0638a9ede89cb9abffd3bda4a80fbb44ea09b805f729  ./baseutils/aarch64_arm64/renice
+efb995c6b9d2385f9ac712338852cfee306b471db10d1c933180c6a6e4afe21e  ./baseutils/aarch64_arm64/resizepart
+141e7dfe859ddd18df89e96f1664d095f279115b461c816c6620668669ad6abc  ./baseutils/aarch64_arm64/rev
+ef127652942b6330773e4e54a8a925d8f80327a6fc59bb4bf3f635d0c3d95861  ./baseutils/aarch64_arm64/rfkill
+13253f9fd0012e8b0b000423d6611cb31df7cbc3b7fa2f51840637620cc5b489  ./baseutils/aarch64_arm64/rm
+134fcaa26fec84590bf88fddabb6cf38d902022d7d0c5262638f5ea09bf0bd59  ./baseutils/aarch64_arm64/rmdir
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/rmmod
+4b88295faeef28bd3a4d08753ce88d73ee8ca351db3475516d44a85ab34a6036  ./baseutils/aarch64_arm64/rtcwake
+44e3a1b03a7e3d9657f2a220585ea97f1364684347d80f958573205f0155e6c8  ./baseutils/aarch64_arm64/runcon
+82dae94911a4f686db948a52ec47f0cad1c6810e99aa522ad40c3456699cf8ce  ./baseutils/aarch64_arm64/scp
+56ba7ab104b3c6efe8ddee0e22e77f9aa8b7ac004345effbf4e01312e64c7074  ./baseutils/aarch64_arm64/script
+b2a4529641cf82fe55e6971c7347873bb5b394b8e66a7f0c3274085c7f78645b  ./baseutils/aarch64_arm64/scriptlive
+0233e05fcc174f26ce604da7b4af30455957fb30f0b147fe99367e7b63db8a39  ./baseutils/aarch64_arm64/scriptreplay
+b101ec1c885958df00bc98965b16598637dc8d965d30c6549cf07307581923b9  ./baseutils/aarch64_arm64/sed
+9d25c9edb13db543d12e418a6339a0fdd9e311bdc7b6b8e7649cbced357b651f  ./baseutils/aarch64_arm64/seq
+489808b7e1ca55c5334fe157a976fccdb4193a248fb027f0965ec7bbe1cb5248  ./baseutils/aarch64_arm64/setarch
+abb0567770e8a247a1f3f1e7d66d75c2e97bb555113fe7092050053282c912ec  ./baseutils/aarch64_arm64/setpgid
+5e84260c304c73519aaef91fbb7d6094f40f86b3bb2f35b771a2e10c1db6c25f  ./baseutils/aarch64_arm64/setpriv
+ae3a704bba426393c90a8c36189424df3966c05830ef73547a5882f5672ab4f4  ./baseutils/aarch64_arm64/setsid
+cfbb4ef24cacce3f79b65c57c7d215377e13b414bc176c13a40c259ed62ba4bf  ./baseutils/aarch64_arm64/setterm
+bbd8c54cc8cbd0766710e89736156b5a2b92b19ffaeafc3fcfd7d123a779cfd7  ./baseutils/aarch64_arm64/sfdisk
+3319244114be482a7dbf2ca4666e12e5608c15ba7cdf51cb8dc4c239ff03c4eb  ./baseutils/aarch64_arm64/sftp
+9667b0dcabcb34d53adb13723f792bd96dcc81de0963541be42b9a05d10b35ea  ./baseutils/aarch64_arm64/sftp-server
+e8dd60a3ec44b36dfe97a121087918c5e6ff85c9b6beea484717420faf0a3bfa  ./baseutils/aarch64_arm64/sha1sum
+45190c8800ce5a24605b0ea24ad74566c791b7c41d477db6bd8ad3a1115d25b1  ./baseutils/aarch64_arm64/sha224sum
+db7ff3b6619af9a4e9a00f93235fad2f1f4c59206acdb1c222fde2aeb874544a  ./baseutils/aarch64_arm64/sha256sum
+a10ea9dcd84c84c2a9418b88b3bfb6816136a08df171831d276694b18d3d3aff  ./baseutils/aarch64_arm64/sha384sum
+cd2be655e1dcc935c74449fe01ffe62a7226437b9b20d93a92116572fec36dff  ./baseutils/aarch64_arm64/sha512sum
+8fec10766d33fdfef2337377fa78b400e23ed182ee0062342ec5270c22611da6  ./baseutils/aarch64_arm64/shred
+fdd10daa2b7700639a8ba98262ebf792bcb106450bf3935d3e3d622a0e550d18  ./baseutils/aarch64_arm64/shuf
+3eb1de7cd147c7836e7f5eab557dbd0eb26e11a714ba325ac57abb7130f270f2  ./baseutils/aarch64_arm64/slabtop
+a7e042de32f390f81164e086f5fab46b3a7ecaf3799f8c5fa9204ae134031ea1  ./baseutils/aarch64_arm64/sleep
+f7d4913ff27f017e22a5aa66a233f0d403549539a6fab594cbbad258f965af1a  ./baseutils/aarch64_arm64/slirp4netns
+15278122fae016115b2e8cc2a30663603ca21b860973698240f4e892c1d17f0c  ./baseutils/aarch64_arm64/sort
+29e4a203aa93b29578f299132c88b9c6d083e276a38303476ede6b36d07e6610  ./baseutils/aarch64_arm64/split
+7487b8c611d2e8e0d0eb6b2806197e696ccd9d4fadf2e116cd0c3046a2d02d79  ./baseutils/aarch64_arm64/ssh
+beb5cf03b61d03d757bced067d331c810c15acb4cb0df2d5d6a16cdafe739d55  ./baseutils/aarch64_arm64/ssh-add
+28a75f8954e45333d69e62bd8970dbdf6286fb57259c12036c657163c49f90f0  ./baseutils/aarch64_arm64/ssh-agent
+b2e2ca5f931b17651d42b9def8858048c166ff59612c37152e35b3c7e16750a9  ./baseutils/aarch64_arm64/ssh-keygen
+dde3cad3244da07499298dece5eb7d71a8d8a83a37cfa87bc7e4e92a36e2183b  ./baseutils/aarch64_arm64/ssh-keyscan
+ef4ef09e158a247386354dd9a142b896821cb221d7b56a8db44d24205d5b4626  ./baseutils/aarch64_arm64/ssh-keysign
+da6f85de2ac3d615c008ebdbb8fecbb199e6b09db1b9548dda8cd5ef5b1271ef  ./baseutils/aarch64_arm64/sshd
+b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./baseutils/aarch64_arm64/sshd_config
+d3d0fef7e499aac3004561711e66c8c366b602901b2064da018aa69b0b62bd2a  ./baseutils/aarch64_arm64/stat
+79cb04f954c4d0180a9122b674281a935a66640f839e4aa0c5d1fcdb34c2dbd7  ./baseutils/aarch64_arm64/stdbuf
+b7f2f012fb463d32750dae4c16ade2a85b7d553811bd3ed4a100467a917b4b9d  ./baseutils/aarch64_arm64/stty
+674b4f2c8c220173a5a45001b0b67077579073796eef0f922f88721159f8804e  ./baseutils/aarch64_arm64/sulogin
+65a5587e2744ad09b91b8c7e204ab64a74cef53723724eb285984da4545fcbb6  ./baseutils/aarch64_arm64/sum
+e883860d8f96251cacb58ba788e160a2f28ae9b156c2f84374d16d529d7a578a  ./baseutils/aarch64_arm64/swaplabel
+d511bc82f776cf9fbd7fc74883fa36504c166bee44edb08cb23a642fb14aabe8  ./baseutils/aarch64_arm64/swapoff
+e1e56461e0c9415f5d913a6de92ab9d1b3bc3afd75835ae4783fb400ae58418a  ./baseutils/aarch64_arm64/swapon
+a067b28006c6e5ffdbce83f417576aaaca2b30457608299669ff848cc0b175a5  ./baseutils/aarch64_arm64/switch_root
+29043e27960d6dd8c1f9d579286a95d970ee7e253707cb0d8251817d9bd972f6  ./baseutils/aarch64_arm64/sync
+2423262e7bbd07df76f72d4b734bafff386ae0510a82f8ab2451ee99c84d21a4  ./baseutils/aarch64_arm64/sysctl
+e2d224a6ebb05ac96741b6e693bc22106505baee30f6a6f6e76767c6bf599553  ./baseutils/aarch64_arm64/tac
+6511b0a9cb170c05444579fffd9452b6a6d4a40433e2487f56809e16683bc169  ./baseutils/aarch64_arm64/tail
+2b86df2589416d0c52274d1db4c6818b27fc8a58c03ebd3e4d753d08607a1641  ./baseutils/aarch64_arm64/tailscale
+46b12c9cff7dcc77e5d84a71a71351213ee0c0016c8311880fb3e9f04e25b39b  ./baseutils/aarch64_arm64/tailscaled
+eda856e0128d7d55815647de010a0e150afa883c9cf430e879886a3af0be7eda  ./baseutils/aarch64_arm64/tar
+adc2716ed6dd122a2fa16a15e9082bc2dad55d6fa801ca073b9567086abafa71  ./baseutils/aarch64_arm64/taskset
+321619e2562c516b7bf39bcdfdf0ec159f8788622e10b590ba920913466c8709  ./baseutils/aarch64_arm64/tee
+ed66334bdda9e4c5dbf1671f474b43b3139b5903c5a6fbb6366b83267d9f61b2  ./baseutils/aarch64_arm64/test
+344ec1ae322683d1407d9789761ca2a54c15b4c40f675de5dd88a269fc2739df  ./baseutils/aarch64_arm64/timeout
+6b5ff9d1c0d5ac85d515e78f36c0ef87bc9e86ac95b3739bd5cfe68515bc506d  ./baseutils/aarch64_arm64/tload
+82503d55431d79543c128f31b40c1c19d173f9621c9eb2d9d71aa415959bf421  ./baseutils/aarch64_arm64/top
+146e8a02e558dc442b9b15bcdc96869187ed91be8739c4f5d294f79e57a0c835  ./baseutils/aarch64_arm64/touch
+ef98721241d9949fc4b2472bbef76260c9669e8e5d0d7ac99de50fff26cc1aa9  ./baseutils/aarch64_arm64/toybox
+ec791d9be12b27a49a0a4b2cbffabc641181b4e2b7026f40bb04cd5e200a8b23  ./baseutils/aarch64_arm64/tr
+cc6325bca843dd5fe94e5257ab5d7052d66ca3ebbf57416a4c49dd47d71895d2  ./baseutils/aarch64_arm64/true
+3eb731e5febf4e4d11be378f78ac0f5993255df1b380cbf2d0bf3f3c91a59133  ./baseutils/aarch64_arm64/truncate
+c5b24721557a488ce71391fe31697937fa0ff9cd4ef4e100d1cde939d3c57f6c  ./baseutils/aarch64_arm64/tsort
+a6cff595d5ad1e7de74984d25d8ae5730ebff477139782438dc50359077fdc56  ./baseutils/aarch64_arm64/tty
+dd9b64c05c76ff4fc924214f6c3a3fdbec4d3879d96c4d9cfe67b6882cd3de3c  ./baseutils/aarch64_arm64/uclampset
+79aa68c494da96df82a20d72153257072cc2a9a09ae04d9963b7ace16cf58e31  ./baseutils/aarch64_arm64/ul
+8288c8bd9d3b077b2aae58ce2b532ffc8c170aa20956520bdeda4a735c60eb68  ./baseutils/aarch64_arm64/umount
+69c2028f0f5c58b51ba122ab200f25cc75317944fd0e6d5a29d5d217444ce0bb  ./baseutils/aarch64_arm64/uname
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/uname26
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/uncompress
+219c9444c8daf8a016bae719685588b49c14fc3ff054d59406af024825fdb06a  ./baseutils/aarch64_arm64/unexpand
+12a9da278c9f4ca3dcd75c3a815913acc03b34081dd8487e13bb5222b3e3add7  ./baseutils/aarch64_arm64/uniq
+ac4e7d84c007a0e6ab8482f826c0a61afd615f13236b0320e93beed7dcfd0746  ./baseutils/aarch64_arm64/unlink
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/unlzma
+8a6f3f2e059d6bb3532dc835fcb4ec32be707c921e33e4a1080d84be878bc3f6  ./baseutils/aarch64_arm64/unshare
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/unxz
+adad3f9f21a95e628ee66b4785f93b9992febe51c2309e947d0dfbb8a99ae1d4  ./baseutils/aarch64_arm64/updatedb
+341ddbdc30ef6168171708c9de80baaf252713ed1af7b6e1d21582747f1b4c37  ./baseutils/aarch64_arm64/uptime
+b8304ac43b055295d20f4770caf472efa6025ed11892f496803c337ae60b4ec7  ./baseutils/aarch64_arm64/users
+db142ef4ba6a2f92326fb460aaecc657c0dc72d7eead987414e39bf7349d8510  ./baseutils/aarch64_arm64/utmpdump
+acb60f0f665283ff251ec336686fa7a8c3fc9f6a7e6d8555832e4db09258da8d  ./baseutils/aarch64_arm64/uuidd
+08dc26e0017993cb457b7d88f51004ae985f0dd8f1c985112c1b4b5b496ab016  ./baseutils/aarch64_arm64/uuidgen
+3979e78ab406e6d9b889f4e29a119c8de002cc1e8c579c38663eecf3aed27821  ./baseutils/aarch64_arm64/uuidparse
+2f751974dd08b38b7a055a4d9bb3009fed2d7c30b90e79506b67ed06a89cb7cf  ./baseutils/aarch64_arm64/vdir
+cfa1a46ca1d62c71b68a6e05816340f49397e39a211265778e6f31468813f77b  ./baseutils/aarch64_arm64/vmstat
+3ea973f6c336df388a1c3ad97300754f2c72591dd9730bce86b7db082ec2a968  ./baseutils/aarch64_arm64/waitpid
+1d392499b0d3705766e424507e60df05617e88c2beb33967e1637273557ce647  ./baseutils/aarch64_arm64/wall
+764d1800db70c5c0736d4788a40f34020e380e31e289de6d2332bb5811b5dcc8  ./baseutils/aarch64_arm64/watch
+a9deee6b89b5babe8790bb979ae450d8b4a8d973623e2b7ecdbf81dc8de5421d  ./baseutils/aarch64_arm64/wc
+84aacfd76f2d4ea93f10490b55eebccd6a93db49073319530fff1ee22425e6bf  ./baseutils/aarch64_arm64/wdctl
+2736f5dbaab743d22c718421b9880f6edd3f031d19404dfb2c93af14dc16687f  ./baseutils/aarch64_arm64/wget-busybox
+8f83d7d841a71a0e4d3d75dfd900a577bab7572a404366046de5e25737f944e8  ./baseutils/aarch64_arm64/whereis
+bc10ed4418668c9f7d1c1003c1c8ca3b73981b7803c29de6b60fac20bbc26f77  ./baseutils/aarch64_arm64/which
+3db58758d7caf300947420e9428d8cb5eb9945ffb8a8716e5cbcbe5fa7dda928  ./baseutils/aarch64_arm64/who
+cbc47a5e8af5a70f03922756364cfd4200fc52c84b892b1f0d47e9bcea2d834a  ./baseutils/aarch64_arm64/whoami
+5e8f569d497e9dcd02a049313cb8e514ed24b67bc6cd1055fece9e776dbcac0d  ./baseutils/aarch64_arm64/wipefs
+e2183d3d9c40c51bc84ccc4e44551fb461a2eb034d72bbe18bacfde7f3f9c1a9  ./baseutils/aarch64_arm64/xargs
+b96ed469adfb2caeaec33b995c600905e6fb604e16cffeeb770feec52f118daf  ./baseutils/aarch64_arm64/xz
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/xzcat
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/xzcmp
+5ffc61f7fe60fd09af990f2bc9db9726d669201337cfb0843c12ada1d11a15ce  ./baseutils/aarch64_arm64/xzdec
+d29971142911738216fc1d4d250fa6f91fada89f894d6c99063c56da778776d5  ./baseutils/aarch64_arm64/xzdiff
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/xzegrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/aarch64_arm64/xzfgrep
+ecac6275fabd1867f550774f96ad6a8e539fe8b60fa2c31e3aa154f406ecc930  ./baseutils/aarch64_arm64/xzgrep
+ce8862bd1ecab0682b3ad08a737678c5e397fb61689aa81b55717df1035ba6fa  ./baseutils/aarch64_arm64/xzless
+7979f0a83cb4d7be06e3bbdf2ad65a90d262dc5539c2c8529e81d3c43f4e9ee3  ./baseutils/aarch64_arm64/xzmore
+9e805e172cc9db55298dce0d4168c08f5163dd9b1c8ed5cb7c518c5dcf2704ec  ./baseutils/aarch64_arm64/yes
+2c1e748d4853fe2b0720f83b3ef05d43e32d9394e8e22b9711efc4c379939514  ./baseutils/aarch64_arm64/zcat
+ae04f61ba9c9ddbc516286c0e2424b31f550845b08a32237b8feeed8b8bd8d23  ./baseutils/aarch64_arm64/zcmp
+74b1f6cdfa2df00d4af4efbae88b93338592c6bb7b0945b33b6afd0f47f468b5  ./baseutils/aarch64_arm64/zdiff
+e57244dceacd2c86f2516f309b413de26bf33dfb88f809bd3c99b8374b20a7d2  ./baseutils/aarch64_arm64/zegrep
+6ff2d4bf718b73c9f90c3f9fa235a2dce14a97e340d81e085aa1cdeb615a1a1d  ./baseutils/aarch64_arm64/zfgrep
+d3dccea0092f18d95f308166f517b49c6f61527d963b72ed988d8a01abcd85b8  ./baseutils/aarch64_arm64/zforce
+43b9909c57588ae59d1b84b85ae92fe2f37e2285b91d33ff676735258dfdf342  ./baseutils/aarch64_arm64/zgrep
+c98e01eff7a65f6d2d8020f2ab6b1c16f4bba1f3b853f45b8b9f66dc263cda32  ./baseutils/aarch64_arm64/zless
+0fe23352a2b247e13d06e0d24beb5b6023d132c817f313ea7ba46a5f1ebfbebf  ./baseutils/aarch64_arm64/zmore
+697cf5278ce27c3fc651c03c4c2eccc7e73b71611b51b5d30832322eb7d8f3c8  ./baseutils/aarch64_arm64/znew
+e7dd2499761f1d3afc0202a6c59a883b8618a8554343c0e518fe19c0d5a6266b  ./baseutils/aarch64_arm64/zramctl
+
+[+] armv7_eabihf:
+
+99fd51225c994fad99aae0ef172cf440c8dc64bb4352f8bb9c8c59d71c8a0757  ./baseutils/armv7_eabihf/scp
+8184008e240b3985a27bb8e239611c352d66a98f26d7ec8adb5b5279ac271d56  ./baseutils/armv7_eabihf/sftp
+101393d894448f149fa06a909e4763c440d00aa8ad3bd42fbe3ca6a3f09ffc77  ./baseutils/armv7_eabihf/sftp-server
+8f089911525304fe5b5bf14e3edaaec43d07f20c4ec22f4d72c89a1563ab0572  ./baseutils/armv7_eabihf/ssh
+1ea06ed3122c153522f129677f4aa33603a62e022339e28a84bd74142f2ed97b  ./baseutils/armv7_eabihf/ssh-add
+2500758df6d42e2f7bf811416e94138dd33bee8dd47f93109bd004db9b9fd2ec  ./baseutils/armv7_eabihf/ssh-agent
+dd84688762290786805c22f884136c7c693b78bc8f2c145924130b56d0882d20  ./baseutils/armv7_eabihf/ssh-keygen
+a1e10ac2991678ce35c0e41b2450effab082a0a9f8c6321d89b09140c5d68539  ./baseutils/armv7_eabihf/ssh-keyscan
+fa059c080aaa4a62c3583d3e20a87e7bcb910dcf47aa379eb75b6eaab8ddcbb9  ./baseutils/armv7_eabihf/ssh-keysign
+c37416828228500a599a760f0393f43da81e13426d71503c4e77a9cca3a79ac6  ./baseutils/armv7_eabihf/sshd
+b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./baseutils/armv7_eabihf/sshd_config
+
+[+] x86_64:
+
+f7395b213b12b7d07273937d74b549c214a43ef3a7f5aa750f1055d1dc9f0b7c  ./baseutils/x86_64/[
+c0e243e29f334bf0e206777a78bfefaf4ebc78ac47d6273a207f06c3789e2344  ./baseutils/x86_64/addpart
+cb932b6c3adc8272434ac57225356c8df859fb5358344db77eded6c6453c4221  ./baseutils/x86_64/agetty
+127f6b69c1695df00981ee16edc1cdc4f481fe76b521ee6db628ab0b096a56f9  ./baseutils/x86_64/awk
+bb60154d26d2047c96ae1de0b492d5fecfe9c67e9667bcb148d04b380e7add9a  ./baseutils/x86_64/b2sum
+217e949c1fcdff86b8cefc4605646af4fa4e50565113aacb282b998817cd52bd  ./baseutils/x86_64/base32
+2b99294bc63521df3e932a350a2d89a4299b54fe3db5fc3977f37f3d9c010c32  ./baseutils/x86_64/base64
+a9b4b44c3d033f32af75253a87ce97b13053e2810781c30ac64085ad31a0c5d1  ./baseutils/x86_64/basename
+4f844cd1602a7e23731bdc676b516cfac4eac53fef333fe0c1d8ca310cb50677  ./baseutils/x86_64/basenc
+2a1102abc99a53734315a76878c93109bc104035056d8842cf16b1c80ab86635  ./baseutils/x86_64/bash
+3584a28357ccc4da46560be4c44ba022fec1c2dee369515bc58d744f4981f676  ./baseutils/x86_64/blkdiscard
+f0c1cc232575fbd1a30dd3b1f21bb941fc12ed0bf44d70f67647f6bd3d4b1dc9  ./baseutils/x86_64/blkid
+a5a4bc9838de98b7f5208ac97cfbe5c08800d8d744e449071e64ed68904f9df9  ./baseutils/x86_64/blkpr
+7b68de646ad4af456750740ee6214748db2d91d884256c972a85593b855822a0  ./baseutils/x86_64/blkzone
+02f0343e846f926ea2a95d934aff9fce3b77499fc814264128d2d4ca84921d13  ./baseutils/x86_64/blockdev
+9fa324a78b79efbac24872071059372daa992520e88436573a33eda359b21552  ./baseutils/x86_64/bore
+72b59cfbcbce34f7480354c9209c8e852b34d0c8863cb9ea290e1a23a80153d4  ./baseutils/x86_64/busybox
+c77c6948e78e7ae6f380e7317d36810878529b405d5d40b7810fc78f744f13ea  ./baseutils/x86_64/cal
+7a668b9bac09064ebadfe40bae51d1bffaff1a17b4714cacfd864e2a535af01e  ./baseutils/x86_64/cat
+1e85944d96f74c936043a07a8ce25314b07850f5d05d39714fcf3d7deaa495e1  ./baseutils/x86_64/cfdisk
+6789453a78464f9336b8d235a0b3f7151e552a5c8afa47ee593189348df97712  ./baseutils/x86_64/chcon
+6fc767c8d0953a83cedadcef01b6a79c637aa9159f4e71c7c1c08896767c50fb  ./baseutils/x86_64/chcpu
+1806a66f60dbda0bab24511f3332fec48b3f64eb8183b5a8d84ee47e2054192f  ./baseutils/x86_64/chgrp
+61638e80ca382d5f1ecfe07b5bbbd314194e661286d3c66db86c3c6ebafccca6  ./baseutils/x86_64/chmem
+3913dc20f0d438ec9115bc8813e0254947cb6db87f42b2e3c7e1b8a5bee32653  ./baseutils/x86_64/chmod
+f664e6b059bd121a4c57b4c715dde681d301d210ef11a23a59faaebd7f17129f  ./baseutils/x86_64/choom
+95fb083db549f0ff6e6bd2c60eee8f7935dccf36f55f5e601e52662f1c8b69ff  ./baseutils/x86_64/chown
+1555fcf40d27da441792780fe017c1dbfd3ede578c3eacfd411c4c2367e67a46  ./baseutils/x86_64/chroot
+412daf03bd3c28bd796710733372fe12db64abdbb61ee059d8053bfb9b2bb6af  ./baseutils/x86_64/chrt
+4b46d866dccb84b78684f1f10bcbdab15915dd2ec4cd63a56d6e9587b7171cc1  ./baseutils/x86_64/cksum
+1da8e7ca1af83b90025dfd0f4ad3433731a33f119efb734f41bc13989a220196  ./baseutils/x86_64/col
+8da6a02f113474928b28fe06ec7a9e6b4162f9d2c47a60c01e9cff32c1468918  ./baseutils/x86_64/colcrt
+ede79b5f443d689f9f501e0012712cedbea34869ea11facc5e133e3abbdab1df  ./baseutils/x86_64/colrm
+8d2aa42aec03a091595b8d89c709e259b8e73c37403550d75689412b7b020bb9  ./baseutils/x86_64/column
+0c5efeb1a5ea881ce3cf360d8884f9b9b98bd895738410d19372fa42dedc57f1  ./baseutils/x86_64/comm
+d324c34617c2101a089c2c812a78a6f213f0af8d633c9d7b02418845d34f7fc9  ./baseutils/x86_64/cp
+6687cdae112883ba81118b919382ffb4e3c141141c92a6250c33f1bb6de3066f  ./baseutils/x86_64/croc
+5e036cdd8085b5403e19b4de2422e3445916124610b33b2218864a7b7e8d6c78  ./baseutils/x86_64/csplit
+b64d5212581840ff4c1038617e1c539c1e4afffb8b85e3fa37cf6ff80950a13e  ./baseutils/x86_64/ctrlaltdel
+d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed  ./baseutils/x86_64/curl
+f5debf6a61eb32cf51b7bad6c5fee495d562e6460fb08eeb374ebb9cdb89d208  ./baseutils/x86_64/cut
+a223fdfecccfc66237fa2191ac8fc7723f2b345a8d877923c3b9aa734fb5af94  ./baseutils/x86_64/date
+fc3d63cefc465e3c91466776684280f67f8c6e994cbc459445d2e630a02b4540  ./baseutils/x86_64/dcgen
+e9bea72559ea1a9208839deb567d45bf839aed141b77ccd4fc94b032b2ff27b1  ./baseutils/x86_64/dd
+e90960c5ad64c463538e4e9241b0633ce77732c204bd8bd8b3a5f4bbd366c5d5  ./baseutils/x86_64/delpart
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/depmod
+a926068c9f75ad0b39cf1e20a63b752ca25dc3602d792c9dff7cbfbca0f6251b  ./baseutils/x86_64/df
+c7b3bdad516f750e4675855e267e68789fcb144726ed5510edb6add9b32a3407  ./baseutils/x86_64/dir
+4574e2fbb2619dcc83eb8f74e9b60c5d0dd915adc2d5be0c4b3c5767f48e7c03  ./baseutils/x86_64/dircolors
+faad2aced919ffdc8e61a22ceb9696921d3cd818799f2ddefb626cd30f20c086  ./baseutils/x86_64/dirname
+5054d85942cd1515c3da035738aab31772de6de66e857fe4f1c84797754f3048  ./baseutils/x86_64/dmesg
+72a662869422c862bc50a4e767c38987a283b5a38e5c1d99b35dc89205380ae0  ./baseutils/x86_64/du
+9267eb7addad357064555b2f4f1626cff3dd4a87092ab4987e9ca0ae39e6444a  ./baseutils/x86_64/echo
+6e83875cb785c7a2c54d237413c35bff88942816c2ec7e426bcb5b1285fd6a30  ./baseutils/x86_64/eject
+881620e1917ae27a637bec6a28cea796d7836f256fadfb097389122537563847  ./baseutils/x86_64/enosys
+082f963fd9539557fd35cf2217a61dc4aa54e62f128d267b6ac5d69e3f7e9822  ./baseutils/x86_64/env
+976409e431a4e2b064516192c12162d285a550a5328a19877eef9a9373bb485f  ./baseutils/x86_64/expand
+166639c80fec1a66f053d9942e3c3a4a6d3663e6718c66bb0ce825989ad0a8b5  ./baseutils/x86_64/expr
+087c61366e6f43a4c17b23b66ca24f0ee6b8477266dffd5bfbc77057c6449b5f  ./baseutils/x86_64/factor
+0e24c779ebc31f2d3c5c3f522d615b1528049f0de0be197678fea7fc1e816c44  ./baseutils/x86_64/fadvise
+0b7b2e42183e713e147618bca9d224a011d1efca2edf65c76c9b30316bf52c67  ./baseutils/x86_64/fallocate
+29c9a20e3afda08e6db4ab06fc0749cc5f6235b9dcbb75ab5700d815480051b7  ./baseutils/x86_64/false
+236614c111953626c39bf99c454ecd94e71af54919fa1c851af0941360b8513e  ./baseutils/x86_64/fdisk
+90c0f87ec6980bdfaf589422c1b5c6e150e4493237c83beaa67b9db885f59376  ./baseutils/x86_64/fincore
+366b926e2a3ce1598df2109efd92813e17ce101588deac8b79ba44aa07070786  ./baseutils/x86_64/find
+330d9b3b671e7d19952b371f74708289bd42efd311538459d9396604af99c4d7  ./baseutils/x86_64/findfs
+cbe4391d37d433dbb13b5afebbf914b00793e077b36b4a1fe27f195cf8ec2500  ./baseutils/x86_64/findmnt
+47732fc8198b76c5056f1c931a937c289b4cd104d8dce30f85f687711b1b1cdb  ./baseutils/x86_64/flock
+ee9a7a6a7ba25a788ee2497688634435a8631e306b6d67700833fda7f6e2000d  ./baseutils/x86_64/fmt
+96fec2c154005c05c960eccfaaf31946968602e5460f20b2a918f9c654ed8453  ./baseutils/x86_64/fold
+fa1c947a58a21b75473b6f29d5f1b7a2e443e32d7fd4a04ce8159c0c21c677f1  ./baseutils/x86_64/frcode
+d1b34d219a7db6034687b0e88bf0a108ab173fe7d35e60c005627fa0e6bf4e98  ./baseutils/x86_64/free
+0a27ee00feb38e9fc75678119f42e81ecf9151e73cae3f6af69a4fd96775dd0a  ./baseutils/x86_64/fsck
+60286bcaf2bab53fff72359cac3d25c3dfc584cdcb2b053bec371e7b113dfd07  ./baseutils/x86_64/fsck.cramfs
+6cf1bf92ac1ae314a18c6fcf0be5548d1bb5f2f3becaed436d442c4f24d4c209  ./baseutils/x86_64/fsck.minix
+788d7df98b4c90f66e1ddf0997694140c294438ca1e1924fa4b55f97f783c1a5  ./baseutils/x86_64/fsfreeze
+d5ca3f951f467102fbc4976eddf6b9e4c8dfe6f08c085366e578c4261219b8e4  ./baseutils/x86_64/fstrim
+127f6b69c1695df00981ee16edc1cdc4f481fe76b521ee6db628ab0b096a56f9  ./baseutils/x86_64/gawk
+5dfcd787954a137c94e503f6363caf9a9ba5ab365b6efb8e30e1f8c7a0a60c6b  ./baseutils/x86_64/getlimits
+58eb54fe54ae0849982f8ecc22e12401efa0ace9e899d3fc2bfcc9af69281236  ./baseutils/x86_64/getopt
+afe946a3dad04e31d5eb2cd2f765cc9bb034bb3eb6ccd98897a22ad8d5826700  ./baseutils/x86_64/ginstall
+0826e5f41ffd5a173a796e852d27dade257c5c149fad4d55f1c8e81a768e977e  ./baseutils/x86_64/git
+dce419ebc49c9a9cf87d699b6796171da42658f82f1a60540d8aebbff0d58c0c  ./baseutils/x86_64/git-cvsserver
+0826e5f41ffd5a173a796e852d27dade257c5c149fad4d55f1c8e81a768e977e  ./baseutils/x86_64/git-receive-pack
+972fc936a63ad8fd25f194e2874006c3ef31f03a60a6665787d06c90ac51a338  ./baseutils/x86_64/git-shell
+0826e5f41ffd5a173a796e852d27dade257c5c149fad4d55f1c8e81a768e977e  ./baseutils/x86_64/git-upload-archive
+0826e5f41ffd5a173a796e852d27dade257c5c149fad4d55f1c8e81a768e977e  ./baseutils/x86_64/git-upload-pack
+b1b7371e31bf3be8a54a392f75ce06ab59beb104206366edc0d0d8fc0b3db17f  ./baseutils/x86_64/gitk
+54247cfd5ca164811805063bdf36fbc48301117ff874f4a06cda4ba55bd6cd43  ./baseutils/x86_64/gost
+db22b5d02e41b7be26e9e3ba5914375566800aee3e5443886b6f8b5cfdb40295  ./baseutils/x86_64/grep
+abb237654d8dab4aaa644bc9ea7eeb5219cacf31db05994655cbeefbdf56cfbc  ./baseutils/x86_64/groups
+de8967490f4c367f45bc5f1865f515b5a2f4c4b46c2aebc4eac3b949a649ffad  ./baseutils/x86_64/gunzip
+2143a1b2c35d8209499d0b583dab7d59aa7125845726b0004b475e9208e5a0f8  ./baseutils/x86_64/gzexe
+0890bf4864f77d6c36d6a6843cc3174c40a4adbef8bc374a5eef3727cb0ec18a  ./baseutils/x86_64/gzip
+56755b82f390a7b4c7f31064895733bd61f4b15f9d54f5eaf49c23c3d6abfa4f  ./baseutils/x86_64/hardlink
+9ea9827162908a1a49e3eabb60b595065fd69d7294ec4f3d40fb9673b5673bd0  ./baseutils/x86_64/head
+e88311f7d6e5b8e485cac53e4e339ca22a5e1c6f3628edc727c7a9b6be345e52  ./baseutils/x86_64/hexdump
+11051085a2e7b2961331baa4db8d465d725df6bf78f455a645008dcf83bb951c  ./baseutils/x86_64/hostid
+71dde17606785ba370929ae3d86223dc37df8444554acb9af2e3db59fa71c146  ./baseutils/x86_64/hwclock
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/i386
+9892125231c0c81822947503512b069802e2cf82539aa791b5e7f2c89a8ebb72  ./baseutils/x86_64/id
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/insmod
+ced94228acf54915618449245993ebe35334150e9cad36217e67fea236b26515  ./baseutils/x86_64/ionice
+e64739ad06af8f471261d2242c0e5812f16df3f06c915c0f84333279fad9e087  ./baseutils/x86_64/ipcmk
+1c95abd289a59bce71a7199bdb8a4d656611f72606662f0a302cf7a68b0379b2  ./baseutils/x86_64/ipcrm
+9c2326dd99313fd74b1690c4f4c542b49d2f02c8eafbda8b55273371ad6e5c69  ./baseutils/x86_64/ipcs
+cc3d8b366412d3b706efb1e027c9bd03e63447c0d55254b8bd47ebd5295fa308  ./baseutils/x86_64/irqtop
+4cab790ee5ffc414ab9e9b8c564a47a7437ddc25129b85aad8c8af9cfb298384  ./baseutils/x86_64/isosize
+1d71a98da7e9ce624577ce1e52ed9e0a7d6017e4494f7e12c49b5cea3ab6d439  ./baseutils/x86_64/join
+37e6e8bf5796456d102f3b8964d6461f15e51128fa9e81e19aee8049e75194cb  ./baseutils/x86_64/kill
+0b5a1bf5f5d0f29eb7cb5163959a105b6690b011a434698ecd683e1f330f1ab9  ./baseutils/x86_64/kmod
+c5faaebd800da9f30f5aa259495eb2b061fff96aa88453a4c39dfe10bea28d55  ./baseutils/x86_64/last
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lastb
+a88fb26d4940f8780f04f9237b7d4dc8669ec1b5f3bf0e9eee27cfd74ed3f648  ./baseutils/x86_64/ldattach
+6ac8979c983a882e8994a41d9289e4f556e91ca43602aa66b6f1934d27c3a0af  ./baseutils/x86_64/link
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/linux32
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/linux64
+44c362475cbbac9e05dc040db54a1ea6094d5687c851b54e6550ca56313c0a25  ./baseutils/x86_64/ln
+cf3a9a9709d200125215072f42e8cf4de187b6e531fca2098fce22916b3805d8  ./baseutils/x86_64/locate
+8e0236ef4c81dff219f627fea9b674faeee64df1b4b73245a2133ed98704a72e  ./baseutils/x86_64/logger
+abb8dcefd11025415f5590f041028854295f5659d8c10c935cf4940bc6199aab  ./baseutils/x86_64/logname
+9dca497b3a8e9cfd62579290dbe76417cc4de5f2c7c2b877544e06f2ae46a5f7  ./baseutils/x86_64/look
+b150f4fd869f7ef2d39d5bb91faa6e30ae539bc6c5b6ed72feea4f829ddb1fce  ./baseutils/x86_64/losetup
+8bd6034f4bec5cdc67e2bba299e62e365c1b3a9b723483ec06796f25f19bad89  ./baseutils/x86_64/ls
+2e9ea18e1d994689b2529c638a7759edc26b397ccb3639c2fbe2884f0a8eae15  ./baseutils/x86_64/lsblk
+38e79fc72a59d199a687bf19d07afcc046e50e28d45c9b85a2fed4d476a323be  ./baseutils/x86_64/lsclocks
+62834c691980b54bd104540f4fd9dbbee2d176c95518176aac64171d835c4341  ./baseutils/x86_64/lscpu
+d79ca9aa4d827f6ea2757f6818ab93d51696f4184955326dd0a8fb0c112858a3  ./baseutils/x86_64/lsfd
+ec79ba55a6bca7055c2131e672ad5ece09cb5b2102e1fca0c560131b119022cd  ./baseutils/x86_64/lsipc
+a0c2263261b1dc0a206a5be601e54e08e17286d0680f00c9c87d1a66a41e0619  ./baseutils/x86_64/lsirq
+f7f4841f8a6443901f0bc996900d9515b2688f86e9f3b3825ed7efddf04aa41a  ./baseutils/x86_64/lslocks
+0d58b9c52facd97844c71b987b870ef8193592ee9bac7a26d6f561b8e1f5343f  ./baseutils/x86_64/lslogins
+2c6c60d30190efda1e5becf07897e266834457fbb28d0580c2261dc921b19dbd  ./baseutils/x86_64/lsmem
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lsmod
+fffac2a959d240c616871289d64d4aa37d05985d4f913a5df7a101ff6ebaf4c1  ./baseutils/x86_64/lsns
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzcat
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzcmp
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzdiff
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzegrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzfgrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzgrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzless
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzma
+97c67b0aa515e44efa3ab869c0fa4a3570bbab44460fc3c187a7fe05d694fa11  ./baseutils/x86_64/lzmadec
+d12cf3f5b17d98435eb5b6e00e4bd0bf2e7da444fab5cfa9d1ab9acac573b725  ./baseutils/x86_64/lzmainfo
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/lzmore
+9edb85a5ce489d87e760bd65703e5c7782350aeeb9f3bcfb1cff3e496acd7f55  ./baseutils/x86_64/make-prime-list
+828e91571f8d089b271d44d383ba48000fbbb22db221ac91a4f629ae96fedbe3  ./baseutils/x86_64/mcookie
+464e890310e791ca40768a6c446fa340f2206c7a8b23873264496520ffdd2679  ./baseutils/x86_64/md5sum
+527164f7b5e396d95493c544ebd60b0b2bc48955906788693b2cb403d7be227a  ./baseutils/x86_64/mesg
+7d5600733f6bcfdb4c0edb59f2f02264a4cf954cded9b12d3a32ce5bc8a22a67  ./baseutils/x86_64/mkdir
+a6e511498f0d832cd08fdcef1edfd0bc5f04d6bbf512c9bf093faef258296ecd  ./baseutils/x86_64/mkfifo
+461d212978ca21869a4507fc1da2db69a593c13d67769e954320a41852c30a69  ./baseutils/x86_64/mkfs
+494a2cc0a6b4727e689c1d89e99e57d1afedf3f8e09a6236470ceb4cdb3932a0  ./baseutils/x86_64/mkfs.bfs
+36ebd8be97cc21cf6abe7f9ee2b89e2d3b6506618440c7b31dcab4f6250e672a  ./baseutils/x86_64/mkfs.cramfs
+1b0f136e69ffb62692407d191f0b9380c9ea531eefeda792e8d27c8383d6a4d7  ./baseutils/x86_64/mkfs.minix
+ba866dce76f3ba212042a4444d3b70d8ca9e683781b8f4dfe103b0492f61654e  ./baseutils/x86_64/mknod
+437f7210b34f8eb8dfd1ffb0e695d11d9ca7b0897077027f6308c90eb07c3c87  ./baseutils/x86_64/mkswap
+a34f9c6976acc4d8286e92fdf5c702f8395a74e64e9c8545ebd85bbc1aa496d6  ./baseutils/x86_64/mktemp
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/modinfo
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/modprobe
+e8bbc897cdf539f2903b2b42752f6f4c47c084c2185cb4dfab162617a3c4feef  ./baseutils/x86_64/more
+4db38ba16c4f2feb244c6d58b27ee2e370ab98854877ba754af4349fac6915ad  ./baseutils/x86_64/mount
+73c74ccf64acf30499b2e03b243e1bc43aba8c63cc29c317962f31a536faeb6e  ./baseutils/x86_64/mountpoint
+595358baeba7b680f2e97ff1eae99509af7d38f529997d6ba35d5730721bfa3e  ./baseutils/x86_64/mv
+4c1091849abad540ea99271aaf548e072eba554d8296d9297c5c46bf04b31108  ./baseutils/x86_64/namei
+864eb297580d0c9356ac7dd2e0def782774a636abe2afcbd1d422ab2cbc52535  ./baseutils/x86_64/ngrok
+6d4414ce752a1e7ba7398320a7f4faa0205784e7235073cfb3ff879d28742173  ./baseutils/x86_64/nice
+4bf8bb60c69bb61ad0f80dab847cce64dd6b8a446db5095a2d25a26ef3f878b1  ./baseutils/x86_64/nl
+b716e4d7d8e488153dc73f87b82f55a4e31c7d5f68e00af69ac5a282502e0fc0  ./baseutils/x86_64/nohup
+9ef8c0e20a367f53c1178307f98f893e5f0d9b069b27fb95d4ad7546f4b2e103  ./baseutils/x86_64/nologin
+80711b72321b3c47fc039104074ae9eba48db379eff14631ba9f7277a3a28bb9  ./baseutils/x86_64/nproc
+1e41c5eb6c54390b048a3c2e6f862f475e45a9531dab4af4fac810fc8e4a2527  ./baseutils/x86_64/nsenter
+853bb0a2bb684e94489629b5c10f93e680ca41f4a8e2b728eedebf2bd677b466  ./baseutils/x86_64/numfmt
+56f68bf59951153f3ade44113efe98f9475dc759b65135b67783fd2683925b89  ./baseutils/x86_64/od
+11768fc0ca3ccc7bcbc2d481d442391959f169b2f3698911a9917e772f048657  ./baseutils/x86_64/partx
+69f4774a68a4608867944b2ce6e7a33bb63498f8e44676940fa7635ee247f565  ./baseutils/x86_64/paste
+b6b93b2864051db39a6e9de45f733ba67b4eb0eff8e5503ef1c2851cf9bc2aeb  ./baseutils/x86_64/pathchk
+5ac525e958a36e6b4eb1631fcc80c5689b19d6017a7412be89adef2aa58d131e  ./baseutils/x86_64/pgrep
+8086447c79f71944b01c8d5c4a7ff90d8b7a3970e6fb0ce1282ef1b30447e363  ./baseutils/x86_64/pidof
+5ac525e958a36e6b4eb1631fcc80c5689b19d6017a7412be89adef2aa58d131e  ./baseutils/x86_64/pidwait
+7f694ff61b7609f1b258452686ae81675d6f81a9c142a506e45eab5819327470  ./baseutils/x86_64/pinky
+12e08e820ba512a62a7aaf80417108a40acd2af801726676be217d47aa390816  ./baseutils/x86_64/pipesz
+6585a70e23c4a0843484734d4914461f880156d26dec8ede823c74d5304d1790  ./baseutils/x86_64/pivot_root
+5ac525e958a36e6b4eb1631fcc80c5689b19d6017a7412be89adef2aa58d131e  ./baseutils/x86_64/pkill
+15d4f9b3cd168abf4aa74a5408217a561659ea748b247123f1ebe3d222a09c67  ./baseutils/x86_64/pmap
+0012f8b8ee5ad14897631c7c6c5fb625908a1df7949ddb2569a62f74deeb1eea  ./baseutils/x86_64/pr
+38e4129446a3221b7c933c84a69fa076976ffa246b5fe3ab58d66cf70ede0cec  ./baseutils/x86_64/printenv
+fec67078dbe58ddf1b5538ec0b57bbb06af56a65af7633451396146c8807c6fe  ./baseutils/x86_64/printf
+934b0fdfaa2fbcbca405c276bfa2b669fe78b75b2d41170fa67573ca64d079bd  ./baseutils/x86_64/prlimit
+afffee91830c11f383a3900c33cfcbf3985327c39524e5270d2a458c26e148da  ./baseutils/x86_64/ps
+88162cfe3fe3c05de8d25f162a48b198c73af46c6f5404e7eb12206a6086f6ee  ./baseutils/x86_64/ptx
+327c5b6b24386dc3e11f7e82219541e2f6b89a8784a04f10223633b2a26292db  ./baseutils/x86_64/pwd
+4f93457c167620517942ef1e20a65ef78131d6030d9010f87f0e1be65e059fff  ./baseutils/x86_64/pwdx
+21f1c960e0c6f2784a65680794b4ba8fb2b92175fc008feaec7a9a65a2dc7ca1  ./baseutils/x86_64/readlink
+03db2a1e8c9d6b8589aadf5d6e99168ed92fd1763e889795b7dbd84d22255a82  ./baseutils/x86_64/readprofile
+68eb7708e52756723ba5e431b2a1bb7aa24fa10196d8198cd31979e12a3d63a9  ./baseutils/x86_64/realpath
+5ea2b5179d9097126e63328b2b58bd8a36e33157fb3582faafd7264808632ef9  ./baseutils/x86_64/rename
+74bfff003f46d17e83d4e85c396fa34df2e76c437e550a72236d9be37ad0a724  ./baseutils/x86_64/renice
+f45c97b499debc35f21eb415c4bbeb6a8fae317cab8a71384928d3035c7db362  ./baseutils/x86_64/resizepart
+fc1cba2f6f718a00d29463ad866c33b6061fa45934e10f676dd5388fa9750cce  ./baseutils/x86_64/rev
+0f08317a4e4bc5207d006f0ec2539f6f85fee9df64b0e7266fe6d60d42eb9faa  ./baseutils/x86_64/rfkill
+40022290adc283db30a1bf2a8579bb94e32856a2076d88177340a087500eb1c2  ./baseutils/x86_64/rm
+30ee52b5b963570ceacc9d5cf77b2ef0c2ce3c58cf70f8d8040ef04c40471847  ./baseutils/x86_64/rmdir
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/rmmod
+e1ed53c676fb7b854afa391a61e0fc08fac776408ac189ea66d219518605056c  ./baseutils/x86_64/rtcwake
+9adb5bd90a6c9358ee272a12e90bf99c8e4fc161f27cc797ef7d444d54a17306  ./baseutils/x86_64/runcon
+5dbb590160fead7dfbc19f5d7dc1c55e49c4138d4ef9bd537bfea13e9029fc3e  ./baseutils/x86_64/scalar
+43722493dfce165aa9a5e04bac104d81d966c6ec818bbf414805882b7f3ff4c0  ./baseutils/x86_64/scp
+dbf5dfd1373b9663ff52e551624057b16de307b2ee0958465dea96c8760e51a4  ./baseutils/x86_64/script
+beee60d66911bfa4e6ffc91bc523df0d8b3fe56597fd4fcabb7b64522e110a76  ./baseutils/x86_64/scriptlive
+bbbee2948cd629b03842596d2a750ed721d842237a2f3799428547002c928d07  ./baseutils/x86_64/scriptreplay
+c813ec6afaa0d7e0376beb7cfea2934bf1d111064c1e837002815416ec8eada7  ./baseutils/x86_64/sed
+80850801656188436a81a99c61403f0a10af6922f8a2963b2fa5ce8786b50285  ./baseutils/x86_64/seq
+0779ae600a547297de7fd92fdb44780e9c2e5a4bea30af3d2bda492d6dbe7314  ./baseutils/x86_64/setarch
+254758eeae7b8b6366169e884a8df1adaf016bcec64249fafc031a2660f82042  ./baseutils/x86_64/setpgid
+e2c83ef12800fb918b8f298744526b089ac8be164f32a4c62d21e866487d38d2  ./baseutils/x86_64/setsid
+9bee0e320d00f2b14e498f4d563d9692851d5ab6e25620453765cf89461b88fb  ./baseutils/x86_64/setterm
+b5b2c7ea3d192202e8e01317223cdddcfd6ee5b7581e54826d31da136649fbe0  ./baseutils/x86_64/sfdisk
+cddfb88c1bbebf0539e49ae16df91bd36539b407414b588a27dacb6b875783b4  ./baseutils/x86_64/sftp
+0c5c501974633c34f5ba8669479de79be67d168e879ebb34210b928c1ff78a35  ./baseutils/x86_64/sftp-server
+21f734f20d72aff8692d8a80d208b46d14f59ffc0ac922b1501993121b7c3e2b  ./baseutils/x86_64/sha1sum
+a7cd0d5deff96a4ba8bb7bf841d6dc73ecd02b86e005d0188c18c5d8c4384d91  ./baseutils/x86_64/sha224sum
+cee140c2cf3957c07163cf14f2316d9963fb06449cc776d55ccf769f90f692cc  ./baseutils/x86_64/sha256sum
+2310304757522d8c8a83a594aec140ce3aaca584aa4436641b64bbec20eab004  ./baseutils/x86_64/sha384sum
+b59574cd481d89ed6f2b3433a5e954134a1609c1107e2d49a123d98d7ea40e1a  ./baseutils/x86_64/sha512sum
+ffa1ca9b97ecd6ce26aa0ea76714cc940b263821ee2474cd2be7882538a2b8ed  ./baseutils/x86_64/shred
+a1b5a88cdc0a70bd8b4c78f53057624b83371e659d2cd0d2e273b3c888f19788  ./baseutils/x86_64/shuf
+bfcc2565fe702ab8b137b14fac0daffc0332a737e5bd60c55c0970127037e82c  ./baseutils/x86_64/slabtop
+e2dea8eb2f4ab76a6201ff4398d832f0b9a3310069aa6e56d5e863737bb1c21b  ./baseutils/x86_64/sleep
+2b59dd438ec1814dcd00c3106c0288ca174c3fe9a178f3400baa06818edaae8d  ./baseutils/x86_64/slirp4netns
+519c1554ff4b430f13079ba60802160525541dd937dfdd7337b15f72c91636f5  ./baseutils/x86_64/sort
+c1b6245c20099a618077d2d73e23308b3dca61825690b96f1d3bfa83321d703b  ./baseutils/x86_64/split
+ebbb92bbb8b76a543c37451eb102fed4fcb801adff31e96796106b855bb3a7c8  ./baseutils/x86_64/ssh
+902f74f590b95bed07bf97e715795f8ed8111529963913db670f888aaed3d3b6  ./baseutils/x86_64/ssh-add
+6dc7f4d28c6b97c2d5aa7ee20bd71c91a1c0e0424c6c2dab83d3ddf04de02fcc  ./baseutils/x86_64/ssh-agent
+fbe1061ca17e32709ea4b9aa97528aad3074b1edd05034458b6bcd9fae8c0292  ./baseutils/x86_64/ssh-keygen
+13d6cf8c1b2eb7f8c8a1a1889b2bce4589a3b6710ff77ef4ea9ca17fd801a55f  ./baseutils/x86_64/ssh-keyscan
+a169af9a86643ecc6db99ffecdd3a5a6067c393e7f76e3dcbceb29670c3b9e4d  ./baseutils/x86_64/ssh-keysign
+6945df6a19c93f85f7c247be321ccd348874dd40a3044116863ccd50c7132552  ./baseutils/x86_64/sshd
+f6c2fbaffc1fc3f4f426171d38091206ae1bcc2f8a2dff03cefa5f3519e55a72  ./baseutils/x86_64/sshd_config
+31921d2ff5a686bcdab95600e79bd320dff8f1ee9a3b2e84c9edde482120a7de  ./baseutils/x86_64/stat
+210de7288b10fefe03cdb93918c23fc4e80492693d96ee74f452c127811f800d  ./baseutils/x86_64/stdbuf
+2d51aceb68304d7ff54f968283db49a9a62b12e052e4d563fc27303a6dffcec6  ./baseutils/x86_64/stty
+79fa8dbd61f7642fe4d4563a06d461db086f9d0da785e50c8a0ad18fac120fce  ./baseutils/x86_64/sulogin
+811c97503ff0d1156677460ed54443a892d4648c66af35158d5d37f8e852459b  ./baseutils/x86_64/sum
+402ec67ed6358d9356f93a75bff90a479eec1865181aa2690889f8dc49960cdd  ./baseutils/x86_64/swaplabel
+7e1f89e9a6f9e788fd27c92a620bc74c87a98b9ec1ba42e3fef9f94481984a1b  ./baseutils/x86_64/swapoff
+27ea1a8edfb7765d1d2537b3300075a25af48fa8ad2908c8f7fa3260452bf8d5  ./baseutils/x86_64/swapon
+2ba2869495a2e3c3c3efafddf1e18587e250c803c8aa175333e3c1ff736ec8c7  ./baseutils/x86_64/switch_root
+56cc4d156399d37952887919d4d63f2dca3f8428fa9ba7f1a31b5b4833acee7f  ./baseutils/x86_64/sync
+5c09874d01e823398b664d642f05f2b87022b87a8c15ded4d69c3bf765828abc  ./baseutils/x86_64/sysctl
+a17eda30505562fc8a67f3a0824cff1f32a28c1680e33a00e02290b229163529  ./baseutils/x86_64/tac
+fa916f34d7a15727ded5eeb8d457a813cad15fe29973b16f739f55f5606483f0  ./baseutils/x86_64/tail
+18ac33212c435fe29be1557c690b4c93c0cb916964ff6cf645b4044633b25a15  ./baseutils/x86_64/tailscale
+1d5f74fcad744897989fa9512220b130e76bb1087bb8f4e9c31766ad4470b8d5  ./baseutils/x86_64/tailscaled
+a309e9383b47f5f96b15a7e20b40b74edd41b539502561a0e6799b3db16c06d3  ./baseutils/x86_64/tar
+8199442e94a958fc762490e401564ddedc6393bfdd9f5e15e948ccda599d45b0  ./baseutils/x86_64/taskset
+6262b718c12f986f33c3e3b75b15bfb6be655095261bcdc166878b509da58b20  ./baseutils/x86_64/tee
+2b11e73fb92ef4e3a178bf2a9e7eb93a68ce21945c1e5728a344731fb76652f9  ./baseutils/x86_64/test
+bad4d3daca1dd596b87e859fea979b15a95c9b8d834b463011bafb12d9d3d5b8  ./baseutils/x86_64/timeout
+06ac3a4642a6f326d757b3acfa4177d729ed59f88f84f3bad4374908cc5d34d2  ./baseutils/x86_64/tload
+285262534ea74167e7d883eb4aaeeae75acce5528dce34deb776075c00ed6ff0  ./baseutils/x86_64/top
+c4f94c041ed6de27914bbf70f9bcef555c18f22cb051884b9de039b01c221107  ./baseutils/x86_64/touch
+69171b03ca3f221012fac692618ae74952f5892727f459c0370c64b61c0780d4  ./baseutils/x86_64/toybox
+868df08b4af77563d00b363e621be814ba39e7aa2eed2021760bcb9c93be8930  ./baseutils/x86_64/tr
+6a22ad70bc10d92ff81601acc790f5c68ee61e6f035a445113245695a824bd1b  ./baseutils/x86_64/true
+7831306e2cacabcb610f9f3f3ef3f079edd03b797e5dd20c2b21027e43c2758b  ./baseutils/x86_64/truncate
+da82b5109892c1761b8cc6017d96cef544b81d26cd840cf8368e7a7e2fa1aa18  ./baseutils/x86_64/tsort
+44aba5079480dcda52cd6a7f08eab9ad36cd0871d8672d62b0a6757bd6c02dc9  ./baseutils/x86_64/tty
+af373385da99789b6931bba9c2544509ba4bfeedf03a5862e8e8cca4ed01a2fe  ./baseutils/x86_64/uclampset
+8f5a29652413e2e641025250e420ee0120bd447f5b7bda2d6a98b54f64c21e52  ./baseutils/x86_64/ul
+aa70fc3160647525393b45c16966ba6bfd0b83557c973371bf64f910868ef906  ./baseutils/x86_64/umount
+c1a5fdd9d9cc9f0dae5634d0e47ee9b9c27539c90b5268f96f276b96228686a8  ./baseutils/x86_64/uname
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/uname26
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/uncompress
+db4be59b4606ec407377bb75f411825253456cb2b7e00c56b22568e0dde51963  ./baseutils/x86_64/unexpand
+6df894af3bc21e02c06185b7401028c1031ac520fd3e10daf42cf8cf8ec1cdd5  ./baseutils/x86_64/uniq
+6e5916af30ed591f2d7ae43dea8d0f24db07e29f263467b170b9dce861733c9c  ./baseutils/x86_64/unlink
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/unlzma
+85137813cab2c9b5d0d7ca20792aecd830197dd8974fa9a8d875cdde6362db49  ./baseutils/x86_64/unshare
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/unxz
+adad3f9f21a95e628ee66b4785f93b9992febe51c2309e947d0dfbb8a99ae1d4  ./baseutils/x86_64/updatedb
+31020a0120d1cae571be588863388a1b64e3b936518d8cbbd2caec36327fa712  ./baseutils/x86_64/uptime
+1cb70920a913c624d86d68bca1317ccd26e59dd584dee00c70cd38557f1e5bb2  ./baseutils/x86_64/users
+987ff9a9c1b5ec3a65186448bcafe4b1b4aaf4977fa21d7db8b4ef862c50f897  ./baseutils/x86_64/utmpdump
+a5546b420d8de9cc7245919765e4754659ce536fb887cb27662fbb37f12c8fe2  ./baseutils/x86_64/uuidd
+7d58840095d520ff652ed74c33e3658ca8632cc2d0ebb32af6cfc6b90893196e  ./baseutils/x86_64/uuidgen
+d26089ac0378b384121fdace83ea8c698ba5e827bf522b49206f9b67c7553e47  ./baseutils/x86_64/uuidparse
+f9c812b05d34d19ee8c8c0b47f8ec7f9fba7b3302afb2d3d32d973d4bc6f116a  ./baseutils/x86_64/vdir
+97d0991385d19aade013d228a35f6da5b4cb1154afa7860f73e56e7a07fd610f  ./baseutils/x86_64/vmstat
+2c241d26364237c4df1c249ac413b32fec562890ec432312a603d4a1f645efb6  ./baseutils/x86_64/waitpid
+cadf00da3ed111c6091f1da5f86d48beac9eac62939176d4ca6c4ae1b9814479  ./baseutils/x86_64/wall
+10afc49290531c24901edda6967881163b02c4a726944518f799ee2f2d89c35f  ./baseutils/x86_64/watch
+1e632d64f52a2e882d91e131665f85d349c204a39b6833f4c316fc4181ce5df7  ./baseutils/x86_64/wc
+fb72c554342c0f3117c95d1836097123614c1ea911a8befc58654c68c5101a14  ./baseutils/x86_64/wdctl
+0003c78e95c2bda65ab2b29f19a446a876278206172cb8836c8b077bf8480ee1  ./baseutils/x86_64/wget-busybox
+af34880729856b37f17c6475427da016c449972e0ffef6eb75337ee0d3d17fa1  ./baseutils/x86_64/whereis
+e80525b32813de61539e8e5ad75e203bde06684f547ceb8ac677cdc2b5e834fb  ./baseutils/x86_64/which
+421c3f74459ee58248a1a5a89360732c0e5abb40c537bc6a60157b87aaf1b0af  ./baseutils/x86_64/who
+e4f3df740c24c4d309eec8fcee0db44044185af8177d02c3036adb503ea9d332  ./baseutils/x86_64/whoami
+b38a6c02a2adc42d19e7a6d15c61a2c1e4be33c24e2b7bed4b2d34ab278e53a2  ./baseutils/x86_64/wipefs
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/x86_64
+e1591fbb1b9ac0b76ed7317277d5c62a2602c6ee588f7e3d95d7b2a2d8f285ef  ./baseutils/x86_64/xargs
+8f71c3302ef2c1388ab7b5c83c37d9aaa3969767b623f40231544e70c7391f84  ./baseutils/x86_64/xz
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/xzcat
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/xzcmp
+fbfdd7640ee529524c9b687973a1fc608c00fbe8df1de4c917e39cfa6a1dbb32  ./baseutils/x86_64/xzdec
+d29971142911738216fc1d4d250fa6f91fada89f894d6c99063c56da778776d5  ./baseutils/x86_64/xzdiff
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/xzegrep
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./baseutils/x86_64/xzfgrep
+ecac6275fabd1867f550774f96ad6a8e539fe8b60fa2c31e3aa154f406ecc930  ./baseutils/x86_64/xzgrep
+ce8862bd1ecab0682b3ad08a737678c5e397fb61689aa81b55717df1035ba6fa  ./baseutils/x86_64/xzless
+7979f0a83cb4d7be06e3bbdf2ad65a90d262dc5539c2c8529e81d3c43f4e9ee3  ./baseutils/x86_64/xzmore
+bc8c9493c414515be929bdde9eb96bb35128855b5de7377495c45d962f90dad6  ./baseutils/x86_64/yes
+2c1e748d4853fe2b0720f83b3ef05d43e32d9394e8e22b9711efc4c379939514  ./baseutils/x86_64/zcat
+ae04f61ba9c9ddbc516286c0e2424b31f550845b08a32237b8feeed8b8bd8d23  ./baseutils/x86_64/zcmp
+74b1f6cdfa2df00d4af4efbae88b93338592c6bb7b0945b33b6afd0f47f468b5  ./baseutils/x86_64/zdiff
+e57244dceacd2c86f2516f309b413de26bf33dfb88f809bd3c99b8374b20a7d2  ./baseutils/x86_64/zegrep
+6ff2d4bf718b73c9f90c3f9fa235a2dce14a97e340d81e085aa1cdeb615a1a1d  ./baseutils/x86_64/zfgrep
+d3dccea0092f18d95f308166f517b49c6f61527d963b72ed988d8a01abcd85b8  ./baseutils/x86_64/zforce
+43b9909c57588ae59d1b84b85ae92fe2f37e2285b91d33ff676735258dfdf342  ./baseutils/x86_64/zgrep
+c98e01eff7a65f6d2d8020f2ab6b1c16f4bba1f3b853f45b8b9f66dc263cda32  ./baseutils/x86_64/zless
+0fe23352a2b247e13d06e0d24beb5b6023d132c817f313ea7ba46a5f1ebfbebf  ./baseutils/x86_64/zmore
+697cf5278ce27c3fc651c03c4c2eccc7e73b71611b51b5d30832322eb7d8f3c8  ./baseutils/x86_64/znew
+36ed6355396f45f4c38b59af1c0cac6d934bbe5395229917c1c0184d0e13dbb7  ./baseutils/x86_64/zramctl
+```
+
+
+---
+
+- #### Sizes
+
+```console
+
+[+] aarch64_arm64:
+
+130K  ./baseutils/aarch64_arm64/[
+586K  ./baseutils/aarch64_arm64/addpart
+844K  ./baseutils/aarch64_arm64/agetty
+646K  ./baseutils/aarch64_arm64/awk
+130K  ./baseutils/aarch64_arm64/b2sum
+130K  ./baseutils/aarch64_arm64/base32
+130K  ./baseutils/aarch64_arm64/base64
+130K  ./baseutils/aarch64_arm64/basename
+130K  ./baseutils/aarch64_arm64/basenc
+2.3M  ./baseutils/aarch64_arm64/bash
+780K  ./baseutils/aarch64_arm64/blkdiscard
+844K  ./baseutils/aarch64_arm64/blkid
+586K  ./baseutils/aarch64_arm64/blkpr
+651K  ./baseutils/aarch64_arm64/blkzone
+651K  ./baseutils/aarch64_arm64/blockdev
+1.2M  ./baseutils/aarch64_arm64/bore
+1.2M  ./baseutils/aarch64_arm64/busybox
+780K  ./baseutils/aarch64_arm64/cal
+130K  ./baseutils/aarch64_arm64/cat
+1.6M  ./baseutils/aarch64_arm64/cfdisk
+130K  ./baseutils/aarch64_arm64/chcon
+651K  ./baseutils/aarch64_arm64/chcpu
+130K  ./baseutils/aarch64_arm64/chgrp
+587K  ./baseutils/aarch64_arm64/chmem
+130K  ./baseutils/aarch64_arm64/chmod
+651K  ./baseutils/aarch64_arm64/choom
+130K  ./baseutils/aarch64_arm64/chown
+130K  ./baseutils/aarch64_arm64/chroot
+587K  ./baseutils/aarch64_arm64/chrt
+194K  ./baseutils/aarch64_arm64/cksum
+587K  ./baseutils/aarch64_arm64/col
+586K  ./baseutils/aarch64_arm64/colcrt
+586K  ./baseutils/aarch64_arm64/colrm
+651K  ./baseutils/aarch64_arm64/column
+130K  ./baseutils/aarch64_arm64/comm
+194K  ./baseutils/aarch64_arm64/cp
+7.2M  ./baseutils/aarch64_arm64/croc
+194K  ./baseutils/aarch64_arm64/csplit
+651K  ./baseutils/aarch64_arm64/ctrlaltdel
+6.3M  ./baseutils/aarch64_arm64/curl
+130K  ./baseutils/aarch64_arm64/cut
+194K  ./baseutils/aarch64_arm64/date
+1.4K  ./baseutils/aarch64_arm64/dcgen
+130K  ./baseutils/aarch64_arm64/dd
+586K  ./baseutils/aarch64_arm64/delpart
+0     ./baseutils/aarch64_arm64/depmod
+195K  ./baseutils/aarch64_arm64/df
+259K  ./baseutils/aarch64_arm64/dir
+130K  ./baseutils/aarch64_arm64/dircolors
+130K  ./baseutils/aarch64_arm64/dirname
+782K  ./baseutils/aarch64_arm64/dmesg
+322K  ./baseutils/aarch64_arm64/du
+130K  ./baseutils/aarch64_arm64/echo
+972K  ./baseutils/aarch64_arm64/eject
+586K  ./baseutils/aarch64_arm64/enosys
+131K  ./baseutils/aarch64_arm64/env
+130K  ./baseutils/aarch64_arm64/expand
+194K  ./baseutils/aarch64_arm64/expr
+130K  ./baseutils/aarch64_arm64/factor
+586K  ./baseutils/aarch64_arm64/fadvise
+586K  ./baseutils/aarch64_arm64/fallocate
+130K  ./baseutils/aarch64_arm64/false
+1.3M  ./baseutils/aarch64_arm64/fdisk
+651K  ./baseutils/aarch64_arm64/fincore
+323K  ./baseutils/aarch64_arm64/find
+844K  ./baseutils/aarch64_arm64/findfs
+1.1M  ./baseutils/aarch64_arm64/findmnt
+651K  ./baseutils/aarch64_arm64/flock
+130K  ./baseutils/aarch64_arm64/fmt
+130K  ./baseutils/aarch64_arm64/fold
+66K   ./baseutils/aarch64_arm64/frcode
+586K  ./baseutils/aarch64_arm64/free
+972K  ./baseutils/aarch64_arm64/fsck
+587K  ./baseutils/aarch64_arm64/fsck.cramfs
+715K  ./baseutils/aarch64_arm64/fsck.minix
+586K  ./baseutils/aarch64_arm64/fsfreeze
+972K  ./baseutils/aarch64_arm64/fstrim
+646K  ./baseutils/aarch64_arm64/gawk
+130K  ./baseutils/aarch64_arm64/getlimits
+586K  ./baseutils/aarch64_arm64/getopt
+194K  ./baseutils/aarch64_arm64/ginstall
+13M   ./baseutils/aarch64_arm64/gost
+1.2M  ./baseutils/aarch64_arm64/grep
+130K  ./baseutils/aarch64_arm64/groups
+2.3K  ./baseutils/aarch64_arm64/gunzip
+6.3K  ./baseutils/aarch64_arm64/gzexe
+131K  ./baseutils/aarch64_arm64/gzip
+651K  ./baseutils/aarch64_arm64/hardlink
+130K  ./baseutils/aarch64_arm64/head
+780K  ./baseutils/aarch64_arm64/hexdump
+130K  ./baseutils/aarch64_arm64/hostid
+715K  ./baseutils/aarch64_arm64/hwclock
+130K  ./baseutils/aarch64_arm64/id
+0     ./baseutils/aarch64_arm64/insmod
+586K  ./baseutils/aarch64_arm64/ionice
+587K  ./baseutils/aarch64_arm64/ipcmk
+586K  ./baseutils/aarch64_arm64/ipcrm
+779K  ./baseutils/aarch64_arm64/ipcs
+972K  ./baseutils/aarch64_arm64/irqtop
+586K  ./baseutils/aarch64_arm64/isosize
+130K  ./baseutils/aarch64_arm64/join
+587K  ./baseutils/aarch64_arm64/kill
+258K  ./baseutils/aarch64_arm64/kmod
+843K  ./baseutils/aarch64_arm64/last
+0     ./baseutils/aarch64_arm64/lastb
+586K  ./baseutils/aarch64_arm64/ldattach
+130K  ./baseutils/aarch64_arm64/link
+0     ./baseutils/aarch64_arm64/linux32
+0     ./baseutils/aarch64_arm64/linux64
+130K  ./baseutils/aarch64_arm64/ln
+194K  ./baseutils/aarch64_arm64/locate
+843K  ./baseutils/aarch64_arm64/logger
+130K  ./baseutils/aarch64_arm64/logname
+586K  ./baseutils/aarch64_arm64/look
+715K  ./baseutils/aarch64_arm64/losetup
+259K  ./baseutils/aarch64_arm64/ls
+1.1M  ./baseutils/aarch64_arm64/lsblk
+843K  ./baseutils/aarch64_arm64/lsclocks
+779K  ./baseutils/aarch64_arm64/lscpu
+972K  ./baseutils/aarch64_arm64/lsfd
+843K  ./baseutils/aarch64_arm64/lsipc
+715K  ./baseutils/aarch64_arm64/lsirq
+1.1M  ./baseutils/aarch64_arm64/lslocks
+907K  ./baseutils/aarch64_arm64/lslogins
+715K  ./baseutils/aarch64_arm64/lsmem
+0     ./baseutils/aarch64_arm64/lsmod
+1.1M  ./baseutils/aarch64_arm64/lsns
+0     ./baseutils/aarch64_arm64/lzcat
+0     ./baseutils/aarch64_arm64/lzcmp
+0     ./baseutils/aarch64_arm64/lzdiff
+0     ./baseutils/aarch64_arm64/lzegrep
+0     ./baseutils/aarch64_arm64/lzfgrep
+0     ./baseutils/aarch64_arm64/lzgrep
+0     ./baseutils/aarch64_arm64/lzless
+0     ./baseutils/aarch64_arm64/lzma
+66K   ./baseutils/aarch64_arm64/lzmadec
+130K  ./baseutils/aarch64_arm64/lzmainfo
+0     ./baseutils/aarch64_arm64/lzmore
+66K   ./baseutils/aarch64_arm64/make-prime-list
+587K  ./baseutils/aarch64_arm64/mcookie
+130K  ./baseutils/aarch64_arm64/md5sum
+650K  ./baseutils/aarch64_arm64/mesg
+130K  ./baseutils/aarch64_arm64/mkdir
+130K  ./baseutils/aarch64_arm64/mkfifo
+586K  ./baseutils/aarch64_arm64/mkfs
+586K  ./baseutils/aarch64_arm64/mkfs.bfs
+650K  ./baseutils/aarch64_arm64/mkfs.cramfs
+651K  ./baseutils/aarch64_arm64/mkfs.minix
+130K  ./baseutils/aarch64_arm64/mknod
+844K  ./baseutils/aarch64_arm64/mkswap
+130K  ./baseutils/aarch64_arm64/mktemp
+0     ./baseutils/aarch64_arm64/modinfo
+0     ./baseutils/aarch64_arm64/modprobe
+780K  ./baseutils/aarch64_arm64/more
+1.2M  ./baseutils/aarch64_arm64/mount
+972K  ./baseutils/aarch64_arm64/mountpoint
+194K  ./baseutils/aarch64_arm64/mv
+715K  ./baseutils/aarch64_arm64/namei
+23M   ./baseutils/aarch64_arm64/ngrok
+130K  ./baseutils/aarch64_arm64/nice
+195K  ./baseutils/aarch64_arm64/nl
+130K  ./baseutils/aarch64_arm64/nohup
+587K  ./baseutils/aarch64_arm64/nologin
+130K  ./baseutils/aarch64_arm64/nproc
+651K  ./baseutils/aarch64_arm64/nsenter
+130K  ./baseutils/aarch64_arm64/numfmt
+130K  ./baseutils/aarch64_arm64/od
+844K  ./baseutils/aarch64_arm64/partx
+130K  ./baseutils/aarch64_arm64/paste
+130K  ./baseutils/aarch64_arm64/pathchk
+907K  ./baseutils/aarch64_arm64/pgrep
+843K  ./baseutils/aarch64_arm64/pidof
+907K  ./baseutils/aarch64_arm64/pidwait
+194K  ./baseutils/aarch64_arm64/pinky
+651K  ./baseutils/aarch64_arm64/pipesz
+586K  ./baseutils/aarch64_arm64/pivot_root
+907K  ./baseutils/aarch64_arm64/pkill
+843K  ./baseutils/aarch64_arm64/pmap
+195K  ./baseutils/aarch64_arm64/pr
+130K  ./baseutils/aarch64_arm64/printenv
+258K  ./baseutils/aarch64_arm64/printf
+651K  ./baseutils/aarch64_arm64/prlimit
+972K  ./baseutils/aarch64_arm64/ps
+194K  ./baseutils/aarch64_arm64/ptx
+130K  ./baseutils/aarch64_arm64/pwd
+586K  ./baseutils/aarch64_arm64/pwdx
+130K  ./baseutils/aarch64_arm64/readlink
+651K  ./baseutils/aarch64_arm64/readprofile
+130K  ./baseutils/aarch64_arm64/realpath
+650K  ./baseutils/aarch64_arm64/rename
+715K  ./baseutils/aarch64_arm64/renice
+651K  ./baseutils/aarch64_arm64/resizepart
+586K  ./baseutils/aarch64_arm64/rev
+715K  ./baseutils/aarch64_arm64/rfkill
+130K  ./baseutils/aarch64_arm64/rm
+130K  ./baseutils/aarch64_arm64/rmdir
+0     ./baseutils/aarch64_arm64/rmmod
+650K  ./baseutils/aarch64_arm64/rtcwake
+130K  ./baseutils/aarch64_arm64/runcon
+403K  ./baseutils/aarch64_arm64/scp
+714K  ./baseutils/aarch64_arm64/script
+650K  ./baseutils/aarch64_arm64/scriptlive
+650K  ./baseutils/aarch64_arm64/scriptreplay
+195K  ./baseutils/aarch64_arm64/sed
+130K  ./baseutils/aarch64_arm64/seq
+651K  ./baseutils/aarch64_arm64/setarch
+586K  ./baseutils/aarch64_arm64/setpgid
+843K  ./baseutils/aarch64_arm64/setpriv
+586K  ./baseutils/aarch64_arm64/setsid
+716K  ./baseutils/aarch64_arm64/setterm
+1.3M  ./baseutils/aarch64_arm64/sfdisk
+403K  ./baseutils/aarch64_arm64/sftp
+307K  ./baseutils/aarch64_arm64/sftp-server
+130K  ./baseutils/aarch64_arm64/sha1sum
+130K  ./baseutils/aarch64_arm64/sha224sum
+130K  ./baseutils/aarch64_arm64/sha256sum
+130K  ./baseutils/aarch64_arm64/sha384sum
+130K  ./baseutils/aarch64_arm64/sha512sum
+130K  ./baseutils/aarch64_arm64/shred
+130K  ./baseutils/aarch64_arm64/shuf
+908K  ./baseutils/aarch64_arm64/slabtop
+130K  ./baseutils/aarch64_arm64/sleep
+1.9M  ./baseutils/aarch64_arm64/slirp4netns
+195K  ./baseutils/aarch64_arm64/sort
+131K  ./baseutils/aarch64_arm64/split
+4.9M  ./baseutils/aarch64_arm64/ssh
+4.2M  ./baseutils/aarch64_arm64/ssh-add
+4.1M  ./baseutils/aarch64_arm64/ssh-agent
+4.3M  ./baseutils/aarch64_arm64/ssh-keygen
+4.4M  ./baseutils/aarch64_arm64/ssh-keyscan
+4.4M  ./baseutils/aarch64_arm64/ssh-keysign
+5.0M  ./baseutils/aarch64_arm64/sshd
+3.1K  ./baseutils/aarch64_arm64/sshd_config
+194K  ./baseutils/aarch64_arm64/stat
+130K  ./baseutils/aarch64_arm64/stdbuf
+130K  ./baseutils/aarch64_arm64/stty
+971K  ./baseutils/aarch64_arm64/sulogin
+130K  ./baseutils/aarch64_arm64/sum
+779K  ./baseutils/aarch64_arm64/swaplabel
+972K  ./baseutils/aarch64_arm64/swapoff
+1.1M  ./baseutils/aarch64_arm64/swapon
+586K  ./baseutils/aarch64_arm64/switch_root
+130K  ./baseutils/aarch64_arm64/sync
+779K  ./baseutils/aarch64_arm64/sysctl
+194K  ./baseutils/aarch64_arm64/tac
+130K  ./baseutils/aarch64_arm64/tail
+16M   ./baseutils/aarch64_arm64/tailscale
+29M   ./baseutils/aarch64_arm64/tailscaled
+718K  ./baseutils/aarch64_arm64/tar
+587K  ./baseutils/aarch64_arm64/taskset
+130K  ./baseutils/aarch64_arm64/tee
+130K  ./baseutils/aarch64_arm64/test
+131K  ./baseutils/aarch64_arm64/timeout
+650K  ./baseutils/aarch64_arm64/tload
+1.1M  ./baseutils/aarch64_arm64/top
+194K  ./baseutils/aarch64_arm64/touch
+822K  ./baseutils/aarch64_arm64/toybox
+130K  ./baseutils/aarch64_arm64/tr
+130K  ./baseutils/aarch64_arm64/true
+130K  ./baseutils/aarch64_arm64/truncate
+130K  ./baseutils/aarch64_arm64/tsort
+130K  ./baseutils/aarch64_arm64/tty
+651K  ./baseutils/aarch64_arm64/uclampset
+652K  ./baseutils/aarch64_arm64/ul
+1.1M  ./baseutils/aarch64_arm64/umount
+130K  ./baseutils/aarch64_arm64/uname
+0     ./baseutils/aarch64_arm64/uname26
+0     ./baseutils/aarch64_arm64/uncompress
+130K  ./baseutils/aarch64_arm64/unexpand
+130K  ./baseutils/aarch64_arm64/uniq
+130K  ./baseutils/aarch64_arm64/unlink
+0     ./baseutils/aarch64_arm64/unlzma
+779K  ./baseutils/aarch64_arm64/unshare
+0     ./baseutils/aarch64_arm64/unxz
+8.9K  ./baseutils/aarch64_arm64/updatedb
+651K  ./baseutils/aarch64_arm64/uptime
+130K  ./baseutils/aarch64_arm64/users
+651K  ./baseutils/aarch64_arm64/utmpdump
+715K  ./baseutils/aarch64_arm64/uuidd
+651K  ./baseutils/aarch64_arm64/uuidgen
+715K  ./baseutils/aarch64_arm64/uuidparse
+259K  ./baseutils/aarch64_arm64/vdir
+715K  ./baseutils/aarch64_arm64/vmstat
+586K  ./baseutils/aarch64_arm64/waitpid
+779K  ./baseutils/aarch64_arm64/wall
+972K  ./baseutils/aarch64_arm64/watch
+130K  ./baseutils/aarch64_arm64/wc
+715K  ./baseutils/aarch64_arm64/wdctl
+115K  ./baseutils/aarch64_arm64/wget-busybox
+587K  ./baseutils/aarch64_arm64/whereis
+67K   ./baseutils/aarch64_arm64/which
+194K  ./baseutils/aarch64_arm64/who
+130K  ./baseutils/aarch64_arm64/whoami
+844K  ./baseutils/aarch64_arm64/wipefs
+130K  ./baseutils/aarch64_arm64/xargs
+259K  ./baseutils/aarch64_arm64/xz
+0     ./baseutils/aarch64_arm64/xzcat
+0     ./baseutils/aarch64_arm64/xzcmp
+130K  ./baseutils/aarch64_arm64/xzdec
+7.3K  ./baseutils/aarch64_arm64/xzdiff
+0     ./baseutils/aarch64_arm64/xzegrep
+0     ./baseutils/aarch64_arm64/xzfgrep
+11K   ./baseutils/aarch64_arm64/xzgrep
+1.8K  ./baseutils/aarch64_arm64/xzless
+2.2K  ./baseutils/aarch64_arm64/xzmore
+130K  ./baseutils/aarch64_arm64/yes
+2.0K  ./baseutils/aarch64_arm64/zcat
+1.7K  ./baseutils/aarch64_arm64/zcmp
+6.3K  ./baseutils/aarch64_arm64/zdiff
+31    ./baseutils/aarch64_arm64/zegrep
+31    ./baseutils/aarch64_arm64/zfgrep
+2.1K  ./baseutils/aarch64_arm64/zforce
+8.1K  ./baseutils/aarch64_arm64/zgrep
+2.4K  ./baseutils/aarch64_arm64/zless
+1.8K  ./baseutils/aarch64_arm64/zmore
+4.5K  ./baseutils/aarch64_arm64/znew
+715K  ./baseutils/aarch64_arm64/zramctl
+
+[+] armv7_eabihf:
+
+406K  ./baseutils/armv7_eabihf/scp
+402K  ./baseutils/armv7_eabihf/sftp
+302K  ./baseutils/armv7_eabihf/sftp-server
+5.0M  ./baseutils/armv7_eabihf/ssh
+4.2M  ./baseutils/armv7_eabihf/ssh-add
+4.2M  ./baseutils/armv7_eabihf/ssh-agent
+4.4M  ./baseutils/armv7_eabihf/ssh-keygen
+4.4M  ./baseutils/armv7_eabihf/ssh-keyscan
+4.5M  ./baseutils/armv7_eabihf/ssh-keysign
+5.1M  ./baseutils/armv7_eabihf/sshd
+3.1K  ./baseutils/armv7_eabihf/sshd_config
+
+[+] x86_64:
+
+90K    ./baseutils/x86_64/[
+813K   ./baseutils/x86_64/addpart
+1.3M   ./baseutils/x86_64/agetty
+586K   ./baseutils/x86_64/awk
+99K    ./baseutils/x86_64/b2sum
+87K    ./baseutils/x86_64/base32
+87K    ./baseutils/x86_64/base64
+78K    ./baseutils/x86_64/basename
+95K    ./baseutils/x86_64/basenc
+1.1M   ./baseutils/x86_64/bash
+1.1M   ./baseutils/x86_64/blkdiscard
+1.2M   ./baseutils/x86_64/blkid
+817K   ./baseutils/x86_64/blkpr
+961K   ./baseutils/x86_64/blkzone
+957K   ./baseutils/x86_64/blockdev
+1.5M   ./baseutils/x86_64/bore
+1.2M   ./baseutils/x86_64/busybox
+1.2M   ./baseutils/x86_64/cal
+82K    ./baseutils/x86_64/cat
+2.0M   ./baseutils/x86_64/cfdisk
+102K   ./baseutils/x86_64/chcon
+953K   ./baseutils/x86_64/chcpu
+110K   ./baseutils/x86_64/chgrp
+865K   ./baseutils/x86_64/chmem
+98K    ./baseutils/x86_64/chmod
+949K   ./baseutils/x86_64/choom
+118K   ./baseutils/x86_64/chown
+114K   ./baseutils/x86_64/chroot
+825K   ./baseutils/x86_64/chrt
+171K   ./baseutils/x86_64/cksum
+817K   ./baseutils/x86_64/col
+817K   ./baseutils/x86_64/colcrt
+813K   ./baseutils/x86_64/colrm
+933K   ./baseutils/x86_64/column
+87K    ./baseutils/x86_64/comm
+147K   ./baseutils/x86_64/cp
+7.5M   ./baseutils/x86_64/croc
+162K   ./baseutils/x86_64/csplit
+945K   ./baseutils/x86_64/ctrlaltdel
+14     ./baseutils/x86_64/curl
+91K    ./baseutils/x86_64/cut
+139K   ./baseutils/x86_64/date
+1.4K   ./baseutils/x86_64/dcgen
+106K   ./baseutils/x86_64/dd
+813K   ./baseutils/x86_64/delpart
+0      ./baseutils/x86_64/depmod
+147K   ./baseutils/x86_64/df
+215K   ./baseutils/x86_64/dir
+115K   ./baseutils/x86_64/dircolors
+78K    ./baseutils/x86_64/dirname
+1.2M   ./baseutils/x86_64/dmesg
+255K   ./baseutils/x86_64/du
+74K    ./baseutils/x86_64/echo
+1.4M   ./baseutils/x86_64/eject
+825K   ./baseutils/x86_64/enosys
+95K    ./baseutils/x86_64/env
+83K    ./baseutils/x86_64/expand
+166K   ./baseutils/x86_64/expr
+127K   ./baseutils/x86_64/factor
+813K   ./baseutils/x86_64/fadvise
+817K   ./baseutils/x86_64/fallocate
+74K    ./baseutils/x86_64/false
+1.6M   ./baseutils/x86_64/fdisk
+909K   ./baseutils/x86_64/fincore
+308K   ./baseutils/x86_64/find
+1.1M   ./baseutils/x86_64/findfs
+1.4M   ./baseutils/x86_64/findmnt
+945K   ./baseutils/x86_64/flock
+87K    ./baseutils/x86_64/fmt
+83K    ./baseutils/x86_64/fold
+62K    ./baseutils/x86_64/frcode
+833K   ./baseutils/x86_64/free
+1.4M   ./baseutils/x86_64/fsck
+861K   ./baseutils/x86_64/fsck.cramfs
+1.1M   ./baseutils/x86_64/fsck.minix
+813K   ./baseutils/x86_64/fsfreeze
+1.3M   ./baseutils/x86_64/fstrim
+586K   ./baseutils/x86_64/gawk
+86K    ./baseutils/x86_64/getlimits
+817K   ./baseutils/x86_64/getopt
+163K   ./baseutils/x86_64/ginstall
+5.8M   ./baseutils/x86_64/git
+160K   ./baseutils/x86_64/git-cvsserver
+5.8M   ./baseutils/x86_64/git-receive-pack
+3.9M   ./baseutils/x86_64/git-shell
+5.8M   ./baseutils/x86_64/git-upload-archive
+5.8M   ./baseutils/x86_64/git-upload-pack
+393K   ./baseutils/x86_64/gitk
+13M    ./baseutils/x86_64/gost
+1.6M   ./baseutils/x86_64/grep
+86K    ./baseutils/x86_64/groups
+2.3K   ./baseutils/x86_64/gunzip
+6.3K   ./baseutils/x86_64/gzexe
+115K   ./baseutils/x86_64/gzip
+929K   ./baseutils/x86_64/hardlink
+90K    ./baseutils/x86_64/head
+1.1M   ./baseutils/x86_64/hexdump
+78K    ./baseutils/x86_64/hostid
+1005K  ./baseutils/x86_64/hwclock
+0      ./baseutils/x86_64/i386
+94K    ./baseutils/x86_64/id
+0      ./baseutils/x86_64/insmod
+817K   ./baseutils/x86_64/ionice
+817K   ./baseutils/x86_64/ipcmk
+817K   ./baseutils/x86_64/ipcrm
+1.2M   ./baseutils/x86_64/ipcs
+1.4M   ./baseutils/x86_64/irqtop
+813K   ./baseutils/x86_64/isosize
+99K    ./baseutils/x86_64/join
+825K   ./baseutils/x86_64/kill
+242K   ./baseutils/x86_64/kmod
+1.2M   ./baseutils/x86_64/last
+0      ./baseutils/x86_64/lastb
+825K   ./baseutils/x86_64/ldattach
+78K    ./baseutils/x86_64/link
+0      ./baseutils/x86_64/linux32
+0      ./baseutils/x86_64/linux64
+107K   ./baseutils/x86_64/ln
+190K   ./baseutils/x86_64/locate
+1.2M   ./baseutils/x86_64/logger
+78K    ./baseutils/x86_64/logname
+845K   ./baseutils/x86_64/look
+1.1M   ./baseutils/x86_64/losetup
+215K   ./baseutils/x86_64/ls
+1.5M   ./baseutils/x86_64/lsblk
+1.3M   ./baseutils/x86_64/lsclocks
+1.1M   ./baseutils/x86_64/lscpu
+1.4M   ./baseutils/x86_64/lsfd
+1.2M   ./baseutils/x86_64/lsipc
+1001K  ./baseutils/x86_64/lsirq
+1.4M   ./baseutils/x86_64/lslocks
+1.3M   ./baseutils/x86_64/lslogins
+1013K  ./baseutils/x86_64/lsmem
+0      ./baseutils/x86_64/lsmod
+1.4M   ./baseutils/x86_64/lsns
+0      ./baseutils/x86_64/lzcat
+0      ./baseutils/x86_64/lzcmp
+0      ./baseutils/x86_64/lzdiff
+0      ./baseutils/x86_64/lzegrep
+0      ./baseutils/x86_64/lzfgrep
+0      ./baseutils/x86_64/lzgrep
+0      ./baseutils/x86_64/lzless
+0      ./baseutils/x86_64/lzma
+62K    ./baseutils/x86_64/lzmadec
+78K    ./baseutils/x86_64/lzmainfo
+0      ./baseutils/x86_64/lzmore
+38K    ./baseutils/x86_64/make-prime-list
+821K   ./baseutils/x86_64/mcookie
+90K    ./baseutils/x86_64/md5sum
+925K   ./baseutils/x86_64/mesg
+86K    ./baseutils/x86_64/mkdir
+78K    ./baseutils/x86_64/mkfifo
+813K   ./baseutils/x86_64/mkfs
+817K   ./baseutils/x86_64/mkfs.bfs
+869K   ./baseutils/x86_64/mkfs.cramfs
+977K   ./baseutils/x86_64/mkfs.minix
+82K    ./baseutils/x86_64/mknod
+1.2M   ./baseutils/x86_64/mkswap
+82K    ./baseutils/x86_64/mktemp
+0      ./baseutils/x86_64/modinfo
+0      ./baseutils/x86_64/modprobe
+1.1M   ./baseutils/x86_64/more
+1.5M   ./baseutils/x86_64/mount
+1.3M   ./baseutils/x86_64/mountpoint
+147K   ./baseutils/x86_64/mv
+1013K  ./baseutils/x86_64/namei
+24M    ./baseutils/x86_64/ngrok
+82K    ./baseutils/x86_64/nice
+151K   ./baseutils/x86_64/nl
+82K    ./baseutils/x86_64/nohup
+813K   ./baseutils/x86_64/nologin
+82K    ./baseutils/x86_64/nproc
+961K   ./baseutils/x86_64/nsenter
+111K   ./baseutils/x86_64/numfmt
+111K   ./baseutils/x86_64/od
+1.2M   ./baseutils/x86_64/partx
+82K    ./baseutils/x86_64/paste
+78K    ./baseutils/x86_64/pathchk
+1.3M   ./baseutils/x86_64/pgrep
+1.2M   ./baseutils/x86_64/pidof
+1.3M   ./baseutils/x86_64/pidwait
+130K   ./baseutils/x86_64/pinky
+949K   ./baseutils/x86_64/pipesz
+813K   ./baseutils/x86_64/pivot_root
+1.3M   ./baseutils/x86_64/pkill
+1.2M   ./baseutils/x86_64/pmap
+135K   ./baseutils/x86_64/pr
+78K    ./baseutils/x86_64/printenv
+242K   ./baseutils/x86_64/printf
+910K   ./baseutils/x86_64/prlimit
+1.3M   ./baseutils/x86_64/ps
+167K   ./baseutils/x86_64/ptx
+86K    ./baseutils/x86_64/pwd
+813K   ./baseutils/x86_64/pwdx
+86K    ./baseutils/x86_64/readlink
+969K   ./baseutils/x86_64/readprofile
+90K    ./baseutils/x86_64/realpath
+905K   ./baseutils/x86_64/rename
+1001K  ./baseutils/x86_64/renice
+949K   ./baseutils/x86_64/resizepart
+813K   ./baseutils/x86_64/rev
+1.1M   ./baseutils/x86_64/rfkill
+107K   ./baseutils/x86_64/rm
+82K    ./baseutils/x86_64/rmdir
+0      ./baseutils/x86_64/rmmod
+997K   ./baseutils/x86_64/rtcwake
+78K    ./baseutils/x86_64/runcon
+4.0M   ./baseutils/x86_64/scalar
+379K   ./baseutils/x86_64/scp
+1.1M   ./baseutils/x86_64/script
+977K   ./baseutils/x86_64/scriptlive
+957K   ./baseutils/x86_64/scriptreplay
+187K   ./baseutils/x86_64/sed
+94K    ./baseutils/x86_64/seq
+953K   ./baseutils/x86_64/setarch
+813K   ./baseutils/x86_64/setpgid
+817K   ./baseutils/x86_64/setsid
+1.1M   ./baseutils/x86_64/setterm
+1.6M   ./baseutils/x86_64/sfdisk
+375K   ./baseutils/x86_64/sftp
+279K   ./baseutils/x86_64/sftp-server
+94K    ./baseutils/x86_64/sha1sum
+98K    ./baseutils/x86_64/sha224sum
+98K    ./baseutils/x86_64/sha256sum
+106K   ./baseutils/x86_64/sha384sum
+106K   ./baseutils/x86_64/sha512sum
+102K   ./baseutils/x86_64/shred
+99K    ./baseutils/x86_64/shuf
+1.3M   ./baseutils/x86_64/slabtop
+86K    ./baseutils/x86_64/sleep
+2.3M   ./baseutils/x86_64/slirp4netns
+171K   ./baseutils/x86_64/sort
+111K   ./baseutils/x86_64/split
+4.8M   ./baseutils/x86_64/ssh
+4.1M   ./baseutils/x86_64/ssh-add
+4.0M   ./baseutils/x86_64/ssh-agent
+4.2M   ./baseutils/x86_64/ssh-keygen
+4.3M   ./baseutils/x86_64/ssh-keyscan
+4.3M   ./baseutils/x86_64/ssh-keysign
+4.9M   ./baseutils/x86_64/sshd
+3.1K   ./baseutils/x86_64/sshd_config
+154K   ./baseutils/x86_64/stat
+90K    ./baseutils/x86_64/stdbuf
+106K   ./baseutils/x86_64/stty
+1.4M   ./baseutils/x86_64/sulogin
+82K    ./baseutils/x86_64/sum
+1.1M   ./baseutils/x86_64/swaplabel
+1.3M   ./baseutils/x86_64/swapoff
+1.4M   ./baseutils/x86_64/swapon
+805K   ./baseutils/x86_64/switch_root
+78K    ./baseutils/x86_64/sync
+1.2M   ./baseutils/x86_64/sysctl
+150K   ./baseutils/x86_64/tac
+118K   ./baseutils/x86_64/tail
+11M    ./baseutils/x86_64/tailscale
+21M    ./baseutils/x86_64/tailscaled
+654K   ./baseutils/x86_64/tar
+829K   ./baseutils/x86_64/taskset
+87K    ./baseutils/x86_64/tee
+86K    ./baseutils/x86_64/test
+107K   ./baseutils/x86_64/timeout
+949K   ./baseutils/x86_64/tload
+1.5M   ./baseutils/x86_64/top
+126K   ./baseutils/x86_64/touch
+739K   ./baseutils/x86_64/toybox
+91K    ./baseutils/x86_64/tr
+74K    ./baseutils/x86_64/true
+82K    ./baseutils/x86_64/truncate
+83K    ./baseutils/x86_64/tsort
+78K    ./baseutils/x86_64/tty
+953K   ./baseutils/x86_64/uclampset
+938K   ./baseutils/x86_64/ul
+1.5M   ./baseutils/x86_64/umount
+78K    ./baseutils/x86_64/uname
+0      ./baseutils/x86_64/uname26
+0      ./baseutils/x86_64/uncompress
+83K    ./baseutils/x86_64/unexpand
+91K    ./baseutils/x86_64/uniq
+78K    ./baseutils/x86_64/unlink
+0      ./baseutils/x86_64/unlzma
+1.1M   ./baseutils/x86_64/unshare
+0      ./baseutils/x86_64/unxz
+8.9K   ./baseutils/x86_64/updatedb
+969K   ./baseutils/x86_64/uptime
+86K    ./baseutils/x86_64/users
+1013K  ./baseutils/x86_64/utmpdump
+1.1M   ./baseutils/x86_64/uuidd
+985K   ./baseutils/x86_64/uuidgen
+1013K  ./baseutils/x86_64/uuidparse
+215K   ./baseutils/x86_64/vdir
+1.1M   ./baseutils/x86_64/vmstat
+861K   ./baseutils/x86_64/waitpid
+1.2M   ./baseutils/x86_64/wall
+1.3M   ./baseutils/x86_64/watch
+103K   ./baseutils/x86_64/wc
+1009K  ./baseutils/x86_64/wdctl
+99K    ./baseutils/x86_64/wget-busybox
+865K   ./baseutils/x86_64/whereis
+63K    ./baseutils/x86_64/which
+126K   ./baseutils/x86_64/who
+82K    ./baseutils/x86_64/whoami
+1.2M   ./baseutils/x86_64/wipefs
+0      ./baseutils/x86_64/x86_64
+98K    ./baseutils/x86_64/xargs
+255K   ./baseutils/x86_64/xz
+0      ./baseutils/x86_64/xzcat
+0      ./baseutils/x86_64/xzcmp
+98K    ./baseutils/x86_64/xzdec
+7.3K   ./baseutils/x86_64/xzdiff
+0      ./baseutils/x86_64/xzegrep
+0      ./baseutils/x86_64/xzfgrep
+11K    ./baseutils/x86_64/xzgrep
+1.8K   ./baseutils/x86_64/xzless
+2.2K   ./baseutils/x86_64/xzmore
+78K    ./baseutils/x86_64/yes
+2.0K   ./baseutils/x86_64/zcat
+1.7K   ./baseutils/x86_64/zcmp
+6.3K   ./baseutils/x86_64/zdiff
+31     ./baseutils/x86_64/zegrep
+31     ./baseutils/x86_64/zfgrep
+2.1K   ./baseutils/x86_64/zforce
+8.1K   ./baseutils/x86_64/zgrep
+2.4K   ./baseutils/x86_64/zless
+1.8K   ./baseutils/x86_64/zmore
+4.5K   ./baseutils/x86_64/znew
+1.1M   ./baseutils/x86_64/zramctl
+```
+
+---
+
