@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib (split(/:/, $ENV{GITPERLLIB} || '/tmp/tmp.aseWnzKwqk/git/Release/share/perl5'));
+use lib (split(/:/, $ENV{GITPERLLIB} || '/tmp/tmp.2EshLyMlrw/git/Release/share/perl5'));
 
 ####
 #### This application is a CVS emulation layer for git.
@@ -28,7 +28,7 @@ use File::Path qw/rmtree/;
 use File::Basename;
 use Getopt::Long qw(:config require_order no_ignore_case);
 
-my $VERSION = '2.43.0.rc2';
+my $VERSION = '2.43.0';
 
 my $log = GITCVS::log->new();
 my $cfg;
