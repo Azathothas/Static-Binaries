@@ -90,6 +90,22 @@ jobs:
           eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/curl"
           eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd64_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/curl"
           #----------#
+          ##DropBear
+          #aarch64_arm64
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dbclient_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dbclient"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbear_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbear"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearconvert_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearconvert"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearkey_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearkey"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearmulti_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearmulti"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearscp_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearscp"
+          #x86_64
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dbclient_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dbclient"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbear_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbear"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearconvert_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearconvert"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearkey_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearkey"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearmulti_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearmulti"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearscp_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearscp"
+          #----------#
           ##FindUtils
           eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
