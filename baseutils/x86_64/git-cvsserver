@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib (split(/:/, $ENV{GITPERLLIB} || '/tmp/tmp.Dptc7p9s2k/git/Release/share/perl5'));
+use lib (split(/:/, $ENV{GITPERLLIB} || '/tmp/tmp.pXE96orbPn/git/Release/share/perl5'));
 
 ####
 #### This application is a CVS emulation layer for git.
