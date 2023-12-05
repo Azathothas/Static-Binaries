@@ -1,0 +1,948 @@
+name: Build || Fetch Bore Binaries
+#MAX_RUNTIME: 90 Minutes 45 18 * * * [18:45 (06:45 PM) UTC --> (05H+45M) 12:30 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 18 * * *"  
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/ekzhang/bore && cd bore
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/bore/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Fetched & Updated"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Fetching... --> v$VERSION (from <-- v$STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/bore/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Download Latest Source Code (Github_API)
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url') -o "$HOME/bore.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/bore.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/ekzhang/bore.git 
+            zip -ro "./bore.zip" "./bore" && mv "./bore.zip" "$HOME/"
+          fi
+        continue-on-error: false
+        
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+
+      - name: Install Build Dependencies
+        if: env.versions_same != 'true'
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          cargo install cross --git https://github.com/cross-rs/cross\n"
+          
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/bore"
+          
+    #Build using rustup | rust-cross
+    #Complete Tool Chain List: `rustup target list`
+    #Cross Target List: https://github.com/cross-rs/cross#supported-targets
+
+   ##Android
+      - name: Install Android NDK
+        if: env.versions_same != 'true'
+        run: |
+          #Download the Android NDK Toolchain
+          cd $(mktemp -d) && curl -qfSLJO "https://dl.google.com/android/repository/android-ndk-r25c-linux.zip"
+          #Unzip
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          mkdir -p "$HOME/.android/android-ndk" && mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "$HOME/.android/android-ndk" 
+        continue-on-error: true     
+          
+      - name: Build bore for aarch64_arm64_Android [cross-llvm-NDK]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="aarch64-linux-android"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv_abi_Android [cross-llvm-NDK]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-linux-androideabi"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv_abi_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abi_Android [cross-llvm-NDK]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-linux-androideabi"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for i686_Android [cross-llvm-NDK]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i686-linux-android"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          rustup target add "$TARGET"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i686_Android"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      # - name: Build bore for x86_64_Android [cross-llvm-NDK]
+      #   if: env.versions_same != 'true'
+      #   run: |
+      #     # Get latest Source Code
+      #     cd $(mktemp -d) && curl -LOJ $(curl -qfs "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.zipball_url')
+      #     find . -type f -name '*.zip*' -exec unzip -o {} \;
+      #     cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+      #     # Build
+      #     export TARGET="x86_64-linux-android"
+      #     export RUSTFLAGS="-C target-feature=+crt-static"
+      #     echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+      #     rustup target add "$TARGET"
+      #     cross build --target "$TARGET" --release
+      #     mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_x86_64_Android"
+      #     #Del Docker Images
+      #     docker rmi -f $(docker images -q) >/dev/null 2>&1 
+      #     # Remove tmp files
+      #     #rm -rf /tmp >/dev/null 2>&1  
+      #   continue-on-error: true  
+
+   ##Linux 
+      - name: Build bore for aarch64_arm64_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="aarch64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for aarch64_arm64_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="aarch64-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1          
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for amd_x86_i686_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i686-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for amd_x86_64_gcc [cargo-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="x86_64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for amd_x86_i686_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i686-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_i686_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for amd_x86_64_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="x86_64-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for arm_abi_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-unknown-linux-gnueabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for arm_abi_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-unknown-linux-musleabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abi_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for arm_abihf_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-unknown-linux-gnueabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for arm_abihf_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="arm-unknown-linux-musleabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_arm_abihf_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abi_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-unknown-linux-gnueabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abi_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-unknown-linux-musleabi"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abi_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abihf_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-unknown-linux-gnueabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for armv7_abihf_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="armv7-unknown-linux-musleabihf"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_armv7_abihf_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for i586_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i586-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for i586_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="i586-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_i586_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for mips_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for mips_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for mipsel_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mipsel-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for mipsel_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mipsel-unknown-linux-musl"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mipsel_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for mips64_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64-unknown-linux-gnuabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true 
+
+      - name: Build bore for mips64_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for mips64el_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64el-unknown-linux-gnuabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for mips64el_musl [cross-MUSL]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="mips64el-unknown-linux-muslabi64"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_mips64el_musl_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for powerpc_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="powerpc-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc_ppc_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build bore for powerpc64_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="powerpc64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc64_ppc64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true 
+
+      - name: Build bore for powerpc64le_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="powerpc64le-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_powerpc64le_ppc64le_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for riscv64_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="riscv64gc-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_riscv64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for s390x_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="s390x-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_s390x_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build bore for sparc64_gcc [cross-GCC]
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/bore.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export TARGET="sparc64-unknown-linux-gnu"
+          rustup target add "$TARGET"
+          export RUSTFLAGS="-C target-feature=+crt-static"
+          echo -e '\n[profile.release]\nstrip = true\nopt-level = "z"\nlto = true' >> "./Cargo.toml"
+          cross build --target "$TARGET" --release
+          mv "./target/$TARGET/release/bore" "$GITHUB_WORKSPACE/main/bore/bore_sparc64_gcc_Linux"
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+     
+     #Fetch
+      - name: Fetch Bore bins ( macOS || Windows )
+        if: env.versions_same != 'true'
+        run: |
+          #macOS
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'aarch64-apple-darwin.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'bore' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_aarch64_arm64_macOS" \;             
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'x86_64-apple-darwin.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'bore' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_x86_64_macOS" \;                 
+          #Windows      
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'i686-pc-windows-msvc.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'bore.exe' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_Windows.exe" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/ekzhang/bore/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'x86_64-pc-windows-msvc.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'bore*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'bore.exe' -exec mv {} "$GITHUB_WORKSPACE/main/bore/bore_amd_x86_64_Windows.exe" \;               
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
+        run: |
+          #Strip All Android Bins
+          "$HOME/.android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip" $GITHUB_WORKSPACE/main/bore/*_Android
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/bore/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/bore/" -type f -name 'bore*' -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+        
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./bore/INFO.md > ./bore/README.md
+           echo -e "" >> ./bore/README.md 
+           echo '---' >> ./bore/README.md
+           echo '```console' >> ./bore/README.md
+           echo -e "" >> ./bore/README.md
+           echo -e "--> METADATA" >> ./bore/README.md
+           /bin/bash -c 'PS4="$ "; file ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md
+           echo -e "" >> ./bore/README.md
+           echo -e "--> SHA256SUM" >> ./bore/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./bore/bore* | grep -v '.txt' ' &>> ./bore/README.md   
+           echo -e '```\n' >> ./bore/README.md
+           echo -e "" >> ./bore/README.md
+           echo '---' >> ./bore/README.md
+           echo -e "" >> ./bore/README.md
+           echo '- #### Sizes' >> ./bore/README.md 
+           echo -e "" >> ./bore/README.md
+           echo '```console' >> ./bore/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./bore/bore* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./bore/README.md
+           echo '```' >> ./bore/README.md     
+           echo -e "" >> ./bore/README.md 
+           echo '---' >> ./bore/README.md 
+           echo -e "" >> ./bore/README.md 
+           echo '- #### Version' >> ./bore/README.md 
+           echo '```console' >> ./bore/README.md 
+           echo -e "" >> ./bore/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./bore/bore_amd_x86_64_musl_Linux --version' &>> ./bore/README.md 
+           echo -e "" >> ./bore/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./bore/bore_amd_x86_64_musl_Linux -h' &>> ./bore/README.md 
+           echo -e "" >> ./bore/README.md
+           echo -e "" >> ./bore/README.md 
+           echo '```' >> ./bore/README.md 
+           echo -e "" >> ./bore/README.md        
+           echo '---' >> ./bore/README.md 
+           echo -e "" >> ./bore/README.md 
+        working-directory: main
+        continue-on-error: true
+        
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+        
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Build || Fetch bore Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "bore ${{ env.VERSION }}"
+          tag_name: "bore_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/bore/bore/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/bore#install-bore_
+          files: |
+            ${{github.workspace}}/main/bore/*_Android
+            ${{github.workspace}}/main/bore/*.exe
+            ${{github.workspace}}/main/bore/*_Linux
+            ${{github.workspace}}/main/bore/*_macOS

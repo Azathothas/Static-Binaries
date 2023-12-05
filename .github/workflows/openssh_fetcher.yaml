@@ -1,0 +1,224 @@
+name: Fetch OpenSSH Binaries
+#MAX_RUNTIME: 15 Minutes 30 21 * * * [21:30 (09:30 PM) UTC --> (05H+45M) 03:15 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 22 * * *"
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL https://api.github.com/repos/openssh/openssh-portable/tags | jq -r '.[0].name')
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/openssh/openssh-portable && cd openssh-portable
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV          
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/openssh/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Fetched & Updated"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Fetching... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/openssh/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+          curl -qfsSL "https://zyedidia.github.io/eget.sh" | bash
+          sudo mv ./eget* "/usr/local/bin/eget"
+          sudo chmod +xwr "/usr/local/bin/eget"
+          
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/openssh"
+
+     #Fetch
+      - name: Fetch openssh bins
+        if: env.versions_same != 'true'
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+         #Linux   
+         #Linux
+         #aarch64_arm64 || armv8
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_aarch64" --to "$GITHUB_WORKSPACE/main/openssh/sshd_aarch64_arm64_Linux" \;  
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_aarch64" --to "$GITHUB_WORKSPACE/main/openssh/sshd_config_aarch64_arm64_Linux" \;
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_aarch64" --to "$GITHUB_WORKSPACE/main/openssh/sftp_server_aarch64_arm64_Linux" \;
+         #amd64_x86_64 
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_amd_x86_64" --to "$GITHUB_WORKSPACE/main/openssh/sshd_amd_x86_64_Linux" \;  
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_amd_x86_64" --to "$GITHUB_WORKSPACE/main/openssh/sshd_config_amd_x86_64_Linux" \;
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_amd_x86_64" --to "$GITHUB_WORKSPACE/main/openssh/sftp_server_amd_x86_64_Linux" \; 
+         #armv7
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_armv7_eabihf" --to "$GITHUB_WORKSPACE/main/openssh/sshd_armv7_eabihf_Linux" \;  
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_armv7_eabihf" --to "$GITHUB_WORKSPACE/main/openssh/sshd_config_armv7_eabihf_Linux" \;
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_armv7_eabihf" --to "$GITHUB_WORKSPACE/main/openssh/sftp_server_armv7_eabihf_Linux" \;                 
+         #i686 
+         #mips
+         #mipsel            
+         #mips64
+         #mips64el  
+         #powerpc
+         #powerpc64le                
+         #riscv64        
+         #s390x
+         #-------------------------#
+         #macOS
+         #aarch64_arm64 || armv8       
+         #amd64_x86_64 
+         #-------------------------# 
+         #Windows 
+         #Windows 32-bit
+          #msi
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols|arm|win64' | grep -i 'Win32' | grep -i 'msi') -o "$GITHUB_WORKSPACE/main/openssh/openssh_amd_x86_Windows.msi"
+          #zip
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols|arm|win64' | grep -i 'Win32' | grep -i 'zip') -o "$GITHUB_WORKSPACE/main/openssh/openssh_amd_x86_Windows.zip"
+         #Windows x86_64_amd64 
+          #msi
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols|arm64' | grep -i 'Win64' | grep -i 'msi') -o "$GITHUB_WORKSPACE/main/openssh/openssh_amd_x86_64_Windows.msi"
+          #zip
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols|arm64' | grep -i 'Win64' | grep -i 'zip') -o "$GITHUB_WORKSPACE/main/openssh/openssh_amd_x86_64_Windows.zip"
+         #Windows arm
+          #zip
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols|64' | grep -i 'arm' | grep -i 'zip') -o "$GITHUB_WORKSPACE/main/openssh/openssh_aarch_arm_Windows.zip"
+         #Windows arm64 
+          #msi
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols' | grep -i 'arm64' | grep -i 'msi') -o "$GITHUB_WORKSPACE/main/openssh/openssh_aarch64_arm64_Windows.msi"
+          #zip
+          curl -qfLJ $(curl -qfsSL https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest | jq -r '.assets[] | select(.browser_download_url) | .browser_download_url' | grep -ivE 'Symbols' | grep -i 'arm64' | grep -i 'zip') -o "$GITHUB_WORKSPACE/main/openssh/openssh_aarch64_arm64_Windows.zip"
+         #-------------------------# 
+         #Any leftovers
+          set +x              
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
+        run: |
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/openssh/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/openssh/" -type f -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+        
+        
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./openssh/INFO.md > ./openssh/README.md
+           echo -e "" >> ./openssh/README.md 
+           echo '---' >> ./openssh/README.md
+           echo '```console' >> ./openssh/README.md
+           echo -e "" >> ./openssh/README.md
+           echo -e "--> METADATA" >> ./openssh/README.md
+           /bin/bash -c 'PS4="$ ";file ./openssh/* | grep -v '.txt' ' &>> ./openssh/README.md
+           echo -e "" >> ./openssh/README.md
+           echo -e "--> SHA256SUM" >> ./openssh/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./openssh/* | grep -v '.txt' ' &>> ./openssh/README.md   
+           echo -e '```\n' >> ./openssh/README.md
+           echo -e "" >> ./openssh/README.md
+           echo '---' >> ./openssh/README.md
+           echo -e "" >> ./openssh/README.md
+           echo '- #### Sizes' >> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md
+           echo '```console' >> ./openssh/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./openssh/* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./openssh/README.md
+           echo '```' >> ./openssh/README.md     
+           echo -e "" >> ./openssh/README.md 
+           echo '---' >> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md 
+           echo '- #### Version' >> ./openssh/README.md 
+           echo '```console' >> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./openssh/sshd_amd_x86_64_Linux -h' &>> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./openssh/sftp_server_amd_x86_64_Linux -help' &>> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md
+           echo -e "" >> ./openssh/README.md 
+           echo '```' >> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md        
+           echo '---' >> ./openssh/README.md 
+           echo -e "" >> ./openssh/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Fetch OpenSSH Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "openssh ${{ env.VERSION }}"
+          tag_name: "openssh_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://openssh.se/changes.html_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/openssh#install-openssh_
+          files: |
+            ${{github.workspace}}/main/openssh/*_Linux
+            ${{github.workspace}}/main/openssh/*.msi
+            ${{github.workspace}}/main/openssh/*.zip

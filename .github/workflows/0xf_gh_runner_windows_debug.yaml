@@ -1,0 +1,130 @@
+name: 0xf ➼ Debug (gh-runner) Windows-Server-2022
+#Image : https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
+on:
+  workflow_dispatch:
+env:
+  #Authenticate with Ephemeral Key: https://login.tailscale.com/admin/settings/keys
+  TSKEY: "tskey-auth-ksYVhg1CNTRL-A5QDDdH66vU2pVMcgBy2wUYwzgL4Sv2F"
+  #The hostname you want your machine to have
+  THOST: "gh-runner-windows"
+  #Password for RDP || SSH || Windows_ADMIN 
+  WINDOWS_PASSWORD: "0xff_WIN1337f#"
+  #Public SSH Keys
+  SSH_PUBLIC_KEY_URL: "https://github.com/Azathothas.keys" 
+  
+jobs:
+  build:
+    runs-on: windows-latest
+    #Default Timeout= 6 Hr (360 Mins) : https://nesin.io/blog/github-action-timeout
+    #Docs: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration    
+    timeout-minutes: 690000000000  # Adjust the timeout as needed
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+                
+      - name: Get Sys-Info || Set User
+        run: |
+          # Print Basic Info
+          Write-Host "`n"
+          Write-Host -ForegroundColor Green "Current User: $env:USERNAME"
+          # Set a password, usually slight complex so it meets minimum requirements
+          Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "${{ env.WINDOWS_PASSWORD }}" -Force)
+          Write-Host -ForegroundColor Green "Current Pass: ${{ env.WINDOWS_PASSWORD }}"
+          Write-Host -ForegroundColor Green "Is_Admin: $((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))"
+          Write-Host -ForegroundColor Green "Hostname: $env:COMPUTERNAME"
+          Write-Host -ForegroundColor Green "Home: $env:HOMEDRIVE$env:HOMEPATH"
+          # Change the Timezone
+          tzutil /s "Nepal Standard Time"
+          Write-Host -ForegroundColor Green "DateTime: $((Get-Date).ToString("yyyy-MM-dd hh:mm:ss tt"))"
+          Write-Host "`n"
+          Write-Host -ForegroundColor Blue "ENV_PATH: $env:PATH`n"
+          # Run fastfetch
+          Invoke-WebRequest -Uri "https://github.com/fastfetch-cli/fastfetch/releases/download/1.12.2/fastfetch-1.12.2-Win64.zip" -OutFile "C:\tools\fastfetch.zip"; Expand-Archive -Path "C:\tools\fastfetch.zip" -DestinationPath "C:\tools\fastfetch" -Force | Out-Null
+          & "C:\tools\fastfetch\fastfetch.exe" --logo "windows" --logo-padding-top 8 --structure "Break:Break:Title:Separator:Icons:OS:Host:Kernel:Uptime:DateTime:Shell:CPU:CPUUSage:Processes:GPU:Memory:Disk:Packages:Display:DE:WM:WMTheme:Theme:Icons:Font:Cursor:Terminal:TerminalFont:Battery:PowerAdapter:Locale:LocalIP:PublicIP:Break:Colors:Break:Break" --publicip-url v4.ident.me
+          Write-Host $output  
+        continue-on-error: true
+
+      - name: Setup Tailscale
+        run: |
+          # Download the installer
+          Invoke-WebRequest -Uri "https://pkgs.tailscale.com/stable/$((Invoke-WebRequest -Uri "https://pkgs.tailscale.com/stable/").Links | Where-Object { $_.href -match 'tailscale-setup.*\.exe' } | ForEach-Object { $_.href } | Select-Object -First 1)" -OutFile "tailscale-setup.exe"
+          # Set it up
+          Start-Process -Wait -FilePath ".\tailscale-setup.exe" -ArgumentList "/install", "/quiet" | Out-Null
+          # Run the service
+          #Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale-ipn.exe"
+          Start-Sleep -Seconds 2
+          Start-Process -NoNewWindow -FilePath "C:\Program Files\Tailscale\tailscale.exe" -ArgumentList "up", "--unattended", --hostname="${{ env.THOST }}", --authkey="${{ env.TSKEY }}"
+        continue-on-error: true
+        
+    #https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell    
+      - name: Configure SSH 
+        run: |      
+         # TailScale SSH is not supported on windows: https://github.com/tailscale/tailscale/issues/4697
+         # Instead rely on a manual approach
+          Add-WindowsCapability -Online -Name OpenSSH.Server*
+          choco install openssh -y | Out-Null
+         #Start Service
+          . "C:\Program Files\OpenSSH-Win64\install-sshd.ps1"
+          . "C:\Program Files\OpenSSH-Win64\ssh-keygen.exe" -A
+          Start-Process -Wait -FilePath "C:\Program Files\OpenSSH-Win64\sshd.exe" -WindowStyle Hidden
+          Start-Sleep 5
+         #Fix Perms 
+          #https://github.com/PowerShell/Win32-OpenSSH/wiki/OpenSSH-utility-scripts-to-fix-file-permissions
+          . "C:\Program Files\OpenSSH-Win64\FixHostFilePermissions.ps1" -Confirm:$false | Out-Null
+          . "C:\Program Files\OpenSSH-Win64\FixUserFilePermissions.ps1" -Confirm:$false | Out-Null
+         #Add Public SSH Key
+          New-Item -Path "$env:USERPROFILE\.ssh" -ItemType Directory -Force
+          #Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value "$((Invoke-RestMethod -Uri "${{ env.SSH_PUBLIC_KEY_URL }}").Split("`n")[1])"
+          (Invoke-RestMethod -Uri "${{ env.SSH_PUBLIC_KEY_URL }}").Split("`n") | ForEach-Object { if (-not [string]::IsNullOrWhiteSpace($_)) { Add-Content -Path "$env:USERPROFILE\.ssh\authorized_keys" -Value $_ } }
+         #Configure SSH Config
+          $filePath = Join-Path $env:ProgramData "ssh\sshd_config"; if (-not (Test-Path $filePath)) { New-Item -Path (Split-Path $filePath) -Name "sshd_config" -ItemType File }; Add-Content -Path $filePath -Value "PasswordAuthentication yes`nAllowTcpForwarding yes`nPubkeyAuthentication yes"
+         #Configure Firewall
+          New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName "OpenSSH-Server-In-TCP"
+          New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Outbound -Action Allow -DisplayName "OpenSSH-Server-Out-TCP"
+          New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName "OpenSSH-Server-In-TCP-EdgeTraversal" -EdgeTraversalPolicy Allow
+          if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) {Write-Output "Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it..." New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22} else {Write-Output "Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists."} 
+          netsh firewall show state
+          ipconfig
+          arp -A
+        continue-on-error: true
+        
+      - name: Print Connection Details
+        run: |
+         # TailScale --> Check Authentication
+         Write-Host "`n"
+         while ($true) { $backendState = & "C:\Program Files\Tailscale\tailscale.exe" status --peers=false --json | jq -r '.BackendState'; if ($backendState -eq 'NeedsLogin' -or $backendState -eq 'NeedsMachineAuth') { Write-Host "Please Approve this device on 'https://login.tailscale.com/admin/machines'"; Start-Sleep -Seconds 5 } elseif ($backendState -eq 'Running') { Write-Host "Successfully Authenticated`n"; break } else { Write-Host "Unknown state: $backendState"; break } }
+         Write-Host "`n"
+         # TailScale --> Print RDP MagicDNS
+         Write-Host "Username: runneradmin"
+         Write-Host "Password: ${{ env.WINDOWS_PASSWORD }}"
+         & "C:\Program Files\Tailscale\tailscale.exe" status --peers=false --json | Out-String | ConvertFrom-Json | ForEach-Object { "RDP --> $($_.Self.DNSName.TrimEnd('.')):3389" }
+         & "C:\Program Files\Tailscale\tailscale.exe" status --peers=false --json | Out-String | ConvertFrom-Json | ForEach-Object { "    --> $($_.Self.TailscaleIps[0]):3389" }
+         # TailScale --> Print SSH MagicDNS
+         & "C:\Program Files\Tailscale\tailscale.exe" status --peers=false --json | Out-String | ConvertFrom-Json | ForEach-Object { "SSH --> ssh runneradmin@$($_.Self.DNSName.TrimEnd('.'))" }
+         # TailScale --> Print SSH TailscaleIP
+         & "C:\Program Files\Tailscale\tailscale.exe" status --peers=false --json | Out-String | ConvertFrom-Json | ForEach-Object { "    --> ssh runneradmin@$($_.Self.TailscaleIps[0])" }
+         # TaiScale netcheck
+         Write-Host "`n"
+         & "C:\Program Files\Tailscale\tailscale.exe" netcheck | Write-Host -ForegroundColor Green
+         # IpInfo
+         Write-Host "`n"
+         (Invoke-WebRequest -Uri 'http://ip-api.com/json/' -UseBasicParsing).Content | ConvertFrom-Json
+         Write-Host "`n"
+        continue-on-error: true
+
+      - name: Run Custom Cmd
+        run: |
+           Write-Host "Hellow"
+        continue-on-error: true
+        
+      - name: SSH (Breakpoint) || Sleep ∞
+        run: |        
+          #Finally ReStart 
+          #Stop-Process -Name sshd -Force 2>$null
+          Start-Process -Wait -FilePath "C:\Program Files\OpenSSH-Win64\sshd.exe" -WindowStyle Hidden ; Start-Sleep 5
+          #Check 
+          Get-Process -Name sshd   
+          #Sleep
+          while ($true) {Start-Sleep -Seconds 1} 
+        continue-on-error: true 

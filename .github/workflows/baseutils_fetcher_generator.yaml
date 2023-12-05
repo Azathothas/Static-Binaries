@@ -1,0 +1,392 @@
+name: Fetch BaseUtils Binaries
+#MAX_RUNTIME: 15 Minutes 45 21 * * * [21:45 (09:45 PM) UTC --> (05H+45M) 03:30 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 */7 * *"  #Every 7 Days
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Install CoreUtils
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget
+
+      - name: Install Addons
+        run: |
+          set +e
+          #eget
+          curl -qfsSL "https://zyedidia.github.io/eget.sh" | bash
+          sudo mv ./eget* "/usr/local/bin/eget"
+          sudo chmod +xwr "/usr/local/bin/eget"
+        continue-on-error: true
+
+      - name: Install 7z
+        run: |
+          set -x ; set +e
+          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/7z" -o "/usr/local/bin/7z"
+          sudo chmod +xwr "/usr/local/bin/7z"
+          sudo cp "/usr/local/bin/7z" "/usr/bin/7z"
+          sudo chmod +xwr "/usr/bin/7z"
+          7z -h
+        continue-on-error: true
+
+      - name: Setup Env
+        run: |
+          # Create Output Dir
+          #aarch64_arm64
+          mkdir -p "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #armv7_eabihf
+          mkdir -p "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
+          #x86_64
+          mkdir -p "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          
+     #Fetch
+      - name: Fetch baseutils
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #----------#
+          ##bash
+          eget "robxu9/bash-static" --asset "aarch64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/bash"
+          eget "robxu9/bash-static" --asset "x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/bash"
+          #----------#
+          ##bore
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/bore/bore_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/bore"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/bore/bore_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/bore"
+          ##busybox
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/busybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/busybox/busybox_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/busybox"
+          #----------#
+          ##coreutils
+          eget "Azathothas/static-toolbox" --tag "coreutils" --asset "coreutils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "coreutils" --asset "coreutils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##croc
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/croc"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/croc/croc_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/croc"
+          #----------#
+          ##Curl
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/curl"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/curl/curl_amd64_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/curl"
+          #----------#
+          ##DropBear
+          #aarch64_arm64
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dbclient_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dbclient"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbear_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbear"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearconvert_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearconvert"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearkey_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearkey"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearmulti_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearmulti"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearscp_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/dropbearscp"
+          #x86_64
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dbclient_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dbclient"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbear_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbear"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearconvert_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearconvert"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearkey_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearkey"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearmulti_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearmulti"
+          eget "Azathothas/static-toolbox" --tag "dropbear" --asset "dropbearscp_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/dropbearscp"
+          #----------#
+          ##FindUtils
+          eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "findutils" --asset "findutils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##git
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git"          
+          eget "Azathothas/static-toolbox" --tag "git" --asset "gitk_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gitk"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_cvsserver_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-cvsserver"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_receive_pack_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-receive-pack"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_shell_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-shell"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_upload_archive_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-upload-archive"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "git_upload_pack_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/git-upload-pack"
+          eget "Azathothas/static-toolbox" --tag "git" --asset "scalar_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/scalar"
+          #----------#
+          ##gost##
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/gost/gost_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/gost"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/gost/gost_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gost"
+          #----------#
+          ##gzip
+          eget "Azathothas/static-toolbox" --tag "gzip" --asset "gzip_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "gzip" --asset "gzip_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##kmod
+          eget "Azathothas/static-toolbox" --tag "kmod" --asset "kmod_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "kmod" --asset "kmod_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#          
+          ##misc-utils
+          #awk|gawk
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "awk_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/awk"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "awk_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/awk"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "gawk_amd_x86_64"  --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gawk"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "gawk_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/gawk"
+          #grep
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "grep_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/grep"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "grep_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/grep"
+          #sed
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "sed_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sed"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "sed_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/sed"
+          #tar
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "tar_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/tar"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "tar_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/tar"
+          #which
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "which_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/which"
+          eget "Azathothas/static-toolbox" --tag "misc" --asset "which_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/which"
+          #----------#
+          ##ngrok##
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/ngrok/ngrok_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ngrok"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/ngrok/ngrok_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ngrok"
+          #----------#
+          ##OpenSSH##
+          #x86_64
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "scp_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/scp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sftp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sftp-server"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-add_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh-add"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-agent_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh-agent"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keygen_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh-keygen"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keyscan_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh-keyscan"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keysign_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh-keysign"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sshd"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sshd_config"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/ssh"
+          #aarch64_arm64
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "scp_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/scp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/sftp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/sftp-server"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-add_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh-add"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-agent_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh-agent"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keygen_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh-keygen"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keyscan_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh-keyscan"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keysign_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh-keysign"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/sshd"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/sshd_config"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/ssh"
+          #armv7_eabihf
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "scp_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/scp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/sftp"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sftp_server_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/sftp-server"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-add_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh-add"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-agent_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh-agent"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keygen_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh-keygen"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keyscan_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh-keyscan"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh-keysign_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh-keysign"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/sshd"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "sshd_config_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/sshd_config"
+          eget "Azathothas/static-toolbox" --tag "openssh" --asset "ssh_armv7_eabihf_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf/ssh"          
+          #----------#          
+          ##procps##
+          eget "Azathothas/static-toolbox" --tag "procps" --asset "procps_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "procps" --asset "procps_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##slirp4netns
+          eget "rootless-containers/slirp4netns" --asset "aarch64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/slirp4netns"
+          eget "rootless-containers/slirp4netns" --asset "x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/slirp4netns"
+          #----------#
+          ##TailScale
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/tailscale"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_aarch64_arm64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/tailscaled"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscale_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/tailscale"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/tailscale/tailscaled_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/tailscaled"
+          #----------#
+          ##toybox
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_arm64_aarch64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/toybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/toybox/toybox_amd_x86_64_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/toybox"
+          #----------#
+          ##util-linux
+          eget "Azathothas/static-toolbox" --tag "linux" --asset "util_linux_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "linux" --asset "util_linux_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #----------#
+          ##wget
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/wget_busybox_aarch64_arm64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/wget-busybox"
+          eget "https://raw.githubusercontent.com/Azathothas/Static-Binaries/main/wget/wget_busybox_amd_x86_64_musl_Linux" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/wget-busybox"
+          #----------#
+          ##xz-utils
+          eget "Azathothas/static-toolbox" --tag "xz" --asset "xz_utils_amd_x86_64" --all --to "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          eget "Azathothas/static-toolbox" --tag "xz" --asset "xz_utils_aarch64_arm64" --all --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #-------------------------# 
+          #Any leftovers
+          set +x
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
+        run: |
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/baseutils/" -type f -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/baseutils/" -type f -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+        
+      - name: Update README.md
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           touch ./baseutils/README.md
+           #cat ./baseutils/INFO.md > ./baseutils/README.md
+           echo -e "" >> ./baseutils/README.md 
+           echo '---' >> ./baseutils/README.md
+           echo '```console' >> ./baseutils/README.md
+           echo -e "" >> ./baseutils/README.md
+           echo -e "--> METATDATA" >> ./baseutils/README.md
+           echo -e "\n[+] aarch64_arm64:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ "; file ./baseutils/aarch64_arm64/* | grep -v '.txt' ' &>> ./baseutils/README.md
+           echo -e "\n[+] armv7_eabihf:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ "; file ./baseutils/armv7_eabihf/* | grep -v '.txt' ' &>> ./baseutils/README.md           
+           echo -e "\n[+] x86_64:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ "; file ./baseutils/x86_64/* | grep -v '.txt' ' &>> ./baseutils/README.md
+           echo -e "" >> ./baseutils/README.md
+           echo -e "--> SHA256SUM" >> ./baseutils/README.md
+           echo -e "\n[+] aarch64_arm64:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./baseutils/aarch64_arm64/* | grep -v '.txt' ' &>> ./baseutils/README.md
+           echo -e "\n[+] armv7_eabihf:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./baseutils/armv7_eabihf/* | grep -v '.txt' ' &>> ./baseutils/README.md
+           echo -e "\n[+] x86_64:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./baseutils/x86_64/* | grep -v '.txt' ' &>> ./baseutils/README.md  
+           echo -e '```\n' >> ./baseutils/README.md
+           echo -e "" >> ./baseutils/README.md
+           echo '---' >> ./baseutils/README.md
+           echo -e "" >> ./baseutils/README.md
+           echo '- #### Sizes' >> ./baseutils/README.md 
+           echo -e "" >> ./baseutils/README.md
+           echo '```console' >> ./baseutils/README.md 
+           echo -e "\n[+] aarch64_arm64:\n" >> ./baseutils/README.md      
+           /bin/bash -c 'PS4="$ ";ls -lh ./baseutils/aarch64_arm64/* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./baseutils/README.md
+           echo -e "\n[+] armv7_eabihf:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./baseutils/armv7_eabihf/* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./baseutils/README.md
+           echo -e "\n[+] x86_64:\n" >> ./baseutils/README.md
+           /bin/bash -c 'PS4="$ ";ls -lh ./baseutils/x86_64/* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./baseutils/README.md
+           echo '```' >> ./baseutils/README.md     
+           echo -e "" >> ./baseutils/README.md 
+           echo '---' >> ./baseutils/README.md 
+           echo -e "" >> ./baseutils/README.md
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+        
+      - name: Get DateTime
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Fetch BaseUtils 📦 <-- at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+      - name: Archive Binaries (.tar | .7z)
+        run: |
+          #Presets
+          set +e ; set -x
+          #--------------#
+          mkdir -p /tmp/releases
+          cd /tmp 
+          # Compress to tar (size ~ orignal_size, maybe slight increase)
+          ##aarch64_arm64
+          #tar
+          tar -cvf "/tmp/releases/baseutils_aarch64_arm64.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.tar" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_aarch64_arm64.tar" -lahr
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_aarch64_arm64.7z" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_aarch64_arm64.7z" -lahr
+          ##armv7_eabihf
+          #tar
+          tar -cvf "/tmp/releases/baseutils_armv7_eabihf.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.tar" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_armv7_eabihf.tar" -lahr
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_armv7_eabihf.7z" "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_armv7_eabihf.7z" -lahr
+          ##x86_64
+          #tar
+          tar -cvf "/tmp/releases/baseutils_x86_64.tar" -C "/tmp" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #7z a -r -ttar -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.tar" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_x86_64.tar" -lahr
+          #.7z
+          7z a -r -t7z -mx="9" -mmt="$(($(nproc)+1))" "/tmp/releases/baseutils_x86_64.7z" "$GITHUB_WORKSPACE/main/baseutils/x86_64" 2>/dev/null
+          echo -e "\n\n" ; ls "/tmp/releases/baseutils_x86_64.7z" -lahr
+        continue-on-error: true
+
+      - name: Create Body for Release
+        run: |
+          set +e
+          cd "/tmp/releases"
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '---' >> /tmp/RELEASE_NOTE.md
+          echo '```console' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo "Details: 'https://github.com/Azathothas/Static-Binaries/tree/main/baseutils'" >> /tmp/RELEASE_NOTE.md    
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo -e "--> METADATA" >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ "; file ./* | grep -v '.txt' '&>> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo -e "--> SHA256SUM" >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ ";sha256sum ./* | grep -v '.txt' ' &>> /tmp/RELEASE_NOTE.md  
+          echo -e '```\n' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '---' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md         
+          echo '- #### Sizes' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '```console' >> /tmp/RELEASE_NOTE.md
+          /bin/bash -c 'PS4="$ "; ls -lh ./* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+          echo '```' >> /tmp/RELEASE_NOTE.md
+          echo -e "" >> /tmp/RELEASE_NOTE.md
+        continue-on-error: true
+
+      - name: Get Safe_DateTime
+        run: |
+          # Date Time
+          SAFE_NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d_%I:%M:%S_%p' | tr ' :-' '_')
+          echo "SAFE_NEPALI_TIME=$SAFE_NEPALI_TIME" >> $GITHUB_ENV
+        continue-on-error: true
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "BaseUtils Weekly ${{ env.SAFE_NEPALI_TIME }}"
+          tag_name: "baseutils_${{ env.SAFE_NEPALI_TIME }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          body_path: "/tmp/RELEASE_NOTE.md"
+          files: |
+            /tmp/releases/baseutils_aarch64_arm64.tar
+            /tmp/releases/baseutils_aarch64_arm64.7z
+            /tmp/releases/baseutils_armv7_eabihf.tar
+            /tmp/releases/baseutils_armv7_eabihf.7z
+            /tmp/releases/baseutils_x86_64.tar
+            /tmp/releases/baseutils_x86_64.7z
+        continue-on-error: true

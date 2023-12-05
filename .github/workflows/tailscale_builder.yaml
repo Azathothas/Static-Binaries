@@ -1,0 +1,679 @@
+name: Build || Fetch Tailscale Binaries
+#MAX_RUNTIME: 70 Minutes 45 23 * * * [23:45 (11:45 PM) UTC --> (05H+45M) 05:30 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 23 * * *" 
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  DOWNLOAD_PAGE: "https://pkgs.tailscale.com/stable/?mode=json"
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+ 
+jobs:
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+  build_on_macos:
+    #Not necessary as this finishes very quickly
+    #needs: build_on_ubuntu  # Let Linux Builds Finish First
+    runs-on: macos-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+   #Incase changes were made after workflow ran      
+      - name: Pull latest changes from main
+        run: |
+          cd "$GITHUB_WORKSPACE/main" && git pull origin main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale && cd tailscale
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash          
+
+      - name: Download Latest Source Code (Github_API)
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/tailscale.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
+            zip -ro "./tailscale.zip" "./tailscale" && mv "./tailscale.zip" "$HOME/"
+          fi
+        continue-on-error: false
+
+      - name: Build Tailscale for darwin/amd64 (macos_amd64)
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=darwin
+          export GOARCH=amd64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_macOS"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_macOS"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_macOS"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+
+      - name: Build Tailscale for darwin/arm64 (macos_arm64)
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=darwin
+          export GOARCH=arm64
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_macOS"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_macOS"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_macOS"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |
+          echo "This is done by Ubuntu-Builder"
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Build || Fetch Tailscale Binaries <-- ${{ env.VERSION }}"
+          #push_options: '--force'
+          
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+  build_on_ubuntu:
+    needs: build_on_macos  #Wait for macOS builds to finish before checking out the repo
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+   #Incase changes were made after workflow ran      
+      - name: Pull latest changes from main
+        run: |
+          cd "$GITHUB_WORKSPACE/main" && git pull origin main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale && cd tailscale
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash   
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/tailscale/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Download Latest Source Code (Github_API)
+        if: env.versions_same != 'true'
+        run: |
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/tailscale/tailscale/releases/latest" | jq -r '.zipball_url') -o "$HOME/tailscale.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/tailscale.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/tailscale/tailscale.git 
+            zip -ro "./tailscale.zip" "./tailscale" && mv "./tailscale.zip" "$HOME/"
+          fi
+        continue-on-error: false
+
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+
+      - name: Install upX
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && curl -qfLJO "$(curl -s https://api.github.com/repos/upx/upx/releases/latest | jq -r '.assets[].browser_download_url' | grep -i 'amd64_linux')"
+          find . -type f -name '*tar*' -exec tar -xvf {} \;
+          sudo find . -type f -name 'upx' -exec mv {} "$(which upx)" \;  
+        continue-on-error: false
+        
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
+
+    #Build using go tool chain
+    #Complete Tool Chain List: `go tool dist list`
+    #   - name: Build Tailscale for dockcross/android-x86_64
+    #     run: | 
+    #       # Get latest Source Code
+    #       cd $(mktemp -d) && curl -LOJ $(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | jq -r '.zipball_url')
+    #       find . -type f -name '*.zip*' -exec unzip -o {} \;
+    #       cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+    #       # Build
+    #       docker run --privileged -v $(pwd):/work dockcross/android-x86_64 bash -c "bash <(curl -sL https://git.io/go-installer) ; export PATH=/root/.go/bin:$PATH ; export PATH=/root/go/bin:$PATH  ; GOOS=android GOARCH=amd64 CGO_ENABLED=0 /root/.go/bin/go build -v -ldflags=\"-s -w -extldflags '-static'\" \"./cmd/tailscale\""
+    #       docker run --privileged -v $(pwd):/work dockcross/android-x86 bash -c "bash <(curl -sL https://git.io/go-installer) ; GOOS=android GOARCH=386 CGO_ENABLED=0 /root/.go/bin/go build -v -ldflags=\"-s -w -extldflags '-static'\" \"./cmd/tailscaled\""
+    #       # Strip & move
+    #       strip "./tailscale" "./tailscaled" 2>/dev/null
+    #       mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd64_x86_64_Android"
+    #       mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd64_x86_64_Android"  
+    #       # Remove tmp files
+    #       #rm -rf /tmp >/dev/null 2>&1   
+    # ERROR: loadinternal: cannot find runtime/cgo
+
+      - name: Delete Existing UPX Bins (II)
+        if: env.versions_same != 'true'
+        run: |
+          find "$GITHUB_WORKSPACE/main/tailscale" -type f -name '*.upx' -exec rm {} \;       
+        continue-on-error: false
+
+      - name: Build Tailscale (Combined) for linux/aarch64_arm64
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=arm64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux"
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux.upx" & 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/amd_x86_64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=amd64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux"
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux.upx" & 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/arm
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=arm
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux"
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux.upx" & 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale (Combined) for linux/i386
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=386
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux"
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux.upx" & 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build Tailscale for linux/powerpc64_ppc64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64_ppc64_Linux"
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64_ppc64_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64_ppc64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64_ppc64_Linux.upx" & 
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build Tailscale for linux/powerpc64le_ppc64le
+        if: env.versions_same != 'true'
+        run: |
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64le
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" 
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux" 
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_powerpc64le_ppc64le_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_powerpc64le_ppc64le_Linux.upx" &
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1                          
+        continue-on-error: true    
+        
+      - name: Build Tailscale for linux/s390x
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/tailscale.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd "$(find . -maxdepth 1 -type d | grep -v '^.$')"
+          # Build
+          export GOOS=linux
+          export GOARCH=s390x
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
+          mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"
+          mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_s390x_Linux"  
+          mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_s390x_Linux"
+          #Compress with upx
+          # Not Supported: https://github.com/upx/upx/issues/17
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+        
+     #docker run --privileged -v $(pwd):/work dockcross/linux-arm64 bash -c "sudo apt install '*ares*' autoconf automake autopoint autotools-dev gettext '*gnutls*' libc-ares-dev libcppunit-dev libexpat1-dev libgcrypt-dev libgmp-dev libgpg-error-dev libsqlite3-dev libssh2-1-dev '*libssl*' libunistring-dev libtool libxml2-dev openssl nettle-dev '*p11-kit*' pkg-config python3-pip zlib1g-dev -y --ignore-missing --no-install-recommends ; pip3 install sphinx ; cd ./tailscale && make clean && autoreconf -i && ./configure --host=aarch64-linux-gnu tailscale_STATIC=yes && make -j$(($(nproc)+1)) ; echo -e '----------------' ; sudo chmod +xwr ./src/tailscalec && ./src/tailscalec --version "
+     
+     #Fetch
+      - name: Fetch tailscale bins [ Stable ]
+        if: env.versions_same != 'true'
+        run: |
+         #-------------------------#
+         # If this breaks, in the future use: https://pkgs.tailscale.com/stable/?mode=json
+         # Example: curl -qfsLJO "https://pkgs.tailscale.com/stable/$(curl -qfsSL \"${{ env.DOWNLOAD_PAGE }}\" -H \"${{ env.USER_AGENT }}\" | jq -r '.Tarballs.\"arm\"')"
+          set -x ; set +e
+         #-------------------------#          
+         #Linux        
+          #386
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_386\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_386.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_i386_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_i386_systemd.defaults_Linux" \;
+
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_arm_abi_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_arm_abi_systemd.defaults_Linux" \;
+
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_arm64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_arm64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_systemd.defaults_Linux" \;
+          
+          #amd_geode
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_geode\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_geode.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_geode_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_geode_systemd.defaults_Linux" \;    
+               
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_amd64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_amd64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Linux.upx" & 
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_systemd.defaults_Linux" \;       
+          
+          #mips 
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips_systemd.defaults_Linux" \;
+          
+          #mipsel|mipsle  
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mipsle\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mipsle.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" \;
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_mipsle_Linux.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_Linux.upx" &
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mipsle_systemd.defaults_Linux" \;
+          
+          #mips64  
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_Linux" \;
+          #Compress with upx
+          # Not Supported: https://github.com/upx/upx/issues/272
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64_systemd.defaults_Linux" \;
+
+          #mips64le
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_mips64le\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_mips64le.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_mips64le_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_Linux" \;
+          #Compress with upx
+          # Not Supported: https://github.com/upx/upx/issues/272
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_mips64le_systemd.defaults_Linux" \;   
+
+          #riscv64      
+          cd $(mktemp -d) && curl -qfLJ $(curl -qfsSL "https://pkgs.tailscale.com/stable/#static" | grep -oE 'href="([^"]*tailscale_[^"]*_riscv64\.tgz)"' | sed -E 's/href="([^"]*)"/https:\/\/pkgs.tailscale.com\/stable\/\1/') -o "tailscale_riscv64.tar.gz" 
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'tailscale*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'tailscale' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscale_riscv64_Linux" \;
+          find . -type f -name 'tailscaled' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_Linux" \;
+          #Compress with upx
+          # Being Considered: https://github.com/upx/upx/issues/649 
+          #Services & Defaults
+          find . -type f -name 'tailscaled.service' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.service_Linux" \;
+          find . -type f -name 'tailscaled.defaults' -exec mv {} "$GITHUB_WORKSPACE/main/tailscale/tailscaled_riscv64_systemd.defaults_Linux" \;    
+
+         #-------------------------#          
+         #macOS (UPX Only)
+         #aarch64_arm64
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_macOS.upx" & 
+
+         #amd_x86_64
+          #Compress with upx
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_macOS.upx" &
+          upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_macOS" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_macOS.upx" &
+
+         #-------------------------#          
+         #Windows
+         #aarch64 || amd_x86_64 -> Exes (Compressing with upx offers very little ~ 99 % ratio)
+          #main
+          WINDOWS_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -v 'ipn')
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_setup_Windows.exe"
+          #ipn
+          WINDOWS_IPN_EXE=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.Exes[]' | grep -i 'ipn')
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_IPN_EXE" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_ipn_setup_Windows.exe"
+         #aarch64 || arm64 -> MSI  (Can't be compressed with upx)
+          WINDOWS_ARM64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'arm64')
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_ARM64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_Windows.msi"
+         #amd || x86_64 -> MSI  
+          WINDOWS_AMD64_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'amd64') 
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_AMD64_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_Windows.msi"
+         #amd || x86 -> MSI  
+          WINDOWS_X86_MSI=$(curl -qfsSL "${{ env.DOWNLOAD_PAGE }}" -H "${{ env.USER_AGENT }}" | jq -r '.MSIs[]' | grep -i 'x86') 
+          curl -qfsLJ "https://pkgs.tailscale.com/stable/$WINDOWS_X86_MSI" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_x86_Windows.msi" 
+         #-------------------------#          
+          set +x 
+        continue-on-error: true
+
+      - name: Wait for UPX
+        if: env.versions_same != 'true'
+        run: |
+          while ps aux | grep -q "[u]px"; do
+              echo "Waiting for upx processes to finish..."
+              ps aux | grep "[u]px"
+              sleep 20  
+          done  
+        shell: bash           
+        continue-on-error: false
+
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./tailscale/INFO.md > ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> METADATA" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";file ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo -e "--> SHA256SUM" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./tailscale/tailscale* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' ' &>> ./tailscale/README.md   
+           echo -e '```\n' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md
+           echo '- #### Sizes' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '```console' >> ./tailscale/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./tailscale/tail* | grep -v '.txt' | grep -v '.service' | grep -v '.defaults' | awk "{print \$5, \$9}" | column -t' &>> ./tailscale/README.md
+           echo '```' >> ./tailscale/README.md   
+           echo -e "" >> ./tailscale/README.md 
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### UPX' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           {
+              /bin/bash -c 'PS4="$ "; find ./tailscale/ -type f -name "*upx" -exec upx --no-progress -q -t {} \; -exec upx --no-progress -q -l {} \; | awk "/^testing/ || /->/ { print }" 2>&1'
+           } >> ./tailscale/README.md
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '- #### Version' >> ./tailscale/README.md 
+           echo '```console' >> ./tailscale/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscale_amd_x86_64_Linux --version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscale_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./tailscale/tailscaled_amd_x86_64_Linux -version' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md
+           /bin/bash -c 'PS4="$ "; ./tailscale/tailscaled_amd_x86_64_Linux -h' &>> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+           echo '```' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md        
+           echo '---' >> ./tailscale/README.md 
+           echo -e "" >> ./tailscale/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+
+   #Commit & Push     
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Build || Fetch Tailscale Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+          
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "Tailscale ${{ env.VERSION }}"
+          tag_name: "tailscale_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/tailscale/tailscale/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/tailscale#install-tailscale_
+          files: |
+            ${{github.workspace}}/main/tailscale/*_Linux
+            ${{github.workspace}}/main/tailscale/*_macOS
+            ${{github.workspace}}/main/tailscale/*.exe
+            ${{github.workspace}}/main/tailscale/*.msi
+            ${{github.workspace}}/main/tailscale/*.upx

@@ -1,0 +1,218 @@
+name: Fetch aria2 Binaries
+#MAX_RUNTIME: 15 Minutes --> 15 18 * * * [18:15 (6:15 PM) UTC --> (05H+45M) 12:00 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 18 * * *" 
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/abcfy2/aria2-static-build && cd aria2-static-build
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/aria2/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash    
+
+      - name: Update Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/aria2/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file pkg-config qemu-system qemu-user qemu-user-static wget              
+          
+      - name: Setup Env
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/aria2"
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+     #Fetch
+      - name: Fetch aria2 bins [ Stable ]
+        if: env.versions_same != 'true'
+        run: |
+          #Android
+          #aarch_arm
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/aria2/aria2c.bin-arm" -o  "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch_arm_Android"
+          #aarch64_arm64
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/aria2/aria2c.bin-arm64" -o  "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Android"
+          #x86
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/aria2/aria2c.bin-x86" -o  "$GITHUB_WORKSPACE/main/aria2/aria2c_x86_Android"
+          #x86_64
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/aria2/aria2c.bin-x64" -o  "$GITHUB_WORKSPACE/main/aria2/aria2c_x86_64_Android"
+          #Linux
+          cd $(mktemp -d)
+          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          for url in $(curl -s "https://api.github.com/repos/minnyres/aria2-windows-arm64/releases/latest" | jq -r '.assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
+          #aarch64_arm64
+          mv "./aria2-aarch64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_Linux"
+          mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_libressl_musl_Linux"
+          #amd_x86_64
+          mv "./aria2-x86_64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_musl_Linux"
+          mv "./aria2-x86_64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_libressl_musl_Linux"          
+          #arm_abi
+          mv "./aria2-arm-linux-musleabi_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_Linux" 
+          mv "./aria2-arm-linux-musleabi_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_libressl_musl_Linux"
+          #mips 
+          mv "./aria2-mips-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_Linux"
+          mv "./aria2-mips-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_libressl_musl_Linux"
+          #mipsel  
+          mv "./aria2-mipsel-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_Linux"
+          mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_Linux"
+          #mips64  
+          mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_Linux"
+          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_libressl_musl_Linux"
+          #Windows
+          mv "./aria2_1.36.0_arm64.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_Windows.exe" 
+          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_Windows.exe"
+          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_Windows.exe"
+        continue-on-error: true
+        
+      - name: Fetch aria2 bins [ Latest ]
+        run: |
+          cd $(mktemp -d)
+          for url in $(curl -s "https://api.github.com/repos/abcfy2/aria2-static-build/releases" | jq -r '.[] | select(.prerelease == true) | .assets[].browser_download_url'); do curl -LOJ "$url"; done
+          find . -type f -name '*.zip*' -exec unzip -j -o {} -d {}_unzipped \;
+          #aarch64_arm64
+          mv "./aria2-aarch64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_musl_latest_Linux"
+          mv "./aria2-aarch64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux"
+          #amd_x86_64
+          mv "./aria2-x86_64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_musl_latest_Linux"
+          mv "./aria2-x86_64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_64_libressl_musl_latest_Linux"          
+          #arm_abi
+          mv "./aria2-arm-linux-musleabi_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_musl_latest_Linux" 
+          mv "./aria2-arm-linux-musleabi_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_arm_abi_libressl_musl_latest_Linux"
+          #mips 
+          mv "./aria2-mips-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_musl_latest_Linux"
+          mv "./aria2-mips-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips_libressl_musl_latest_Linux"
+          #mipsel  
+          mv "./aria2-mipsel-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_musl_latest_Linux"
+          mv "./aria2-mipsel-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mipsel_libressl_musl_latest_Linux"
+          #mips64  
+          mv "./aria2-mips64-linux-musl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_musl_latest_Linux"
+          mv "./aria2-mips64-linux-musl_libressl_static.zip_unzipped/aria2c" "$GITHUB_WORKSPACE/main/aria2/aria2c_mips64_libressl_musl_latest_Linux"
+          #Windows
+          mv "./aria2-i686-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_i686_latest_Windows.exe"
+          mv "./aria2-x86_64-w64-mingw32_static.zip_unzipped/aria2c.exe" "$GITHUB_WORKSPACE/main/aria2/aria2c_amd_x86_x64_latest_Windows.exe"                    
+        continue-on-error: true
+        
+      - name: Update README.md
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./aria2/INFO.md > ./aria2/README.md
+           echo -e "" >> ./aria2/README.md 
+           echo '---' >> ./aria2/README.md
+           echo '```console' >> ./aria2/README.md
+           /bin/bash -c 'PS4="$ "; set -x; file ./aria2/aria2*' &>> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo -e "--> SHA256SUM" >> ./aria2/README.md
+           /bin/bash -c 'PS4="$ "; set -x; sha256sum ./aria2/aria2*' &>> ./aria2/README.md   
+           echo -e '```\n' >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo '---' >> ./aria2/README.md
+           echo -e "" >> ./aria2/README.md
+           echo '- #### Sizes' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md
+           echo '```console' >> ./aria2/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./aria2 | awk "{print \$5, \$9}" | column -t' &>> ./aria2/README.md
+           echo '```' >> ./aria2/README.md     
+           echo -e "" >> ./aria2/README.md 
+           echo '---' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
+           echo '- #### Flags' >> ./aria2/README.md 
+           echo '```console' >> ./aria2/README.md 
+           /bin/bash -c 'PS4="$ "; set -x; qemu-aarch64-static ./aria2/aria2c_aarch64_arm64_libressl_musl_latest_Linux --version' &>> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
+           echo '```' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md        
+           echo '---' >> ./aria2/README.md 
+           echo -e "" >> ./aria2/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+        
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Fetch aria2 Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "aria2 ${{ env.VERSION }}"
+          tag_name: "aria2_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog_Stable`: _https://github.com/aria2/aria2/releases/tag/${{ env.VERSION }}_
+            
+            `Changelog_Latest`: _https://github.com/abcfy2/aria2-static-build/releases/tag/continuous_
+
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/aria2#install-aria2_
+          files: |
+            ${{github.workspace}}/main/aria2/*_Android
+            ${{github.workspace}}/main/aria2/*_Linux
+            ${{github.workspace}}/main/aria2/*.exe

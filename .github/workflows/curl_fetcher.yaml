@@ -1,0 +1,283 @@
+name: Fetch curl Binaries
+#MAX_RUNTIME: 15 Minutes 30 21 * * * [21:30 (09:30 PM) UTC --> (05H+45M) 03:15 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 21 * * *"
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/stunnel/static-curl && cd static-curl
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV          
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/curl/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Fetched & Updated"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Fetching... --> v$VERSION (from <-- v$STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/curl/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/curl"
+          # Get latest version
+          #curl -qfsSL "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/curl/version.txt"
+          #export VERSION=$(cat $GITHUB_WORKSPACE/main/curl/version.txt)
+
+     #Fetch
+      - name: Fetch curl bins
+        if: env.versions_same != 'true'
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+         #Android
+         #armhf
+          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/armhf/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_armhf_arm32_Android"
+          #arm32
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm32_Android"
+         #arm64
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm64" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm64_Android"         
+         #mips
+          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mips/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mips_Android"
+         #mipsel 
+          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mipsel/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Android"
+          #x86
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x86" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_Android"
+          #x86_64
+          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/x86_64/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_64_Android"
+          #x64
+          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x64" -o  "$GITHUB_WORKSPACE/main/curl/curl_x64_Android"
+         #-------------------------#
+         #DOS
+          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curl.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_DOS"
+          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curllite.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_lite_DOS"
+          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curltiny.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_tiny_DOS"         
+         #-------------------------#     
+         #Linux
+         #aarch64_arm64 || armv8
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'arm64' | grep -v 'macos')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_Linux" \;  
+         #amd64_x86_64 
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'amd64' | grep -v 'macos')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Linux" \;   
+         #armv7
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'armv7')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_armv7_Linux" \;                    
+         #i686 
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i '686')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_i686_Linux" \;
+         #mips
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips' | grep -v 'mipsel' | grep -v 'mips64' )
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips_Linux" \;
+         #mipsel
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mipsel' | grep -v 'mips64')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Linux" \;                 
+         #mips64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64' | grep -v 'mips64el')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips64_Linux" \;
+         #mips64el
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64el')
+          find . -type f -name '*.tar*' -exec tar -xzvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips64el_Linux" \;    
+         #powerpc
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc' | grep -v 'powerpc64le')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_powerpc_Linux" \;      
+         #powerpc64le
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc64le')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_powerpc64le_Linux" \;                 
+         #riscv64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'riscv64')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_riscv64_Linux" \;          
+         #s390x
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 's390x')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_s390x_Linux" \;
+         #-------------------------#
+         #macOS
+         #aarch64_arm64 || armv8
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos-arm64')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_macOS" \;         
+         #amd64_x86_64 
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos-amd64')
+          find . -type f -name '*.tar*' -exec tar -xvf {} \;
+          find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_macOS" \; 
+         #-------------------------# 
+         #Windows 
+         #Windows 32-bit
+          curl -qflSL "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_Windows.exe"
+         #Windows x86_64_amd64 
+          curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Windows.exe"
+         #Windows arm64 
+          curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_arm_x64_Windows.exe" 
+         #-------------------------# 
+         #Any leftovers
+          set +x              
+        continue-on-error: true
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
+        run: |
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/curl/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/curl/" -type f -name 'curl*' -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+        
+        
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./curl/INFO.md > ./curl/README.md
+           echo -e "" >> ./curl/README.md 
+           echo '---' >> ./curl/README.md
+           echo '```console' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo -e "--> METADATA" >> ./curl/README.md
+           /bin/bash -c 'PS4="$ ";file ./curl/curl* | grep -v '.txt' ' &>> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo -e "--> SHA256SUM" >> ./curl/README.md
+           /bin/bash -c 'PS4="$ ";sha256sum ./curl/curl* | grep -v '.txt' ' &>> ./curl/README.md   
+           echo -e '```\n' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo '---' >> ./curl/README.md
+           echo -e "" >> ./curl/README.md
+           echo '- #### Sizes' >> ./curl/README.md 
+           echo -e "" >> ./curl/README.md
+           echo '```console' >> ./curl/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./curl/curl* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./curl/README.md
+           echo '```' >> ./curl/README.md     
+           echo -e "" >> ./curl/README.md 
+           echo '---' >> ./curl/README.md 
+           echo -e "" >> ./curl/README.md 
+           echo '- #### Version' >> ./curl/README.md 
+           echo '```console' >> ./curl/README.md 
+           echo -e "" >> ./curl/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./curl/curl_amd_x86_64_Linux -V' &>> ./curl/README.md 
+           echo -e "" >> ./curl/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./curl/curl_amd_x86_64_Linux -h' &>> ./curl/README.md 
+           echo -e "" >> ./curl/README.md
+           echo -e "" >> ./curl/README.md 
+           echo '```' >> ./curl/README.md 
+           echo -e "" >> ./curl/README.md        
+           echo '---' >> ./curl/README.md 
+           echo -e "" >> ./curl/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Fetch curl Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "Curl ${{ env.VERSION }}"
+          tag_name: "curl_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://curl.se/changes.html_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/curl#install-curl_
+          files: |
+            ${{github.workspace}}/main/curl/*_Android
+            ${{github.workspace}}/main/curl/*DOS
+            ${{github.workspace}}/main/curl/*_Linux
+            ${{github.workspace}}/main/curl/*_macOS
+            ${{github.workspace}}/main/curl/*.exe

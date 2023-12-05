@@ -1,0 +1,970 @@
+name: Build Busybox Binaries
+#MAX_RUNTIME: 60 Minutes 15 20 * * * [20:15 (08:15 PM) UTC --> (05H+45M) 02:00 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 20 * * *"  
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version
+        id: check_version
+        run: |
+          # Get latest version
+          #export VERSION=$(echo "https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" | sed 's/.*busybox-\(.*\)\.tar\.bz2/\1/')
+          cd $(mktemp -d) && git clone https://git.busybox.net/busybox && cd busybox
+          export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/busybox/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already Built & Compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash          
+
+      - name: Compare Versions
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/busybox/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Download Latest Source Code (Hacky Scraping)
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          export BUSYBOX_URL="https://git.busybox.net$(curl -qfsSL "https://git.busybox.net/busybox/" | grep -Po "(?<=href=')[^']*\.tar\.bz2" | sort | tail -n 1)" 
+          echo "BUSYBOX_URL=$BUSYBOX_URL" >> $GITHUB_ENV
+          curl -qfLJ "$BUSYBOX_URL" -o "$HOME/busybox.tar.bz2"
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and tar
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/busybox.tar.bz2" ]; then
+            cd $(mktemp -d) && git clone "https://git.busybox.net/busybox"
+            pushd ./busybox && git checkout "${{ env.VERSION }}" && popd 
+            tar -cjvf ./busybox.tar.bz2 ./busybox && mv "./busybox.tar.bz2" "$HOME/"  
+          fi
+        continue-on-error: false
+        
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/busybox"
+          #RISCV32
+          export RISCV32_TOOLCHAIN_URL=$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases/tags/$(curl -qfsSL "https://api.github.com/repos/riscv-collab/riscv-gnu-toolchain/releases" | jq -r '.[] | select(.prerelease == true) | .tag_name' | head -n 1)" | jq -r '.assets[] | .browser_download_url' | grep -i 'riscv32-glibc-ubuntu-22.04-gcc')
+          echo "RISCV32_TOOLCHAIN_URL=$RISCV32_TOOLCHAIN_URL" >> $GITHUB_ENV
+          
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install b3sum build-essential ca-certificates ccache '*glibc*' 'libssl*' lzip jq musl musl-dev musl-tools 'openssl*' p7zip-full '*tls*' wget -y
+        
+      - name: Install Build Dependencies
+        if: env.versions_same != 'true'
+        run: "\
+          sudo apt-get update\n
+          sudo apt-get install -y --no-install-recommends \
+          file qemu-user-static \
+          g++-aarch64-linux-gnu \
+          g++-arm-linux-gnueabi \
+          g++-arm-linux-gnueabihf \
+          g++-i686-linux-gnu \
+          g++-m68k-linux-gnu \
+          g++-mips-linux-gnu \
+          g++-mipsel-linux-gnu \
+          g++-mips64-linux-gnuabi64 \
+          g++-mips64el-linux-gnuabi64 \
+          g++-powerpc-linux-gnu \
+          g++-powerpc64-linux-gnu \
+          g++-powerpc64le-linux-gnu \
+          g++-riscv64-linux-gnu \
+          g++-s390x-linux-gnu \
+          g++-sh4-linux-gnu libc6-dev-sh4-cross\n
+          sudo mkdir -p /usr/local/rv32\n
+          wget -O- -q $RISCV32_TOOLCHAIN_URL | sudo tar -C /usr/local/rv32 --strip-components=1 -xzf -\n
+          sudo ln -s /usr/local/rv32/sysroot /usr/riscv32-linux-gnu\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-ar /usr/bin/riscv32-linux-gnu-ar\n
+          sudo ln -s /usr/local/rv32/bin/riscv32-unknown-linux-gnu-strip /usr/bin/riscv32-linux-gnu-strip\n
+          echo '/usr/local/rv32/bin/riscv32-unknown-linux-gnu-gcc -L/usr/riscv32-linux-gnu \"$@\"' | sudo tee /usr/bin/riscv32-linux-gnu-gcc > /dev/null\n
+          sudo chmod +x /usr/bin/riscv32-linux-gnu-gcc\n
+          mkdir busybox\n"
+
+    ##Linux    
+      - name: Build busybox for aarch64_arm64_gcc (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=aarch64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_aarch64_arm64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        continue-on-error: true
+
+    #   - name: Build busybox for aarch64 (MUSL-Docker: blackdex/musl-toolchainCross)
+    #     if: env.versions_same != 'true'
+    #     run: |
+    #       cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+    #       find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+    #       cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+    #       # Build
+    #       docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make defconfig"
+    #       sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+    #       sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
+    #       docker run --privileged -v $(pwd):/work dockcross/linux-arm64-musl bash -c "make -j$(($(nproc)+1))"
+    #       cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_aarch64_arm64_musl_Linux"
+    #     continue-on-error: true               
+                    
+      - name: Build busybox for aarch64_arm64_musl #(MUSL-Docker: blackdex/musl-toolchain)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name aarch64_arm64_musl \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            blackdex/musl-toolchain:aarch64-musl \
+            bash -c '
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=aarch64
+              export CROSS_COMPILE=aarch64-unknown-linux-musl-
+              export PATH="$PATH:/usr/local/musl/aarch64-unknown-linux-musl/bin"
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"aarch64-unknown-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_aarch64_arm64_musl_Linux"
+            '
+          #Copy 
+          docker cp "aarch64_arm64_musl:/busybox_aarch64_arm64_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true   
+
+     #amd_x86_64
+      - name: Build busybox for amd_x86_64 (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_amd_x86_64_gcc_Linux"
+          cd "$GITHUB_WORKSPACE/busybox" && rm -rf "$GITHUB_WORKSPACE/busybox/build"
+        continue-on-error: true
+
+      - name: Build busybox for amd_x86_64_musl #(MUSL-Docker: blackdex/musl-toolchain)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name amd_x86_64_musl \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            blackdex/musl-toolchain:x86_64-musl \
+            bash -c '
+              curl -qfLJO "$BUSYBOX_URL"
+              export PATH="$PATH:/usr/local/musl/x86_64-unknown-linux-musl/bin"
+              export ARCH=x86_64
+              export CROSS_COMPILE=x86_64-unknown-linux-musl-
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"x86_64-unknown-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_amd_x86_64_musl_Linux"
+            '
+          #Copy 
+          docker cp "amd_x86_64_musl:/busybox_amd_x86_64_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true   
+
+      - name: Build busybox for arm_abi_gcc (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabi-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_arm_abi_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for arm_abi_musl #(MUSL-Docker: blackdex/musl-toolchain)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name arm_abi_musl \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            blackdex/musl-toolchain:arm-musleabi \
+            bash -c '
+              curl -qfLJO "$BUSYBOX_URL"
+              export PATH="$PATH:/usr/local/musl/arm-unknown-linux-musleabi/bin"
+              export ARCH=arm
+              export CROSS_COMPILE=arm-unknown-linux-musleabi-
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"arm-unknown-linux-musleabi-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_arm_abi_musl_Linux"
+            '
+          #Copy 
+          docker cp "arm_abi_musl:/busybox_arm_abi_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true  
+
+      - name: Build busybox for arm_abihf_gcc (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=arm
+          export CROSS_COMPILE=arm-linux-gnueabihf-          
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_arm_abihf_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for arm_abihf_musl #(MUSL-Docker: blackdex/musl-toolchain)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name arm_abihf_musl \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            blackdex/musl-toolchain:arm-musleabihf \
+            bash -c '
+              curl -qfLJO "$BUSYBOX_URL"
+              export PATH="$PATH:/usr/local/musl/arm-unknown-linux-musleabihf/bin"
+              export ARCH=arm
+              export CROSS_COMPILE=arm-unknown-linux-musleabihf-
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"arm-unknown-linux-musleabihf-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_arm_abihf_musl_Linux"
+            '
+          #Copy 
+          docker cp "arm_abihf_musl:/busybox_arm_abihf_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true  
+
+      # - name: Build busybox for armv5te_abi_musl #(MUSL-Docker: blackdex/musl-toolchain)
+      #   if: env.versions_same != 'true'
+      #   run: |
+      #     docker run --privileged --name armv5te_abi_musl \
+      #       -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+      #       blackdex/musl-toolchain:armv5te-musleabi \
+      #       bash -c '
+      #         curl -qfLJO "$BUSYBOX_URL"
+      #         export PATH="$PATH:/usr/local/musl/armv5te-unknown-linux-musleabi/bin"
+      #         export ARCH=arm
+      #         export CROSS_COMPILE=armv5te-unknown-linux-musleabi
+      #         find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+      #         cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+      #         make defconfig
+      #         sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+      #         sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"armv5te-unknown-linux-musleabi\"/" -i .config
+      #         make
+      #         sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+      #         cp "./busybox" "/busybox_armv5te_abi_musl_Linux"
+      #       '
+      #     #Copy 
+      #     docker cp "armv5te_abi_musl:/busybox_armv5te_abi_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+      #     #Delete Containers
+      #     docker rm $(docker ps -a -q)
+      #     #Del Docker Images
+      #     docker rmi -f $(docker images -q) >/dev/null 2>&1 
+      #   continue-on-error: true  
+
+      # - name: Build busybox for arm-linux-gnueabihf_armv7l (MUSL-Docker: blackdex/musl-toolchainCross)
+      #   if: env.versions_same != 'true'
+      #   run: |
+      #     cd $(mktemp -d) && curl -qfLOJ "$BUSYBOX_URL"
+      #     find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+      #     cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+      #     # Build
+      #     docker run --privileged -v $(pwd):/work dockcross/linux-armv7l-musl bash -c "make defconfig"
+      #     sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+      #     sed 's/^\(CONFIG_CROSS_COMPILER_PREFIX\)=""/\1="musl-"/' -i .config           
+      #     docker run --privileged -v $(pwd):/work dockcross/linux-armv7l-musl bash -c "make -j$(($(nproc)+1))"
+      #     cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_arm_gnueabihf_armv7l_musl_Linux"
+      #   continue-on-error: true  
+
+      - name: Build busybox for armv7l_abihf_musl_Linux #(MUSL-Docker: blackdex/musl-toolchain)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name armv7l_abihf_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            blackdex/musl-toolchain:armv7-musleabihf \
+            bash -c '
+              curl -qfLJO "$BUSYBOX_URL"
+              export PATH="$PATH:/usr/local/musl/armv7-unknown-linux-musleabihf/bin"
+              export ARCH=arm
+              export CROSS_COMPILE=armv7-unknown-linux-musleabihf-
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"armv7-unknown-linux-musleabihf-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_armv7l_abihf_musl_Linux"
+            '
+          #Copy 
+          docker cp "armv7l_abihf_musl_Linux:/busybox_armv7l_abihf_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true    
+
+      - name: Build busybox for i686_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=i686
+          export CROSS_COMPILE=i686-linux-gnu-        
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_i686_x86_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for m68k_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=m68k
+          export CROSS_COMPILE=m68k-linux-gnu-      
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_m68k_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for m68k_linux_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name m68k_linux_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:m68k-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=m68k
+              export CROSS_COMPILE=m68k-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"m68k-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_m68k_linux_musl_Linux"
+            '
+          #Copy 
+          docker cp "m68k_linux_musl_Linux:/busybox_m68k_linux_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for mips_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=mips
+          export CROSS_COMPILE=mips-linux-gnu-     
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mips_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for mips_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name mips_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:mips-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq nano pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=mips
+              export CROSS_COMPILE=mips-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"mips-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_mips_musl_Linux"
+            '
+          #Copy 
+          docker cp "mips_musl_Linux:/busybox_mips_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for mipsel_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=mips
+          export CROSS_COMPILE=mipsel-linux-gnu-     
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mipsel_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for mipsel_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name mipsel_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:mipsel-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=mipsel
+              export CROSS_COMPILE=mipsel-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"mipsel-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_mipsel_musl_Linux"
+            '
+          #Copy 
+          docker cp "mipsel_musl_Linux:/busybox_mipsel_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for mips64_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64-linux-gnuabi64-    
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mips64_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for mips64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name mips64_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:mips64-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=mips64
+              export CROSS_COMPILE=mips64-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"mips64-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_mips64_musl_Linux"
+            '
+          #Copy 
+          docker cp "mips64_musl_Linux:/busybox_mips64_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for mips64el_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=mips64
+          export CROSS_COMPILE=mips64el-linux-gnuabi64-   
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_mips64el_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for mips64el_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name mips64el_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:mips64el-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=mips64el
+              export CROSS_COMPILE=mips64el-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"mips64el-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_mips64el_musl_Linux"
+            '
+          #Copy 
+          docker cp "mips64el_musl_Linux:/busybox_mips64el_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for powerpc_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=powerpc
+          export CROSS_COMPILE=powerpc-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for powerpc_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name powerpc_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:powerpc-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=powerpc
+              export CROSS_COMPILE=powerpc-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"powerpc-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_powerpc_musl_Linux"
+            '
+          #Copy 
+          docker cp "powerpc_musl_Linux:/busybox_powerpc_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for powerpc64_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=powerpc64
+          export CROSS_COMPILE=powerpc64-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for powerpc64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name powerpc64_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:powerpc64-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=powerpc64
+              export CROSS_COMPILE=powerpc64-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"powerpc64-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_powerpc64_musl_Linux"
+            '
+          #Copy 
+          docker cp "powerpc64_musl_Linux:/busybox_powerpc64_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for powerpc64le_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=powerpc64
+          export CROSS_COMPILE=powerpc64le-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_powerpc64le_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for powerpc64le_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name powerpc64le_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:powerpc64le-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=powerpc64le
+              export CROSS_COMPILE=powerpc64le-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"powerpc64le-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_powerpc64le_musl_Linux"
+            '
+          #Copy 
+          docker cp "powerpc64le_musl_Linux:/busybox_powerpc64le_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for riscv32_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv32-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_riscv32_gcc_Linux"
+        continue-on-error: true
+
+      # - name: Build busybox for riscv32_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+      #   if: env.versions_same != 'true'
+      #   run: |
+      #     docker run --privileged --name riscv32_musl_Linux \
+      #       -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+      #       abcfy2/muslcc-toolchain-ubuntu:riscv32-linux-musl \
+      #       bash -c '
+      #         export DEBIAN_FRONTEND=noninteractive
+      #         apt update -y
+      #         apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+      #         curl -qfLJO "$BUSYBOX_URL"
+      #         find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+      #         cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+      #         export ARCH=riscv
+      #         export CROSS_COMPILE=riscv32-linux-musl-
+      #         make defconfig
+      #         sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+      #         sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"riscv32-linux-musl-\"/" -i .config
+      #         make
+      #         sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+      #         cp "./busybox" "/busybox_riscv32_musl_Linux"
+      #       '
+      #     #Copy 
+      #     docker cp "riscv32_musl_Linux:/busybox_riscv32_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+      #     #Delete Containers
+      #     docker rm $(docker ps -a -q)
+      #     #Del Docker Images
+      #     docker rmi -f $(docker images -q) >/dev/null 2>&1 
+      #   continue-on-error: true 
+
+      - name: Build busybox for riscv64_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=riscv
+          export CROSS_COMPILE=riscv64-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_riscv64_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for riscv64_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name riscv64_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:riscv64-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=riscv
+              export CROSS_COMPILE=riscv64-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"\"/CONFIG_CROSS_COMPILER_PREFIX=\"riscv64-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_riscv64_musl_Linux"
+            '
+          #Copy 
+          docker cp "riscv64_musl_Linux:/busybox_riscv64_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true 
+
+      - name: Build busybox for s390x_gcc_Linux (GCC-Native)
+        if: env.versions_same != 'true'
+        run: |
+          cd $(mktemp -d) && cp "$HOME/busybox.tar.bz2" .
+          find . -type f -name '*.tar.bz2*' -exec tar -xjvf {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export ARCH=s390x
+          export CROSS_COMPILE=s390x-linux-gnu-
+          make defconfig
+          sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          make -j$(($(nproc)+1))
+          cp "./busybox" "$GITHUB_WORKSPACE/main/busybox/busybox_s390x_gcc_Linux"
+        continue-on-error: true
+
+      - name: Build busybox for s390x_musl_Linux #(MUSL-Docker: abcfy2/muslcc-toolchain-ubuntu)
+        if: env.versions_same != 'true'
+        run: |
+          docker run --privileged --name s390x_musl_Linux \
+            -e "BUSYBOX_URL=${BUSYBOX_URL}" \
+            abcfy2/muslcc-toolchain-ubuntu:s390x-linux-musl \
+            bash -c '
+              export DEBIAN_FRONTEND=noninteractive
+              apt update -y
+              apt install -y autoconf automake autopoint curl file g++ make libtool jq pkgconf tcl patch wget unzip
+              curl -qfLJO "$BUSYBOX_URL"
+              find . -type f -name "*.tar.bz2*" -exec tar -xjvf {} \;
+              cd $(find . -maxdepth 1 -type d -name "*busybox*" | grep -v "^.$")
+              export ARCH=s390x
+              export CROSS_COMPILE=s390x-linux-musl-
+              make defconfig
+              sed -e "s/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/" -i .config
+              sed -e "s/CONFIG_CROSS_COMPILER_PREFIX=\"musl-\"/CONFIG_CROSS_COMPILER_PREFIX=\"s390x-linux-musl-\"/" -i .config
+              make
+              sha256sum "./busybox" && file "./busybox" && ls -lah "./busybox"
+              cp "./busybox" "/busybox_s390x_musl_Linux"
+            '
+          #Copy 
+          docker cp "s390x_musl_Linux:/busybox_s390x_musl_Linux" "$GITHUB_WORKSPACE/main/busybox/"
+          #Delete Containers
+          docker rm $(docker ps -a -q)
+          #Del Docker Images
+          docker rmi -f $(docker images -q) >/dev/null 2>&1 
+        continue-on-error: true  
+
+     #Cleanup
+      - name: Cleanup >> Strip >> chmod
+        if: env.versions_same != 'true'
+        run: |
+          #Strip All Linux Bins
+          find "$GITHUB_WORKSPACE/main/busybox/" -type f -name '*_Linux' -exec strip {} \; >/dev/null 2>&1
+          #chmod +xwr everything
+          find "$GITHUB_WORKSPACE/main/busybox/" -type f -name 'busybox*' -exec chmod +xwr {} \; >/dev/null 2>&1
+        continue-on-error: true
+
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           sudo chmod +xwr ./busybox/busy* 
+           cat ./busybox/INFO.md > ./busybox/README.md
+           echo -e "" >> ./busybox/README.md 
+           echo '---' >> ./busybox/README.md
+           echo '```console' >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo -e "--> METADATA" >> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; file ./busybox/busybox* | grep -v '.txt' ' &>> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo -e "--> SHA256SUM" >> ./busybox/README.md
+           /bin/bash -c 'PS4="$ "; sha256sum ./busybox/busybox* | grep -v '.txt' ' &>> ./busybox/README.md   
+           echo -e '```\n' >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo '---' >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md
+           echo '- #### Sizes' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md
+           echo '```console' >> ./busybox/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./busybox/busybox* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./busybox/README.md
+           echo '```' >> ./busybox/README.md     
+           echo -e "" >> ./busybox/README.md 
+           echo '---' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md 
+           echo '- #### Bundled Commands' >> ./busybox/README.md 
+           echo '```console' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./busybox/busybox_amd_x86_64_gcc_Linux' &>> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md
+           echo -e "" >> ./busybox/README.md 
+           echo '```' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md        
+           echo '---' >> ./busybox/README.md 
+           echo -e "" >> ./busybox/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      #https://github.com/stefanzweifel/git-auto-commit-action  
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Cross-Compile Busybox Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "busybox ${{ env.VERSION }}"
+          tag_name: "busybox_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://git.busybox.net/busybox/log/?h=${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/busybox#install-busybox_
+          files: |
+            ${{github.workspace}}/main/busybox/*_Linux

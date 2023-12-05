@@ -1,0 +1,508 @@
+name: Build || Fetch croc Binaries
+#MAX_RUNTIME: 15 Minutes 15 21 * * * [21:15 (09:15 PM) UTC --> (05H+45M) 03:00 AM NPT ]
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 21 * * *"  
+  # https://crontab.guru
+  # https://savvytime.com/converter/utc-to-nepal-kathmandu
+
+env:
+  # https://i.redd.it/o6xypg00uac91.png
+  USER_AGENT: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/115.0.5790.160 Mobile/15E148 Safari/604.1"
+  GITHUB_TOKEN: ${{ secrets.STATIC_BINARIES_RELEASER }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+          
+      - name: Check Version & Compare
+        id: check_version
+        run: |
+          # Get latest version
+          export VERSION=$(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.tag_name' )
+          # If we get rate-limited, git clone the repo
+          if [ -z "$VERSION" ]; then
+            cd $(mktemp -d) && git clone https://github.com/schollz/croc && cd croc
+            export VERSION=$(git tag --sort=-creatordate | head -n 1)
+          fi
+          # Export it to ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # Get stored version
+          export STORED_VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          if [ "$VERSION" == "$STORED_VERSION" ]; then
+            echo "Version $VERSION is already built & compiled"
+            echo "versions_same=true" >> $GITHUB_ENV
+          else
+            echo "Building... --> $VERSION (from <-- $STORED_VERSION)"
+            echo "versions_same=false" >> $GITHUB_ENV
+          fi
+        shell: bash    
+
+      - name: Update Version
+        if: env.versions_same != 'true'
+        run: |
+          # Update version.txt with the latest version
+          echo $VERSION > $GITHUB_WORKSPACE/main/croc/version.txt
+          echo "Updated version.txt with the latest version $VERSION"
+
+      - name: Download Latest Source Code (Github_API)
+        if: env.versions_same != 'true'
+        run: | 
+          # Get latest Source Code
+          curl -qfLJ $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.zipball_url') -o "$HOME/croc.zip"     
+        continue-on-error: true
+
+      - name: Clone repository if curl fails and zip
+        if: env.versions_same != 'true'
+        run: |
+          if [ ! -f "$HOME/croc.zip" ]; then
+            cd $(mktemp -d) && git clone https://github.com/schollz/croc.git 
+            zip -ro "./croc.zip" "./croc" && mv "./croc.zip" "$HOME/"
+          fi
+        continue-on-error: false    
+
+      - name: Install CoreUtils
+        if: env.versions_same != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget 
+
+      # - name: Install build dependencies
+      #   run: "\
+      #     sudo apt-get update\n
+      #     sudo apt-get install -y --no-install-recommends \
+      #     g++-aarch64-linux-gnu \
+      #     g++-arm-linux-gnueabi \
+      #     g++-arm-linux-gnueabihf \
+      #     g++-i686-linux-gnu \
+      #     g++-m68k-linux-gnu \
+      #     g++-mips-linux-gnu \
+      #     g++-mipsel-linux-gnu \
+      #     g++-mips64-linux-gnuabi64 \
+      #     g++-mips64el-linux-gnuabi64 \
+      #     g++-powerpc-linux-gnu \
+      #     g++-powerpc64-linux-gnu \
+      #     g++-powerpc64le-linux-gnu \
+      #     g++-riscv64-linux-gnu \
+      #     g++-s390x-linux-gnu \
+      #     g++-sh4-linux-gnu libc6-dev-sh4-cross\n"
+          
+      - name: Setup Env
+        if: env.versions_same != 'true'
+        run: |
+          # Create Output Dir
+          mkdir -p "$GITHUB_WORKSPACE/main/croc"
+          
+    #Build using go tool chain
+    #Complete Tool Chain List: `go tool dist list`
+
+      - name: Build croc for linux/386
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=386
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_386_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/loong64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=loong64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_loong64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/mips
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=mips
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/mipsle
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=mipsle
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mipsle_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/mips64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=mips64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/mips64le
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=mips64le
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips64le_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+
+      - name: Build croc for linux/powerpc64_ppc64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_powerpc64_ppc64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true  
+        
+      - name: Build croc for linux/powerpc64le_ppc64le
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=ppc64le
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1 
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_powerpc64le_ppc64le_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1                          
+        continue-on-error: true
+
+      - name: Build croc for linux/riscv64
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=riscv64
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1  
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_riscv64_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1  
+        continue-on-error: true 
+
+      - name: Build croc for linux/s390x
+        if: env.versions_same != 'true'
+        run: | 
+          #Get the zip
+          cd $(mktemp -d) && cp "$HOME/croc.zip" .
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          cd $(find . -maxdepth 1 -type d | grep -v '^.$')
+          # Build
+          export GOOS=linux
+          export GOARCH=s390x
+          export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
+          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'"
+          # Strip & move, if this fails, the entire step is skipped
+          # strip "./croc" "./crocd" >/dev/null 2>&1 
+          mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_s390x_Linux"
+          # Remove tmp files
+          #rm -rf /tmp >/dev/null 2>&1        
+        continue-on-error: true
+     
+     #Fetch
+      - name: Fetch croc bins [ Stable ]
+        if: env.versions_same != 'true'
+        run: |
+         #--------------#
+          set +e ; set -x
+         #--------------#  
+          #DragonFlyBSD
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'DragonFlyBSD-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_DragonFlyBSD" \;            
+          #FreeBSD
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'FreeBSD-ARM64.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_FreeBSD" \;        
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'FreeBSD-32bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_FreeBSD" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'FreeBSD-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_FreeBSD" \;             
+          #Linux
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Linux-ARM.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_Linux" \;
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Linux-ARM64.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_Linux" \;        
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Linux-32bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_Linux" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Linux-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_Linux" \;     
+          #macOS
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'macOS-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_x86_64_macOS" \; 
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'macOS-ARM64.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_macOS" \;            
+          #NetBSD
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'NetBSD-32bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_NetBSD" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'NetBSD-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_NetBSD" \;     
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'NetBSD-ARM.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_arm_abi_NetBSD" \;                 
+          #OpenBSD
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-ARM.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_arm_abi_OpenBSD" \;
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-ARM64.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_OpenBSD" \;        
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-32bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_OpenBSD" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'OpenBSD-64bit.tar.gz')
+          find . -type f -name '*.tar.gz' -exec tar -xzvf {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_OpenBSD" \;           
+          #Windows
+          #arm_abi
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-ARM.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_arm_Windows.exe" \;
+          #aarch64_arm64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-ARM64.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_aarch64_arm64_Windows.exe" \;        
+          #amd_x86
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-32bit.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_Windows.exe" \;           
+          #amd_x86_64
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/schollz/croc/releases/latest" | jq -r '.assets[].browser_download_url' | grep 'Windows-64bit.zip')
+          find . -type f -name '*.zip*' -exec unzip -o {} \;
+          find . -type f -name 'croc*' -exec strip {} \; >/dev/null 2>&1  
+          find . -type f -name 'croc.exe' -exec mv {} "$GITHUB_WORKSPACE/main/croc/croc_amd_x86_64_Windows.exe" \;           
+          #---------#
+          set +x    
+        continue-on-error: true
+        
+      - name: Update README.md
+        if: env.versions_same != 'true'
+        run: |  
+           cd "$GITHUB_WORKSPACE/main"
+           cat ./croc/INFO.md > ./croc/README.md
+           echo -e "" >> ./croc/README.md 
+           echo '---' >> ./croc/README.md
+           echo '```console' >> ./croc/README.md
+           echo -e "" >> ./croc/README.md
+           echo -e "--> METADATA" >> ./croc/README.md
+           /bin/bash -c 'PS4="$ "; file ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md
+           echo -e "" >> ./croc/README.md
+           echo -e "--> SHA256SUM" >> ./croc/README.md
+           /bin/bash -c 'PS4="$ "; sha256sum ./croc/croc* | grep -v '.txt' ' &>> ./croc/README.md   
+           echo -e '```\n' >> ./croc/README.md
+           echo -e "" >> ./croc/README.md
+           echo '---' >> ./croc/README.md
+           echo -e "" >> ./croc/README.md
+           echo '- #### Sizes' >> ./croc/README.md 
+           echo -e "" >> ./croc/README.md
+           echo '```console' >> ./croc/README.md       
+           /bin/bash -c 'PS4="$ ";ls -lh ./croc/croc* | grep -v '.txt' | awk "{print \$5, \$9}" | column -t' &>> ./croc/README.md
+           echo '```' >> ./croc/README.md     
+           echo -e "" >> ./croc/README.md 
+           echo '---' >> ./croc/README.md 
+           echo -e "" >> ./croc/README.md 
+           echo '- #### Version' >> ./croc/README.md 
+           echo '```console' >> ./croc/README.md 
+           echo -e "" >> ./croc/README.md           
+           /bin/bash -c 'PS4="$ "; set -x; ./croc/croc_amd_x86_64_Linux --version' &>> ./croc/README.md 
+           echo -e "" >> ./croc/README.md
+           /bin/bash -c 'PS4="$ "; set -x; ./croc/croc_amd_x86_64_Linux -h' &>> ./croc/README.md 
+           echo -e "" >> ./croc/README.md
+           echo -e "" >> ./croc/README.md 
+           echo '```' >> ./croc/README.md 
+           echo -e "" >> ./croc/README.md        
+           echo '---' >> ./croc/README.md 
+           echo -e "" >> ./croc/README.md 
+        working-directory: main
+        continue-on-error: true
+
+      - name: Git Pull
+        run: |
+           cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
+        
+      - name: Get DateTime
+        if: env.versions_same != 'true'
+        run: |
+          # Date Time
+          NEPALI_TIME=$(TZ='Asia/Kathmandu' date +'%Y-%m-%d (%I:%M:%S %p)')
+          echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Build || Fetch croc Binaries 📦 <-- ${{ env.VERSION }} at ${{ env.NEPALI_TIME }} ⌚"
+          #push_options: '--force'
+
+  #Create a new Release & Publish
+  # Repo: https://github.com/softprops/action-gh-release
+  # Market-Place: https://github.com/marketplace/actions/gh-release
+      - name: Releaser
+        if: env.versions_same != 'true'
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          name: "croc ${{ env.VERSION }}"
+          tag_name: "croc_${{ env.VERSION }}"
+          prerelease: false
+          draft: false
+          generate_release_notes: false
+          token: "${{ secrets.GITHUB_TOKEN }}"          
+          body: |
+            `Changelog`: _https://github.com/schollz/croc/releases/tag/${{ env.VERSION }}_
+            
+            `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/croc#install-croc_
+          files: |
+            ${{github.workspace}}/main/croc/*_DragonFlyBSD
+            ${{github.workspace}}/main/croc/*.exe
+            ${{github.workspace}}/main/croc/*_FreeBSD
+            ${{github.workspace}}/main/croc/*_Linux
+            ${{github.workspace}}/main/croc/*_macOS
+            ${{github.workspace}}/main/croc/*_NetBSD
+            ${{github.workspace}}/main/croc/*_OpenBSD
