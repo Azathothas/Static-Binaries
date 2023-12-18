@@ -168,12 +168,12 @@ Get-Process -Name sshd
 --> METADATA
 ./openssh/INFO.md:                           ASCII text, with very long lines (456)
 ./openssh/README.md:                         ASCII text, with very long lines (456)
-./openssh/openssh_aarch64_arm64_Windows.msi: Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: Arm64;1033, Revision Number: {915CAD16-4168-4E59-9A3B-F7C2549D3BCF}, Create Time/Date: Wed Apr 12 18:17:38 2023, Last Saved Time/Date: Wed Apr 12 18:17:38 2023, Number of Pages: 500, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.14.0.4118), Security: 2
+./openssh/openssh_aarch64_arm64_Windows.msi: Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: Arm64;1033, Revision Number: {D032C4AA-0893-427E-BD14-B53C03C8950D}, Create Time/Date: Wed Dec 13 16:56:38 2023, Last Saved Time/Date: Wed Dec 13 16:56:38 2023, Number of Pages: 500, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.14.0.4118), Security: 2
 ./openssh/openssh_aarch64_arm64_Windows.zip: Zip archive data, at least v2.0 to extract, compression method=store
 ./openssh/openssh_aarch_arm_Windows.zip:     Zip archive data, at least v2.0 to extract, compression method=store
-./openssh/openssh_amd_x86_64_Windows.msi:    Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: x64;1033, Revision Number: {BCCD7D56-02D0-4999-97A1-3E894561D5AA}, Create Time/Date: Wed Apr 12 18:16:08 2023, Last Saved Time/Date: Wed Apr 12 18:16:08 2023, Number of Pages: 200, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.11.2.4516), Security: 2
+./openssh/openssh_amd_x86_64_Windows.msi:    Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: x64;1033, Revision Number: {35EC8F95-208B-49C9-ACA0-27A8A98D59D2}, Create Time/Date: Wed Dec 13 16:51:40 2023, Last Saved Time/Date: Wed Dec 13 16:51:40 2023, Number of Pages: 200, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.11.2.4516), Security: 2
 ./openssh/openssh_amd_x86_64_Windows.zip:    Zip archive data, at least v2.0 to extract, compression method=store
-./openssh/openssh_amd_x86_Windows.msi:       Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: Intel;1033, Revision Number: {9B22DA04-D0AA-476A-8EBF-59DC6A098CD5}, Create Time/Date: Wed Apr 12 18:16:30 2023, Last Saved Time/Date: Wed Apr 12 18:16:30 2023, Number of Pages: 200, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.11.2.4516), Security: 2
+./openssh/openssh_amd_x86_Windows.msi:       Composite Document File V2 Document, Little Endian, Os: Windows, Version 10.0, MSI Installer, Code page: 1252, Title: Installation Database, Subject: OpenSSH, Author: Microsoft Corporation, Keywords: Installer, Comments: This installer database contains the logic and data required to install OpenSSH., Template: Intel;1033, Revision Number: {F561FF71-C02E-4453-80D4-EE4A747F4079}, Create Time/Date: Wed Dec 13 16:57:16 2023, Last Saved Time/Date: Wed Dec 13 16:57:16 2023, Number of Pages: 200, Number of Words: 2, Name of Creating Application: Windows Installer XML Toolset (3.11.2.4516), Security: 2
 ./openssh/openssh_amd_x86_Windows.zip:       Zip archive data, at least v2.0 to extract, compression method=store
 ./openssh/sftp_server_aarch64_arm64_Linux:   ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
 ./openssh/sftp_server_amd_x86_64_Linux:      ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
@@ -187,20 +187,20 @@ Get-Process -Name sshd
 
 --> SHA256SUM
 b199e119075255d47303b9040322ce41a8ad362ca2da8f5da7376bce11cca8f3  ./openssh/INFO.md
-f025f0eb9aa21666f995d5d7ef8c5f3e0988fffa795265baa48f54ac05a45949  ./openssh/README.md
-1c151437e0de8868872616e1c448acf81d774c280eacb4ad963e4a51d5095c09  ./openssh/openssh_aarch64_arm64_Windows.msi
-fff11e929f50ab25bf1b38d9fb6116d11e44496fe39498d1b2bd0267f9ea9c2f  ./openssh/openssh_aarch64_arm64_Windows.zip
-b6bdb7afd888ce1de6bab9edc5d624d00e7fb41a767c92bc91fc4771e84f870d  ./openssh/openssh_aarch_arm_Windows.zip
-93432222cbabe5057bafb6c386dfc12fe7346e78235c1cb343a4326a1695516a  ./openssh/openssh_amd_x86_64_Windows.msi
-ec8144a107014740ec3ce16ec51710398fc390fca5344931c1506e7cc2e181f3  ./openssh/openssh_amd_x86_64_Windows.zip
-fb7a69d41bb049c15b6ce1747d2894da46db88a2b4ab1c777418e88d5568a083  ./openssh/openssh_amd_x86_Windows.msi
-7b132aad088eae3ac67d85751e88d884e80631607cab9b1da52c838655bb5ae6  ./openssh/openssh_amd_x86_Windows.zip
-f59a3f9946f355a79fe43b031a2721417a3ef559a246358ea2a9671ab04b07af  ./openssh/sftp_server_aarch64_arm64_Linux
-28218d668c0bb45642f34ebc3a1ca8d9f297f2075c8d767a191eddb6db5413e9  ./openssh/sftp_server_amd_x86_64_Linux
-5ab82532f651404bbdab17b8209634c08bda01d9c1392d21d6670021a08fdd9b  ./openssh/sftp_server_armv7_eabihf_Linux
-062686d29639c281774fa490706165653b718efaf5d6e34f523f6effe2b3f2ac  ./openssh/sshd_aarch64_arm64_Linux
-bbcdddcdda757b4df0f982424548b69c19644fff588b080a40deb487fcd0073b  ./openssh/sshd_amd_x86_64_Linux
-56f2afbe1589be9d3a4a99065f5afe110b99245e243a80ce40d05cdd8ddc7f79  ./openssh/sshd_armv7_eabihf_Linux
+5c6b6ece5e628e94636df9f540057a488fa8c0c48b2eff05fee0729079b90bb6  ./openssh/README.md
+20c1ddaa6ba0bf0cb01997d6628cadd98efef8e5ef2431f9f03abe5fe885f281  ./openssh/openssh_aarch64_arm64_Windows.msi
+e6a7e39266485eb98ce5396c61a9931e7826502c71bf5234dfdda5bee3882f23  ./openssh/openssh_aarch64_arm64_Windows.zip
+1de8a11417ed1a5e9bbc7c34a0f2e26f48f6c9e657633a0b9bf180e7fec90fa5  ./openssh/openssh_aarch_arm_Windows.zip
+6333f5b38313360a2c960ea7afa3086002f479bad663f20f92a4889063fe925c  ./openssh/openssh_amd_x86_64_Windows.msi
+bd48fe985d400402c278c485db20e6a82bc4c7f7d8e0ef5a81128f523096530c  ./openssh/openssh_amd_x86_64_Windows.zip
+76855b7b474ac9686b5cfb8b1da0586161bf460d0328825acf410082976368fa  ./openssh/openssh_amd_x86_Windows.msi
+9245c9ff62d6d11708cb3125097f8cd5627e995c225d0469cf2c3c6be4014952  ./openssh/openssh_amd_x86_Windows.zip
+e738368d8a041efb2eb6f6e64fd1e5dd0529a7923d8ad92aaf2c61eaa89171f7  ./openssh/sftp_server_aarch64_arm64_Linux
+ffa1b10c6df9c92b2191d1199fbba12de7e7b03758c0355628668a7a5f000bdb  ./openssh/sftp_server_amd_x86_64_Linux
+61e3c5fcafe62b561be320941cafc7d96032d1c3d87594a9769b8addc0b71b4d  ./openssh/sftp_server_armv7_eabihf_Linux
+1ad73603450cb9a4a3f1fbb7b3add78fdfa00d6b195afaf606977f50cfc51fb4  ./openssh/sshd_aarch64_arm64_Linux
+036e165f0a66fe8b5dbeff200138ad719ef4c02b3297d0ebdcd3f6de9fee62f9  ./openssh/sshd_amd_x86_64_Linux
+3a0f200f9dea5912089288f1c89da1c479d0f2535aff7cfe2f7e2b813ae3b663  ./openssh/sshd_armv7_eabihf_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_aarch64_arm64_Linux
 f6c2fbaffc1fc3f4f426171d38091206ae1bcc2f8a2dff03cefa5f3519e55a72  ./openssh/sshd_config_amd_x86_64_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_armv7_eabihf_Linux
@@ -214,19 +214,19 @@ b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd
 ```console
 9.5K  ./openssh/INFO.md
 15K   ./openssh/README.md
-5.1M  ./openssh/openssh_aarch64_arm64_Windows.msi
-3.9M  ./openssh/openssh_aarch64_arm64_Windows.zip
-3.7M  ./openssh/openssh_aarch_arm_Windows.zip
-5.2M  ./openssh/openssh_amd_x86_64_Windows.msi
-4.3M  ./openssh/openssh_amd_x86_64_Windows.zip
-4.6M  ./openssh/openssh_amd_x86_Windows.msi
-3.7M  ./openssh/openssh_amd_x86_Windows.zip
-307K  ./openssh/sftp_server_aarch64_arm64_Linux
-279K  ./openssh/sftp_server_amd_x86_64_Linux
-298K  ./openssh/sftp_server_armv7_eabihf_Linux
-4.9M  ./openssh/sshd_aarch64_arm64_Linux
+5.2M  ./openssh/openssh_aarch64_arm64_Windows.msi
+4.0M  ./openssh/openssh_aarch64_arm64_Windows.zip
+3.9M  ./openssh/openssh_aarch_arm_Windows.zip
+5.5M  ./openssh/openssh_amd_x86_64_Windows.msi
+4.7M  ./openssh/openssh_amd_x86_64_Windows.zip
+4.9M  ./openssh/openssh_amd_x86_Windows.msi
+4.0M  ./openssh/openssh_amd_x86_Windows.zip
+259K  ./openssh/sftp_server_aarch64_arm64_Linux
+239K  ./openssh/sftp_server_amd_x86_64_Linux
+278K  ./openssh/sftp_server_armv7_eabihf_Linux
+4.8M  ./openssh/sshd_aarch64_arm64_Linux
 4.7M  ./openssh/sshd_amd_x86_64_Linux
-4.9M  ./openssh/sshd_armv7_eabihf_Linux
+5.0M  ./openssh/sshd_armv7_eabihf_Linux
 3.1K  ./openssh/sshd_config_aarch64_arm64_Linux
 3.1K  ./openssh/sshd_config_amd_x86_64_Linux
 3.1K  ./openssh/sshd_config_armv7_eabihf_Linux
@@ -239,7 +239,7 @@ b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd
 
 $ ./openssh/sshd_amd_x86_64_Linux -h
 ./openssh/sshd_amd_x86_64_Linux: option requires an argument: h
-OpenSSH_9.4p1, OpenSSL 3.1.2 1 Aug 2023
+OpenSSH_9.6p1, OpenSSL 3.2.0 23 Nov 2023
 usage: sshd [-46DdeGiqTtV] [-C connection_spec] [-c host_cert_file]
             [-E log_file] [-f config_file] [-g login_grace_time]
             [-h host_key_file] [-o option] [-p port] [-u len]
