@@ -215,7 +215,7 @@ jobs:
           generate_release_notes: false
           token: "${{ secrets.GITHUB_TOKEN }}"          
           body: |
-            `Changelog`: _https://openssh.se/changes.html_
+            `Changelog`: _https://www.openssh.com/releasenotes.html_
             
             `Install`: _https://github.com/Azathothas/Static-Binaries/tree/main/openssh#install-openssh_
           files: |
