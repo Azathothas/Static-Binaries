@@ -24,16 +24,79 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          path: main
-
-      - name: Install CoreUtils
+          path: "main"
+          filter: "blob:none" #https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
+          
+      - name: Debloat Runner
         run: |
+          #Presets
+          set -x ; set +e
+          #--------------#
+          #12.0 GB 
+          sudo rm /usr/local/lib/android -rf 2>/dev/null
+          #8.2 GB
+          sudo rm /opt/hostedtoolcache/CodeQL -rf 2>/dev/null
+          #5.0 GB
+          sudo rm /usr/local/.ghcup -rf 2>/dev/null
+          #2.0 GB
+          sudo rm /usr/share/dotnet -rf 2>/dev/null
+          #1.7 GB
+          sudo rm /usr/share/swift -rf 2>/dev/null
+          #1.1 GB
+          #sudo rm /usr/local/lib/node_modules -rf 2>/dev/null
+          #1.0 GB
+          sudo rm /usr/local/share/powershell -rf 2>/dev/null
+          #500 MB
+          sudo rm /usr/local/lib/heroku -rf 2>/dev/null
+        continue-on-error: true
+                       
+      - name: Install CoreUtils & Deps
+        run: |
+          set +e
           sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends bison build-essential ca-certificates flex file jq pkg-config qemu-user-static wget
+          sudo apt-get install automake b3sum build-essential ca-certificates ccache lzip jq make musl musl-dev musl-tools p7zip-full wget -y
+          sudo apt-get install -y --no-install-recommends autoconf automake autopoint binutils bison build-essential byacc ca-certificates clang flex file jq patch patchelf pkg-config python3-pip qemu-user-static wget
+          #libpcap
+          sudo apt install 'libpcap*' -y
+          sudo apt install 'nmap' -y
+        continue-on-error: true
+        
+      - name: Install PythonUtils & Deps (StaticX)
+        run: |       
+          set +e
+          sudo apt-get install libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev xcb -y
+          pip install ansi2txt
+          pip install scons
+          pip install staticx
+          pip install pyinstaller
+          pip install py2static
+          pip install typer
+        continue-on-error: true
+        
+      - name: Install CargoUtils & Deps
+        run: |    
+          set +e
+          cargo install cross --git "https://github.com/cross-rs/cross"
+        continue-on-error: true
+
+    ##Needed until gh runners updates go version: https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+    ## It helps to be on bleeding edge anyway
+      - name: Install/Update golang
+        run: |
+          #Presets
+          set -x ; set +e
+          #--------------#
+          echo "yes" | bash <(curl -qfsSL "https://git.io/go-installer")
+          source "$HOME/.bashrc"
+          go version
+        continue-on-error: true
 
       - name: Install Addons
         run: |
           set +e
+          #b3sum
+          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/b3sum" -o "/usr/bin/b3sum" && sudo chmod +xwr "/usr/bin/b3sum"
+          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/b3sum" -o "/usr/local/bin/b3sum" && sudo chmod +xwr "/usr/local/bin/b3sum"
           #eget
           curl -qfsSL "https://zyedidia.github.io/eget.sh" | bash
           sudo mv ./eget* "/usr/local/bin/eget"
@@ -49,6 +112,38 @@ jobs:
           sudo chmod +xwr "/usr/bin/7z"
           7z -h
         continue-on-error: true
+        
+      - name: Install Alsa-Libs (libasound)
+        run: |
+          # Presets
+          set -x ; set +e
+          #--------------#
+          sudo apt-get install alsa-base alsa-utils linux-sound-base libasound2-dev libfl-dev libjack-dev librust-cpal-dev libxi-dev libxtst-dev -y
+          pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://github.com/alsa-project/alsa-lib" && cd "alsa-lib"
+          bash "./gitcompile" ; "./configure" --enable-shared=no --enable-static=yes
+          sudo make install ; popd
+        continue-on-error: true
+
+      - name: Install Crystal
+        run: |
+          #https://crystal-lang.org/install/on_ubuntu/
+          curl -fsSL https://crystal-lang.org/install.sh | sudo bash
+        continue-on-error: true
+
+      - name: Install Meson & Ninja
+        run: |
+          #Presets
+          set -x ; set +e
+          #Install
+          sudo rm "/usr/bin/meson" "/usr/bin/ninja" 2>/dev/null
+          pip install meson ninja --upgrade
+          #python3 -m pip install meson ninja --upgrade
+          sudo ln -s "$HOME/.local/bin/meson" "/usr/bin/meson" 2>/dev/null
+          sudo ln -s "$HOME/.local/bin/ninja" "/usr/bin/ninja" 2>/dev/null
+          sudo chmod +xwr "/usr/bin/meson" "/usr/bin/ninja"
+          #version
+          meson --version ; ninja --version
+        continue-on-error: true
 
       - name: Setup Env
         run: |
@@ -59,7 +154,56 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
           #x86_64
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-          
+
+      - name: Install Zig
+        run: |
+         pushd "$(mktemp -d)" && curl -qfSLJO $(curl -qfsSL "https://ziglang.org/download/index.json" | jq -r '.master | ."x86_64-linux".tarball')
+         find . -type f -name '*.tar*' -exec tar -xvf {} \;
+         sudo mkdir -p "/usr/local/zig" && sudo mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "/usr/local/zig"
+         export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+         zig version ; popd
+        continue-on-error: true
+
+     #Build
+      - name: Build ncurses (x86_64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #changelogs: https://invisible-island.net/ncurses/NEWS.html
+          #Create tmp dir & get latest stable sources
+          pushd "$(mktemp -d)" && wget --quiet "https://invisible-island.net/datafiles/release/ncurses.tar.gz"
+          find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
+          cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
+          #https://invisible-island.net/ncurses/INSTALL.html
+          sudo apt-get install libtool-bin -y
+          make clean 2>/dev/null
+          #export FLAGS
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+          zig version
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Configure with zig cc & sane opts
+          "./configure" --with-build-cc="zig cc -target x86_64-linux-musl" --with-build-cpp="zig c++ -target x86_64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
+          #Build
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
+          #Test
+          find "./progs" -type f -exec strip {} 2>/dev/null \; 2>/dev/null
+          file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
+          ls -sh "./progs/"* ; chmdo +xwr "./progs/"* ; "./progs/tput" -V
+          #Copy
+          cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+        continue-on-error: true
+
      #Fetch
       - name: Fetch baseutils
         run: |
