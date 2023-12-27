@@ -145,6 +145,15 @@ jobs:
           meson --version ; ninja --version
         continue-on-error: true
 
+      - name: Install Zig
+        run: |
+         pushd "$(mktemp -d)" && curl -qfSLJO $(curl -qfsSL "https://ziglang.org/download/index.json" | jq -r '.master | ."x86_64-linux".tarball')
+         find . -type f -name '*.tar*' -exec tar -xvf {} \;
+         sudo mkdir -p "/usr/local/zig" && sudo mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "/usr/local/zig"
+         export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+         zig version ; popd
+        continue-on-error: true
+        
       - name: Setup Env
         run: |
           # Create Output Dir
@@ -154,16 +163,7 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/armv7_eabihf"
           #x86_64
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-
-      - name: Install Zig
-        run: |
-         pushd "$(mktemp -d)" && curl -qfSLJO $(curl -qfsSL "https://ziglang.org/download/index.json" | jq -r '.master | ."x86_64-linux".tarball')
-         find . -type f -name '*.tar*' -exec tar -xvf {} \;
-         sudo mkdir -p "/usr/local/zig" && sudo mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "/usr/local/zig"
-         export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
-         zig version ; popd
-        continue-on-error: true
-
+          
      #Build
       - name: Build ncurses (x86_64)
         run: |
@@ -202,6 +202,45 @@ jobs:
           cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+        continue-on-error: true
+
+      - name: Build & Install ncurses (aarch64_arm64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #changelogs: https://invisible-island.net/ncurses/NEWS.html
+          #Create tmp dir & get latest stable sources
+          pushd "$(mktemp -d)" && wget --quiet "https://invisible-island.net/datafiles/release/ncurses.tar.gz"
+          find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
+          cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
+          #https://invisible-island.net/ncurses/INSTALL.html
+          sudo apt-get install libtool-bin -y
+          make dist clean 2>/dev/null ; make clean 2>/dev/null 
+          #export FLAGS
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+          zig version
+          export CC="zig cc -target aarch64-linux-musl"
+          export CXX="zig c++ -target aarch64-linux-musl"
+          export HOST_CC="zig cc -target aarch64-linux-musl"
+          export HOST_CXX="zig c++ -target aarch64-linux-musl"
+          #Configure with zig cc & sane opts
+          "./configure" --with-build-cc="zig cc -target aarch64-linux-musl" --with-build-cpp="zig c++ -target aarch64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
+          #Build
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
+          #Test
+          find "./progs" -type f -exec aarch64-linux-gnu-objcopy --preserve-dates --verbose --strip-all {} 2>/dev/null \; 2>/dev/null
+          file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
+          ls -sh "./progs/"* ; chmod +xwr "./progs/"* ; qemu-aarch64-static "./progs/tput" -V
+          #Copy
+          cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"          
         continue-on-error: true
 
      #Fetch
