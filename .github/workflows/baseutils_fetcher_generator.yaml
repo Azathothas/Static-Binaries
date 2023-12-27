@@ -253,6 +253,7 @@ jobs:
           ##Compile & install pcre2
           #Source
           pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
           #export FLAGS
           export AR="zig ar"
           export CC="zig cc -target x86_64-linux-musl"
