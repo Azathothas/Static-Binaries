@@ -204,7 +204,7 @@ jobs:
           cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
         continue-on-error: true
 
-      - name: Build & Install ncurses (aarch64_arm64)
+      - name: Build ncurses (aarch64_arm64)
         run: |
          #Download
           set -x ; set +e
@@ -243,6 +243,59 @@ jobs:
           cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"          
         continue-on-error: true
 
+      - name: Build grep (x86_64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #Deps
+          sudo apt-get install gperf libtool-bin -y
+          ##Compile & install pcre2
+          #Source
+          pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
+          #export FLAGS
+          export AR="zig ar"
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Generate config files
+          bash "./autogen.sh"
+          #Configure
+          "./configure" --enable-pcre2-16 --enable-pcre2-32 --enable-newline-is-anycrlf --enable-jit --enable-shared="no"
+          #Make
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
+          #install
+          sudo PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH" make install
+          #test
+          file "$(which pcre2grep)" ; pcre2grep --version
+          ##Grep
+          #Get source
+          pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://git.savannah.gnu.org/git/grep.git" && cd "./grep"
+          #fetch Version tag
+          GREP_VERSION="$(git tag --sort=-creatordate | head -n 1)" && export GREP_VERSION="$GREP_VERSION" ; echo -e "\n[+] Version = $GREP_VERSION\n"
+          #checkout to latest version
+          git checkout "$GREP_VERSION"
+          #bootstrap
+          bash "./bootstrap"  
+          #export FLAGS
+          export AR="zig ar"
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Configure
+          "./configure" --disable-dependency-tracking --enable-threads="isoc+posix"
+          #make
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
+          #Test
+          strip "./src/grep" ; file "./src/grep" 2>/dev/null && ldd "./src/grep" 2>/dev/null ; ls -sh "./src/grep"
+          #Version
+          "./src/grep" -V
+          #Copy
+          cp "./src/grep" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+        continue-on-error: true
+        
      #Fetch
       - name: Fetch baseutils
         run: |
