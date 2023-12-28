@@ -82,8 +82,8 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 615M   ├─┬ baseutils
- 309M   │ ├─┬ x86_64
+ 628M   ├─┬ baseutils
+ 310M   │ ├─┬ x86_64
   29M   │ │ ├── tailscaled
   23M   │ │ ├── ngrok
   12M   │ │ ├── gost
@@ -249,16 +249,19 @@
  336K   │ │ ├── scp
  328K   │ │ ├── sftp
  308K   │ │ ├── find
+ 260K   │ │ ├── tic
  256K   │ │ ├── xz
  256K   │ │ ├── du
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
  240K   │ │ ├── sftp-server
+ 236K   │ │ ├── infocmp
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
  192K   │ │ ├── locate
  188K   │ │ ├── sed
+ 172K   │ │ ├── toe
  172K   │ │ ├── sort
  172K   │ │ ├── cksum
  168K   │ │ ├── ptx
@@ -272,8 +275,11 @@
  148K   │ │ ├── mv
  148K   │ │ ├── df
  148K   │ │ ├── cp
+ 140K   │ │ ├── tset
+ 140K   │ │ ├── tput
  140K   │ │ ├── date
  136K   │ │ ├── pr
+ 132K   │ │ ├── tabs
  132K   │ │ ├── pinky
  128K   │ │ ├── who
  128K   │ │ ├── touch
@@ -282,6 +288,7 @@
  120K   │ │ ├── chown
  116K   │ │ ├── gzip
  116K   │ │ ├── dircolors
+ 116K   │ │ ├── clear
  116K   │ │ ├── chroot
  112K   │ │ ├── split
  112K   │ │ ├── od
@@ -372,6 +379,7 @@
   12K   │ │ ├── zgrep
   12K   │ │ ├── xzgrep
   12K   │ │ ├── updatedb
+  12K   │ │ ├── capconvert
  8.0K   │ │ ├── znew
  8.0K   │ │ ├── zdiff
  8.0K   │ │ ├── xzdiff
@@ -417,7 +425,7 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 259M   │ ├─┬ aarch64_arm64
+ 270M   │ ├─┬ aarch64_arm64
   40M   │ │ ├── tailscaled
   22M   │ │ ├── ngrok
   15M   │ │ ├── tailscale
@@ -432,8 +440,15 @@
  4.0M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
  2.2M   │ │ ├── bash
+ 1.9M   │ │ ├── tic
  1.9M   │ │ ├── slirp4netns
+ 1.8M   │ │ ├── infocmp
+ 1.6M   │ │ ├── toe
  1.5M   │ │ ├── cfdisk
+ 1.5M   │ │ ├── tset
+ 1.5M   │ │ ├── tput
+ 1.4M   │ │ ├── tabs
+ 1.3M   │ │ ├── clear
  1.3M   │ │ ├── dropbearmulti
  1.3M   │ │ ├── lsblk
  1.3M   │ │ ├── dropbear
@@ -700,6 +715,7 @@
   12K   │ │ ├── zgrep
   12K   │ │ ├── xzgrep
   12K   │ │ ├── updatedb
+  12K   │ │ ├── capconvert
  8.0K   │ │ ├── znew
  8.0K   │ │ ├── zdiff
  8.0K   │ │ ├── xzdiff
