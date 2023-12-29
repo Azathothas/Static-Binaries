@@ -460,9 +460,9 @@
  1.1M   │ │ ├── dbclient
  1.1M   │ │ ├── umount
  1.0M   │ │ ├── findmnt
+ 1.0M   │ │ ├── top
  1.0M   │ │ ├── swapon
  1.0M   │ │ ├── lsns
- 1.0M   │ │ ├── top
  1.0M   │ │ ├── lslocks
  972K   │ │ ├── swapoff
  972K   │ │ ├── mountpoint
@@ -553,9 +553,9 @@
  604K   │ │ ├── mkfs.cramfs
  604K   │ │ ├── fincore
  588K   │ │ ├── fsck.cramfs
- 588K   │ │ ├── free
  572K   │ │ ├── whereis
  572K   │ │ ├── waitpid
+ 572K   │ │ ├── free
  572K   │ │ ├── enosys
  572K   │ │ ├── dropbearscp
  572K   │ │ ├── chmem
