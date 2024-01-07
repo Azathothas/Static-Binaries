@@ -806,8 +806,8 @@
   11M   │ ├── aria2c_aarch64_arm64_musl_latest_Linux
   10M   │ ├── aria2c_mips64_libressl_musl_latest_Linux
   10M   │ ├── aria2c_mips64_libressl_musl_Linux
-  10M   │ ├── aria2c_mipsel_libressl_musl_latest_Linux
   10M   │ ├── aria2c_mips_libressl_musl_latest_Linux
+  10M   │ ├── aria2c_mipsel_libressl_musl_latest_Linux
   10M   │ ├── aria2c_mipsel_libressl_musl_Linux
   10M   │ ├── aria2c_mips_libressl_musl_Linux
   10M   │ ├── aria2c_aarch64_arm64_musl_Linux
@@ -881,8 +881,8 @@
  7.1M   │ ├── croc_aarch64_arm64_FreeBSD
  7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_aarch64_arm64_Linux
- 7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_OpenBSD
+ 7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
  7.0M   │ ├── croc_powerpc64_ppc64_Linux
  7.0M   │ ├── croc_amd_x86_NetBSD
@@ -1151,15 +1151,15 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  5.9M   ├─┬ masscan
+ 1.5M   │ ├── masscan_linux_x86_gcc
  1.4M   │ ├── masscan_linux_x86_64_gcc
- 1.4M   │ ├── masscan_linux_x86_gcc
  1.3M   │ ├── masscan_linux_s390x_gcc
  1.1M   │ ├── masscan_linux_arm64_aarch64_gcc
  552K   │ ├── masscan_linux_arm64_aarch64_musl
  8.0K   │ ├── README.md
  4.0K   │ └── INFO.md
- 2.5M   ├─┬ massdns
- 876K   │ ├── massdns_linux_x86_64_gcc
+ 2.6M   ├─┬ massdns
+ 928K   │ ├── massdns_linux_x86_64_gcc
  836K   │ ├── massdns_linux_s390x_gcc
  716K   │ ├── massdns_linux_arm64_aarch64_gcc
  148K   │ ├── massdns_linux_arm64_aarch64_musl
