@@ -82,7 +82,7 @@ cd "$HOME/bin" && for i in $($HOME/bin/toybox); do ln -s toybox $i; done; PATH=$
 
 --> METADATA
 ./toybox/toybox_amd_x86_64_Linux:           ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
-./toybox/toybox_arm64_aarch64_Linux:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
+./toybox/toybox_arm64_aarch64_Linux:        ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, missing section headers at 841624
 ./toybox/toybox_armv4l_Linux:               ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 ./toybox/toybox_armv5l_Linux:               ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 ./toybox/toybox_armv7l_Linux:               ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
@@ -102,7 +102,7 @@ cd "$HOME/bin" && for i in $($HOME/bin/toybox); do ln -s toybox $i; done; PATH=$
 
 --> SHA256SUM
 69171b03ca3f221012fac692618ae74952f5892727f459c0370c64b61c0780d4  ./toybox/toybox_amd_x86_64_Linux
-ef98721241d9949fc4b2472bbef76260c9669e8e5d0d7ac99de50fff26cc1aa9  ./toybox/toybox_arm64_aarch64_Linux
+17a499aac8330c3c72577343d3343af051bb242b91e02918c34d9b86eaf6b37e  ./toybox/toybox_arm64_aarch64_Linux
 ee2fc96e556643e967874802532476cd1fdf23164f8b7bd7a33dc7d56d465daa  ./toybox/toybox_armv4l_Linux
 5781e5fc2f9f9673ad6af807ccf52c596a8268dd22d73ea5d8ca906377f17964  ./toybox/toybox_armv5l_Linux
 413f3f53331f1c893157c37a6b709d09859cb23460edb800a6fbd7b79024a558  ./toybox/toybox_armv7l_Linux
@@ -180,7 +180,7 @@ whoami xargs xxd yes zcat
 
 ```console
 739K   ./toybox/toybox_amd_x86_64_Linux
-822K   ./toybox/toybox_arm64_aarch64_Linux
+86K    ./toybox/toybox_arm64_aarch64_Linux
 790K   ./toybox/toybox_armv4l_Linux
 782K   ./toybox/toybox_armv5l_Linux
 774K   ./toybox/toybox_armv7l_Linux
