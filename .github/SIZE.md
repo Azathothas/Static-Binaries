@@ -82,7 +82,7 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 628M   ├─┬ baseutils
+ 629M   ├─┬ baseutils
  310M   │ ├─┬ x86_64
   29M   │ │ ├── tailscaled
   23M   │ │ ├── ngrok
@@ -150,14 +150,14 @@
  1.1M   │ │ ├── dmesg
  1.1M   │ │ ├── blkid
  1.1M   │ │ ├── mkswap
- 1.1M   │ │ ├── cal
  1.1M   │ │ ├── ipcs
  1.1M   │ │ ├── busybox
  1.1M   │ │ ├── unshare
  1.1M   │ │ ├── findfs
- 1.1M   │ │ ├── hexdump
+ 1.1M   │ │ ├── cal
  1.1M   │ │ ├── blkdiscard
  1.1M   │ │ ├── swaplabel
+ 1.1M   │ │ ├── hexdump
  1.1M   │ │ ├── setterm
  1.1M   │ │ ├── lscpu
  1.0M   │ │ ├── more
@@ -182,13 +182,13 @@
  980K   │ │ ├── scriptlive
  980K   │ │ ├── mkfs.minix
  972K   │ │ ├── uptime
- 972K   │ │ ├── readprofile
  964K   │ │ ├── nsenter
  964K   │ │ ├── blkzone
  960K   │ │ ├── scriptreplay
  960K   │ │ ├── blockdev
  956K   │ │ ├── uclampset
  956K   │ │ ├── setarch
+ 956K   │ │ ├── readprofile
  956K   │ │ ├── chcpu
  952K   │ │ ├── tload
  952K   │ │ ├── resizepart
@@ -444,7 +444,7 @@
  1.9M   │ │ ├── slirp4netns
  1.8M   │ │ ├── infocmp
  1.6M   │ │ ├── toe
- 1.5M   │ │ ├── cfdisk
+ 1.6M   │ │ ├── cfdisk
  1.5M   │ │ ├── tset
  1.5M   │ │ ├── tput
  1.4M   │ │ ├── tabs
@@ -466,11 +466,11 @@
  1.0M   │ │ ├── lsns
  1.0M   │ │ ├── lslocks
  972K   │ │ ├── swapoff
- 972K   │ │ ├── mountpoint
  972K   │ │ ├── lsfd
  972K   │ │ ├── fstrim
  972K   │ │ ├── fsck
  972K   │ │ ├── eject
+ 956K   │ │ ├── mountpoint
  956K   │ │ ├── irqtop
  940K   │ │ ├── sulogin
  940K   │ │ ├── ps
@@ -489,12 +489,12 @@
  844K   │ │ ├── blkid
  844K   │ │ ├── agetty
  824K   │ │ ├── toybox
+ 816K   │ │ ├── dmesg
  812K   │ │ ├── setpriv
  812K   │ │ ├── pmap
  812K   │ │ ├── mkswap
  812K   │ │ ├── logger
  812K   │ │ ├── findfs
- 800K   │ │ ├── dmesg
  796K   │ │ ├── pidof
  796K   │ │ ├── last
  780K   │ │ ├── wall
@@ -1110,7 +1110,7 @@
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
-  34M   ├─┬ toybox
+  32M   ├─┬ toybox
  1.4M   │ ├── toybox_microblaze_Linux.base64
  1.3M   │ ├── toybox_mipsel_Linux.base64
  1.3M   │ ├── toybox_mips_Linux.base64
@@ -1119,7 +1119,6 @@
  1.2M   │ ├── toybox_powerpc64_Linux.base64
  1.1M   │ ├── toybox_s390x_Linux.base64
  1.1M   │ ├── toybox_powerpc_Linux.base64
- 1.1M   │ ├── toybox_arm64_aarch64_Linux.base64
  1.1M   │ ├── toybox_microblaze_Linux
  1.0M   │ ├── toybox_armv4l_Linux.base64
  1.0M   │ ├── toybox_armv5l_Linux.base64
@@ -1137,7 +1136,6 @@
  884K   │ ├── toybox_armv7m_Linux.base64
  876K   │ ├── toybox_s390x_Linux
  844K   │ ├── toybox_powerpc_Linux
- 824K   │ ├── toybox_arm64_aarch64_Linux
  792K   │ ├── toybox_armv4l_Linux
  784K   │ ├── toybox_armv5l_Linux
  776K   │ ├── toybox_armv7l_Linux
@@ -1147,6 +1145,8 @@
  740K   │ ├── toybox_amd_x86_64_Linux
  720K   │ ├── toybox_sh4_Linux
  664K   │ ├── toybox_armv7m_Linux
+ 116K   │ ├── toybox_arm64_aarch64_Linux.base64
+  88K   │ ├── toybox_arm64_aarch64_Linux
   12K   │ ├── README.md
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
