@@ -926,9 +926,9 @@
   16M   │ ├── twingate_connector_aarch64_arm64_dynamic_Linux
   11M   │ ├── twingate_connectorctl_amd_x86_64_dynamic_Linux
   11M   │ ├── twingate_connectorctl_aarch64_arm64_dynamic_Linux
-  11M   │ ├── twingate_connector_arm32v7_dynamic_Linux
- 6.9M   │ ├── twingate_connector_amd_x86_64_staticx_Linux
- 6.8M   │ ├── twingate_connectorctl_arm32v7_dynamic_Linux
+  10M   │ ├── twingate_connector_arm32v7_dynamic_Linux
+ 7.0M   │ ├── twingate_connector_amd_x86_64_staticx_Linux
+ 6.7M   │ ├── twingate_connectorctl_arm32v7_dynamic_Linux
  4.9M   │ ├── twingate_client_amd_x86_64_dynamic_Linux
  4.3M   │ ├── twingate_connectorctl_amd_x86_64_staticx_Linux
  4.3M   │ ├── twingate_client_aarch64_arm64_dynamic_Linux
@@ -1109,7 +1109,7 @@
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
-  32M   ├─┬ toybox
+  34M   ├─┬ toybox
  1.4M   │ ├── toybox_microblaze_Linux.base64
  1.3M   │ ├── toybox_mipsel_Linux.base64
  1.3M   │ ├── toybox_mips_Linux.base64
@@ -1118,6 +1118,7 @@
  1.2M   │ ├── toybox_powerpc64_Linux.base64
  1.1M   │ ├── toybox_s390x_Linux.base64
  1.1M   │ ├── toybox_powerpc_Linux.base64
+ 1.1M   │ ├── toybox_arm64_aarch64_Linux.base64
  1.1M   │ ├── toybox_microblaze_Linux
  1.0M   │ ├── toybox_armv4l_Linux.base64
  1.0M   │ ├── toybox_armv5l_Linux.base64
@@ -1135,6 +1136,7 @@
  884K   │ ├── toybox_armv7m_Linux.base64
  876K   │ ├── toybox_s390x_Linux
  844K   │ ├── toybox_powerpc_Linux
+ 824K   │ ├── toybox_arm64_aarch64_Linux
  792K   │ ├── toybox_armv4l_Linux
  784K   │ ├── toybox_armv5l_Linux
  776K   │ ├── toybox_armv7l_Linux
@@ -1144,8 +1146,6 @@
  740K   │ ├── toybox_amd_x86_64_Linux
  720K   │ ├── toybox_sh4_Linux
  664K   │ ├── toybox_armv7m_Linux
- 116K   │ ├── toybox_arm64_aarch64_Linux.base64
-  88K   │ ├── toybox_arm64_aarch64_Linux
   12K   │ ├── README.md
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
