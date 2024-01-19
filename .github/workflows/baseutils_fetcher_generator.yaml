@@ -376,7 +376,7 @@ jobs:
           eget "Azathothas/static-toolbox" --tag "misc" --asset "gawk_amd_x86_64"  --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/gawk"
           eget "Azathothas/static-toolbox" --tag "misc" --asset "gawk_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/gawk"
           #grep
-          eget "Azathothas/static-toolbox" --tag "misc" --asset "grep_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/grep"
+          #eget "Azathothas/static-toolbox" --tag "misc" --asset "grep_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/grep"
           eget "Azathothas/static-toolbox" --tag "misc" --asset "grep_aarch64_arm64" --to "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64/grep"
           #sed
           eget "Azathothas/static-toolbox" --tag "misc" --asset "sed_amd_x86_64" --to "$GITHUB_WORKSPACE/main/baseutils/x86_64/sed"
