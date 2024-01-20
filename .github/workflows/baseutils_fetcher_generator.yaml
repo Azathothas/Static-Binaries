@@ -52,7 +52,9 @@ jobs:
                        
       - name: Install CoreUtils & Deps
         run: |
-          set +e
+          # Presets
+          set -x ; set +e
+          #--------------#
           sudo apt-get update -y
           sudo apt-get install automake b3sum build-essential ca-certificates ccache lzip jq make musl musl-dev musl-tools p7zip-full wget -y
           sudo apt-get install -y --no-install-recommends autoconf automake autopoint binutils bison build-essential byacc ca-certificates clang flex file jq patch patchelf pkg-config python3-pip qemu-user-static wget
@@ -63,7 +65,9 @@ jobs:
         
       - name: Install PythonUtils & Deps (StaticX)
         run: |       
-          set +e
+          # Presets
+          set -x ; set +e
+          #--------------#
           sudo apt-get install libxcb1-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev xcb -y
           pip install ansi2txt
           pip install scons
@@ -75,7 +79,9 @@ jobs:
         
       - name: Install CargoUtils & Deps
         run: |    
-          set +e
+          # Presets
+          set -x ; set +e
+          #--------------#
           cargo install cross --git "https://github.com/cross-rs/cross"
         continue-on-error: true
 
@@ -93,10 +99,12 @@ jobs:
 
       - name: Install Addons
         run: |
-          set +e
+          # Presets
+          set -x ; set +e
+          #--------------#
           #b3sum
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/b3sum" -o "/usr/bin/b3sum" && sudo chmod +xwr "/usr/bin/b3sum"
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/b3sum" -o "/usr/local/bin/b3sum" && sudo chmod +xwr "/usr/local/bin/b3sum"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/b3sum" -o "/usr/bin/b3sum" && sudo chmod +xwr "/usr/bin/b3sum"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/b3sum" -o "/usr/local/bin/b3sum" && sudo chmod +xwr "/usr/local/bin/b3sum"
           #eget
           curl -qfsSL "https://zyedidia.github.io/eget.sh" | bash
           sudo mv ./eget* "/usr/local/bin/eget"
@@ -105,8 +113,10 @@ jobs:
 
       - name: Install 7z
         run: |
+          # Presets
           set -x ; set +e
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/7z" -o "/usr/local/bin/7z"
+          #--------------#
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/7z" -o "/usr/local/bin/7z"
           sudo chmod +xwr "/usr/local/bin/7z"
           sudo cp "/usr/local/bin/7z" "/usr/bin/7z"
           sudo chmod +xwr "/usr/bin/7z"
@@ -126,14 +136,18 @@ jobs:
 
       - name: Install Crystal
         run: |
+          # Presets
+          set -x ; set +e
+          #--------------#        
           #https://crystal-lang.org/install/on_ubuntu/
           curl -fsSL https://crystal-lang.org/install.sh | sudo bash
         continue-on-error: true
 
       - name: Install Meson & Ninja
         run: |
-          #Presets
+          # Presets
           set -x ; set +e
+          #--------------#
           #Install
           sudo rm "/usr/bin/meson" "/usr/bin/ninja" 2>/dev/null
           pip install meson ninja --upgrade
@@ -147,15 +161,17 @@ jobs:
 
       - name: Install Zig
         run: |
-         pushd "$(mktemp -d)" && curl -qfSLJO $(curl -qfsSL "https://ziglang.org/download/index.json" | jq -r '.master | ."x86_64-linux".tarball')
-         find . -type f -name '*.tar*' -exec tar -xvf {} \;
-         sudo mkdir -p "/usr/local/zig" && sudo mv "$(find . -maxdepth 1 -type d | grep -v '^.$')"/* "/usr/local/zig"
-         export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
-         zig version ; popd
+          # Presets
+          set -x ; set +e
+          #--------------#        
+          bash <(curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Arsenal/main/misc/Linux/Debian/install_zig.sh")
         continue-on-error: true
         
       - name: Setup Env
         run: |
+          # Presets
+          set -x ; set +e
+          #--------------#        
           # Create Output Dir
           #aarch64_arm64
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
@@ -172,7 +188,7 @@ jobs:
          #-------------------------#
           #changelogs: https://invisible-island.net/ncurses/NEWS.html
           #Create tmp dir & get latest stable sources
-          pushd "$(mktemp -d)" && wget --quiet "https://invisible-island.net/datafiles/release/ncurses.tar.gz"
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
           find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
           cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
           #https://invisible-island.net/ncurses/INSTALL.html
@@ -202,6 +218,9 @@ jobs:
           cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
           cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
         continue-on-error: true
 
       - name: Build ncurses (aarch64_arm64)
@@ -211,7 +230,7 @@ jobs:
          #-------------------------#
           #changelogs: https://invisible-island.net/ncurses/NEWS.html
           #Create tmp dir & get latest stable sources
-          pushd "$(mktemp -d)" && wget --quiet "https://invisible-island.net/datafiles/release/ncurses.tar.gz"
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
           find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
           cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
           #https://invisible-island.net/ncurses/INSTALL.html
@@ -240,7 +259,10 @@ jobs:
           cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
           cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
           cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"          
+          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
         continue-on-error: true
 
       - name: Build grep (x86_64)
@@ -252,7 +274,7 @@ jobs:
           sudo apt-get install gperf libtool-bin -y
           ##Compile & install pcre2
           #Source
-          pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
           export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
           #export FLAGS
           export AR="zig ar"
@@ -295,6 +317,9 @@ jobs:
           "./src/grep" -V
           #Copy
           cp "./src/grep" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
         continue-on-error: true
         
      #Fetch
