@@ -188,147 +188,147 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE/main/baseutils/x86_64"
         continue-on-error: true
 #------------------------------------------------------------------------------------#                  
-    #  #Build
-    #   - name: Build ncurses (x86_64)
-    #     run: |
-    #      #Download
-    #       set -x ; set +e
-    #      #-------------------------#
-    #       #changelogs: https://invisible-island.net/ncurses/NEWS.html
-    #       #Create tmp dir & get latest stable sources
-    #       pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
-    #       find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
-    #       cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
-    #       #https://invisible-island.net/ncurses/INSTALL.html
-    #       sudo apt-get install libtool-bin -y
-    #       make clean 2>/dev/null
-    #       #export FLAGS
-    #       export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
-    #       zig version
-    #       export CC="zig cc -target x86_64-linux-musl"
-    #       export CXX="zig c++ -target x86_64-linux-musl"
-    #       export HOST_CC="zig cc -target x86_64-linux-musl"
-    #       export HOST_CXX="zig c++ -target x86_64-linux-musl"
-    #       #Configure with zig cc & sane opts
-    #       "./configure" --with-build-cc="zig cc -target x86_64-linux-musl" --with-build-cpp="zig c++ -target x86_64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
-    #       #Build
-    #       make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
-    #       #Test
-    #       find "./progs" -type f -exec strip {} 2>/dev/null \; 2>/dev/null
-    #       file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
-    #       ls -sh "./progs/"* ; chmod +xwr "./progs/"* ; "./progs/tput" -V
-    #       #Copy
-    #       cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       #Clean & Exit
-    #       unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
-    #       popd > /dev/null 2>&1
-    #     continue-on-error: true
+     #Build
+      - name: Build ncurses (x86_64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #changelogs: https://invisible-island.net/ncurses/NEWS.html
+          #Create tmp dir & get latest stable sources
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
+          find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
+          cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
+          #https://invisible-island.net/ncurses/INSTALL.html
+          sudo apt-get install libtool-bin -y
+          make clean 2>/dev/null
+          #export FLAGS
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+          zig version
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Configure with zig cc & sane opts
+          "./configure" --with-build-cc="zig cc -target x86_64-linux-musl" --with-build-cpp="zig c++ -target x86_64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
+          #Build
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
+          #Test
+          find "./progs" -type f -exec strip {} 2>/dev/null \; 2>/dev/null
+          file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
+          ls -sh "./progs/"* ; chmod +xwr "./progs/"* ; "./progs/tput" -V
+          #Copy
+          cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
+        continue-on-error: true
 
-    #   - name: Build ncurses (aarch64_arm64)
-    #     run: |
-    #      #Download
-    #       set -x ; set +e
-    #      #-------------------------#
-    #       #changelogs: https://invisible-island.net/ncurses/NEWS.html
-    #       #Create tmp dir & get latest stable sources
-    #       pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
-    #       find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
-    #       cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
-    #       #https://invisible-island.net/ncurses/INSTALL.html
-    #       sudo apt-get install libtool-bin -y
-    #       make dist clean 2>/dev/null ; make clean 2>/dev/null 
-    #       #export FLAGS
-    #       export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
-    #       zig version
-    #       export CC="zig cc -target aarch64-linux-musl"
-    #       export CXX="zig c++ -target aarch64-linux-musl"
-    #       export HOST_CC="zig cc -target aarch64-linux-musl"
-    #       export HOST_CXX="zig c++ -target aarch64-linux-musl"
-    #       #Configure with zig cc & sane opts
-    #       "./configure" --with-build-cc="zig cc -target aarch64-linux-musl" --with-build-cpp="zig c++ -target aarch64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
-    #       #Build
-    #       make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
-    #       #Test
-    #       find "./progs" -type f -exec aarch64-linux-gnu-objcopy --preserve-dates --verbose --strip-all {} 2>/dev/null \; 2>/dev/null
-    #       file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
-    #       ls -sh "./progs/"* ; chmod +xwr "./progs/"* ; qemu-aarch64-static "./progs/tput" -V
-    #       #Copy
-    #       cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
-    #       #Clean & Exit
-    #       unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
-    #       popd > /dev/null 2>&1
-    #     continue-on-error: true
+      - name: Build ncurses (aarch64_arm64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #changelogs: https://invisible-island.net/ncurses/NEWS.html
+          #Create tmp dir & get latest stable sources
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && wget --quiet --show-progress --progress="dot:giga" "https://invisible-island.net/datafiles/current/ncurses.tar.gz"
+          find . -type f -name "*.tar.gz*" -exec tar -xvf {} \; 2>/dev/null
+          cd "$(find . -maxdepth 1 -type d -name "*ncurses*" | grep -v "^.$")"
+          #https://invisible-island.net/ncurses/INSTALL.html
+          sudo apt-get install libtool-bin -y
+          make dist clean 2>/dev/null ; make clean 2>/dev/null 
+          #export FLAGS
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+          zig version
+          export CC="zig cc -target aarch64-linux-musl"
+          export CXX="zig c++ -target aarch64-linux-musl"
+          export HOST_CC="zig cc -target aarch64-linux-musl"
+          export HOST_CXX="zig c++ -target aarch64-linux-musl"
+          #Configure with zig cc & sane opts
+          "./configure" --with-build-cc="zig cc -target aarch64-linux-musl" --with-build-cpp="zig c++ -target aarch64-linux-musl" --with-libtool --with-libtool-opts="-static" --enable-bsdpad --enable-getcap --enable-static --with-normal --without-debug
+          #Build
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going 
+          #Test
+          find "./progs" -type f -exec aarch64-linux-gnu-objcopy --preserve-dates --verbose --strip-all {} 2>/dev/null \; 2>/dev/null
+          file "./progs/"* 2>/dev/null && ldd "./progs/"* 2>/dev/null
+          ls -sh "./progs/"* ; chmod +xwr "./progs/"* ; qemu-aarch64-static "./progs/tput" -V
+          #Copy
+          cp "./progs/capconvert" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/clear" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/infocmp" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tabs" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tic" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/toe" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tput" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          cp "./progs/tset" "$GITHUB_WORKSPACE/main/baseutils/aarch64_arm64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
+        continue-on-error: true
 
-    #   - name: Build grep (x86_64)
-    #     run: |
-    #      #Download
-    #       set -x ; set +e
-    #      #-------------------------#
-    #       #Deps
-    #       sudo apt-get install gperf libtool-bin -y
-    #       ##Compile & install pcre2
-    #       #Source
-    #       pushd "$(mktemp -d)" > /dev/null 2>&1 && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
-    #       export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
-    #       #export FLAGS
-    #       export AR="zig ar"
-    #       export CC="zig cc -target x86_64-linux-musl"
-    #       export CXX="zig c++ -target x86_64-linux-musl"
-    #       export HOST_CC="zig cc -target x86_64-linux-musl"
-    #       export HOST_CXX="zig c++ -target x86_64-linux-musl"
-    #       #Generate config files
-    #       bash "./autogen.sh"
-    #       #Configure
-    #       "./configure" --enable-pcre2-16 --enable-pcre2-32 --enable-newline-is-anycrlf --enable-jit --enable-shared="no"
-    #       #Make
-    #       make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
-    #       #install
-    #       sudo PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH" make install
-    #       #test
-    #       file "$(which pcre2grep)" ; pcre2grep --version
-    #       ##Grep
-    #       #Get source
-    #       pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://git.savannah.gnu.org/git/grep.git" && cd "./grep"
-    #       #fetch Version tag
-    #       GREP_VERSION="$(git tag --sort=-creatordate | head -n 1)" && export GREP_VERSION="$GREP_VERSION" ; echo -e "\n[+] Version = $GREP_VERSION\n"
-    #       #checkout to latest version
-    #       git checkout "$GREP_VERSION"
-    #       #bootstrap
-    #       bash "./bootstrap"  
-    #       #export FLAGS
-    #       export AR="zig ar"
-    #       export CC="zig cc -target x86_64-linux-musl"
-    #       export CXX="zig c++ -target x86_64-linux-musl"
-    #       export HOST_CC="zig cc -target x86_64-linux-musl"
-    #       export HOST_CXX="zig c++ -target x86_64-linux-musl"
-    #       #Configure
-    #       "./configure" --disable-dependency-tracking --enable-threads="isoc+posix"
-    #       #make
-    #       make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
-    #       #Test
-    #       strip "./src/grep" ; file "./src/grep" 2>/dev/null && ldd "./src/grep" 2>/dev/null ; ls -sh "./src/grep"
-    #       #Version
-    #       "./src/grep" -V
-    #       #Copy
-    #       cp "./src/grep" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
-    #       #Clean & Exit
-    #       unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
-    #       popd > /dev/null 2>&1
-    #     continue-on-error: true
+      - name: Build grep (x86_64)
+        run: |
+         #Download
+          set -x ; set +e
+         #-------------------------#
+          #Deps
+          sudo apt-get install gperf libtool-bin -y
+          ##Compile & install pcre2
+          #Source
+          pushd "$(mktemp -d)" > /dev/null 2>&1 && git clone --filter "blob:none" "https://github.com/PCRE2Project/pcre2" && cd "./pcre2"
+          export PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH"
+          #export FLAGS
+          export AR="zig ar"
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Generate config files
+          bash "./autogen.sh"
+          #Configure
+          "./configure" --enable-pcre2-16 --enable-pcre2-32 --enable-newline-is-anycrlf --enable-jit --enable-shared="no"
+          #Make
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
+          #install
+          sudo PATH="/usr/local/zig:/usr/local/zig/lib:/usr/local/zig/lib/include:$PATH" make install
+          #test
+          file "$(which pcre2grep)" ; pcre2grep --version
+          ##Grep
+          #Get source
+          pushd "$(mktemp -d)" && git clone --filter "blob:none" "https://git.savannah.gnu.org/git/grep.git" && cd "./grep"
+          #fetch Version tag
+          GREP_VERSION="$(git tag --sort=-creatordate | head -n 1)" && export GREP_VERSION="$GREP_VERSION" ; echo -e "\n[+] Version = $GREP_VERSION\n"
+          #checkout to latest version
+          git checkout "$GREP_VERSION"
+          #bootstrap
+          bash "./bootstrap"  
+          #export FLAGS
+          export AR="zig ar"
+          export CC="zig cc -target x86_64-linux-musl"
+          export CXX="zig c++ -target x86_64-linux-musl"
+          export HOST_CC="zig cc -target x86_64-linux-musl"
+          export HOST_CXX="zig c++ -target x86_64-linux-musl"
+          #Configure
+          "./configure" --disable-dependency-tracking --enable-threads="isoc+posix"
+          #make
+          make CC="$CC" CXX="$CXX" HOST_CC="$HOST_CC" HOST_CXX="$HOST_CXX" TARGET_STRIP="strip" --jobs="$(($(nproc)+1))" --keep-going
+          #Test
+          strip "./src/grep" ; file "./src/grep" 2>/dev/null && ldd "./src/grep" 2>/dev/null ; ls -sh "./src/grep"
+          #Version
+          "./src/grep" -V
+          #Copy
+          cp "./src/grep" "$GITHUB_WORKSPACE/main/baseutils/x86_64"
+          #Clean & Exit
+          unset AR CC CXX HOST_CC HOST_CXX OBJCOPY RANLIB
+          popd > /dev/null 2>&1
+        continue-on-error: true
 #------------------------------------------------------------------------------------#        
      #Fetch
       - name: Fetch baseutils
