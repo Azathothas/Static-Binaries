@@ -82,7 +82,7 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 607M   ├─┬ baseutils
+ 608M   ├─┬ baseutils
  300M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
@@ -249,19 +249,19 @@
  336K   │ │ ├── scp
  328K   │ │ ├── sftp
  308K   │ │ ├── find
- 260K   │ │ ├── tic
+ 272K   │ │ ├── tic
  256K   │ │ ├── xz
  256K   │ │ ├── du
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
+ 244K   │ │ ├── infocmp
  240K   │ │ ├── sftp-server
- 236K   │ │ ├── infocmp
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
  192K   │ │ ├── locate
+ 188K   │ │ ├── toe
  188K   │ │ ├── sed
- 172K   │ │ ├── toe
  172K   │ │ ├── sort
  172K   │ │ ├── cksum
  168K   │ │ ├── ptx
@@ -275,12 +275,13 @@
  148K   │ │ ├── mv
  148K   │ │ ├── df
  148K   │ │ ├── cp
- 140K   │ │ ├── tset
- 140K   │ │ ├── tput
+ 144K   │ │ ├── tset
+ 144K   │ │ ├── tput
  140K   │ │ ├── date
+ 136K   │ │ ├── tabs
  136K   │ │ ├── pr
- 132K   │ │ ├── tabs
  132K   │ │ ├── pinky
+ 132K   │ │ ├── clear
  128K   │ │ ├── who
  128K   │ │ ├── touch
  128K   │ │ ├── factor
@@ -288,7 +289,6 @@
  120K   │ │ ├── chown
  116K   │ │ ├── gzip
  116K   │ │ ├── dircolors
- 116K   │ │ ├── clear
  116K   │ │ ├── chroot
  112K   │ │ ├── split
  112K   │ │ ├── od
@@ -425,7 +425,7 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 258M   │ ├─┬ aarch64_arm64
+ 259M   │ ├─┬ aarch64_arm64
   28M   │ │ ├── tailscaled
   22M   │ │ ├── ngrok
   15M   │ │ ├── tailscale
@@ -440,15 +440,15 @@
  4.0M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
  2.2M   │ │ ├── bash
- 1.9M   │ │ ├── tic
+ 2.0M   │ │ ├── tic
+ 1.9M   │ │ ├── infocmp
  1.9M   │ │ ├── slirp4netns
- 1.8M   │ │ ├── infocmp
- 1.6M   │ │ ├── toe
+ 1.7M   │ │ ├── toe
  1.6M   │ │ ├── cfdisk
  1.5M   │ │ ├── tset
  1.5M   │ │ ├── tput
  1.4M   │ │ ├── tabs
- 1.3M   │ │ ├── clear
+ 1.4M   │ │ ├── clear
  1.3M   │ │ ├── dropbearmulti
  1.3M   │ │ ├── lsblk
  1.3M   │ │ ├── dropbear
@@ -776,8 +776,8 @@
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_mips_Linux
+  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
