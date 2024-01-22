@@ -85,9 +85,9 @@ jobs:
           export GOOS=darwin
           export GOARCH=amd64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_amd_x86_64_macOS"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_amd_x86_64_macOS"  
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_macOS"
@@ -105,9 +105,9 @@ jobs:
           # Build
           export GOOS=darwin
           export GOARCH=arm64
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_aarch64_arm64_macOS"
           mv "./tailscaled" "$GITHUB_WORKSPACE/main/tailscale/tailscaled_aarch64_arm64_macOS"  
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_macOS"
@@ -249,7 +249,7 @@ jobs:
           export GOOS=linux
           export GOARCH=arm64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux"
           #Compress with upx
           upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_aarch64_arm64_Linux.upx" & 
@@ -268,7 +268,7 @@ jobs:
           export GOOS=linux
           export GOARCH=amd64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux"
           #Compress with upx
           upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_amd_x86_64_Linux.upx" & 
@@ -287,7 +287,7 @@ jobs:
           export GOOS=linux
           export GOARCH=arm
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux"
           #Compress with upx
           upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_arm_Linux.upx" & 
@@ -306,7 +306,7 @@ jobs:
           export GOOS=linux
           export GOARCH=386
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           mv "./tailscale.combined" "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux"
           #Compress with upx
           upx --all-methods --brute --best --lzma --no-progress -qq "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux" -o "$GITHUB_WORKSPACE/main/tailscale/tailscale_merged_i386_Linux.upx" & 
@@ -325,9 +325,9 @@ jobs:
           export GOOS=linux
           export GOARCH=ppc64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1  
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64_ppc64_Linux"
@@ -352,9 +352,9 @@ jobs:
           export GOOS=linux
           export GOARCH=ppc64le
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_powerpc64le_ppc64le_Linux"
@@ -379,9 +379,9 @@ jobs:
           export GOOS=linux
           export GOARCH=s390x
           export VERSION=$(cat $GITHUB_WORKSPACE/main/tailscale/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscale"
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" "./cmd/tailscaled" 
-          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscale"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" "./cmd/tailscaled" 
+          CGO_ENABLED=0 go build -o tailscale.combined -v -ldflags="-buildid= -s -w -extldflags '-static'" -tags "ts_omit_aws,ts_omit_bird,ts_omit_tap,ts_omit_kube,ts_include_cli" "./cmd/tailscaled"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./tailscale" "./tailscaled" >/dev/null 2>&1 
           mv "./tailscale" "$GITHUB_WORKSPACE/main/tailscale/tailscale_s390x_Linux"

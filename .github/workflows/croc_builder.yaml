@@ -118,7 +118,7 @@ jobs:
           export GOOS=linux
           export GOARCH=386
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_386_Linux"
@@ -137,7 +137,7 @@ jobs:
           export GOOS=linux
           export GOARCH=loong64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_loong64_Linux"
@@ -156,7 +156,7 @@ jobs:
           export GOOS=linux
           export GOARCH=mips
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips_Linux"
@@ -175,7 +175,7 @@ jobs:
           export GOOS=linux
           export GOARCH=mipsle
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mipsle_Linux"
@@ -194,7 +194,7 @@ jobs:
           export GOOS=linux
           export GOARCH=mips64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips64_Linux"
@@ -213,7 +213,7 @@ jobs:
           export GOOS=linux
           export GOARCH=mips64le
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_mips64le_Linux"
@@ -232,7 +232,7 @@ jobs:
           export GOOS=linux
           export GOARCH=ppc64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_powerpc64_ppc64_Linux"
@@ -251,7 +251,7 @@ jobs:
           export GOOS=linux
           export GOARCH=ppc64le
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1 
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_powerpc64le_ppc64le_Linux"
@@ -270,7 +270,7 @@ jobs:
           export GOOS=linux
           export GOARCH=riscv64
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'" 
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'" 
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1  
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_riscv64_Linux"
@@ -289,7 +289,7 @@ jobs:
           export GOOS=linux
           export GOARCH=s390x
           export VERSION=$(cat $GITHUB_WORKSPACE/main/croc/version.txt)
-          CGO_ENABLED=0 go build -v -ldflags="-s -w -extldflags '-static'"
+          CGO_ENABLED=0 go build -v -ldflags="-buildid= -s -w -extldflags '-static'"
           # Strip & move, if this fails, the entire step is skipped
           # strip "./croc" "./crocd" >/dev/null 2>&1 
           mv "./croc" "$GITHUB_WORKSPACE/main/croc/croc_s390x_Linux"
