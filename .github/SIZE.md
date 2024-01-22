@@ -82,7 +82,7 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 608M   ├─┬ baseutils
+ 583M   ├─┬ baseutils
  300M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
@@ -425,11 +425,11 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 259M   │ ├─┬ aarch64_arm64
-  28M   │ │ ├── tailscaled
+ 233M   │ ├─┬ aarch64_arm64
   22M   │ │ ├── ngrok
-  15M   │ │ ├── tailscale
+  19M   │ │ ├── tailscaled
   12M   │ │ ├── gost
+  10M   │ │ ├── tailscale
  7.1M   │ │ ├── croc
  6.2M   │ │ ├── curl
  4.8M   │ │ ├── sshd
@@ -439,16 +439,8 @@
  4.2M   │ │ ├── ssh-keygen
  4.0M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
- 2.2M   │ │ ├── bash
- 2.0M   │ │ ├── tic
- 1.9M   │ │ ├── infocmp
  1.9M   │ │ ├── slirp4netns
- 1.7M   │ │ ├── toe
  1.6M   │ │ ├── cfdisk
- 1.5M   │ │ ├── tset
- 1.5M   │ │ ├── tput
- 1.4M   │ │ ├── tabs
- 1.4M   │ │ ├── clear
  1.3M   │ │ ├── dropbearmulti
  1.3M   │ │ ├── lsblk
  1.3M   │ │ ├── dropbear
@@ -457,6 +449,7 @@
  1.2M   │ │ ├── grep
  1.2M   │ │ ├── busybox
  1.2M   │ │ ├── bore
+ 1.2M   │ │ ├── bash
  1.1M   │ │ ├── mount
  1.1M   │ │ ├── umount
  1.1M   │ │ ├── dbclient
@@ -594,6 +587,7 @@
  344K   │ │ ├── sftp
  324K   │ │ ├── find
  292K   │ │ ├── du
+ 264K   │ │ ├── tic
  260K   │ │ ├── xz
  260K   │ │ ├── sftp-server
  260K   │ │ ├── printf
@@ -601,6 +595,7 @@
  244K   │ │ ├── vdir
  244K   │ │ ├── ls
  244K   │ │ ├── dir
+ 240K   │ │ ├── infocmp
  196K   │ │ ├── stat
  196K   │ │ ├── sort
  196K   │ │ ├── sed
@@ -610,6 +605,7 @@
  196K   │ │ ├── expr
  196K   │ │ ├── csplit
  196K   │ │ ├── cksum
+ 188K   │ │ ├── toe
  180K   │ │ ├── tac
  180K   │ │ ├── nl
  180K   │ │ ├── mv
@@ -620,6 +616,9 @@
  164K   │ │ ├── pinky
  164K   │ │ ├── date
  148K   │ │ ├── touch
+ 144K   │ │ ├── tset
+ 144K   │ │ ├── tput
+ 136K   │ │ ├── tabs
  132K   │ │ ├── xzdec
  132K   │ │ ├── xargs
  132K   │ │ ├── wc
@@ -647,6 +646,7 @@
  132K   │ │ ├── factor
  132K   │ │ ├── dircolors
  132K   │ │ ├── dd
+ 132K   │ │ ├── clear
  132K   │ │ ├── chroot
  132K   │ │ ├── chown
  132K   │ │ ├── chmod
@@ -770,14 +770,14 @@
  376K   │ │ ├── sftp
  280K   │ │ ├── sftp-server
  4.0K   │ │ └── sshd_config
-  16M   │ └── README.md
+  17M   │ └── README.md
  455M   ├─┬ ngrok
   25M   │ ├── ngrok_amd_x86_64_macOS
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_mipsle_Linux
+  24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
