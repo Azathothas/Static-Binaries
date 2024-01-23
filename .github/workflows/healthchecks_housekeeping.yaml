@@ -127,9 +127,9 @@ jobs:
           rm -rf "$(pwd)/.git"
           #Upload to Pub
           echo -e "[+] Syncing $GITHUB_REPOSITORY to pub.ajam.dev/repos/$GITHUB_REPOSITORY \n"
-          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/.github" --progress --check-first
-          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/.scripts" --progress --check-first
-          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/README.md" --progress --check-first
+          rclone copy "./.github" "r2:/pub/repos/$GITHUB_REPOSITORY/" --progress --check-first
+          rclone copy "./.scripts" "r2:/pub/repos/$GITHUB_REPOSITORY/" --progress --check-first
+          rclone copy "./README.md" "r2:/pub/repos/$GITHUB_REPOSITORY/" --progress --check-first
         continue-on-error: true
 #EOF
 #------------------------------------------------------------------------------------#
