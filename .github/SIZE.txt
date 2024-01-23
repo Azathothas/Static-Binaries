@@ -81,11 +81,10 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 583M   ├─┬ baseutils
- 300M   │ ├─┬ x86_64
+ 570M   ├─┬ baseutils
+ 287M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
-  12M   │ │ ├── gost
   10M   │ │ ├── tailscale
  7.4M   │ │ ├── croc
  5.7M   │ │ ├── git-upload-pack
