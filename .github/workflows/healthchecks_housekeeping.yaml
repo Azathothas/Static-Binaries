@@ -9,7 +9,8 @@ on:
 
 env:
   USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
-  
+  RCLONE_CF_R2_PUB: "${{ secrets.RCLONE_CF_R2_PUB }}"
+#------------------------------------------------------------------------------------#
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -26,29 +27,37 @@ jobs:
 
       - name: Setup Env
         run: |
+          #Presets
+          set +x ; set +e
+          #--------------#        
           sudo apt update -y
           sudo apt install dos2unix -y
           pip install ansi2txt --upgrade
-
+        continue-on-error: true
+        
       - name: Install Addons
         run: |
-          set +e
+          #Presets
+          set +x ; set +e
+          #--------------#
           #action-lint
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/actionlint" -o "/usr/local/bin/actionlint" && sudo chmod +xwr "/usr/local/bin/actionlint"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/actionlint" -o "/usr/local/bin/actionlint" && sudo chmod +xwr "/usr/local/bin/actionlint"
           #delta
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/delta" -o "/usr/local/bin/delta" && sudo chmod +xwr "/usr/local/bin/delta"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/delta" -o "/usr/local/bin/delta" && sudo chmod +xwr "/usr/local/bin/delta"
           #dust
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/dust" -o "/usr/local/bin/dust" && sudo chmod +xwr "/usr/local/bin/dust"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/dust" -o "/usr/local/bin/dust" && sudo chmod +xwr "/usr/local/bin/dust"
           #eget
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/eget" -o "/usr/local/bin/eget" && sudo chmod +xwr "/usr/local/bin/eget"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/eget" -o "/usr/local/bin/eget" && sudo chmod +xwr "/usr/local/bin/eget"
           #git-sizer
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/git-sizer" -o "/usr/local/bin/git-sizer" && sudo chmod +xwr "/usr/local/bin/git-sizer"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/git-sizer" -o "/usr/local/bin/git-sizer" && sudo chmod +xwr "/usr/local/bin/git-sizer"
+          #rclone
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/rclone" -o "/usr/local/bin/rclone" && sudo chmod +xwr "/usr/local/bin/rclone"
           #validtoml
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/validtoml" -o "/usr/local/bin/validtoml" && sudo chmod +xwr "/usr/local/bin/validtoml"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/validtoml" -o "/usr/local/bin/validtoml" && sudo chmod +xwr "/usr/local/bin/validtoml"
           #Yq
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/yq" -o "/usr/local/bin/yq" && sudo chmod +xwr "/usr/local/bin/yq"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/yq" -o "/usr/local/bin/yq" && sudo chmod +xwr "/usr/local/bin/yq"
           #Yj
-          sudo curl -qfsSL "https://raw.githubusercontent.com/Azathothas/Toolpacks/main/x86_64/yj" -o "/usr/local/bin/yj" && sudo chmod +xwr "/usr/local/bin/yj"
+          sudo curl -qfsSL "https://bin.ajam.dev/x86_64_Linux/yj" -o "/usr/local/bin/yj" && sudo chmod +xwr "/usr/local/bin/yj"
         continue-on-error: true
 
       - name: Dos2Unix Everything
@@ -89,10 +98,10 @@ jobs:
           echo "NEPALI_TIME=$NEPALI_TIME" >> $GITHUB_ENV
         continue-on-error: true
 
-     # - name: Git Pull
-     #   run: |
-     #      cd "$GITHUB_WORKSPACE/main" && git pull origin main
-     #   continue-on-error: true
+      - name: Git Pull
+        run: |
+          cd "$GITHUB_WORKSPACE/main" && git pull origin main
+        continue-on-error: true
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -101,3 +110,26 @@ jobs:
           commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "✅ 🐧🧹 🖳🗑️"
           #push_options: '--force'
+        continue-on-error: true
+#------------------------------------------------------------------------------------#
+      - name: rClone BackUp Repo ("https://pub.ajam.dev/repos/$GITHUB_REPOSITORY")
+        run: |
+          # Presets
+          set -x ; set +e
+          #--------------#
+          #touch "$HOME/.rclone.conf"
+          echo "${{ secrets.RCLONE_CF_R2_PUB }}" > "$HOME/.rclone.conf"
+          #chdir to Repo
+          cd "$GITHUB_WORKSPACE/main"
+          #Git pull
+          git pull origin main --no-edit 2>/dev/null
+          #Del Bloat
+          rm -rf "$(pwd)/.git"
+          #Upload to Pub
+          echo -e "[+] Syncing $GITHUB_REPOSITORY to pub.ajam.dev/repos/$GITHUB_REPOSITORY \n"
+          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/.github" --progress --check-first
+          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/.scripts" --progress --check-first
+          rclone copy "." "r2:/pub/repos/$GITHUB_REPOSITORY/README.md" --progress --check-first
+        continue-on-error: true
+#EOF
+#------------------------------------------------------------------------------------#
