@@ -29,6 +29,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: main
+          filter: "blob:none" #https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
           
    #Incase changes were made after workflow ran      
       - name: Pull latest changes from main
@@ -142,6 +143,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: main
+          filter: "blob:none" #https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
+          
    #Incase changes were made after workflow ran      
       - name: Pull latest changes from main
         run: |
@@ -213,6 +216,19 @@ jobs:
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/tailscale"
 
+    ##Needed until gh runners updates go version: https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+    ## It helps to be on bleeding edge anyway
+      - name: Install/Update golang
+        if: env.versions_same != 'true'
+        run: |
+          #Presets
+          set -x ; set +e
+          #--------------#
+          echo "yes" | bash <(curl -qfsSL "https://git.io/go-installer")
+          source "$HOME/.bashrc"
+          go version
+        continue-on-error: true
+        
     #Build using go tool chain
     #Complete Tool Chain List: `go tool dist list`
     #   - name: Build Tailscale for dockcross/android-x86_64
