@@ -1,6 +1,6 @@
 ```mathematica
  3.3G └─┬ main
-1022M   ├─┬ tailscale
+ 1.0G   ├─┬ tailscale
   50M   │ ├── tailscale_setup_Windows.exe
   42M   │ ├── tailscale_ipn_setup_Windows.exe
   31M   │ ├── tailscaled_mips64_Linux
@@ -11,23 +11,23 @@
   28M   │ ├── tailscaled_aarch64_arm64_Linux
   27M   │ ├── tailscaled_arm_abi_Linux
   23M   │ ├── tailscale_amd_x86_64_Windows.msi
-  23M   │ ├── tailscale_merged_s390x_Linux
   22M   │ ├── tailscale_x86_Windows.msi
   22M   │ ├── tailscale_merged_amd_x86_64_macOS
   21M   │ ├── tailscale_aarch64_arm64_Windows.msi
-  21M   │ ├── tailscale_merged_amd_x86_64_Linux
+  21M   │ ├── tailscaled_s390x_Linux
   21M   │ ├── tailscale_merged_aarch64_arm64_macOS
-  21M   │ ├── tailscale_merged_powerpc64_ppc64_Linux
-  21M   │ ├── tailscale_merged_powerpc64le_ppc64le_Linux
-  20M   │ ├── tailscale_merged_aarch64_arm64_Linux
-  20M   │ ├── tailscale_merged_i386_Linux
-  20M   │ ├── tailscale_merged_arm_Linux
+  21M   │ ├── tailscale_merged_s390x_Linux
   20M   │ ├── tailscaled_amd_x86_64_Linux
-  19M   │ ├── tailscaled_s390x_Linux
+  20M   │ ├── tailscaled_powerpc64le_ppc64le_Linux
+  20M   │ ├── tailscaled_powerpc64_ppc64_Linux
+  19M   │ ├── tailscale_merged_amd_x86_64_Linux
   19M   │ ├── tailscaled_amd_geode_Linux
   19M   │ ├── tailscaled_i386_Linux
-  18M   │ ├── tailscaled_powerpc64le_ppc64le_Linux
-  18M   │ ├── tailscaled_powerpc64_ppc64_Linux
+  19M   │ ├── tailscale_merged_powerpc64le_ppc64le_Linux
+  19M   │ ├── tailscale_merged_powerpc64_ppc64_Linux
+  18M   │ ├── tailscale_merged_aarch64_arm64_Linux
+  18M   │ ├── tailscale_merged_i386_Linux
+  18M   │ ├── tailscale_merged_arm_Linux
   17M   │ ├── tailscaled_amd_x86_64_macOS
   16M   │ ├── tailscale_mips64_Linux
   16M   │ ├── tailscaled_aarch64_arm64_macOS
@@ -37,16 +37,16 @@
   15M   │ ├── tailscale_riscv64_Linux
   15M   │ ├── tailscale_aarch64_arm64_Linux
   15M   │ ├── tailscale_arm_abi_Linux
-  12M   │ ├── tailscale_s390x_Linux
   12M   │ ├── tailscaled_aarch64_arm64_Linux.upx
   12M   │ ├── tailscale_amd_x86_64_macOS
   11M   │ ├── tailscaled_mips_Linux.upx
   11M   │ ├── tailscaled_mipsle_Linux.upx
   11M   │ ├── tailscale_aarch64_arm64_macOS
   11M   │ ├── tailscaled_arm_abi_Linux.upx
-  11M   │ ├── tailscale_powerpc64le_ppc64le_Linux
-  11M   │ ├── tailscale_powerpc64_ppc64_Linux
+  11M   │ ├── tailscale_s390x_Linux
   10M   │ ├── tailscale_amd_x86_64_Linux
+  10M   │ ├── tailscale_powerpc64le_ppc64le_Linux
+  10M   │ ├── tailscale_powerpc64_ppc64_Linux
   10M   │ ├── tailscale_amd_geode_Linux
   10M   │ ├── tailscale_i386_Linux
  7.0M   │ ├── tailscale_aarch64_arm64_Linux.upx
@@ -54,12 +54,22 @@
  6.8M   │ ├── tailscale_arm_abi_Linux.upx
  6.8M   │ ├── tailscale_mipsle_Linux.upx
  6.1M   │ ├── tailscaled_amd_x86_64_Linux.upx
+ 6.0M   │ ├── tailscale_merged_amd_x86_64_Linux.upx
  5.6M   │ ├── tailscaled_amd_geode_Linux.upx
  5.6M   │ ├── tailscaled_i386_Linux.upx
+ 5.6M   │ ├── tailscale_merged_i386_Linux.upx
+ 5.1M   │ ├── tailscaled_powerpc64le_ppc64le_Linux.upx
+ 5.1M   │ ├── tailscale_merged_powerpc64le_ppc64le_Linux.upx
+ 5.0M   │ ├── tailscale_merged_aarch64_arm64_Linux.upx
+ 4.8M   │ ├── tailscaled_powerpc64_ppc64_Linux.upx
+ 4.8M   │ ├── tailscale_merged_arm_Linux.upx
+ 4.8M   │ ├── tailscale_merged_powerpc64_ppc64_Linux.upx
  3.6M   │ ├── tailscale_amd_x86_64_Linux.upx
  3.1M   │ ├── tailscale_amd_geode_Linux.upx
  3.0M   │ ├── tailscale_i386_Linux.upx
-  44K   │ ├── README.md
+ 3.0M   │ ├── tailscale_powerpc64le_ppc64le_Linux.upx
+ 2.8M   │ ├── tailscale_powerpc64_ppc64_Linux.upx
+  48K   │ ├── README.md
   16K   │ ├── INFO.md
  4.0K   │ ├── version.txt
  4.0K   │ ├── tailscaled_riscv64_systemd.service_Linux
@@ -857,8 +867,8 @@
  4.0K   │ └── version.txt
  221M   ├─┬ croc
  8.1M   │ ├── croc_x86_64_macOS
- 8.1M   │ ├── croc_mips64_Linux
  8.1M   │ ├── croc_mips64le_Linux
+ 8.1M   │ ├── croc_mips64_Linux
  7.9M   │ ├── croc_aarch64_arm64_macOS
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
