@@ -22,8 +22,8 @@
   20M   │ ├── tailscaled_powerpc64_ppc64_Linux
   19M   │ ├── tailscale_merged_amd_x86_64_Linux
   19M   │ ├── tailscaled_amd_geode_Linux
-  19M   │ ├── tailscale_merged_powerpc64le_ppc64le_Linux
   19M   │ ├── tailscaled_i386_Linux
+  19M   │ ├── tailscale_merged_powerpc64le_ppc64le_Linux
   19M   │ ├── tailscale_merged_powerpc64_ppc64_Linux
   18M   │ ├── tailscale_merged_aarch64_arm64_Linux
   18M   │ ├── tailscale_merged_i386_Linux
@@ -785,8 +785,8 @@
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_mips_Linux
+  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
@@ -867,8 +867,8 @@
  4.0K   │ └── version.txt
  221M   ├─┬ croc
  8.1M   │ ├── croc_x86_64_macOS
- 8.1M   │ ├── croc_mips64_Linux
  8.1M   │ ├── croc_mips64le_Linux
+ 8.1M   │ ├── croc_mips64_Linux
  7.9M   │ ├── croc_aarch64_arm64_macOS
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
