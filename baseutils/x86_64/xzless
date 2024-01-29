@@ -23,7 +23,7 @@
 # specified via XZ_OPT.
 xz='xz --format=auto'
 
-version='xzless (XZ Utils) 5.5.0alpha'
+version='xzless (XZ Utils) 5.5.1alpha'
 
 usage="Usage: ${0##*/} [OPTION]... [FILE]...
 Like 'less', but operate on the uncompressed contents of xz compressed FILEs.
