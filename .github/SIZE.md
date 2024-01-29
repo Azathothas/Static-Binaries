@@ -92,10 +92,11 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 570M   ├─┬ baseutils
- 287M   │ ├─┬ x86_64
+ 583M   ├─┬ baseutils
+ 300M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
+  12M   │ │ ├── gost
   10M   │ │ ├── tailscale
  7.4M   │ │ ├── croc
  5.7M   │ │ ├── git-upload-pack
@@ -139,8 +140,8 @@
  1.3M   │ │ ├── ps
  1.2M   │ │ ├── dropbearconvert
  1.2M   │ │ ├── slabtop
- 1.2M   │ │ ├── lsclocks
  1.2M   │ │ ├── dropbearkey
+ 1.2M   │ │ ├── lsclocks
  1.2M   │ │ ├── pkill
  1.2M   │ │ ├── pidwait
  1.2M   │ │ ├── pgrep
@@ -218,11 +219,11 @@
  868K   │ │ ├── chmem
  864K   │ │ ├── waitpid
  864K   │ │ ├── fsck.cramfs
+ 852K   │ │ ├── kill
  848K   │ │ ├── look
  836K   │ │ ├── free
  832K   │ │ ├── taskset
  828K   │ │ ├── ldattach
- 828K   │ │ ├── kill
  828K   │ │ ├── enosys
  828K   │ │ ├── chrt
  824K   │ │ ├── mcookie
@@ -460,13 +461,13 @@
  1.2M   │ │ ├── bore
  1.2M   │ │ ├── bash
  1.1M   │ │ ├── mount
- 1.1M   │ │ ├── umount
  1.1M   │ │ ├── dbclient
+ 1.1M   │ │ ├── umount
  1.0M   │ │ ├── findmnt
  1.0M   │ │ ├── top
- 1.0M   │ │ ├── lslocks
  1.0M   │ │ ├── swapon
  1.0M   │ │ ├── lsns
+ 1.0M   │ │ ├── lslocks
  972K   │ │ ├── swapoff
  972K   │ │ ├── mountpoint
  972K   │ │ ├── lsfd
@@ -547,13 +548,13 @@
  620K   │ │ ├── rename
  620K   │ │ ├── prlimit
  620K   │ │ ├── pipesz
+ 620K   │ │ ├── mkfs.cramfs
  620K   │ │ ├── mesg
  620K   │ │ ├── flock
  620K   │ │ ├── ctrlaltdel
  620K   │ │ ├── choom
  616K   │ │ ├── gawk
  616K   │ │ ├── awk
- 604K   │ │ ├── mkfs.cramfs
  604K   │ │ ├── fincore
  588K   │ │ ├── fsck.cramfs
  572K   │ │ ├── whereis
@@ -805,8 +806,8 @@
  4.0K   │ └── INFO.md
  317M   ├─┬ aria2
   13M   │ ├── aria2c_mips64_musl_latest_Linux
-  13M   │ ├── aria2c_mips_musl_latest_Linux
   13M   │ ├── aria2c_mipsel_musl_latest_Linux
+  13M   │ ├── aria2c_mips_musl_latest_Linux
   13M   │ ├── aria2c_mips64_musl_Linux
   12M   │ ├── aria2c_mips_musl_Linux
   12M   │ ├── aria2c_mipsel_musl_Linux
@@ -841,8 +842,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mips64_Linux
+  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
