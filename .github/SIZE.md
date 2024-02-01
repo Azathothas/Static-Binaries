@@ -92,8 +92,8 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 583M   ├─┬ baseutils
- 300M   │ ├─┬ x86_64
+ 587M   ├─┬ baseutils
+ 302M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
@@ -108,7 +108,7 @@
  4.2M   │ │ ├── ssh-keysign
  4.1M   │ │ ├── ssh-keyscan
  4.1M   │ │ ├── ssh-keygen
- 3.9M   │ │ ├── ssh-add
+ 4.0M   │ │ ├── ssh-add
  3.9M   │ │ ├── scalar
  3.9M   │ │ ├── ssh-agent
  3.9M   │ │ ├── git-shell
@@ -121,6 +121,7 @@
  1.6M   │ │ ├── sfdisk
  1.5M   │ │ ├── dbclient
  1.5M   │ │ ├── mount
+ 1.4M   │ │ ├── hugetop
  1.4M   │ │ ├── umount
  1.4M   │ │ ├── top
  1.4M   │ │ ├── bore
@@ -435,13 +436,13 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 233M   │ ├─┬ aarch64_arm64
+ 235M   │ ├─┬ aarch64_arm64
   22M   │ │ ├── ngrok
   19M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
  7.1M   │ │ ├── croc
- 6.2M   │ │ ├── curl
+ 7.0M   │ │ ├── curl
  4.8M   │ │ ├── sshd
  4.7M   │ │ ├── ssh
  4.2M   │ │ ├── ssh-keysign
@@ -464,10 +465,11 @@
  1.1M   │ │ ├── dbclient
  1.1M   │ │ ├── umount
  1.0M   │ │ ├── findmnt
- 1.0M   │ │ ├── top
+ 1.0M   │ │ ├── hugetop
+ 1.0M   │ │ ├── lslocks
  1.0M   │ │ ├── swapon
  1.0M   │ │ ├── lsns
- 1.0M   │ │ ├── lslocks
+ 1.0M   │ │ ├── top
  972K   │ │ ├── swapoff
  972K   │ │ ├── mountpoint
  972K   │ │ ├── lsfd
@@ -476,8 +478,8 @@
  972K   │ │ ├── eject
  956K   │ │ ├── irqtop
  940K   │ │ ├── sulogin
- 940K   │ │ ├── ps
  924K   │ │ ├── watch
+ 924K   │ │ ├── ps
  908K   │ │ ├── dropbearkey
  908K   │ │ ├── dropbearconvert
  892K   │ │ ├── slabtop
@@ -491,11 +493,11 @@
  844K   │ │ ├── lsclocks
  844K   │ │ ├── blkid
  844K   │ │ ├── agetty
+ 828K   │ │ ├── mkswap
  824K   │ │ ├── toybox
  816K   │ │ ├── dmesg
  812K   │ │ ├── setpriv
  812K   │ │ ├── pmap
- 812K   │ │ ├── mkswap
  812K   │ │ ├── logger
  812K   │ │ ├── findfs
  796K   │ │ ├── pidof
@@ -548,25 +550,25 @@
  620K   │ │ ├── rename
  620K   │ │ ├── prlimit
  620K   │ │ ├── pipesz
- 620K   │ │ ├── mkfs.cramfs
  620K   │ │ ├── mesg
  620K   │ │ ├── flock
  620K   │ │ ├── ctrlaltdel
  620K   │ │ ├── choom
  616K   │ │ ├── gawk
  616K   │ │ ├── awk
+ 604K   │ │ ├── mkfs.cramfs
+ 604K   │ │ ├── fsck.cramfs
  604K   │ │ ├── fincore
- 588K   │ │ ├── fsck.cramfs
+ 588K   │ │ ├── free
  572K   │ │ ├── whereis
  572K   │ │ ├── waitpid
- 572K   │ │ ├── free
  572K   │ │ ├── enosys
  572K   │ │ ├── dropbearscp
  572K   │ │ ├── chmem
  556K   │ │ ├── taskset
  556K   │ │ ├── setsid
+ 556K   │ │ ├── rev
  556K   │ │ ├── mkfs.bfs
- 556K   │ │ ├── mkfs
  556K   │ │ ├── mcookie
  556K   │ │ ├── ldattach
  556K   │ │ ├── kill
@@ -577,20 +579,20 @@
  556K   │ │ ├── fallocate
  556K   │ │ ├── fadvise
  556K   │ │ ├── exch
- 556K   │ │ ├── delpart
  556K   │ │ ├── colcrt
  556K   │ │ ├── col
  556K   │ │ ├── chrt
  556K   │ │ ├── blkpr
  540K   │ │ ├── switch_root
  540K   │ │ ├── setpgid
- 540K   │ │ ├── rev
  540K   │ │ ├── pwdx
  540K   │ │ ├── pivot_root
  540K   │ │ ├── nologin
+ 540K   │ │ ├── mkfs
  540K   │ │ ├── look
  540K   │ │ ├── isosize
  540K   │ │ ├── fsfreeze
+ 540K   │ │ ├── delpart
  540K   │ │ ├── colrm
  540K   │ │ ├── addpart
  348K   │ │ ├── scp
@@ -786,8 +788,8 @@
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_mips_Linux
+  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
@@ -900,29 +902,29 @@
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 138M   ├─┬ curl
+ 145M   ├─┬ curl
+ 8.4M   │ ├── curl_powerpc64le_Linux
+ 8.2M   │ ├── curl_amd_x86_64_Linux
  8.1M   │ ├── curl_x86_Android
- 8.0M   │ ├── curl_powerpc64le_Linux
  8.0M   │ ├── curl_x64_Android
- 7.3M   │ ├── curl_i686_Linux
- 7.3M   │ ├── curl_amd_x86_64_Linux
- 7.1M   │ ├── curl_mips64_Linux
+ 7.7M   │ ├── curl_amd_x86_64_macOS
+ 7.6M   │ ├── curl_i686_Linux
+ 7.4M   │ ├── curl_mips64_Linux
+ 7.3M   │ ├── curl_powerpc_Linux
+ 7.2M   │ ├── curl_mips_Linux
+ 7.2M   │ ├── curl_mipsel_Linux
+ 7.0M   │ ├── curl_aarch64_arm64_Linux
+ 7.0M   │ ├── curl_aarch64_arm64_macOS
+ 6.8M   │ ├── curl_s390x_Linux
  6.7M   │ ├── curl_arm64_Android
- 6.7M   │ ├── curl_powerpc_Linux
- 6.6M   │ ├── curl_mips_Linux
- 6.5M   │ ├── curl_mipsel_Linux
- 6.5M   │ ├── curl_s390x_Linux
- 6.4M   │ ├── curl_amd_x86_64_macOS
- 6.2M   │ ├── curl_aarch64_arm64_Linux
- 5.4M   │ ├── curl_riscv64_Linux
- 5.2M   │ ├── curl_aarch64_arm64_macOS
+ 5.6M   │ ├── curl_riscv64_Linux
  5.1M   │ ├── curl_x86_64_Android
  4.9M   │ ├── curl_arm32_Android
- 4.1M   │ ├── curl_armv7_Linux
- 3.6M   │ ├── curl_amd_x86_64_Windows.exe
- 3.5M   │ ├── curl_arm_x64_Windows.exe
- 3.4M   │ ├── curl_amd_x86_Windows.exe
+ 4.3M   │ ├── curl_armv7_Linux
  3.2M   │ ├── curl_armhf_arm32_Android
+ 3.1M   │ ├── curl_amd_x86_64_Windows.exe
+ 3.0M   │ ├── curl_arm_x64_Windows.exe
+ 3.0M   │ ├── curl_amd_x86_Windows.exe
  2.1M   │ ├── curl_mips_Android
  2.0M   │ ├── curl_mips64el_Linux
  2.0M   │ ├── curl_mipsel_Android
