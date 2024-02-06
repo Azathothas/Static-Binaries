@@ -269,8 +269,8 @@
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
+ 192K   │ │ ├── toe
  192K   │ │ ├── locate
- 188K   │ │ ├── toe
  188K   │ │ ├── sed
  172K   │ │ ├── sort
  172K   │ │ ├── cksum
@@ -787,8 +787,8 @@
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_mipsle_Linux
+  24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
