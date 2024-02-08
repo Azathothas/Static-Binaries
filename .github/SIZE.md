@@ -92,13 +92,12 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 587M   ├─┬ baseutils
- 302M   │ ├─┬ x86_64
+ 577M   ├─┬ baseutils
+ 297M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
- 7.4M   │ │ ├── croc
  5.7M   │ │ ├── git-upload-pack
  5.7M   │ │ ├── git-upload-archive
  5.7M   │ │ ├── git-receive-pack
@@ -112,6 +111,7 @@
  3.9M   │ │ ├── scalar
  3.9M   │ │ ├── ssh-agent
  3.9M   │ │ ├── git-shell
+ 2.3M   │ │ ├── croc
  2.2M   │ │ ├── slirp4netns
  2.0M   │ │ ├── cfdisk
  1.7M   │ │ ├── dropbearmulti
@@ -260,24 +260,24 @@
  336K   │ │ ├── scp
  328K   │ │ ├── sftp
  308K   │ │ ├── find
- 272K   │ │ ├── tic
+ 296K   │ │ ├── tic
+ 272K   │ │ ├── infocmp
  256K   │ │ ├── xz
  256K   │ │ ├── du
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
- 244K   │ │ ├── infocmp
  240K   │ │ ├── sftp-server
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
+ 212K   │ │ ├── toe
  192K   │ │ ├── locate
- 188K   │ │ ├── toe
  188K   │ │ ├── sed
  172K   │ │ ├── sort
  172K   │ │ ├── cksum
  168K   │ │ ├── ptx
- 168K   │ │ ├── ginstall
  168K   │ │ ├── expr
+ 164K   │ │ ├── ginstall
  164K   │ │ ├── csplit
  160K   │ │ ├── git-cvsserver
  156K   │ │ ├── stat
@@ -436,12 +436,11 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 235M   │ ├─┬ aarch64_arm64
-  22M   │ │ ├── ngrok
+ 230M   │ ├─┬ aarch64_arm64
+  23M   │ │ ├── ngrok
   19M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
- 7.1M   │ │ ├── croc
  7.0M   │ │ ├── curl
  4.8M   │ │ ├── sshd
  4.7M   │ │ ├── ssh
@@ -450,6 +449,7 @@
  4.2M   │ │ ├── ssh-keygen
  4.0M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
+ 2.0M   │ │ ├── croc
  1.9M   │ │ ├── slirp4netns
  1.6M   │ │ ├── cfdisk
  1.3M   │ │ ├── dropbearmulti
@@ -464,8 +464,8 @@
  1.1M   │ │ ├── mount
  1.1M   │ │ ├── dbclient
  1.1M   │ │ ├── umount
+ 1.1M   │ │ ├── hugetop
  1.0M   │ │ ├── findmnt
- 1.0M   │ │ ├── hugetop
  1.0M   │ │ ├── lslocks
  1.0M   │ │ ├── swapon
  1.0M   │ │ ├── lsns
@@ -599,7 +599,8 @@
  344K   │ │ ├── sftp
  324K   │ │ ├── find
  292K   │ │ ├── du
- 264K   │ │ ├── tic
+ 288K   │ │ ├── tic
+ 264K   │ │ ├── infocmp
  260K   │ │ ├── xz
  260K   │ │ ├── sftp-server
  260K   │ │ ├── printf
@@ -607,7 +608,7 @@
  244K   │ │ ├── vdir
  244K   │ │ ├── ls
  244K   │ │ ├── dir
- 240K   │ │ ├── infocmp
+ 212K   │ │ ├── toe
  196K   │ │ ├── stat
  196K   │ │ ├── sort
  196K   │ │ ├── sed
@@ -617,7 +618,6 @@
  196K   │ │ ├── expr
  196K   │ │ ├── csplit
  196K   │ │ ├── cksum
- 188K   │ │ ├── toe
  180K   │ │ ├── tac
  180K   │ │ ├── nl
  180K   │ │ ├── mv
@@ -783,13 +783,13 @@
  280K   │ │ ├── sftp-server
  4.0K   │ │ └── sshd_config
   17M   │ └── README.md
- 455M   ├─┬ ngrok
-  25M   │ ├── ngrok_amd_x86_64_macOS
-  25M   │ ├── ngrok_mips64le_Linux
-  25M   │ ├── ngrok_mips64_Linux
+ 456M   ├─┬ ngrok
+  26M   │ ├── ngrok_amd_x86_64_macOS
+  26M   │ ├── ngrok_mips64le_Linux
+  26M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mips_Linux
-  24M   │ ├── ngrok_mipsle_Linux
+  25M   │ ├── ngrok_mipsle_Linux
+  25M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
@@ -797,8 +797,8 @@
   23M   │ ├── ngrok_powerpc64le_Linux
   23M   │ ├── ngrok_powerpc64_Linux
   23M   │ ├── ngrok_amd_x86_64_Solaris
-  22M   │ ├── ngrok_amd_x86_Windows.exe
-  22M   │ ├── ngrok_aarch64_arm64_Linux
+  23M   │ ├── ngrok_amd_x86_Windows.exe
+  23M   │ ├── ngrok_aarch64_arm64_Linux
   22M   │ ├── ngrok_arm_Linux
   22M   │ ├── ngrok_arm_FreeBSD
   22M   │ ├── ngrok_i386_Linux
@@ -868,37 +868,37 @@
   12K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 221M   ├─┬ croc
- 8.1M   │ ├── croc_x86_64_macOS
+ 211M   ├─┬ croc
  8.1M   │ ├── croc_mips64le_Linux
  8.1M   │ ├── croc_mips64_Linux
- 7.9M   │ ├── croc_aarch64_arm64_macOS
+ 7.9M   │ ├── croc_x86_64_macOS
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
+ 7.9M   │ ├── croc_amd_x86_64_Windows.exe
  7.8M   │ ├── croc_s390x_Linux
- 7.6M   │ ├── croc_amd_x86_64_Windows.exe
+ 7.6M   │ ├── croc_aarch64_arm64_macOS
  7.5M   │ ├── croc_amd_x86_64_OpenBSD
  7.5M   │ ├── croc_amd_x86_64_FreeBSD
  7.4M   │ ├── croc_amd_x86_64_DragonFlyBSD
- 7.4M   │ ├── croc_amd_x86_64_Linux
  7.4M   │ ├── croc_amd_x86_64_NetBSD
- 7.3M   │ ├── croc_amd_x86_Windows.exe
+ 7.4M   │ ├── croc_amd_x86_Windows.exe
  7.2M   │ ├── croc_arm_Windows.exe
+ 7.2M   │ ├── croc_amd_x86_Linux
  7.2M   │ ├── croc_loong64_Linux
  7.2M   │ ├── croc_aarch64_arm64_Windows.exe
  7.1M   │ ├── croc_arm_abi_OpenBSD
  7.1M   │ ├── croc_arm_abi_NetBSD
  7.1M   │ ├── croc_aarch64_arm64_OpenBSD
- 7.1M   │ ├── croc_amd_x86_Linux
  7.1M   │ ├── croc_aarch64_arm64_FreeBSD
  7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
- 7.1M   │ ├── croc_aarch64_arm64_Linux
  7.1M   │ ├── croc_amd_x86_OpenBSD
- 7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
- 7.0M   │ ├── croc_powerpc64_ppc64_Linux
+ 7.1M   │ ├── croc_riscv64_Linux
  7.0M   │ ├── croc_amd_x86_NetBSD
+ 7.0M   │ ├── croc_powerpc64_ppc64_Linux
  7.0M   │ ├── croc_386_Linux
+ 2.3M   │ ├── croc_amd_x86_64_Linux
+ 2.0M   │ ├── croc_aarch64_arm64_Linux
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
