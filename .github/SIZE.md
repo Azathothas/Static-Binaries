@@ -817,9 +817,9 @@
   11M   │ ├── aria2c_amd_x86_64_musl_Linux
   11M   │ ├── aria2c_aarch64_arm64_musl_latest_Linux
   10M   │ ├── aria2c_mips64_libressl_musl_latest_Linux
-  10M   │ ├── aria2c_mips64_libressl_musl_Linux
   10M   │ ├── aria2c_mipsel_libressl_musl_latest_Linux
   10M   │ ├── aria2c_mips_libressl_musl_latest_Linux
+  10M   │ ├── aria2c_mips64_libressl_musl_Linux
   10M   │ ├── aria2c_mipsel_libressl_musl_Linux
   10M   │ ├── aria2c_mips_libressl_musl_Linux
   10M   │ ├── aria2c_aarch64_arm64_musl_Linux
