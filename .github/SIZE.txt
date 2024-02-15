@@ -91,8 +91,8 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 577M   ├─┬ baseutils
- 297M   │ ├─┬ x86_64
+ 572M   ├─┬ baseutils
+ 291M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
@@ -113,15 +113,12 @@
  2.3M   │ │ ├── croc
  2.2M   │ │ ├── slirp4netns
  2.0M   │ │ ├── cfdisk
- 1.7M   │ │ ├── dropbearmulti
- 1.7M   │ │ ├── dropbear
  1.6M   │ │ ├── lsblk
  1.6M   │ │ ├── fdisk
  1.6M   │ │ ├── sfdisk
- 1.5M   │ │ ├── dbclient
  1.5M   │ │ ├── mount
- 1.4M   │ │ ├── hugetop
  1.4M   │ │ ├── umount
+ 1.4M   │ │ ├── hugetop
  1.4M   │ │ ├── top
  1.4M   │ │ ├── bore
  1.4M   │ │ ├── findmnt
@@ -138,9 +135,7 @@
  1.3M   │ │ ├── watch
  1.3M   │ │ ├── mountpoint
  1.3M   │ │ ├── ps
- 1.2M   │ │ ├── dropbearconvert
  1.2M   │ │ ├── slabtop
- 1.2M   │ │ ├── dropbearkey
  1.2M   │ │ ├── lsclocks
  1.2M   │ │ ├── pkill
  1.2M   │ │ ├── pidwait
@@ -149,14 +144,15 @@
  1.2M   │ │ ├── lslogins
  1.2M   │ │ ├── lsipc
  1.2M   │ │ ├── sysctl
+ 1.2M   │ │ ├── uptime
  1.2M   │ │ ├── partx
  1.2M   │ │ ├── logger
- 1.1M   │ │ ├── pmap
  1.1M   │ │ ├── last
  1.1M   │ │ ├── wall
+ 1.1M   │ │ ├── pmap
  1.1M   │ │ ├── wipefs
- 1.1M   │ │ ├── pidof
  1.1M   │ │ ├── dmesg
+ 1.1M   │ │ ├── pidof
  1.1M   │ │ ├── mkswap
  1.1M   │ │ ├── blkid
  1.1M   │ │ ├── ipcs
@@ -164,6 +160,7 @@
  1.1M   │ │ ├── unshare
  1.1M   │ │ ├── findfs
  1.1M   │ │ ├── cal
+ 1.1M   │ │ ├── vmstat
  1.1M   │ │ ├── blkdiscard
  1.1M   │ │ ├── swaplabel
  1.1M   │ │ ├── hexdump
@@ -172,7 +169,6 @@
  1.0M   │ │ ├── more
  1.0M   │ │ ├── fsck.minix
  1.0M   │ │ ├── bash
- 1.0M   │ │ ├── vmstat
  1.0M   │ │ ├── rfkill
  1.0M   │ │ ├── losetup
  1.0M   │ │ ├── uuidd
@@ -190,7 +186,6 @@
  988K   │ │ ├── uuidgen
  980K   │ │ ├── scriptlive
  980K   │ │ ├── mkfs.minix
- 972K   │ │ ├── uptime
  964K   │ │ ├── nsenter
  964K   │ │ ├── blkzone
  960K   │ │ ├── scriptreplay
@@ -213,7 +208,6 @@
  912K   │ │ ├── prlimit
  912K   │ │ ├── fincore
  908K   │ │ ├── rename
- 880K   │ │ ├── dropbearscp
  872K   │ │ ├── mkfs.cramfs
  868K   │ │ ├── whereis
  868K   │ │ ├── chmem
@@ -255,7 +249,10 @@
  656K   │ │ ├── tar
  588K   │ │ ├── gawk
  588K   │ │ ├── awk
+ 508K   │ │ ├── dropbearmulti
+ 432K   │ │ ├── dropbear
  396K   │ │ ├── gitk
+ 388K   │ │ ├── dbclient
  336K   │ │ ├── scp
  328K   │ │ ├── sftp
  308K   │ │ ├── find
@@ -266,6 +263,8 @@
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
  240K   │ │ ├── sftp-server
+ 224K   │ │ ├── dropbearkey
+ 220K   │ │ ├── dropbearconvert
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
@@ -385,6 +384,7 @@
   64K   │ │ ├── which
   64K   │ │ ├── lzmadec
   64K   │ │ ├── frcode
+  64K   │ │ ├── dropbearscp
   40K   │ │ ├── make-prime-list
   12K   │ │ ├── zgrep
   12K   │ │ ├── xzgrep
@@ -435,7 +435,7 @@
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
    0B   │ │ └── depmod
- 230M   │ ├─┬ aarch64_arm64
+ 231M   │ ├─┬ aarch64_arm64
   23M   │ │ ├── ngrok
   19M   │ │ ├── tailscaled
   12M   │ │ ├── gost
@@ -463,8 +463,8 @@
  1.1M   │ │ ├── mount
  1.1M   │ │ ├── dbclient
  1.1M   │ │ ├── umount
- 1.1M   │ │ ├── hugetop
  1.0M   │ │ ├── findmnt
+ 1.0M   │ │ ├── hugetop
  1.0M   │ │ ├── lslocks
  1.0M   │ │ ├── swapon
  1.0M   │ │ ├── lsns
@@ -477,8 +477,8 @@
  972K   │ │ ├── eject
  956K   │ │ ├── irqtop
  940K   │ │ ├── sulogin
+ 940K   │ │ ├── ps
  924K   │ │ ├── watch
- 924K   │ │ ├── ps
  908K   │ │ ├── dropbearkey
  908K   │ │ ├── dropbearconvert
  892K   │ │ ├── slabtop
@@ -492,6 +492,7 @@
  844K   │ │ ├── lsclocks
  844K   │ │ ├── blkid
  844K   │ │ ├── agetty
+ 828K   │ │ ├── uptime
  828K   │ │ ├── mkswap
  824K   │ │ ├── toybox
  816K   │ │ ├── dmesg
@@ -508,10 +509,10 @@
  780K   │ │ ├── cal
  780K   │ │ ├── blkdiscard
  764K   │ │ ├── unshare
+ 748K   │ │ ├── vmstat
  748K   │ │ ├── lscpu
  732K   │ │ ├── more
  732K   │ │ ├── hexdump
- 716K   │ │ ├── vmstat
  716K   │ │ ├── setterm
  716K   │ │ ├── rfkill
  716K   │ │ ├── losetup
@@ -533,7 +534,6 @@
  652K   │ │ ├── rtcwake
  652K   │ │ ├── mkfs.minix
  636K   │ │ ├── uuidgen
- 636K   │ │ ├── uptime
  636K   │ │ ├── uclampset
  636K   │ │ ├── scriptreplay
  636K   │ │ ├── readprofile
@@ -787,8 +787,8 @@
   26M   │ ├── ngrok_mips64_Linux
   26M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  25M   │ ├── ngrok_mips_Linux
   25M   │ ├── ngrok_mipsle_Linux
+  25M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
@@ -889,8 +889,8 @@
  7.1M   │ ├── croc_arm_abi_NetBSD
  7.1M   │ ├── croc_aarch64_arm64_OpenBSD
  7.1M   │ ├── croc_aarch64_arm64_FreeBSD
- 7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_OpenBSD
+ 7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
  7.1M   │ ├── croc_riscv64_Linux
  7.0M   │ ├── croc_amd_x86_NetBSD
@@ -901,25 +901,25 @@
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 145M   ├─┬ curl
- 8.4M   │ ├── curl_powerpc64le_Linux
+ 148M   ├─┬ curl
+ 8.3M   │ ├── curl_powerpc64le_Linux
  8.2M   │ ├── curl_amd_x86_64_Linux
  8.1M   │ ├── curl_x86_Android
+ 8.0M   │ ├── curl_mips64_Linux
  8.0M   │ ├── curl_x64_Android
+ 7.9M   │ ├── curl_mips_Linux
+ 7.8M   │ ├── curl_mipsel_Linux
  7.7M   │ ├── curl_amd_x86_64_macOS
- 7.6M   │ ├── curl_i686_Linux
- 7.4M   │ ├── curl_mips64_Linux
+ 7.7M   │ ├── curl_i686_Linux
  7.3M   │ ├── curl_powerpc_Linux
- 7.2M   │ ├── curl_mips_Linux
- 7.2M   │ ├── curl_mipsel_Linux
+ 7.2M   │ ├── curl_s390x_Linux
  7.0M   │ ├── curl_aarch64_arm64_Linux
  7.0M   │ ├── curl_aarch64_arm64_macOS
- 6.8M   │ ├── curl_s390x_Linux
  6.7M   │ ├── curl_arm64_Android
- 5.6M   │ ├── curl_riscv64_Linux
+ 5.7M   │ ├── curl_armv7_Linux
  5.1M   │ ├── curl_x86_64_Android
+ 5.0M   │ ├── curl_riscv64_Linux
  4.9M   │ ├── curl_arm32_Android
- 4.3M   │ ├── curl_armv7_Linux
  3.2M   │ ├── curl_armhf_arm32_Android
  3.1M   │ ├── curl_amd_x86_64_Windows.exe
  3.0M   │ ├── curl_arm_x64_Windows.exe
