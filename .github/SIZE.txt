@@ -1,4 +1,4 @@
- 3.3G └─┬ main
+ 3.4G └─┬ main
  1.1G   ├─┬ tailscale
   50M   │ ├── tailscale_setup_Windows.exe
   45M   │ ├── tailscale_ipn_setup_Windows.exe
@@ -784,8 +784,8 @@
   17M   │ └── README.md
  456M   ├─┬ ngrok
   26M   │ ├── ngrok_amd_x86_64_macOS
-  26M   │ ├── ngrok_mips64_Linux
   26M   │ ├── ngrok_mips64le_Linux
+  26M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
   25M   │ ├── ngrok_mipsle_Linux
   25M   │ ├── ngrok_mips_Linux
@@ -867,23 +867,25 @@
   12K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 211M   ├─┬ croc
- 8.1M   │ ├── croc_x86_64_macOS
- 8.1M   │ ├── croc_mips64le_Linux
+ 237M   ├─┬ croc
+  10M   │ ├── croc_x86_64_macOS
+  10M   │ ├── croc_aarch64_arm64_macOS
+  10M   │ ├── croc_arm_Windows.exe
+  10M   │ ├── croc_aarch64_arm64_Windows.exe
+  10M   │ ├── croc_aarch64_arm64_Linux
+ 8.2M   │ ├── croc_amd_x86_64_Windows.exe
  8.1M   │ ├── croc_mips64_Linux
- 8.0M   │ ├── croc_aarch64_arm64_macOS
+ 8.1M   │ ├── croc_mips64le_Linux
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
+ 7.8M   │ ├── croc_amd_x86_Windows.exe
  7.8M   │ ├── croc_s390x_Linux
- 7.7M   │ ├── croc_amd_x86_64_Windows.exe
  7.5M   │ ├── croc_amd_x86_64_OpenBSD
  7.5M   │ ├── croc_amd_x86_64_FreeBSD
+ 7.4M   │ ├── croc_amd_x86_64_Linux
  7.4M   │ ├── croc_amd_x86_64_DragonFlyBSD
  7.4M   │ ├── croc_amd_x86_64_NetBSD
- 7.3M   │ ├── croc_amd_x86_Windows.exe
- 7.3M   │ ├── croc_arm_Windows.exe
  7.2M   │ ├── croc_loong64_Linux
- 7.2M   │ ├── croc_aarch64_arm64_Windows.exe
  7.1M   │ ├── croc_arm_abi_OpenBSD
  7.1M   │ ├── croc_amd_x86_Linux
  7.1M   │ ├── croc_arm_abi_NetBSD
@@ -896,8 +898,6 @@
  7.0M   │ ├── croc_amd_x86_NetBSD
  7.0M   │ ├── croc_powerpc64_ppc64_Linux
  7.0M   │ ├── croc_386_Linux
- 2.3M   │ ├── croc_amd_x86_64_Linux
- 2.0M   │ ├── croc_aarch64_arm64_Linux
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
