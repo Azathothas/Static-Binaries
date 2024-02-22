@@ -92,12 +92,13 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 572M   ├─┬ baseutils
- 291M   │ ├─┬ x86_64
+ 585M   ├─┬ baseutils
+ 297M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
-  20M   │ │ ├── tailscaled
+  21M   │ │ ├── tailscaled
   12M   │ │ ├── gost
-  10M   │ │ ├── tailscale
+  11M   │ │ ├── tailscale
+ 7.4M   │ │ ├── croc
  5.7M   │ │ ├── git-upload-pack
  5.7M   │ │ ├── git-upload-archive
  5.7M   │ │ ├── git-receive-pack
@@ -111,7 +112,6 @@
  3.9M   │ │ ├── scalar
  3.9M   │ │ ├── ssh-agent
  3.9M   │ │ ├── git-shell
- 2.3M   │ │ ├── croc
  2.2M   │ │ ├── slirp4netns
  2.0M   │ │ ├── cfdisk
  1.6M   │ │ ├── lsblk
@@ -404,8 +404,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
+ 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
- 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
  4.0K   │ │ ├── curl
    0B   │ │ ├── xzfgrep
@@ -415,7 +415,6 @@
    0B   │ │ ├── x86_64
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
-   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -435,12 +434,14 @@
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
+   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
- 231M   │ ├─┬ aarch64_arm64
+ 237M   │ ├─┬ aarch64_arm64
   23M   │ │ ├── ngrok
-  19M   │ │ ├── tailscaled
+  20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
+ 7.1M   │ │ ├── croc
  7.0M   │ │ ├── curl
  4.8M   │ │ ├── sshd
  4.7M   │ │ ├── ssh
@@ -449,7 +450,6 @@
  4.2M   │ │ ├── ssh-keygen
  4.0M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
- 2.0M   │ │ ├── croc
  1.9M   │ │ ├── slirp4netns
  1.6M   │ │ ├── cfdisk
  1.3M   │ │ ├── dropbearmulti
@@ -741,8 +741,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
+ 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
- 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
    0B   │ │ ├── xzfgrep
    0B   │ │ ├── xzegrep
@@ -750,7 +750,6 @@
    0B   │ │ ├── xzcat
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
-   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -769,6 +768,7 @@
    0B   │ │ ├── linux32
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
+   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
   31M   │ ├─┬ armv7_eabihf
  4.9M   │ │ ├── sshd
@@ -782,7 +782,7 @@
  376K   │ │ ├── sftp
  280K   │ │ ├── sftp-server
  4.0K   │ │ └── sshd_config
-  17M   │ └── README.md
+  18M   │ └── README.md
  456M   ├─┬ ngrok
   26M   │ ├── ngrok_amd_x86_64_macOS
   26M   │ ├── ngrok_mips64le_Linux
@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mips64le_Linux
+  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
@@ -875,8 +875,8 @@
   10M   │ ├── croc_aarch64_arm64_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Linux
  8.2M   │ ├── croc_amd_x86_64_Windows.exe
- 8.1M   │ ├── croc_mips64_Linux
  8.1M   │ ├── croc_mips64le_Linux
+ 8.1M   │ ├── croc_mips64_Linux
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
  7.8M   │ ├── croc_amd_x86_Windows.exe
