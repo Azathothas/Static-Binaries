@@ -30,7 +30,7 @@ jobs:
         id: check_version
         run: |
           # Get latest version
-          export VERSION=$(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.tag_name' )
+          export VERSION=$(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.tag_name' )
           # If we get rate-limited, git clone the repo
           if [ -z "$VERSION" ]; then
             cd $(mktemp -d) && git clone https://github.com/stunnel/static-curl && cd static-curl
@@ -68,7 +68,7 @@ jobs:
           # Create Output Dir
           mkdir -p "$GITHUB_WORKSPACE/main/curl"
           # Get latest version
-          #curl -qfsSL "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/curl/version.txt"
+          #curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/$GIT_REPO/releases/latest" | jq -r '.tag_name' > "$GITHUB_WORKSPACE/main/curl/version.txt"
           #export VERSION=$(cat $GITHUB_WORKSPACE/main/curl/version.txt)
 
      #Fetch
@@ -76,115 +76,115 @@ jobs:
         if: env.versions_same != 'true'
         run: |
          #Download
-          set -x ; set +e
+          set +x ; set +e
          #-------------------------#
          #Android
          #armhf
-          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/armhf/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_armhf_arm32_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/bol-van/bins/master/armhf/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_armhf_arm32_Android"
           #arm32
-          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm32_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm32_Android"
          #arm64
-          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm64" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm64_Android"         
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-arm64" -o  "$GITHUB_WORKSPACE/main/curl/curl_arm64_Android"         
          #mips
-          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mips/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mips_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/bol-van/bins/master/mips/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mips_Android"
          #mipsel 
-          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/mipsel/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/bol-van/bins/master/mipsel/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Android"
           #x86
-          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x86" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x86" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_Android"
           #x86_64
-          curl -qflSL "https://raw.githubusercontent.com/bol-van/bins/master/x86_64/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_64_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/bol-van/bins/master/x86_64/static/curl" -o  "$GITHUB_WORKSPACE/main/curl/curl_x86_64_Android"
           #x64
-          curl -qflSL "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x64" -o  "$GITHUB_WORKSPACE/main/curl/curl_x64_Android"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/master/curl/curl-x64" -o  "$GITHUB_WORKSPACE/main/curl/curl_x64_Android"
          #-------------------------#
          #DOS
-          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curl.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_DOS"
-          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curllite.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_lite_DOS"
-          curl -qflSL "http://mik.dyndns.pro/dos-stuff/bin/curltiny.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_tiny_DOS"         
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "http://mik.dyndns.pro/dos-stuff/bin/curl.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_DOS"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "http://mik.dyndns.pro/dos-stuff/bin/curllite.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_lite_DOS"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "http://mik.dyndns.pro/dos-stuff/bin/curltiny.exe" -o  "$GITHUB_WORKSPACE/main/curl/curl_tiny_DOS"         
          #-------------------------#     
          #Linux
          #aarch64_arm64 || armv8
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'arm64' | grep -v 'macos')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'aarch64' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_Linux" \;  
          #amd64_x86_64 
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'amd64' | grep -v 'macos')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'x86_64' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Linux" \;   
          #armv7
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'armv7')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'armv7' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_armv7_Linux" \;                    
          #i686 
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i '686')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i '686' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_i686_Linux" \;
          #mips
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips' | grep -v 'mipsel' | grep -v 'mips64' )
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips' | grep -v 'mipsel' | grep -v 'mips64' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips_Linux" \;
          #mipsel
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mipsel' | grep -v 'mips64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mipsel' | grep -v 'mips64' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mipsel_Linux" \;                 
          #mips64
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64' | grep -v 'mips64el')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64' | grep -v 'mips64el' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips64_Linux" \;
          #mips64el
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64el')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'mips64el' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xzvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_mips64el_Linux" \;    
          #powerpc
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc' | grep -v 'powerpc64le')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc' | grep -v 'powerpc64le' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_powerpc_Linux" \;      
          #powerpc64le
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc64le')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'powerpc64le' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_powerpc64le_Linux" \;                 
          #riscv64
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'riscv64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'riscv64' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_riscv64_Linux" \;          
          #s390x
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 's390x')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 's390x' | grep -i 'linux' | grep -i 'musl')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_s390x_Linux" \;
          #-------------------------#
          #macOS
          #aarch64_arm64 || armv8
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos-arm64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos' | grep -i 'arm64')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
-          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_macOS" \;         
+          find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_aarch64_arm64_macOS" \;
          #amd64_x86_64 
-          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos-amd64')
+          cd $(mktemp -d) && curl -qfLJO $(curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/stunnel/static-curl/releases/latest" | jq -r '.assets[].browser_download_url' | grep -i 'macos' | grep -i 'x86_64')
           find . -type f -name '*.tar*' -exec tar -xvf {} \;
           find . -type f -name 'curl*' -exec strip {} \; >/dev/null 2>&1  
           find . -type f -name 'curl*' ! -name '*.tar*' -exec mv {} "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_macOS" \; 
          #-------------------------# 
          #Windows 
          #Windows 32-bit
-          curl -qflSL "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_Windows.exe"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://curl.se/windows/latest.cgi?p=win32-mingw.zip" -o win32.zip && unzip -j -o win32.zip -d win32 && cp "./win32/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_Windows.exe"
          #Windows x86_64_amd64 
-          curl -qflSL "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Windows.exe"
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://curl.se/windows/latest.cgi?p=win64-mingw.zip" -o win64.zip && unzip -j -o win64.zip -d win64 && cp "./win64/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_amd_x86_64_Windows.exe"
          #Windows arm64 
-          curl -qflSL "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_arm_x64_Windows.exe" 
+          curl -qfsSL -H "Authorization: Bearer $GITHUB_TOKEN" "https://curl.se/windows/latest.cgi?p=win64a-mingw.zip" -o win64arm.zip && unzip -j -o win64arm.zip -d win64arm && cp "./win64arm/curl.exe" "$GITHUB_WORKSPACE/main/curl/curl_arm_x64_Windows.exe" 
          #-------------------------# 
          #Any leftovers
-          set +x              
+          set +x
         continue-on-error: true
 
      #Cleanup
