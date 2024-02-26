@@ -785,11 +785,11 @@
   18M   │ └── README.md
  456M   ├─┬ ngrok
   26M   │ ├── ngrok_amd_x86_64_macOS
-  26M   │ ├── ngrok_mips64le_Linux
   26M   │ ├── ngrok_mips64_Linux
+  26M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  25M   │ ├── ngrok_mips_Linux
   25M   │ ├── ngrok_mipsle_Linux
+  25M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mips64_Linux
+  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
@@ -877,8 +877,8 @@
   10M   │ ├── croc_aarch64_arm64_OpenBSD
   10M   │ ├── croc_aarch64_arm64_FreeBSD
  8.2M   │ ├── croc_amd_x86_64_Windows.exe
- 8.1M   │ ├── croc_mips64le_Linux
  8.1M   │ ├── croc_mips64_Linux
+ 8.1M   │ ├── croc_mips64le_Linux
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
  7.8M   │ ├── croc_amd_x86_Windows.exe
@@ -892,8 +892,8 @@
  7.1M   │ ├── croc_arm_abi_OpenBSD
  7.1M   │ ├── croc_amd_x86_Linux
  7.1M   │ ├── croc_arm_abi_NetBSD
- 7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_OpenBSD
+ 7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
  7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_NetBSD
