@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mips64le_Linux
+  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
@@ -877,8 +877,8 @@
   10M   │ ├── croc_aarch64_arm64_OpenBSD
   10M   │ ├── croc_aarch64_arm64_FreeBSD
  8.2M   │ ├── croc_amd_x86_64_Windows.exe
- 8.1M   │ ├── croc_mips64_Linux
  8.1M   │ ├── croc_mips64le_Linux
+ 8.1M   │ ├── croc_mips64_Linux
  7.9M   │ ├── croc_mipsle_Linux
  7.9M   │ ├── croc_mips_Linux
  7.8M   │ ├── croc_amd_x86_Windows.exe
@@ -895,32 +895,32 @@
  7.1M   │ ├── croc_amd_x86_OpenBSD
  7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
- 7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_NetBSD
+ 7.1M   │ ├── croc_riscv64_Linux
  7.0M   │ ├── croc_powerpc64_ppc64_Linux
  7.0M   │ ├── croc_386_Linux
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 148M   ├─┬ curl
+ 146M   ├─┬ curl
  8.3M   │ ├── curl_powerpc64le_Linux
- 8.2M   │ ├── curl_amd_x86_64_Linux
  8.1M   │ ├── curl_x86_Android
- 8.0M   │ ├── curl_mips64_Linux
  8.0M   │ ├── curl_x64_Android
  7.9M   │ ├── curl_mips_Linux
- 7.8M   │ ├── curl_mipsel_Linux
+ 7.9M   │ ├── curl_mipsel_Linux
+ 7.8M   │ ├── curl_powerpc_Linux
  7.7M   │ ├── curl_amd_x86_64_macOS
  7.7M   │ ├── curl_i686_Linux
- 7.3M   │ ├── curl_powerpc_Linux
- 7.2M   │ ├── curl_s390x_Linux
- 7.0M   │ ├── curl_aarch64_arm64_Linux
+ 7.6M   │ ├── curl_amd_x86_64_Linux
+ 7.3M   │ ├── curl_mips64_Linux
  7.0M   │ ├── curl_aarch64_arm64_macOS
+ 7.0M   │ ├── curl_aarch64_arm64_Linux
  6.7M   │ ├── curl_arm64_Android
- 5.7M   │ ├── curl_armv7_Linux
+ 6.7M   │ ├── curl_s390x_Linux
+ 5.5M   │ ├── curl_riscv64_Linux
  5.1M   │ ├── curl_x86_64_Android
- 5.0M   │ ├── curl_riscv64_Linux
  4.9M   │ ├── curl_arm32_Android
+ 4.5M   │ ├── curl_armv7_Linux
  3.2M   │ ├── curl_armhf_arm32_Android
  3.1M   │ ├── curl_amd_x86_64_Windows.exe
  3.0M   │ ├── curl_arm_x64_Windows.exe
