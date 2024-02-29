@@ -205,7 +205,7 @@
  940K   │ │ ├── ul
  932K   │ │ ├── hardlink
  928K   │ │ ├── mesg
- 920K   │ │ ├── grep
+ 916K   │ │ ├── grep
  912K   │ │ ├── prlimit
  912K   │ │ ├── fincore
  908K   │ │ ├── rename
