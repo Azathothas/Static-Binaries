@@ -895,8 +895,8 @@
  7.1M   │ ├── croc_amd_x86_OpenBSD
  7.1M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.1M   │ ├── croc_amd_x86_FreeBSD
- 7.1M   │ ├── croc_riscv64_Linux
  7.1M   │ ├── croc_amd_x86_NetBSD
+ 7.1M   │ ├── croc_riscv64_Linux
  7.0M   │ ├── croc_powerpc64_ppc64_Linux
  7.0M   │ ├── croc_386_Linux
   20K   │ ├── README.md
