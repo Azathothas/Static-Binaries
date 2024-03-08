@@ -92,7 +92,7 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 585M   ├─┬ baseutils
+ 586M   ├─┬ baseutils
  297M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   21M   │ │ ├── tailscaled
@@ -104,13 +104,13 @@
  5.7M   │ │ ├── git-receive-pack
  5.7M   │ │ ├── git
  4.7M   │ │ ├── sshd
- 4.6M   │ │ ├── ssh
+ 4.7M   │ │ ├── ssh
  4.2M   │ │ ├── ssh-keysign
- 4.1M   │ │ ├── ssh-keyscan
+ 4.2M   │ │ ├── ssh-keyscan
  4.1M   │ │ ├── ssh-keygen
  4.0M   │ │ ├── ssh-add
+ 4.0M   │ │ ├── ssh-agent
  3.9M   │ │ ├── scalar
- 3.9M   │ │ ├── ssh-agent
  3.9M   │ │ ├── git-shell
  2.2M   │ │ ├── slirp4netns
  2.0M   │ │ ├── cfdisk
@@ -250,22 +250,22 @@
  656K   │ │ ├── tar
  588K   │ │ ├── gawk
  588K   │ │ ├── awk
- 508K   │ │ ├── dropbearmulti
- 432K   │ │ ├── dropbear
+ 540K   │ │ ├── dropbearmulti
+ 460K   │ │ ├── dropbear
+ 412K   │ │ ├── dbclient
  396K   │ │ ├── gitk
- 388K   │ │ ├── dbclient
- 336K   │ │ ├── scp
- 328K   │ │ ├── sftp
+ 360K   │ │ ├── scp
+ 356K   │ │ ├── sftp
  308K   │ │ ├── find
  296K   │ │ ├── tic
  272K   │ │ ├── infocmp
+ 268K   │ │ ├── sftp-server
  256K   │ │ ├── xz
  256K   │ │ ├── du
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
- 240K   │ │ ├── sftp-server
- 224K   │ │ ├── dropbearkey
- 220K   │ │ ├── dropbearconvert
+ 244K   │ │ ├── dropbearkey
+ 240K   │ │ ├── dropbearconvert
  216K   │ │ ├── vdir
  216K   │ │ ├── ls
  216K   │ │ ├── dir
@@ -382,10 +382,10 @@
   76K   │ │ ├── true
   76K   │ │ ├── false
   76K   │ │ ├── echo
+  76K   │ │ ├── dropbearscp
   64K   │ │ ├── which
   64K   │ │ ├── lzmadec
   64K   │ │ ├── frcode
-  64K   │ │ ├── dropbearscp
   40K   │ │ ├── make-prime-list
   12K   │ │ ├── zgrep
   12K   │ │ ├── xzgrep
@@ -404,8 +404,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
- 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
+ 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
  4.0K   │ │ ├── curl
    0B   │ │ ├── xzfgrep
@@ -415,6 +415,7 @@
    0B   │ │ ├── x86_64
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
+   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -434,7 +435,6 @@
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
-   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
  237M   │ ├─┬ aarch64_arm64
   23M   │ │ ├── ngrok
@@ -445,10 +445,10 @@
  7.0M   │ │ ├── curl
  4.8M   │ │ ├── sshd
  4.7M   │ │ ├── ssh
- 4.2M   │ │ ├── ssh-keysign
+ 4.3M   │ │ ├── ssh-keysign
  4.2M   │ │ ├── ssh-keyscan
  4.2M   │ │ ├── ssh-keygen
- 4.0M   │ │ ├── ssh-add
+ 4.1M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
  1.9M   │ │ ├── slirp4netns
  1.6M   │ │ ├── cfdisk
@@ -595,14 +595,14 @@
  540K   │ │ ├── delpart
  540K   │ │ ├── colrm
  540K   │ │ ├── addpart
- 348K   │ │ ├── scp
- 344K   │ │ ├── sftp
+ 368K   │ │ ├── scp
+ 360K   │ │ ├── sftp
  324K   │ │ ├── find
  292K   │ │ ├── du
  288K   │ │ ├── tic
+ 276K   │ │ ├── sftp-server
  264K   │ │ ├── infocmp
  260K   │ │ ├── xz
- 260K   │ │ ├── sftp-server
  260K   │ │ ├── printf
  260K   │ │ ├── kmod
  244K   │ │ ├── vdir
@@ -741,8 +741,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
- 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
+ 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
    0B   │ │ ├── xzfgrep
    0B   │ │ ├── xzegrep
@@ -750,6 +750,7 @@
    0B   │ │ ├── xzcat
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
+   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -768,19 +769,18 @@
    0B   │ │ ├── linux32
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
-   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
-  31M   │ ├─┬ armv7_eabihf
- 4.9M   │ │ ├── sshd
- 4.8M   │ │ ├── ssh
+  32M   │ ├─┬ armv7_eabihf
+ 5.0M   │ │ ├── sshd
+ 4.9M   │ │ ├── ssh
  4.4M   │ │ ├── ssh-keysign
  4.3M   │ │ ├── ssh-keyscan
  4.3M   │ │ ├── ssh-keygen
  4.1M   │ │ ├── ssh-add
  4.1M   │ │ ├── ssh-agent
- 380K   │ │ ├── scp
- 376K   │ │ ├── sftp
- 280K   │ │ ├── sftp-server
+ 396K   │ │ ├── scp
+ 388K   │ │ ├── sftp
+ 292K   │ │ ├── sftp-server
  4.0K   │ │ └── sshd_config
   18M   │ └── README.md
  456M   ├─┬ ngrok
