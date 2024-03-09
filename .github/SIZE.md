@@ -783,26 +783,26 @@
  292K   │ │ ├── sftp-server
  4.0K   │ │ └── sshd_config
   18M   │ └── README.md
- 456M   ├─┬ ngrok
-  26M   │ ├── ngrok_amd_x86_64_macOS
-  26M   │ ├── ngrok_mips64le_Linux
-  26M   │ ├── ngrok_mips64_Linux
+ 451M   ├─┬ ngrok
+  25M   │ ├── ngrok_amd_x86_64_macOS
+  25M   │ ├── ngrok_mips64le_Linux
+  25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  25M   │ ├── ngrok_mipsle_Linux
-  25M   │ ├── ngrok_mips_Linux
+  24M   │ ├── ngrok_mipsle_Linux
+  24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
   23M   │ ├── ngrok_amd_x86_64_FreeBSD
   23M   │ ├── ngrok_powerpc64le_Linux
   23M   │ ├── ngrok_powerpc64_Linux
-  23M   │ ├── ngrok_amd_x86_64_Solaris
-  23M   │ ├── ngrok_amd_x86_Windows.exe
-  23M   │ ├── ngrok_aarch64_arm64_Linux
+  22M   │ ├── ngrok_amd_x86_64_Solaris
+  22M   │ ├── ngrok_amd_x86_Windows.exe
+  22M   │ ├── ngrok_aarch64_arm64_Linux
   22M   │ ├── ngrok_arm_Linux
   22M   │ ├── ngrok_arm_FreeBSD
   22M   │ ├── ngrok_i386_Linux
-  22M   │ ├── ngrok_386_FreeBSD
+  21M   │ ├── ngrok_386_FreeBSD
   16K   │ ├── README.md
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
