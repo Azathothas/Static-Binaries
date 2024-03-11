@@ -294,7 +294,7 @@ jobs:
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
         if: env.versions_same != 'true'
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2.0.2
         with:
           name: "ngrok ${{ env.VERSION }}"
           tag_name: "ngrok_${{ env.VERSION }}"
