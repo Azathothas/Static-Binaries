@@ -1032,7 +1032,7 @@
   47M   ├─┬ openssh
  5.5M   │ ├── openssh_amd_x86_64_Windows.msi
  5.1M   │ ├── openssh_aarch64_arm64_Windows.msi
- 4.9M   │ ├── sshd_armv7_eabihf_Linux
+ 5.0M   │ ├── sshd_armv7_eabihf_Linux
  4.9M   │ ├── openssh_amd_x86_Windows.msi
  4.8M   │ ├── sshd_aarch64_arm64_Linux
  4.7M   │ ├── sshd_amd_x86_64_Linux
@@ -1040,9 +1040,9 @@
  4.0M   │ ├── openssh_amd_x86_Windows.zip
  3.9M   │ ├── openssh_aarch64_arm64_Windows.zip
  3.9M   │ ├── openssh_aarch_arm_Windows.zip
- 280K   │ ├── sftp_server_armv7_eabihf_Linux
- 260K   │ ├── sftp_server_aarch64_arm64_Linux
- 240K   │ ├── sftp_server_amd_x86_64_Linux
+ 292K   │ ├── sftp_server_armv7_eabihf_Linux
+ 276K   │ ├── sftp_server_aarch64_arm64_Linux
+ 268K   │ ├── sftp_server_amd_x86_64_Linux
   16K   │ ├── README.md
   12K   │ ├── INFO.md
  4.0K   │ ├── version.txt
