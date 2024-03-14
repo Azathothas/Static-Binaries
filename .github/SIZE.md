@@ -10,9 +10,9 @@
   30M   │ ├── tailscaled_riscv64_Linux
   30M   │ ├── tailscaled_aarch64_arm64_Linux
   29M   │ ├── tailscaled_arm_abi_Linux
-  24M   │ ├── tailscale_amd_x86_64_Windows.msi
-  23M   │ ├── tailscale_x86_Windows.msi
-  22M   │ ├── tailscale_aarch64_arm64_Windows.msi
+  25M   │ ├── tailscale_amd_x86_64_Windows.msi
+  24M   │ ├── tailscale_x86_Windows.msi
+  23M   │ ├── tailscale_aarch64_arm64_Windows.msi
   22M   │ ├── tailscaled_s390x_Linux
   22M   │ ├── tailscale_merged_s390x_Linux
   22M   │ ├── tailscale_merged_amd_x86_64_macOS
@@ -51,8 +51,8 @@
   10M   │ ├── tailscale_i386_Linux
  7.1M   │ ├── tailscale_aarch64_arm64_Linux.upx
  6.9M   │ ├── tailscale_mips_Linux.upx
- 6.8M   │ ├── tailscale_mipsle_Linux.upx
- 6.8M   │ ├── tailscale_arm_abi_Linux.upx
+ 6.9M   │ ├── tailscale_mipsle_Linux.upx
+ 6.9M   │ ├── tailscale_arm_abi_Linux.upx
  6.3M   │ ├── tailscaled_amd_x86_64_Linux.upx
  6.2M   │ ├── tailscale_merged_amd_x86_64_Linux.upx
  5.8M   │ ├── tailscaled_amd_geode_Linux.upx
@@ -785,8 +785,8 @@
   18M   │ └── README.md
  451M   ├─┬ ngrok
   25M   │ ├── ngrok_amd_x86_64_macOS
-  25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
+  25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
   24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_mips_Linux
