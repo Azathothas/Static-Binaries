@@ -254,7 +254,7 @@
  460K   │ │ ├── dropbear
  412K   │ │ ├── dbclient
  396K   │ │ ├── gitk
- 360K   │ │ ├── scp
+ 364K   │ │ ├── scp
  356K   │ │ ├── sftp
  308K   │ │ ├── find
  296K   │ │ ├── tic
@@ -404,8 +404,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
+ 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
- 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
  4.0K   │ │ ├── curl
    0B   │ │ ├── xzfgrep
@@ -415,7 +415,6 @@
    0B   │ │ ├── x86_64
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
-   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -435,9 +434,10 @@
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
    0B   │ │ ├── i386
+   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
  237M   │ ├─┬ aarch64_arm64
-  23M   │ │ ├── ngrok
+  22M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
@@ -596,7 +596,7 @@
  540K   │ │ ├── colrm
  540K   │ │ ├── addpart
  368K   │ │ ├── scp
- 360K   │ │ ├── sftp
+ 364K   │ │ ├── sftp
  324K   │ │ ├── find
  292K   │ │ ├── du
  288K   │ │ ├── tic
@@ -741,8 +741,8 @@
  4.0K   │ │ ├── zcat
  4.0K   │ │ ├── xzmore
  4.0K   │ │ ├── xzless
+ 4.0K   │ │ ├── uncompress
  4.0K   │ │ ├── sshd_config
- 4.0K   │ │ ├── gunzip
  4.0K   │ │ ├── dcgen
    0B   │ │ ├── xzfgrep
    0B   │ │ ├── xzegrep
@@ -750,7 +750,6 @@
    0B   │ │ ├── xzcat
    0B   │ │ ├── unxz
    0B   │ │ ├── unlzma
-   0B   │ │ ├── uncompress
    0B   │ │ ├── uname26
    0B   │ │ ├── rmmod
    0B   │ │ ├── modprobe
@@ -769,6 +768,7 @@
    0B   │ │ ├── linux32
    0B   │ │ ├── lastb
    0B   │ │ ├── insmod
+   0B   │ │ ├── gunzip
    0B   │ │ └── depmod
   32M   │ ├─┬ armv7_eabihf
  5.0M   │ │ ├── sshd
@@ -788,8 +788,8 @@
   25M   │ ├── ngrok_mips64_Linux
   25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
-  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_mips_Linux
+  24M   │ ├── ngrok_mipsle_Linux
   24M   │ ├── ngrok_s390x_Linux
   24M   │ ├── ngrok_amd_x86_64_Windows.exe
   23M   │ ├── ngrok_amd_x86_64_Linux
