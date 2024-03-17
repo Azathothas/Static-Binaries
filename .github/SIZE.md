@@ -816,25 +816,25 @@
   12M   │ ├── aria2c_amd_x86_64_musl_latest_Linux
   11M   │ ├── aria2c_amd_x86_64_musl_Linux
   11M   │ ├── aria2c_aarch64_arm64_musl_latest_Linux
-  10M   │ ├── aria2c_mips64_libressl_musl_latest_Linux
-  10M   │ ├── aria2c_mipsel_libressl_musl_latest_Linux
-  10M   │ ├── aria2c_mips_libressl_musl_latest_Linux
   10M   │ ├── aria2c_mips64_libressl_musl_Linux
   10M   │ ├── aria2c_mipsel_libressl_musl_Linux
   10M   │ ├── aria2c_mips_libressl_musl_Linux
+  10M   │ ├── aria2c_mips64_libressl_musl_latest_Linux
+  10M   │ ├── aria2c_mipsel_libressl_musl_latest_Linux
+  10M   │ ├── aria2c_mips_libressl_musl_latest_Linux
   10M   │ ├── aria2c_aarch64_arm64_musl_Linux
   10M   │ ├── aria2c_x86_Android
  9.5M   │ ├── aria2c_x86_64_Android
  8.9M   │ ├── aria2c_arm_abi_musl_latest_Linux
  8.6M   │ ├── aria2c_aarch64_arm64_Android
  8.5M   │ ├── aria2c_arm_abi_musl_Linux
- 8.3M   │ ├── aria2c_amd_x86_64_libressl_musl_latest_Linux
  8.3M   │ ├── aria2c_amd_x86_64_libressl_musl_Linux
- 8.1M   │ ├── aria2c_aarch64_arm64_libressl_musl_latest_Linux
+ 8.2M   │ ├── aria2c_amd_x86_64_libressl_musl_latest_Linux
  8.0M   │ ├── aria2c_aarch64_arm64_libressl_musl_Linux
+ 8.0M   │ ├── aria2c_aarch64_arm64_libressl_musl_latest_Linux
  7.5M   │ ├── aria2c_aarch_arm_Android
- 6.8M   │ ├── aria2c_arm_abi_libressl_musl_latest_Linux
  6.8M   │ ├── aria2c_arm_abi_libressl_musl_Linux
+ 6.7M   │ ├── aria2c_arm_abi_libressl_musl_latest_Linux
  6.4M   │ ├── aria2c_i686_latest_Windows.exe
  5.9M   │ ├── aria2c_amd_x86_x64_latest_Windows.exe
  5.8M   │ ├── aria2c_amd_x86_x64_Windows.exe
