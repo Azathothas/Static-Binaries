@@ -938,8 +938,8 @@
   17M   │ ├── twingate_connector_amd_x86_64_dynamic_Linux
   16M   │ ├── twingate_connector_aarch64_arm64_dynamic_Linux
   11M   │ ├── twingate_connectorctl_amd_x86_64_dynamic_Linux
-  11M   │ ├── twingate_connector_arm32v7_dynamic_Linux
   11M   │ ├── twingate_connectorctl_aarch64_arm64_dynamic_Linux
+  11M   │ ├── twingate_connector_arm32v7_dynamic_Linux
  6.9M   │ ├── twingate_connector_amd_x86_64_staticx_Linux
  6.7M   │ ├── twingate_connectorctl_arm32v7_dynamic_Linux
  4.9M   │ ├── twingate_client_amd_x86_64_dynamic_Linux
