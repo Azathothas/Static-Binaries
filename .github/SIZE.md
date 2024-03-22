@@ -118,8 +118,8 @@
  1.6M   │ │ ├── fdisk
  1.6M   │ │ ├── sfdisk
  1.5M   │ │ ├── mount
- 1.4M   │ │ ├── umount
  1.4M   │ │ ├── hugetop
+ 1.4M   │ │ ├── umount
  1.4M   │ │ ├── top
  1.4M   │ │ ├── bore
  1.4M   │ │ ├── findmnt
@@ -478,8 +478,8 @@
  972K   │ │ ├── eject
  956K   │ │ ├── irqtop
  940K   │ │ ├── sulogin
- 940K   │ │ ├── ps
  924K   │ │ ├── watch
+ 924K   │ │ ├── ps
  908K   │ │ ├── dropbearkey
  908K   │ │ ├── dropbearconvert
  892K   │ │ ├── slabtop
