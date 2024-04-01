@@ -91,8 +91,8 @@
  4.0K   │ ├── tailscaled_amd_geode_systemd.defaults_Linux
  4.0K   │ ├── tailscaled_aarch64_arm64_systemd.service_Linux
  4.0K   │ └── tailscaled_aarch64_arm64_systemd.defaults_Linux
- 586M   ├─┬ baseutils
- 297M   │ ├─┬ x86_64
+ 588M   ├─┬ baseutils
+ 298M   │ ├─┬ x86_64
   23M   │ │ ├── ngrok
   21M   │ │ ├── tailscaled
   12M   │ │ ├── gost
@@ -102,12 +102,12 @@
  5.7M   │ │ ├── git-upload-archive
  5.7M   │ │ ├── git-receive-pack
  5.7M   │ │ ├── git
- 4.7M   │ │ ├── sshd
- 4.7M   │ │ ├── ssh
- 4.2M   │ │ ├── ssh-keysign
- 4.2M   │ │ ├── ssh-keyscan
- 4.1M   │ │ ├── ssh-keygen
- 4.0M   │ │ ├── ssh-add
+ 4.8M   │ │ ├── sshd
+ 4.8M   │ │ ├── ssh
+ 4.3M   │ │ ├── ssh-keysign
+ 4.3M   │ │ ├── ssh-keyscan
+ 4.2M   │ │ ├── ssh-keygen
+ 4.1M   │ │ ├── ssh-add
  4.0M   │ │ ├── ssh-agent
  3.9M   │ │ ├── scalar
  3.9M   │ │ ├── git-shell
@@ -260,109 +260,111 @@
  272K   │ │ ├── infocmp
  268K   │ │ ├── sftp-server
  256K   │ │ ├── xz
- 256K   │ │ ├── du
+ 252K   │ │ ├── du
  244K   │ │ ├── printf
  244K   │ │ ├── kmod
  244K   │ │ ├── dropbearkey
  240K   │ │ ├── dropbearconvert
- 216K   │ │ ├── vdir
- 216K   │ │ ├── ls
- 216K   │ │ ├── dir
+ 212K   │ │ ├── vdir
  212K   │ │ ├── toe
+ 212K   │ │ ├── ls
+ 212K   │ │ ├── dir
  192K   │ │ ├── locate
  188K   │ │ ├── sed
  172K   │ │ ├── sort
- 172K   │ │ ├── cksum
- 168K   │ │ ├── ptx
- 168K   │ │ ├── expr
+ 168K   │ │ ├── cksum
+ 164K   │ │ ├── ptx
  164K   │ │ ├── ginstall
- 164K   │ │ ├── csplit
+ 164K   │ │ ├── expr
  160K   │ │ ├── git-cvsserver
  156K   │ │ ├── stat
+ 156K   │ │ ├── csplit
  152K   │ │ ├── tac
  152K   │ │ ├── nl
+ 152K   │ │ ├── mv
  148K   │ │ ├── tset
- 148K   │ │ ├── mv
- 148K   │ │ ├── df
- 148K   │ │ ├── cp
  144K   │ │ ├── tput
+ 144K   │ │ ├── cp
+ 140K   │ │ ├── df
  140K   │ │ ├── date
  136K   │ │ ├── tabs
  136K   │ │ ├── pr
+ 132K   │ │ ├── who
+ 132K   │ │ ├── touch
  132K   │ │ ├── pinky
  132K   │ │ ├── clear
- 128K   │ │ ├── who
- 128K   │ │ ├── touch
  128K   │ │ ├── factor
  120K   │ │ ├── tail
+ 120K   │ │ ├── dircolors
  120K   │ │ ├── chown
+ 120K   │ │ ├── chgrp
+ 116K   │ │ ├── od
+ 116K   │ │ ├── numfmt
  116K   │ │ ├── gzip
- 116K   │ │ ├── dircolors
  116K   │ │ ├── chroot
  112K   │ │ ├── split
- 112K   │ │ ├── od
- 112K   │ │ ├── numfmt
- 112K   │ │ ├── chgrp
+ 112K   │ │ ├── ln
+ 112K   │ │ ├── dd
+ 108K   │ │ ├── wc
  108K   │ │ ├── timeout
- 108K   │ │ ├── stty
  108K   │ │ ├── sha512sum
  108K   │ │ ├── sha384sum
  108K   │ │ ├── rm
- 108K   │ │ ├── ln
- 108K   │ │ ├── dd
- 104K   │ │ ├── wc
+ 104K   │ │ ├── stty
  104K   │ │ ├── shred
+ 104K   │ │ ├── sha256sum
+ 104K   │ │ ├── sha224sum
+ 104K   │ │ ├── chmod
  104K   │ │ ├── chcon
  100K   │ │ ├── xzdec
  100K   │ │ ├── xargs
  100K   │ │ ├── wget-busybox
  100K   │ │ ├── shuf
- 100K   │ │ ├── sha256sum
- 100K   │ │ ├── sha224sum
  100K   │ │ ├── join
- 100K   │ │ ├── chmod
  100K   │ │ ├── b2sum
+  96K   │ │ ├── uniq
+  96K   │ │ ├── tr
   96K   │ │ ├── sha1sum
   96K   │ │ ├── seq
+  96K   │ │ ├── md5sum
   96K   │ │ ├── id
   96K   │ │ ├── env
+  96K   │ │ ├── cut
   96K   │ │ ├── basenc
-  92K   │ │ ├── uniq
-  92K   │ │ ├── tr
-  92K   │ │ ├── stdbuf
   92K   │ │ ├── realpath
-  92K   │ │ ├── md5sum
-  92K   │ │ ├── head
-  92K   │ │ ├── cut
+  92K   │ │ ├── readlink
+  92K   │ │ ├── mkdir
+  92K   │ │ ├── groups
+  92K   │ │ ├── getlimits
+  92K   │ │ ├── comm
   92K   │ │ ├── [
+  88K   │ │ ├── whoami
   88K   │ │ ├── users
-  88K   │ │ ├── test
+  88K   │ │ ├── truncate
   88K   │ │ ├── tee
+  88K   │ │ ├── sum
+  88K   │ │ ├── stdbuf
   88K   │ │ ├── sleep
-  88K   │ │ ├── readlink
   88K   │ │ ├── pwd
-  88K   │ │ ├── mkdir
-  88K   │ │ ├── groups
-  88K   │ │ ├── getlimits
+  88K   │ │ ├── mknod
+  88K   │ │ ├── head
+  88K   │ │ ├── fold
   88K   │ │ ├── fmt
-  88K   │ │ ├── comm
+  88K   │ │ ├── cat
   88K   │ │ ├── base64
   88K   │ │ ├── base32
-  84K   │ │ ├── whoami
   84K   │ │ ├── unexpand
   84K   │ │ ├── tsort
-  84K   │ │ ├── truncate
-  84K   │ │ ├── sum
+  84K   │ │ ├── test
   84K   │ │ ├── rmdir
+  84K   │ │ ├── pathchk
   84K   │ │ ├── paste
   84K   │ │ ├── nproc
   84K   │ │ ├── nohup
   84K   │ │ ├── nice
   84K   │ │ ├── mktemp
-  84K   │ │ ├── mknod
-  84K   │ │ ├── fold
+  84K   │ │ ├── mkfifo
   84K   │ │ ├── expand
-  84K   │ │ ├── cat
   80K   │ │ ├── yes
   80K   │ │ ├── unlink
   80K   │ │ ├── uname
@@ -370,8 +372,6 @@
   80K   │ │ ├── sync
   80K   │ │ ├── runcon
   80K   │ │ ├── printenv
-  80K   │ │ ├── pathchk
-  80K   │ │ ├── mkfifo
   80K   │ │ ├── lzmainfo
   80K   │ │ ├── logname
   80K   │ │ ├── link
@@ -435,20 +435,20 @@
    0B   │ │ ├── i386
    0B   │ │ ├── gunzip
    0B   │ │ └── depmod
- 237M   │ ├─┬ aarch64_arm64
+ 238M   │ ├─┬ aarch64_arm64
   22M   │ │ ├── ngrok
   20M   │ │ ├── tailscaled
   12M   │ │ ├── gost
   10M   │ │ ├── tailscale
  7.1M   │ │ ├── croc
  7.0M   │ │ ├── curl
- 4.8M   │ │ ├── sshd
- 4.7M   │ │ ├── ssh
- 4.3M   │ │ ├── ssh-keysign
- 4.2M   │ │ ├── ssh-keyscan
- 4.2M   │ │ ├── ssh-keygen
+ 4.9M   │ │ ├── sshd
+ 4.8M   │ │ ├── ssh
+ 4.4M   │ │ ├── ssh-keysign
+ 4.3M   │ │ ├── ssh-keyscan
+ 4.3M   │ │ ├── ssh-keygen
  4.1M   │ │ ├── ssh-add
- 4.0M   │ │ ├── ssh-agent
+ 4.1M   │ │ ├── ssh-agent
  1.9M   │ │ ├── slirp4netns
  1.6M   │ │ ├── cfdisk
  1.3M   │ │ ├── dropbearmulti
@@ -623,10 +623,11 @@
  180K   │ │ ├── df
  180K   │ │ ├── cp
  164K   │ │ ├── who
+ 164K   │ │ ├── touch
  164K   │ │ ├── pr
  164K   │ │ ├── pinky
  164K   │ │ ├── date
- 148K   │ │ ├── touch
+ 148K   │ │ ├── factor
  144K   │ │ ├── tset
  144K   │ │ ├── tput
  136K   │ │ ├── tabs
@@ -654,7 +655,7 @@
  132K   │ │ ├── id
  132K   │ │ ├── gzip
  132K   │ │ ├── getlimits
- 132K   │ │ ├── factor
+ 132K   │ │ ├── env
  132K   │ │ ├── dircolors
  132K   │ │ ├── dd
  132K   │ │ ├── clear
@@ -700,12 +701,12 @@
  116K   │ │ ├── md5sum
  116K   │ │ ├── logname
  116K   │ │ ├── link
+ 116K   │ │ ├── hostid
  116K   │ │ ├── head
  116K   │ │ ├── groups
  116K   │ │ ├── fold
  116K   │ │ ├── fmt
  116K   │ │ ├── expand
- 116K   │ │ ├── env
  116K   │ │ ├── dirname
  116K   │ │ ├── cut
  116K   │ │ ├── comm
@@ -716,7 +717,6 @@
  116K   │ │ ├── [
  100K   │ │ ├── true
  100K   │ │ ├── lzmainfo
- 100K   │ │ ├── hostid
  100K   │ │ ├── false
  100K   │ │ ├── echo
   68K   │ │ ├── which
@@ -773,10 +773,10 @@
  5.0M   │ │ ├── sshd
  4.9M   │ │ ├── ssh
  4.4M   │ │ ├── ssh-keysign
- 4.3M   │ │ ├── ssh-keyscan
- 4.3M   │ │ ├── ssh-keygen
- 4.1M   │ │ ├── ssh-add
- 4.1M   │ │ ├── ssh-agent
+ 4.4M   │ │ ├── ssh-keyscan
+ 4.4M   │ │ ├── ssh-keygen
+ 4.2M   │ │ ├── ssh-add
+ 4.2M   │ │ ├── ssh-agent
  396K   │ │ ├── scp
  388K   │ │ ├── sftp
  292K   │ │ ├── sftp-server
