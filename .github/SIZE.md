@@ -882,11 +882,11 @@
  8.0M   │ ├── croc_mipsle_Linux
  8.0M   │ ├── croc_mips_Linux
  7.9M   │ ├── croc_s390x_Linux
- 7.8M   │ ├── croc_amd_x86_Windows.exe
+ 7.9M   │ ├── croc_amd_x86_Windows.exe
  7.5M   │ ├── croc_amd_x86_64_OpenBSD
  7.5M   │ ├── croc_amd_x86_64_FreeBSD
- 7.4M   │ ├── croc_amd_x86_64_Linux
- 7.4M   │ ├── croc_amd_x86_64_DragonFlyBSD
+ 7.5M   │ ├── croc_amd_x86_64_Linux
+ 7.5M   │ ├── croc_amd_x86_64_DragonFlyBSD
  7.4M   │ ├── croc_amd_x86_64_NetBSD
  7.4M   │ ├── croc_loong64_Linux
  7.3M   │ ├── croc_powerpc64le_ppc64le_Linux
@@ -897,8 +897,8 @@
  7.1M   │ ├── croc_386_Linux
  7.1M   │ ├── croc_arm_abi_NetBSD
  7.1M   │ ├── croc_amd_x86_OpenBSD
- 7.1M   │ ├── croc_amd_x86_FreeBSD
  7.1M   │ ├── croc_amd_x86_NetBSD
+ 7.1M   │ ├── croc_amd_x86_FreeBSD
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
