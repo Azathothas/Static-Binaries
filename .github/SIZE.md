@@ -785,8 +785,8 @@
   19M   │ └── README.md
  451M   ├─┬ ngrok
   25M   │ ├── ngrok_amd_x86_64_macOS
-  25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_mips64_Linux
+  25M   │ ├── ngrok_mips64le_Linux
   25M   │ ├── ngrok_aarch64_arm64_macOS
   24M   │ ├── ngrok_mips_Linux
   24M   │ ├── ngrok_mipsle_Linux
@@ -1012,9 +1012,9 @@
  1.8M   │ ├── busybox_mipsel_musl_Linux
  1.7M   │ ├── busybox_m68k_gcc_Linux
  1.7M   │ ├── busybox_riscv64_gcc_Linux
+ 1.7M   │ ├── busybox_riscv32_gcc_Linux
  1.6M   │ ├── busybox_mips64_musl_Linux
  1.6M   │ ├── busybox_mips64el_musl_Linux
- 1.6M   │ ├── busybox_riscv32_gcc_Linux
  1.6M   │ ├── busybox_powerpc64le_musl_Linux
  1.5M   │ ├── busybox_arm_abihf_gcc_Linux
  1.4M   │ ├── busybox_s390x_musl_Linux
