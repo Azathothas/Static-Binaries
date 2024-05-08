@@ -487,7 +487,7 @@ jobs:
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
         if: env.versions_same != 'true'
-        uses: softprops/action-gh-release@v2.0.4
+        uses: softprops/action-gh-release@v2.0.5
         with:
           name: "croc ${{ env.VERSION }}"
           tag_name: "croc_${{ env.VERSION }}"
