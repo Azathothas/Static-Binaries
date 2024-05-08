@@ -207,7 +207,7 @@ jobs:
   # Repo: https://github.com/softprops/action-gh-release
   # Market-Place: https://github.com/marketplace/actions/gh-release
       - name: Releaser
-        uses: softprops/action-gh-release@v2.0.4
+        uses: softprops/action-gh-release@v2.0.5
         with:
           name: "openssh ${{ env.VERSION }}"
           tag_name: "openssh_${{ env.VERSION }}"
