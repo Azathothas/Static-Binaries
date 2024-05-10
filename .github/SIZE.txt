@@ -41,7 +41,7 @@
   11M   │ ├── tailscaled_mipsle_Linux.upx
   11M   │ ├── tailscaled_arm_abi_Linux.upx
   11M   │ ├── tailscale_s390x_Linux
-  10M   │ ├── tailscale_amd_x86_64_Linux
+  11M   │ ├── tailscale_amd_x86_64_Linux
   10M   │ ├── tailscale_powerpc64le_ppc64le_Linux
   10M   │ ├── tailscale_powerpc64_ppc64_Linux
   10M   │ ├── tailscale_amd_x86_64_macOS
