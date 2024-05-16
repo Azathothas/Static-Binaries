@@ -786,8 +786,8 @@
  525M   ├─┬ ngrok
   29M   │ ├── ngrok_mips64le_Linux
   29M   │ ├── ngrok_mips64_Linux
-  29M   │ ├── ngrok_mips_Linux
   29M   │ ├── ngrok_mipsle_Linux
+  29M   │ ├── ngrok_mips_Linux
   28M   │ ├── ngrok_s390x_Linux
   28M   │ ├── ngrok_amd_x86_64_Windows.exe
   27M   │ ├── ngrok_amd_x86_64_macOS
@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mips64le_Linux
+  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
