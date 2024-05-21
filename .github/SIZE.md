@@ -868,7 +868,7 @@
   12K   │ ├── README.md
  8.0K   │ ├── INFO.md
  4.0K   │ └── version.txt
- 245M   ├─┬ croc
+ 246M   ├─┬ croc
   10M   │ ├── croc_x86_64_macOS
   10M   │ ├── croc_aarch64_arm64_macOS
   10M   │ ├── croc_arm_Windows.exe
@@ -885,9 +885,9 @@
  7.9M   │ ├── croc_amd_x86_Windows.exe
  7.5M   │ ├── croc_amd_x86_64_OpenBSD
  7.5M   │ ├── croc_amd_x86_64_FreeBSD
- 7.5M   │ ├── croc_amd_x86_64_Linux
  7.5M   │ ├── croc_amd_x86_64_DragonFlyBSD
- 7.4M   │ ├── croc_amd_x86_64_NetBSD
+ 7.5M   │ ├── croc_amd_x86_64_Linux
+ 7.5M   │ ├── croc_amd_x86_64_NetBSD
  7.4M   │ ├── croc_loong64_Linux
  7.3M   │ ├── croc_powerpc64le_ppc64le_Linux
  7.2M   │ ├── croc_riscv64_Linux
