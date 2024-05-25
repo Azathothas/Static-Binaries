@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mips64le_Linux
+  13M   │ ├── gost_mips64_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
