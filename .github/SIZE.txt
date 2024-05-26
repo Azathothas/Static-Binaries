@@ -807,8 +807,8 @@
  4.0K   │ └── INFO.md
  317M   ├─┬ aria2
   13M   │ ├── aria2c_mips64_musl_latest_Linux
-  13M   │ ├── aria2c_mips_musl_latest_Linux
   13M   │ ├── aria2c_mipsel_musl_latest_Linux
+  13M   │ ├── aria2c_mips_musl_latest_Linux
   13M   │ ├── aria2c_mips64_musl_Linux
   12M   │ ├── aria2c_mips_musl_Linux
   12M   │ ├── aria2c_mipsel_musl_Linux
@@ -828,7 +828,7 @@
  8.6M   │ ├── aria2c_aarch64_arm64_Android
  8.5M   │ ├── aria2c_arm_abi_musl_Linux
  8.3M   │ ├── aria2c_amd_x86_64_libressl_musl_Linux
- 8.2M   │ ├── aria2c_amd_x86_64_libressl_musl_latest_Linux
+ 8.3M   │ ├── aria2c_amd_x86_64_libressl_musl_latest_Linux
  8.0M   │ ├── aria2c_aarch64_arm64_libressl_musl_Linux
  8.0M   │ ├── aria2c_aarch64_arm64_libressl_musl_latest_Linux
  7.5M   │ ├── aria2c_aarch_arm_Android
@@ -895,8 +895,8 @@
  7.1M   │ ├── croc_amd_x86_Linux
  7.1M   │ ├── croc_386_Linux
  7.1M   │ ├── croc_arm_abi_NetBSD
- 7.1M   │ ├── croc_amd_x86_OpenBSD
  7.1M   │ ├── croc_amd_x86_NetBSD
+ 7.1M   │ ├── croc_amd_x86_OpenBSD
  7.1M   │ ├── croc_amd_x86_FreeBSD
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
