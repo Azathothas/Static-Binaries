@@ -1171,7 +1171,7 @@
  8.0K   │ ├── README.md
  4.0K   │ └── INFO.md
  2.6M   ├─┬ massdns
- 928K   │ ├── massdns_linux_x86_64_gcc
+ 932K   │ ├── massdns_linux_x86_64_gcc
  836K   │ ├── massdns_linux_s390x_gcc
  716K   │ ├── massdns_linux_arm64_aarch64_gcc
  148K   │ ├── massdns_linux_arm64_aarch64_musl
