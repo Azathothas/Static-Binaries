@@ -784,8 +784,8 @@
  4.0K   │ │ └── sshd_config
   19M   │ └── README.md
  526M   ├─┬ ngrok
-  29M   │ ├── ngrok_mips64_Linux
   29M   │ ├── ngrok_mips64le_Linux
+  29M   │ ├── ngrok_mips64_Linux
   29M   │ ├── ngrok_mipsle_Linux
   29M   │ ├── ngrok_mips_Linux
   28M   │ ├── ngrok_s390x_Linux
@@ -953,44 +953,44 @@
  4.0K   │ ├── twingate_version.txt
  4.0K   │ ├── twingate_connector_version.txt
  4.0K   │ └── INFO.md
-  66M   ├─┬ bore
- 2.6M   │ ├── bore_aarch64_arm64_macOS
- 2.5M   │ ├── bore_x86_64_macOS
+  67M   ├─┬ bore
  2.4M   │ ├── bore_powerpc64_ppc64_gcc_Linux
+ 2.4M   │ ├── bore_x86_64_macOS
  2.4M   │ ├── bore_powerpc64le_ppc64le_gcc_Linux
- 2.3M   │ ├── bore_amd_x86_64_gcc_Linux
+ 2.4M   │ ├── bore_amd_x86_64_gcc_Linux
+ 2.4M   │ ├── bore_aarch64_arm64_macOS
  2.3M   │ ├── bore_mipsel_gcc_Linux
  2.3M   │ ├── bore_mips_gcc_Linux
  2.3M   │ ├── bore_mips64el_gcc_Linux
  2.3M   │ ├── bore_mips64_gcc_Linux
- 2.1M   │ ├── bore_i586_gcc_Linux
- 2.1M   │ ├── bore_amd_x86_i686_gcc_Linux
+ 2.2M   │ ├── bore_i586_gcc_Linux
+ 2.2M   │ ├── bore_amd_x86_i686_gcc_Linux
  2.1M   │ ├── bore_powerpc_ppc_gcc_Linux
  2.1M   │ ├── bore_s390x_gcc_Linux
  2.0M   │ ├── bore_sparc64_gcc_Linux
  1.8M   │ ├── bore_mips_musl_Linux
  1.8M   │ ├── bore_mipsel_musl_Linux
- 1.7M   │ ├── bore_amd_x86_64_Windows.exe
+ 1.7M   │ ├── bore_aarch64_arm64_gcc_Linux
  1.7M   │ ├── bore_mips64el_musl_Linux
  1.7M   │ ├── bore_mips64_musl_Linux
  1.7M   │ ├── bore_i686_Android
- 1.7M   │ ├── bore_aarch64_arm64_gcc_Linux
- 1.6M   │ ├── bore_aarch64_arm64_Android
- 1.6M   │ ├── bore_arm_abihf_gcc_Linux
- 1.6M   │ ├── bore_arm_abi_gcc_Linux
+ 1.7M   │ ├── bore_amd_x86_64_Windows.exe
+ 1.7M   │ ├── bore_arm_abi_gcc_Linux
  1.6M   │ ├── bore_armv7_abi_gcc_Linux
- 1.5M   │ ├── bore_riscv64_gcc_Linux
- 1.5M   │ ├── bore_amd_x86_Windows.exe
+ 1.6M   │ ├── bore_arm_abihf_gcc_Linux
+ 1.6M   │ ├── bore_riscv64_gcc_Linux
+ 1.5M   │ ├── bore_aarch64_arm64_Android
  1.5M   │ ├── bore_armv7_abihf_gcc_Linux
- 1.4M   │ ├── bore_amd_x86_64_musl_Linux
+ 1.5M   │ ├── bore_amd_x86_64_musl_Linux
+ 1.4M   │ ├── bore_amd_x86_Windows.exe
  1.3M   │ ├── bore_i586_musl_Linux
  1.3M   │ ├── bore_amd_x86_i686_musl_Linux
  1.3M   │ ├── bore_armv_abi_Android
- 1.2M   │ ├── bore_aarch64_arm64_musl_Linux
  1.2M   │ ├── bore_arm_abi_musl_Linux
+ 1.2M   │ ├── bore_aarch64_arm64_musl_Linux
  1.2M   │ ├── bore_arm_abihf_musl_Linux
- 1.1M   │ ├── bore_armv7_abi_musl_Linux
- 1.1M   │ ├── bore_armv7_abihf_musl_Linux
+ 1.2M   │ ├── bore_armv7_abi_musl_Linux
+ 1.2M   │ ├── bore_armv7_abihf_musl_Linux
  1.0M   │ ├── bore_armv7_abi_Android
   20K   │ ├── README.md
  8.0K   │ ├── INFO.md
