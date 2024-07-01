@@ -874,8 +874,8 @@
   10M   │ ├── croc_arm_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Linux
-  10M   │ ├── croc_aarch64_arm64_FreeBSD
   10M   │ ├── croc_aarch64_arm64_OpenBSD
+  10M   │ ├── croc_aarch64_arm64_FreeBSD
  8.3M   │ ├── croc_amd_x86_64_Windows.exe
  8.2M   │ ├── croc_mips64le_Linux
  8.2M   │ ├── croc_mips64_Linux
