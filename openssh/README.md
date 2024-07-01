@@ -198,9 +198,9 @@ bd48fe985d400402c278c485db20e6a82bc4c7f7d8e0ef5a81128f523096530c  ./openssh/open
 f3d275070dc64d7f5fb278795a0bca34df77f4f19280d58a4a18ecca4b5ba1ff  ./openssh/sftp_server_aarch64_arm64_Linux
 2cba45068ceccd7f04342f3ee884ccb0534cbba80573dc9f6ff19b6131032b22  ./openssh/sftp_server_amd_x86_64_Linux
 e8ed57f7cf1b93e4edb77e7b85b0792c3001a4b2d9da5f2e41f3c59bf21125cc  ./openssh/sftp_server_armv7_eabihf_Linux
-96ca7c17381b7e10ac966be6cc879d258b94e487955e2934a8d99e39e071f80e  ./openssh/sshd_aarch64_arm64_Linux
-b16dd941f04f5e94c4a688743b974c9b9486851d747f1b242d5b0d03b1c8cc3c  ./openssh/sshd_amd_x86_64_Linux
-f41d468478df0f5355dbd527272a7ef4f9d0cdbbe554ec089cd1f2e61359c8bf  ./openssh/sshd_armv7_eabihf_Linux
+a2f739d66edbc1c274b02a5ad63e305bff2974631555aa1771b2dbaddc768acc  ./openssh/sshd_aarch64_arm64_Linux
+002d8838ddca9b13e023b1cce1791bbb1ac9ed819c8c0f27bad130b5ae693373  ./openssh/sshd_amd_x86_64_Linux
+233092df84777ea62426603fdf1866d12dab151c70ac682786630d6ee06adf56  ./openssh/sshd_armv7_eabihf_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_aarch64_arm64_Linux
 f6c2fbaffc1fc3f4f426171d38091206ae1bcc2f8a2dff03cefa5f3519e55a72  ./openssh/sshd_config_amd_x86_64_Linux
 b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd_config_armv7_eabihf_Linux
@@ -224,9 +224,9 @@ b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd
 275K  ./openssh/sftp_server_aarch64_arm64_Linux
 266K  ./openssh/sftp_server_amd_x86_64_Linux
 290K  ./openssh/sftp_server_armv7_eabihf_Linux
-4.8M  ./openssh/sshd_aarch64_arm64_Linux
-4.8M  ./openssh/sshd_amd_x86_64_Linux
-5.0M  ./openssh/sshd_armv7_eabihf_Linux
+4.9M  ./openssh/sshd_aarch64_arm64_Linux
+4.9M  ./openssh/sshd_amd_x86_64_Linux
+5.1M  ./openssh/sshd_armv7_eabihf_Linux
 3.1K  ./openssh/sshd_config_aarch64_arm64_Linux
 3.1K  ./openssh/sshd_config_amd_x86_64_Linux
 3.1K  ./openssh/sshd_config_armv7_eabihf_Linux
@@ -239,7 +239,7 @@ b29a6aafd672f43a35fda7295f2a5360603d90729e6ab717dac0f73754503005  ./openssh/sshd
 
 $ ./openssh/sshd_amd_x86_64_Linux -h
 ./openssh/sshd_amd_x86_64_Linux: option requires an argument: h
-OpenSSH_9.7p1, OpenSSL 3.2.1 30 Jan 2024
+OpenSSH_9.7p1, OpenSSL 3.3.0 9 Apr 2024
 usage: sshd [-46DdeGiqTtV] [-C connection_spec] [-c host_cert_file]
             [-E log_file] [-f config_file] [-g login_grace_time]
             [-h host_key_file] [-o option] [-p port] [-u len]
