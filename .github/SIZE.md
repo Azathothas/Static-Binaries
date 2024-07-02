@@ -844,8 +844,8 @@
  4.0K   │ ├── version.txt
  4.0K   │ └── INFO.md
  259M   ├─┬ gost
-  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mips64_Linux
+  13M   │ ├── gost_mips64le_Linux
   13M   │ ├── gost_mipsle_softfloat_Linux
   13M   │ ├── gost_mips_softfloat_Linux
   13M   │ ├── gost_mipsle_hardfloat_Linux
@@ -874,8 +874,8 @@
   10M   │ ├── croc_arm_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Linux
-  10M   │ ├── croc_aarch64_arm64_OpenBSD
   10M   │ ├── croc_aarch64_arm64_FreeBSD
+  10M   │ ├── croc_aarch64_arm64_OpenBSD
  8.3M   │ ├── croc_amd_x86_64_Windows.exe
  8.2M   │ ├── croc_mips64le_Linux
  8.2M   │ ├── croc_mips64_Linux
@@ -1034,9 +1034,9 @@
  5.5M   │ ├── openssh_amd_x86_64_Windows.msi
  5.1M   │ ├── openssh_aarch64_arm64_Windows.msi
  5.0M   │ ├── sshd_armv7_eabihf_Linux
+ 4.9M   │ ├── sshd_aarch64_arm64_Linux
  4.9M   │ ├── openssh_amd_x86_Windows.msi
- 4.8M   │ ├── sshd_aarch64_arm64_Linux
- 4.7M   │ ├── sshd_amd_x86_64_Linux
+ 4.8M   │ ├── sshd_amd_x86_64_Linux
  4.6M   │ ├── openssh_amd_x86_64_Windows.zip
  4.0M   │ ├── openssh_amd_x86_Windows.zip
  3.9M   │ ├── openssh_aarch64_arm64_Windows.zip
