@@ -785,8 +785,8 @@
  526M   ├─┬ ngrok
   29M   │ ├── ngrok_mips64le_Linux
   29M   │ ├── ngrok_mips64_Linux
-  29M   │ ├── ngrok_mips_Linux
   29M   │ ├── ngrok_mipsle_Linux
+  29M   │ ├── ngrok_mips_Linux
   28M   │ ├── ngrok_s390x_Linux
   28M   │ ├── ngrok_amd_x86_64_Windows.exe
   27M   │ ├── ngrok_amd_x86_64_macOS
@@ -873,8 +873,8 @@
   10M   │ ├── croc_arm_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Windows.exe
   10M   │ ├── croc_aarch64_arm64_Linux
-  10M   │ ├── croc_aarch64_arm64_FreeBSD
   10M   │ ├── croc_aarch64_arm64_OpenBSD
+  10M   │ ├── croc_aarch64_arm64_FreeBSD
  8.3M   │ ├── croc_amd_x86_64_Windows.exe
  8.2M   │ ├── croc_mips64le_Linux
  8.2M   │ ├── croc_mips64_Linux
