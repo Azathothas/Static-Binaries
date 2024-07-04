@@ -28,6 +28,10 @@ file URL to obtain its checksum.</p>
     
     <option value="latest" selected>latest</option>
     
+    <option value="1.68.2" >1.68.2</option>
+    
+    <option value="1.68.1" >1.68.1</option>
+    
     <option value="1.68.0" >1.68.0</option>
     
     <option value="1.66.4" >1.66.4</option>
@@ -61,10 +65,6 @@ file URL to obtain its checksum.</p>
     <option value="1.54.1" >1.54.1</option>
     
     <option value="1.54.0" >1.54.0</option>
-    
-    <option value="1.52.1" >1.52.1</option>
-    
-    <option value="1.52.0" >1.52.0</option>
     
   </select>
 </form>
@@ -1118,25 +1118,25 @@ sudo tailscale up
 
   <ul>
   
-    <li>386: <a href="tailscale_1.68.0_386.tgz">tailscale_1.68.0_386.tgz</a></li>
+    <li>386: <a href="tailscale_1.68.2_386.tgz">tailscale_1.68.2_386.tgz</a></li>
   
-    <li>amd64: <a href="tailscale_1.68.0_amd64.tgz">tailscale_1.68.0_amd64.tgz</a></li>
+    <li>amd64: <a href="tailscale_1.68.2_amd64.tgz">tailscale_1.68.2_amd64.tgz</a></li>
   
-    <li>arm: <a href="tailscale_1.68.0_arm.tgz">tailscale_1.68.0_arm.tgz</a></li>
+    <li>arm: <a href="tailscale_1.68.2_arm.tgz">tailscale_1.68.2_arm.tgz</a></li>
   
-    <li>arm64: <a href="tailscale_1.68.0_arm64.tgz">tailscale_1.68.0_arm64.tgz</a></li>
+    <li>arm64: <a href="tailscale_1.68.2_arm64.tgz">tailscale_1.68.2_arm64.tgz</a></li>
   
-    <li>geode: <a href="tailscale_1.68.0_geode.tgz">tailscale_1.68.0_geode.tgz</a></li>
+    <li>geode: <a href="tailscale_1.68.2_geode.tgz">tailscale_1.68.2_geode.tgz</a></li>
   
-    <li>mips: <a href="tailscale_1.68.0_mips.tgz">tailscale_1.68.0_mips.tgz</a></li>
+    <li>mips: <a href="tailscale_1.68.2_mips.tgz">tailscale_1.68.2_mips.tgz</a></li>
   
-    <li>mips64: <a href="tailscale_1.68.0_mips64.tgz">tailscale_1.68.0_mips64.tgz</a></li>
+    <li>mips64: <a href="tailscale_1.68.2_mips64.tgz">tailscale_1.68.2_mips64.tgz</a></li>
   
-    <li>mips64le: <a href="tailscale_1.68.0_mips64le.tgz">tailscale_1.68.0_mips64le.tgz</a></li>
+    <li>mips64le: <a href="tailscale_1.68.2_mips64le.tgz">tailscale_1.68.2_mips64le.tgz</a></li>
   
-    <li>mipsle: <a href="tailscale_1.68.0_mipsle.tgz">tailscale_1.68.0_mipsle.tgz</a></li>
+    <li>mipsle: <a href="tailscale_1.68.2_mipsle.tgz">tailscale_1.68.2_mipsle.tgz</a></li>
   
-    <li>riscv64: <a href="tailscale_1.68.0_riscv64.tgz">tailscale_1.68.0_riscv64.tgz</a></li>
+    <li>riscv64: <a href="tailscale_1.68.2_riscv64.tgz">tailscale_1.68.2_riscv64.tgz</a></li>
   
   </ul>
 
@@ -1155,24 +1155,24 @@ sudo tailscale up
   <ul>
   
     
-  <li><a href="tailscale-setup-1.68.0.exe">tailscale-setup-1.68.0.exe</a></li>
+  <li><a href="tailscale-setup-1.68.2.exe">tailscale-setup-1.68.2.exe</a></li>
 
   
     
-  <li><a href="tailscale-setup-full-1.68.0.exe">tailscale-setup-full-1.68.0.exe</a>: full installer (all MSI packages are embedded in the self-extracting executable)</li>
+  <li><a href="tailscale-setup-full-1.68.2.exe">tailscale-setup-full-1.68.2.exe</a>: full installer (all MSI packages are embedded in the self-extracting executable)</li>
 
   
   
     
-  <li><a href="tailscale-setup-1.68.0-amd64.msi">tailscale-setup-1.68.0-amd64.msi</a>: 64-bit x86 (amd64)</li>
+  <li><a href="tailscale-setup-1.68.2-amd64.msi">tailscale-setup-1.68.2-amd64.msi</a>: 64-bit x86 (amd64)</li>
 
   
     
-  <li><a href="tailscale-setup-1.68.0-arm64.msi">tailscale-setup-1.68.0-arm64.msi</a>: 64-bit ARM64</li>
+  <li><a href="tailscale-setup-1.68.2-arm64.msi">tailscale-setup-1.68.2-arm64.msi</a>: 64-bit ARM64</li>
 
   
     
-  <li><a href="tailscale-setup-1.68.0-x86.msi">tailscale-setup-1.68.0-x86.msi</a>: 32-bit x86</li>
+  <li><a href="tailscale-setup-1.68.2-x86.msi">tailscale-setup-1.68.2-x86.msi</a>: 32-bit x86</li>
 
   
   </ul>
@@ -1199,63 +1199,63 @@ sudo tailscale up
     <ul>
       
         
-  <li><a href="tailscale-x86_64-1.68.0-600068000-dsm6.spk">tailscale-x86_64-1.68.0-600068000-dsm6.spk</a>: 64-bit x86 (amd64)</li>
+  <li><a href="tailscale-x86_64-1.68.2-600068002-dsm6.spk">tailscale-x86_64-1.68.2-600068002-dsm6.spk</a>: 64-bit x86 (amd64)</li>
 
       
         
-  <li><a href="tailscale-armv8-1.68.0-600068000-dsm6.spk">tailscale-armv8-1.68.0-600068000-dsm6.spk</a>: ARMv8 (arm64)</li>
+  <li><a href="tailscale-armv8-1.68.2-600068002-dsm6.spk">tailscale-armv8-1.68.2-600068002-dsm6.spk</a>: ARMv8 (arm64)</li>
 
       
         
-  <li><a href="tailscale-armv7-1.68.0-600068000-dsm6.spk">tailscale-armv7-1.68.0-600068000-dsm6.spk</a>: ARMv7</li>
+  <li><a href="tailscale-armv7-1.68.2-600068002-dsm6.spk">tailscale-armv7-1.68.2-600068002-dsm6.spk</a>: ARMv7</li>
 
       
         
-  <li><a href="tailscale-armv5-1.68.0-600068000-dsm6.spk">tailscale-armv5-1.68.0-600068000-dsm6.spk</a>: ARMv5</li>
+  <li><a href="tailscale-armv5-1.68.2-600068002-dsm6.spk">tailscale-armv5-1.68.2-600068002-dsm6.spk</a>: ARMv5</li>
 
       
         
-  <li><a href="tailscale-i686-1.68.0-600068000-dsm6.spk">tailscale-i686-1.68.0-600068000-dsm6.spk</a>: 32-bit x86</li>
+  <li><a href="tailscale-i686-1.68.2-600068002-dsm6.spk">tailscale-i686-1.68.2-600068002-dsm6.spk</a>: 32-bit x86</li>
 
       
         
-  <li><a href="tailscale-88f6281-1.68.0-600068000-dsm6.spk">tailscale-88f6281-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-88f6281-1.68.2-600068002-dsm6.spk">tailscale-88f6281-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-88f6282-1.68.0-600068000-dsm6.spk">tailscale-88f6282-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-88f6282-1.68.2-600068002-dsm6.spk">tailscale-88f6282-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-alpine-1.68.0-600068000-dsm6.spk">tailscale-alpine-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-alpine-1.68.2-600068002-dsm6.spk">tailscale-alpine-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada370-1.68.0-600068000-dsm6.spk">tailscale-armada370-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-armada370-1.68.2-600068002-dsm6.spk">tailscale-armada370-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada375-1.68.0-600068000-dsm6.spk">tailscale-armada375-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-armada375-1.68.2-600068002-dsm6.spk">tailscale-armada375-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada38x-1.68.0-600068000-dsm6.spk">tailscale-armada38x-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-armada38x-1.68.2-600068002-dsm6.spk">tailscale-armada38x-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-armadaxp-1.68.0-600068000-dsm6.spk">tailscale-armadaxp-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-armadaxp-1.68.2-600068002-dsm6.spk">tailscale-armadaxp-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-comcerto2k-1.68.0-600068000-dsm6.spk">tailscale-comcerto2k-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-comcerto2k-1.68.2-600068002-dsm6.spk">tailscale-comcerto2k-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-hi3535-1.68.0-600068000-dsm6.spk">tailscale-hi3535-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-hi3535-1.68.2-600068002-dsm6.spk">tailscale-hi3535-1.68.2-600068002-dsm6.spk</a></li>
 
       
         
-  <li><a href="tailscale-monaco-1.68.0-600068000-dsm6.spk">tailscale-monaco-1.68.0-600068000-dsm6.spk</a></li>
+  <li><a href="tailscale-monaco-1.68.2-600068002-dsm6.spk">tailscale-monaco-1.68.2-600068002-dsm6.spk</a></li>
 
       
     </ul>
@@ -1264,63 +1264,63 @@ sudo tailscale up
     <ul>
       
         
-  <li><a href="tailscale-x86_64-1.68.0-700068000-dsm7.spk">tailscale-x86_64-1.68.0-700068000-dsm7.spk</a>: 64-bit x86 (amd64)</li>
+  <li><a href="tailscale-x86_64-1.68.2-700068002-dsm7.spk">tailscale-x86_64-1.68.2-700068002-dsm7.spk</a>: 64-bit x86 (amd64)</li>
 
       
         
-  <li><a href="tailscale-armv8-1.68.0-700068000-dsm7.spk">tailscale-armv8-1.68.0-700068000-dsm7.spk</a>: ARMv8 (arm64)</li>
+  <li><a href="tailscale-armv8-1.68.2-700068002-dsm7.spk">tailscale-armv8-1.68.2-700068002-dsm7.spk</a>: ARMv8 (arm64)</li>
 
       
         
-  <li><a href="tailscale-armv7-1.68.0-700068000-dsm7.spk">tailscale-armv7-1.68.0-700068000-dsm7.spk</a>: ARMv7</li>
+  <li><a href="tailscale-armv7-1.68.2-700068002-dsm7.spk">tailscale-armv7-1.68.2-700068002-dsm7.spk</a>: ARMv7</li>
 
       
         
-  <li><a href="tailscale-armv5-1.68.0-700068000-dsm7.spk">tailscale-armv5-1.68.0-700068000-dsm7.spk</a>: ARMv5</li>
+  <li><a href="tailscale-armv5-1.68.2-700068002-dsm7.spk">tailscale-armv5-1.68.2-700068002-dsm7.spk</a>: ARMv5</li>
 
       
         
-  <li><a href="tailscale-i686-1.68.0-700068000-dsm7.spk">tailscale-i686-1.68.0-700068000-dsm7.spk</a>: 32-bit x86</li>
+  <li><a href="tailscale-i686-1.68.2-700068002-dsm7.spk">tailscale-i686-1.68.2-700068002-dsm7.spk</a>: 32-bit x86</li>
 
       
         
-  <li><a href="tailscale-88f6281-1.68.0-700068000-dsm7.spk">tailscale-88f6281-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-88f6281-1.68.2-700068002-dsm7.spk">tailscale-88f6281-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-88f6282-1.68.0-700068000-dsm7.spk">tailscale-88f6282-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-88f6282-1.68.2-700068002-dsm7.spk">tailscale-88f6282-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-alpine-1.68.0-700068000-dsm7.spk">tailscale-alpine-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-alpine-1.68.2-700068002-dsm7.spk">tailscale-alpine-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada370-1.68.0-700068000-dsm7.spk">tailscale-armada370-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-armada370-1.68.2-700068002-dsm7.spk">tailscale-armada370-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada375-1.68.0-700068000-dsm7.spk">tailscale-armada375-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-armada375-1.68.2-700068002-dsm7.spk">tailscale-armada375-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-armada38x-1.68.0-700068000-dsm7.spk">tailscale-armada38x-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-armada38x-1.68.2-700068002-dsm7.spk">tailscale-armada38x-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-armadaxp-1.68.0-700068000-dsm7.spk">tailscale-armadaxp-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-armadaxp-1.68.2-700068002-dsm7.spk">tailscale-armadaxp-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-comcerto2k-1.68.0-700068000-dsm7.spk">tailscale-comcerto2k-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-comcerto2k-1.68.2-700068002-dsm7.spk">tailscale-comcerto2k-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-hi3535-1.68.0-700068000-dsm7.spk">tailscale-hi3535-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-hi3535-1.68.2-700068002-dsm7.spk">tailscale-hi3535-1.68.2-700068002-dsm7.spk</a></li>
 
       
         
-  <li><a href="tailscale-monaco-1.68.0-700068000-dsm7.spk">tailscale-monaco-1.68.0-700068000-dsm7.spk</a></li>
+  <li><a href="tailscale-monaco-1.68.2-700068002-dsm7.spk">tailscale-monaco-1.68.2-700068002-dsm7.spk</a></li>
 
       
     </ul>
@@ -1335,19 +1335,19 @@ sudo tailscale up
 
   <ul>
   
-    <li>arm-x19: <a href="Tailscale_1.68.0-1_arm-x19.qpkg">Tailscale_1.68.0-1_arm-x19.qpkg</a></li>
+    <li>arm-x19: <a href="Tailscale_1.68.2-1_arm-x19.qpkg">Tailscale_1.68.2-1_arm-x19.qpkg</a></li>
   
-    <li>arm-x31: <a href="Tailscale_1.68.0-1_arm-x31.qpkg">Tailscale_1.68.0-1_arm-x31.qpkg</a></li>
+    <li>arm-x31: <a href="Tailscale_1.68.2-1_arm-x31.qpkg">Tailscale_1.68.2-1_arm-x31.qpkg</a></li>
   
-    <li>arm-x41: <a href="Tailscale_1.68.0-1_arm-x41.qpkg">Tailscale_1.68.0-1_arm-x41.qpkg</a></li>
+    <li>arm-x41: <a href="Tailscale_1.68.2-1_arm-x41.qpkg">Tailscale_1.68.2-1_arm-x41.qpkg</a></li>
   
-    <li>arm_64: <a href="Tailscale_1.68.0-1_arm_64.qpkg">Tailscale_1.68.0-1_arm_64.qpkg</a></li>
+    <li>arm_64: <a href="Tailscale_1.68.2-1_arm_64.qpkg">Tailscale_1.68.2-1_arm_64.qpkg</a></li>
   
-    <li>x86: <a href="Tailscale_1.68.0-1_x86.qpkg">Tailscale_1.68.0-1_x86.qpkg</a></li>
+    <li>x86: <a href="Tailscale_1.68.2-1_x86.qpkg">Tailscale_1.68.2-1_x86.qpkg</a></li>
   
-    <li>x86_64: <a href="Tailscale_1.68.0-1_x86_64.qpkg">Tailscale_1.68.0-1_x86_64.qpkg</a></li>
+    <li>x86_64: <a href="Tailscale_1.68.2-1_x86_64.qpkg">Tailscale_1.68.2-1_x86_64.qpkg</a></li>
   
-    <li>x86_ce53xx: <a href="Tailscale_1.68.0-1_x86_ce53xx.qpkg">Tailscale_1.68.0-1_x86_ce53xx.qpkg</a></li>
+    <li>x86_ce53xx: <a href="Tailscale_1.68.2-1_x86_ce53xx.qpkg">Tailscale_1.68.2-1_x86_ce53xx.qpkg</a></li>
   
   </ul>
 
@@ -1368,9 +1368,9 @@ sudo tailscale up
 
   <ul>
   
-    <li><a href="Tailscale-1.68.0-macos.zip">Tailscale-1.68.0-macos.zip</a></li>
+    <li><a href="Tailscale-1.68.2-macos.zip">Tailscale-1.68.2-macos.zip</a></li>
   
-    <li><a href="Tailscale-1.68.0-macos.pkg">Tailscale-1.68.0-macos.pkg</a></li>
+    <li><a href="Tailscale-1.68.2-macos.pkg">Tailscale-1.68.2-macos.pkg</a></li>
   
   </ul>
 
@@ -1390,7 +1390,7 @@ sudo tailscale up
 
   <ul>
   
-    <li><a href="tailscale-android-universal-1.68.0.apk">tailscale-android-universal-1.68.0.apk</a></li>
+    <li><a href="tailscale-android-universal-1.68.1.apk">tailscale-android-universal-1.68.1.apk</a></li>
   
   </ul>
 
