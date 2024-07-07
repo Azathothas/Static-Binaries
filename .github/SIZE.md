@@ -808,8 +808,8 @@
  4.0K   │ └── INFO.md
  316M   ├─┬ aria2
   13M   │ ├── aria2c_mips64_musl_latest_Linux
-  13M   │ ├── aria2c_mipsel_musl_latest_Linux
   13M   │ ├── aria2c_mips_musl_latest_Linux
+  13M   │ ├── aria2c_mipsel_musl_latest_Linux
   13M   │ ├── aria2c_mips64_musl_Linux
   12M   │ ├── aria2c_mips_musl_Linux
   12M   │ ├── aria2c_mipsel_musl_Linux
@@ -837,8 +837,8 @@
  6.6M   │ ├── aria2c_arm_abi_libressl_musl_latest_Linux
  6.3M   │ ├── aria2c_i686_latest_Windows.exe
  5.8M   │ ├── aria2c_amd_x86_x64_Windows.exe
- 5.8M   │ ├── aria2c_i686_Windows.exe
  5.8M   │ ├── aria2c_amd_x86_x64_latest_Windows.exe
+ 5.8M   │ ├── aria2c_i686_Windows.exe
  4.4M   │ ├── aria2c_aarch64_arm64_Windows.exe
   20K   │ ├── README.md
  4.0K   │ ├── version.txt
